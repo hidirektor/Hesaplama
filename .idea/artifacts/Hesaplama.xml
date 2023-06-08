@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Hesaplama">
+    <output-path>$PROJECT_DIR$/out/artifacts/Hesaplama</output-path>
+    <root id="root">
+      <element id="archive" name="Hesaplama.jar">
+        <element id="module-output" name="Hesaplama" />
+      </element>
+    </root>
+  </artifact>
+</component>

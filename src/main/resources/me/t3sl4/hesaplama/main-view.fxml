@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.MainController">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu fx:id="yardimButton" mnemonicParsing="false" onAction="#yardimFunc" text="Yardım" />
+            </menus>
+        </MenuBar>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <ComboBox fx:id="firstOption" layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="119.0" promptText="1. Seçenek" />
+                <ComboBox fx:id="secondOption" layoutX="172.0" layoutY="41.0" prefHeight="25.0" prefWidth="119.0" promptText="2. Seçenek" />
+                <ComboBox fx:id="thirthOption" layoutX="348.0" layoutY="41.0" prefHeight="25.0" prefWidth="119.0" promptText="3. Seçenek" />
+                <ComboBox fx:id="fourthOption" layoutX="513.0" layoutY="40.0" prefHeight="25.0" prefWidth="119.0" promptText="4. Seçenek" />
+                <Button fx:id="hesaplaButton" layoutX="294.0" layoutY="124.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
+                <TextArea fx:id="sonucArea" layoutX="133.0" layoutY="161.0" prefHeight="200.0" prefWidth="388.0" />
+                <Text layoutX="140.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sonuç:" />
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
