@@ -36,6 +36,7 @@
                 <Text fx:id="hidrolikUnitesiText" layoutX="33.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidrolik Ünitesi" visible="false" />
                 <TextArea fx:id="parcaListesiTextArea" layoutX="181.0" layoutY="247.0" prefHeight="113.0" prefWidth="119.0" visible="false" />
                 <Text fx:id="parcaListesiText" layoutX="209.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parça Listesi" visible="false" />
+                <Text fx:id="programVersion" layoutX="563.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="v15.06.2023" />
             </children>
         </AnchorPane>
     </children>
