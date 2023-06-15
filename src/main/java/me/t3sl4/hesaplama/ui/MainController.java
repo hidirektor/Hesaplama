@@ -28,8 +28,21 @@ public class MainController {
 
     @FXML
     private ComboBox<String> sogutmaComboBox;
+
     @FXML
     private TextField tankKapasitesiTextField;
+
+    @FXML
+    private TextArea hidrolikUnitesiTextArea;
+
+    @FXML
+    private TextArea parcaListesiTextArea;
+
+    @FXML
+    private Text hidrolikUnitesiText;
+
+    @FXML
+    private Text parcaListesiText;
 
     private String secilenMotor;
     private String secilenPompa;
@@ -37,6 +50,10 @@ public class MainController {
     private String secilenValfTipi;
     private String secilenHidrolikKilitDurumu;
     private String secilenSogutmaDurumu;
+
+    boolean valfTipiStat = false;
+    boolean hidrolikKilitStat = false;
+    boolean sogutmaStat = false;
 
     private HostServices hostServices;
 
@@ -54,8 +71,10 @@ public class MainController {
         if (checkComboBox()) {
             showErrorMessage("Hata", "Lütfen tüm girdileri kontrol edin.");
         } else {
-            // Hesaplama işlemini burada gerçekleştir
-            // Sonucu sonucArea'ya yazdır
+            parcaListesiTextArea.setVisible(true);
+            hidrolikUnitesiTextArea.setVisible(true);
+            parcaListesiText.setVisible(true);
+            hidrolikUnitesiText.setVisible(true);
         }
     }
 
@@ -99,6 +118,7 @@ public class MainController {
         tankKapasitesiTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.isEmpty()) {
                 valfTipiComboBox.setDisable(true);
+                disableKilitAndSogutma();
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
@@ -110,11 +130,14 @@ public class MainController {
             girilenTankKapasitesiMiktari = Integer.parseInt(tankKapasitesiTextField.getText());
             if(girilenTankKapasitesiMiktari < 1 || girilenTankKapasitesiMiktari > 500) {
                 valfTipiComboBox.setDisable(true);
+                disableKilitAndSogutma();
             } else {
                 valfTipiComboBox.setDisable(false);
+                valfTipiStat = true;
             }
         } else {
             valfTipiComboBox.setDisable(true);
+            disableKilitAndSogutma();
         }
     }
 
@@ -123,6 +146,7 @@ public class MainController {
         if(event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
             tankKapasitesiTextField.clear();
             valfTipiComboBox.setDisable(true);
+            disableKilitAndSogutma();
         }
     }
 
@@ -130,6 +154,14 @@ public class MainController {
     public void valfTipiPressed() {
         secilenValfTipi = valfTipiComboBox.getValue();
         hidrolikKilitComboBox.setDisable(false);
+        hidrolikKilitStat = true;
+    }
+
+    @FXML
+    public void hidrolikKilitPressed() {
+        secilenHidrolikKilitDurumu = hidrolikKilitComboBox.getValue();
+        sogutmaComboBox.setDisable(false);
+        sogutmaStat = true;
     }
 
     @FXML
@@ -204,6 +236,17 @@ public class MainController {
         valfTipiComboBox.setDisable(true);
         hidrolikKilitComboBox.setDisable(true);
         sogutmaComboBox.setDisable(true);
+    }
+
+    private void disableKilitAndSogutma() {
+        if(hidrolikKilitStat) {
+            hidrolikKilitComboBox.setDisable(true);
+            hidrolikKilitStat = false;
+        }
+        if(sogutmaStat) {
+            sogutmaComboBox.setDisable(true);
+            sogutmaStat = false;
+        }
     }
 
     private void showErrorMessage(String title, String message) {
