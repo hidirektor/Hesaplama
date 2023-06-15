@@ -4,27 +4,35 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.MainController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.ui.MainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
-                <Menu fx:id="yardimButton" mnemonicParsing="false" onAction="#yardimFunc" text="Yardım" />
+                <Menu fx:id="yardimButton" mnemonicParsing="false" text="Yardım">
+                    <items>
+                        <MenuItem fx:id="githubMenuItem" mnemonicParsing="false" onAction="#redirectGithub" text="Github" />
+                    </items></Menu>
             </menus>
         </MenuBar>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <ComboBox fx:id="firstOption" layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="119.0" promptText="1. Seçenek" />
-                <ComboBox fx:id="secondOption" layoutX="172.0" layoutY="41.0" prefHeight="25.0" prefWidth="119.0" promptText="2. Seçenek" />
-                <ComboBox fx:id="thirthOption" layoutX="348.0" layoutY="41.0" prefHeight="25.0" prefWidth="119.0" promptText="3. Seçenek" />
-                <ComboBox fx:id="fourthOption" layoutX="513.0" layoutY="40.0" prefHeight="25.0" prefWidth="119.0" promptText="4. Seçenek" />
-                <Button fx:id="hesaplaButton" layoutX="294.0" layoutY="124.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
-                <TextArea fx:id="sonucArea" layoutX="133.0" layoutY="161.0" prefHeight="200.0" prefWidth="388.0" />
-                <Text layoutX="140.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sonuç:" />
+                <ComboBox fx:id="motorComboBox" disable="true" layoutX="111.0" layoutY="63.0" onAction="#motorPressed" prefHeight="25.0" prefWidth="78.0" promptText="Motor" />
+                <ComboBox fx:id="pompaComboBox" disable="true" layoutX="258.0" layoutY="63.0" onAction="#pompaPressed" prefHeight="25.0" prefWidth="85.0" promptText="Pompa" />
+                <ComboBox fx:id="valfTipiComboBox" disable="true" layoutX="90.0" layoutY="100.0" onAction="#valfTipiPressed" prefHeight="25.0" prefWidth="119.0" promptText="Valf Tipi" />
+                <Button fx:id="hesaplaButton" layoutX="271.0" layoutY="147.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
+                <TextArea fx:id="sonucTextArea" layoutX="38.0" layoutY="248.0" prefHeight="113.0" prefWidth="192.0" />
+                <Text layoutX="38.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sonuç:" />
+                <ComboBox fx:id="hidrolikKilitComboBox" disable="true" layoutX="241.0" layoutY="100.0" prefHeight="25.0" prefWidth="119.0" promptText="Hidrolik Kilit" />
+                <ComboBox fx:id="sogutmaComboBox" disable="true" layoutX="377.0" layoutY="100.0" prefWidth="150.0" promptText="Soğutma" />
+                <ComboBox fx:id="uniteTipiComboBox" layoutX="253.0" layoutY="14.0" onAction="#uniteTipiPressed" prefHeight="25.0" prefWidth="96.0" promptText="Ünite Tipi" />
+                <TextField fx:id="tankKapasitesiTextField" disable="true" layoutX="378.0" layoutY="63.0" onKeyPressed="#tankKapasitesiBackSpacePressed" onKeyTyped="#tankKapasitesiEntered" promptText="Gerekli Yağ Miktarı (L)" />
             </children>
         </AnchorPane>
     </children>
