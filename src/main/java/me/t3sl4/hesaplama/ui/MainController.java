@@ -3,12 +3,36 @@ package me.t3sl4.hesaplama.ui;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
+import javafx.scene.shape.CullFace;
+import javafx.scene.shape.DrawMode;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.stage.Stage;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 
 public class MainController {
     @FXML
@@ -44,6 +68,18 @@ public class MainController {
     @FXML
     private Text parcaListesiText;
 
+    @FXML
+    private Text genislikSonucText;
+
+    @FXML
+    private Text yukseklikSonucText;
+
+    @FXML
+    private Text derinlikSonucText;
+
+    @FXML
+    private Box hydraulicUnitShape;
+
     private String secilenMotor;
     private String secilenPompa;
     private int girilenTankKapasitesiMiktari;
@@ -55,26 +91,62 @@ public class MainController {
     boolean hidrolikKilitStat = false;
     boolean sogutmaStat = false;
 
+    //Excel2List
+    List<String> istenenMakineBilgiler = new ArrayList<String>();
+
+    List<String> motorVerileri = new ArrayList<>();
+    List<String> kampanaVerileri = new ArrayList<>();
+    List<String> pompaVerileri = new ArrayList<>();
+    List<String> tankKapasiteVerileri = new ArrayList<>();
+    List<String> valfVerileri = new ArrayList<>();
+    List<String> hidrolikKilitVerileri = new ArrayList<>();
+    List<String> sogutmaVerileri = new ArrayList<>();
+
     private HostServices hostServices;
 
     public void initialize() {
         initUniteTipi();
         initMotor();
         initPompa();
-        initValf();
+        initValf(1);
         initHidrolikKilit();
         initSogutma();
+
+        //readExcelData();
     }
 
     @FXML
     public void hesaplaFunc() {
+        int yukseklik = 380;
+        int derinlik =100;
+        int genislik = 250;
         if (checkComboBox()) {
             showErrorMessage("Hata", "Lütfen tüm girdileri kontrol edin.");
         } else {
-            parcaListesiTextArea.setVisible(true);
-            hidrolikUnitesiTextArea.setVisible(true);
-            parcaListesiText.setVisible(true);
-            hidrolikUnitesiText.setVisible(true);
+            enableSonucSection();
+            if(secilenHidrolikKilitDurumu == "Var" || secilenValfTipi == "Kilitli Blok || Çift Hız") {
+                genislik += 100;
+            } else {
+                derinlik = 100;
+                yukseklik = 380;
+            }
+            derinlik += 50;
+            yukseklik += 50;
+            genislik += 50;
+
+            genislikSonucText.setText("Genişlik: " + genislik + " mm");
+            derinlikSonucText.setText("Derinlik: " + derinlik + " mm");
+            yukseklikSonucText.setText("Yükseklik: " + yukseklik + " mm");
+            String secim =
+                    "Hidrolik Ünitesi Tipi: " + uniteTipiComboBox.getValue() + "\n" +
+                            "Seçilen Motor: " + secilenMotor + "\n" +
+                            "Kampana: " + "NaN\n" +
+                            "Seçilen Pompa: " + secilenPompa + "\n" +
+                            "Tank Kapasitesi: " + girilenTankKapasitesiMiktari + "\n" +
+                            "Seçilen Valf Tipi: " + secilenValfTipi + "\n" +
+                            "Hidrolik Kilit Durumu: " + secilenHidrolikKilitDurumu + "\n" +
+                            "Soğutma Durumu: " + secilenSogutmaDurumu + "\n";
+            hidrolikUnitesiTextArea.setText(secim);
         }
     }
 
@@ -106,13 +178,14 @@ public class MainController {
     public void motorPressed() {
         secilenMotor = motorComboBox.getValue();
         pompaComboBox.setDisable(false);
+        if(secilenMotor == "4 kW") {
+            pompaComboBox.getItems().clear();
+            pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "4.8 cc");
+        }
     }
 
     @FXML
     public void pompaPressed() {
-        if(secilenMotor == "4 kW") {
-            //4 kW motor seçilirse seçilenleri filtrele
-        }
         secilenPompa = pompaComboBox.getValue();
         tankKapasitesiTextField.setDisable(false);
         tankKapasitesiTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -129,14 +202,14 @@ public class MainController {
         if(!tankKapasitesiTextField.getText().isEmpty()) {
             girilenTankKapasitesiMiktari = Integer.parseInt(tankKapasitesiTextField.getText());
             if(girilenTankKapasitesiMiktari < 1 || girilenTankKapasitesiMiktari > 500) {
-                valfTipiComboBox.setDisable(true);
+                hidrolikKilitComboBox.setDisable(true);
                 disableKilitAndSogutma();
             } else {
-                valfTipiComboBox.setDisable(false);
-                valfTipiStat = true;
+                hidrolikKilitComboBox.setDisable(false);
+                hidrolikKilitStat = true;
             }
         } else {
-            valfTipiComboBox.setDisable(true);
+            hidrolikKilitComboBox.setDisable(true);
             disableKilitAndSogutma();
         }
     }
@@ -145,21 +218,32 @@ public class MainController {
     public void tankKapasitesiBackSpacePressed(KeyEvent event) {
         if(event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
             tankKapasitesiTextField.clear();
-            valfTipiComboBox.setDisable(true);
-            disableKilitAndSogutma();
-        }
-    }
+            hidrolikKilitComboBox.setDisable(false);
+            hidrolikKilitStat = true;
 
-    @FXML
-    public void valfTipiPressed() {
-        secilenValfTipi = valfTipiComboBox.getValue();
-        hidrolikKilitComboBox.setDisable(false);
-        hidrolikKilitStat = true;
+        }
     }
 
     @FXML
     public void hidrolikKilitPressed() {
         secilenHidrolikKilitDurumu = hidrolikKilitComboBox.getValue();
+        valfTipiComboBox.setDisable(false);
+        hidrolikKilitStat = true;
+        if(secilenHidrolikKilitDurumu == "Yok") {
+            initValf(0);
+        }
+        hidrolikKilitComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if(newValue == "Var") {
+                initValf(1);
+            } else {
+                initValf(0);
+            }
+        });
+    }
+
+    @FXML
+    public void valfTipiPressed() {
+        secilenValfTipi = valfTipiComboBox.getValue();
         sogutmaComboBox.setDisable(false);
         sogutmaStat = true;
     }
@@ -217,8 +301,13 @@ public class MainController {
         }
     }
 
-    private void initValf() {
-        valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız", "Kilitli Blok || Çift Hız");
+    private void initValf(int stat) {
+        valfTipiComboBox.getItems().clear();
+        if(stat == 1) {
+            valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız", "Kilitli Blok || Çift Hız");
+        } else {
+            valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız");
+        }
     }
 
     private void initHidrolikKilit() {
@@ -229,6 +318,37 @@ public class MainController {
         sogutmaComboBox.getItems().addAll("Var", "Yok");
     }
 
+    /*private void readExcelData2() {
+        try {
+            FileInputStream file = new FileInputStream("Hidrolik.xlsx");
+
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+            int rowCount = sheet.getLastRowNum();
+            for (int i = 1; i <= rowCount; i++) {
+                XSSFRow row = sheet.getRow(i);
+                if (row != null) {
+                    XSSFCell motorCell = row.getCell(0);
+                    XSSFCell kampanaCell = row.getCell(1);
+                    XSSFCell pompaCell = row.getCell(2);
+
+                    String motor = motorCell.getStringCellValue();
+                    String kampana = kampanaCell.getStringCellValue();
+                    String pompa = pompaCell.getStringCellValue();
+
+                    motorVerileri.add(motor);
+                    kampanaVerileri.add(kampana);
+                    pompaVerileri.add(pompa);
+                }
+            }
+
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+
     private void disableAllSections() {
         motorComboBox.setDisable(true);
         pompaComboBox.setDisable(true);
@@ -236,6 +356,17 @@ public class MainController {
         valfTipiComboBox.setDisable(true);
         hidrolikKilitComboBox.setDisable(true);
         sogutmaComboBox.setDisable(true);
+    }
+
+    private void enableSonucSection() {
+        parcaListesiTextArea.setVisible(true);
+        hidrolikUnitesiTextArea.setVisible(true);
+        parcaListesiText.setVisible(true);
+        hidrolikUnitesiText.setVisible(true);
+        genislikSonucText.setVisible(true);
+        yukseklikSonucText.setVisible(true);
+        derinlikSonucText.setVisible(true);
+        hydraulicUnitShape.setVisible(true);
     }
 
     private void disableKilitAndSogutma() {
