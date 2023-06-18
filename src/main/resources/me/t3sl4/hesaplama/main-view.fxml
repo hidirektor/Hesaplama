@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="470.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.ui.MainController">
+<VBox prefHeight="470.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.ui.MainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -25,7 +25,7 @@
         </MenuBar>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <ComboBox fx:id="motorComboBox" disable="true" layoutX="109.0" layoutY="75.0" onAction="#motorPressed" prefHeight="25.0" prefWidth="78.0" promptText="Motor" />
+                <ComboBox fx:id="motorComboBox" disable="true" layoutX="79.0" layoutY="75.0" onAction="#motorPressed" prefHeight="25.0" prefWidth="137.0" promptText="Motor" />
                 <ComboBox fx:id="pompaComboBox" disable="true" layoutX="277.0" layoutY="75.0" onAction="#pompaPressed" prefHeight="25.0" prefWidth="85.0" promptText="Pompa" />
                 <ComboBox fx:id="valfTipiComboBox" disable="true" layoutX="228.0" layoutY="125.0" onAction="#valfTipiPressed" prefHeight="25.0" prefWidth="185.0" promptText="Valf Tipi" />
                 <Button fx:id="hesaplaButton" layoutX="290.0" layoutY="174.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
@@ -50,9 +50,9 @@
                         <Point3D x="-1.0" y="1.0" />
                     </rotationAxis>
                 </Box>
-                <Text fx:id="genislikSonucText" layoutX="455.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genişlik: 120 mm" visible="false" />
-                <Text fx:id="yukseklikSonucText" layoutX="380.0" layoutY="322.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yükseklik: 120 mm" visible="false" />
-                <Text fx:id="derinlikSonucText" fill="WHITE" layoutX="440.0" layoutY="281.0" rotate="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Derinlik: 120 mm" visible="false" wrappingWidth="58.66666666666674" />
+                <Text fx:id="genislikSonucText" layoutX="475.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X: 120 mm" visible="false" />
+                <Text fx:id="yukseklikSonucText" layoutX="382.0" layoutY="319.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h: 120 mm" visible="false" />
+                <Text fx:id="derinlikSonucText" fill="WHITE" layoutX="440.0" layoutY="281.0" rotate="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 120 mm" visible="false" wrappingWidth="58.66666666666674" />
             </children>
         </AnchorPane>
     </children>

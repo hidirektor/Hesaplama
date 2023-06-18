@@ -27,6 +27,7 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.stage.Stage;
@@ -92,15 +93,7 @@ public class MainController {
     boolean sogutmaStat = false;
 
     //Excel2List
-    List<String> istenenMakineBilgiler = new ArrayList<String>();
-
-    List<String> motorVerileri = new ArrayList<>();
     List<String> kampanaVerileri = new ArrayList<>();
-    List<String> pompaVerileri = new ArrayList<>();
-    List<String> tankKapasiteVerileri = new ArrayList<>();
-    List<String> valfVerileri = new ArrayList<>();
-    List<String> hidrolikKilitVerileri = new ArrayList<>();
-    List<String> sogutmaVerileri = new ArrayList<>();
 
     private HostServices hostServices;
 
@@ -117,26 +110,68 @@ public class MainController {
 
     @FXML
     public void hesaplaFunc() {
-        int yukseklik = 380;
-        int derinlik =100;
-        int genislik = 250;
+        initKampana();
+        System.out.println(kampanaVerileri.get(0).split(" "));
+        int h = 0; //Yükseklik
+        int y = 0; //Derinlik
+        int x = 0; //Genişlik
+        int[] kampanaDegerleri = {250, 250, 300, 300, 350, 350, 350, 400};
         if (checkComboBox()) {
             showErrorMessage("Hata", "Lütfen tüm girdileri kontrol edin.");
         } else {
             enableSonucSection();
-            if(secilenHidrolikKilitDurumu == "Var" || secilenValfTipi == "Kilitli Blok || Çift Hız") {
-                genislik += 100;
-            } else {
-                derinlik = 100;
-                yukseklik = 380;
-            }
-            derinlik += 50;
-            yukseklik += 50;
-            genislik += 50;
+            String[] secPmp = secilenPompa.split(" cc");
+            x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
+            float secilenPompaVal = Float.parseFloat(secPmp[0]);
 
-            genislikSonucText.setText("Genişlik: " + genislik + " mm");
-            derinlikSonucText.setText("Derinlik: " + derinlik + " mm");
-            yukseklikSonucText.setText("Yükseklik: " + yukseklik + " mm");
+            if(secilenPompaVal > 28.1) {
+                //kilitli bloğu kapat
+                //kilit motoru çapı = 200
+                //kilit motoru devreye girdiğinde x'e +200 eklenecek (sağ ve sol olarak 100'e 100)
+                x += 200;
+            } else {
+                //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
+                //kilitli blok ölçüsü olarak: X'e +100 olacak
+                if(secilenHidrolikKilitDurumu == "Var" && secilenValfTipi == "Kilitli Blok || Çift Hız") {
+                    x += 100;
+                }
+            }
+            //hidrolik kilit olmadığı durumlarda valf tipleri için
+            if(secilenHidrolikKilitDurumu == "Yok") {
+                if(secilenValfTipi == "İnişte Tek Hız") {
+                    // X yönünde +120 olacak Y yönünde 180 mm eklenecek
+                    x += 120;
+                    y += 180;
+                } else if(secilenValfTipi == "İnişte Çift Hız") {
+                    //X yönünde 190 Y yönünde 90
+                    x += 190;
+                    y += 90;
+                } else {
+                    //kompanzasyon seçilmişse:
+                    //kilit yoksa: X'e 190 Y'ye 180
+                    if(secilenHidrolikKilitDurumu == "Yok" && secilenValfTipi == "Kompanzasyon + İnişte Tek Hız") {
+                        x += 190;
+                        y += 180;
+                    }
+                }
+            }
+            if(secilenSogutmaDurumu == "Var") {
+                x += 550;
+                y += 250;
+            }
+            if(secilenHidrolikKilitDurumu == "Var" || secilenValfTipi == "Kilitli Blok || Çift Hız") {
+                x += 100;
+            } else {
+                y = 100;
+                h = 380;
+            }
+            y += 70;
+            h += 70;
+            x += 0;
+
+            genislikSonucText.setText("X: " + x + " mm");
+            derinlikSonucText.setText("Y: " + y + " mm");
+            yukseklikSonucText.setText("Yükseklik: " + h + " mm");
             String secim =
                     "Hidrolik Ünitesi Tipi: " + uniteTipiComboBox.getValue() + "\n" +
                             "Seçilen Motor: " + secilenMotor + "\n" +
@@ -178,10 +213,6 @@ public class MainController {
     public void motorPressed() {
         secilenMotor = motorComboBox.getValue();
         pompaComboBox.setDisable(false);
-        if(secilenMotor == "4 kW") {
-            pompaComboBox.getItems().clear();
-            pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "4.8 cc");
-        }
     }
 
     @FXML
@@ -283,12 +314,18 @@ public class MainController {
     }
 
     private void initMotor() {
-        motorComboBox.getItems().addAll("4 kW", "5.5 kW", "7.5 kW", "11 kW", "15 kW", "18.5 kW", "22 kW", "37 kW");
+        motorComboBox.getItems().addAll("4 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
     }
 
     private void initKampana() {
-        //motorComboBox 2 kampana
-        motorComboBox.getItems().addAll("250 mm", "250 mm", "300 mm", "300 mm", "350 mm", "350 mm", "350 mm", "400 mm");
+        kampanaVerileri.add("250 mm");
+        kampanaVerileri.add("250 mm");
+        kampanaVerileri.add("300 mm");
+        kampanaVerileri.add("300 mm");
+        kampanaVerileri.add("350 mm");
+        kampanaVerileri.add("350 mm");
+        kampanaVerileri.add("350 mm");
+        kampanaVerileri.add("400 mm");
     }
 
     private void initPompa() {
@@ -299,12 +336,19 @@ public class MainController {
         } else {
             pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc", "9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
         }
+        uniteTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if(newValue == "Hidros") {
+                pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
+            } else {
+                pompaComboBox.getItems().addAll("9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
+            }
+        });
     }
 
     private void initValf(int stat) {
         valfTipiComboBox.getItems().clear();
         if(stat == 1) {
-            valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız", "Kilitli Blok || Çift Hız");
+            valfTipiComboBox.getItems().addAll("Kilitli Blok || Çift Hız");
         } else {
             valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız");
         }
