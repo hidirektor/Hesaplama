@@ -111,64 +111,19 @@ public class MainController {
     @FXML
     public void hesaplaFunc() {
         initKampana();
-        System.out.println(kampanaVerileri.get(0).split(" "));
         int h = 0; //Yükseklik
         int y = 0; //Derinlik
         int x = 0; //Genişlik
         int[] kampanaDegerleri = {250, 250, 300, 300, 350, 350, 350, 400};
+        int[] results;
         if (checkComboBox()) {
             showErrorMessage("Hata", "Lütfen tüm girdileri kontrol edin.");
         } else {
             enableSonucSection();
-            String[] secPmp = secilenPompa.split(" cc");
-            x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
-            float secilenPompaVal = Float.parseFloat(secPmp[0]);
-
-            if(secilenPompaVal > 28.1) {
-                //kilitli bloğu kapat
-                //kilit motoru çapı = 200
-                //kilit motoru devreye girdiğinde x'e +200 eklenecek (sağ ve sol olarak 100'e 100)
-                x += 200;
-            } else {
-                //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
-                //kilitli blok ölçüsü olarak: X'e +100 olacak
-                if(secilenHidrolikKilitDurumu == "Var" && secilenValfTipi == "Kilitli Blok || Çift Hız") {
-                    x += 100;
-                }
-            }
-            //hidrolik kilit olmadığı durumlarda valf tipleri için
-            if(secilenHidrolikKilitDurumu == "Yok") {
-                if(secilenValfTipi == "İnişte Tek Hız") {
-                    // X yönünde +120 olacak Y yönünde 180 mm eklenecek
-                    x += 120;
-                    y += 180;
-                } else if(secilenValfTipi == "İnişte Çift Hız") {
-                    //X yönünde 190 Y yönünde 90
-                    x += 190;
-                    y += 90;
-                } else {
-                    //kompanzasyon seçilmişse:
-                    //kilit yoksa: X'e 190 Y'ye 180
-                    if(secilenHidrolikKilitDurumu == "Yok" && secilenValfTipi == "Kompanzasyon + İnişte Tek Hız") {
-                        x += 190;
-                        y += 180;
-                    }
-                }
-            }
-            if(secilenSogutmaDurumu == "Var") {
-                x += 550;
-                y += 250;
-            }
-            if(secilenHidrolikKilitDurumu == "Var" || secilenValfTipi == "Kilitli Blok || Çift Hız") {
-                x += 100;
-            } else {
-                y = 100;
-                h = 380;
-            }
-            y += 70;
-            h += 70;
-            x += 0;
-
+            results = calcDimensions(x, y, h, kampanaDegerleri);
+            x = results[0];
+            y = results[1];
+            h = results[2];
             genislikSonucText.setText("X: " + x + " mm");
             derinlikSonucText.setText("Y: " + y + " mm");
             yukseklikSonucText.setText("Yükseklik: " + h + " mm");
@@ -183,6 +138,61 @@ public class MainController {
                             "Soğutma Durumu: " + secilenSogutmaDurumu + "\n";
             hidrolikUnitesiTextArea.setText(secim);
         }
+    }
+
+    int[] calcDimensions(int x, int y, int h, int[] kampanaDegerleri) {
+        int[] finalValues = new int[3];
+        String[] secPmp = secilenPompa.split(" cc");
+        x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
+        float secilenPompaVal = Float.parseFloat(secPmp[0]);
+        if(secilenPompaVal > 28.1) {
+            //kilitli bloğu kapat
+            //kilit motoru çapı = 200
+            //kilit motoru devreye girdiğinde x'e +200 eklenecek (sağ ve sol olarak 100'e 100)
+            x += 200;
+        } else {
+            //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
+            //kilitli blok ölçüsü olarak: X'e +100 olacak
+            if(secilenHidrolikKilitDurumu == "Var" && secilenValfTipi == "Kilitli Blok || Çift Hız") {
+                x += 100;
+            }
+        }
+        //hidrolik kilit olmadığı durumlarda valf tipleri için
+        if(secilenHidrolikKilitDurumu == "Yok") {
+            if(secilenValfTipi == "İnişte Tek Hız") {
+                // X yönünde +120 olacak Y yönünde 180 mm eklenecek
+                x += 120;
+                y += 180;
+            } else if(secilenValfTipi == "İnişte Çift Hız") {
+                //X yönünde 190 Y yönünde 90
+                x += 190;
+                y += 90;
+            } else {
+                //kompanzasyon seçilmişse:
+                //kilit yoksa: X'e 190 Y'ye 180
+                if(secilenHidrolikKilitDurumu == "Yok" && secilenValfTipi == "Kompanzasyon + İnişte Tek Hız") {
+                    x += 190;
+                    y += 180;
+                }
+            }
+        }
+        if(secilenSogutmaDurumu == "Var") {
+            x += 550;
+            y += 250;
+        }
+        if(secilenHidrolikKilitDurumu == "Var" || secilenValfTipi == "Kilitli Blok || Çift Hız") {
+            x += 100;
+        } else {
+            y = 100;
+            h = 380;
+        }
+        y += 70;
+        h += 70;
+        x += 70;
+        finalValues[0] = x;
+        finalValues[1] = y;
+        finalValues[2] = h;
+        return finalValues;
     }
 
     @FXML
@@ -224,7 +234,7 @@ public class MainController {
                 valfTipiComboBox.setDisable(true);
                 disableKilitAndSogutma();
             }
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+            System.out.println("Old: " + oldValue + " New: " + newValue);
         });
     }
 
@@ -294,7 +304,6 @@ public class MainController {
         }
         int girilenTankKapasitesi = 0;
         girilenTankKapasitesi = Integer.parseInt(tankKapasitesiTextField.getText());
-        System.out.println(girilenTankKapasitesi);
 
         if(tankKapasitesiTextField.getText() == null || girilenTankKapasitesi == 0) {
             return true;
