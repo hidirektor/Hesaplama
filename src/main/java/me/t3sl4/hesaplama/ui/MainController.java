@@ -136,10 +136,11 @@ public class MainController {
         int[] finalValues = new int[3];
         int yV = 0;
         int yK = 0;
+        System.out.println("--------Hesaplama Başladı--------");
         String[] secPmp = secilenPompa.split(" cc");
         x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
         yK += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + 140;
-        System.out.println("Motor + Kampana X: " + x);
+        System.out.println("Motor + Kampana için (X): " + x + " yK: " + yK);
 
         float secilenPompaVal = Float.parseFloat(secPmp[0]);
         //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
@@ -147,7 +148,7 @@ public class MainController {
         if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
             x += 300;
             yV += 280;
-            System.out.println("Pompa <= 28.1 && Hidorlik Kilit + Kilitli Blok Aktif X: " + x);
+            System.out.println("Hidorlik Kilit + Kilitli Blok Aktif X: " + x + " yV: " + yV);
         }
         //hidrolik kilit olmadığı durumlarda valf tipleri için
         if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
@@ -155,19 +156,19 @@ public class MainController {
                 // X yönünde +120 olacak Y yönünde 180 mm eklenecek
                 x += 120;
                 yV += 180 + 80;
-                System.out.println("Hidrolik Kilit Yok + İnişte Tek Hız X: " + x + " Y: " + y);
+                System.out.println("Hidrolik Kilit Yok + İnişte Tek Hız X: " + x + " yV: " + yV);
             } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
                 //X yönünde 190 Y yönünde 90
                 x += 190;
                 yV += 90 + 80;
-                System.out.println("Hidrolik Kilit Yok + İnişte Çift Hız X: " + x + " Y: " + y);
+                System.out.println("Hidrolik Kilit Yok + İnişte Çift Hız X: " + x + " yV: " + yV);
             } else {
                 //kompanzasyon seçilmişse:
                 //kilit yoksa: X'e 190 Y'ye 180
                 if(secilenHidrolikKilitDurumu.equals("Yok") && Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
                     x += 190;
                     yV += 180 + 80;
-                    System.out.println("Hidrolik Kilit Yok + (Kompanzasyon + İnişte Tek Hız) X: " + x + " Y: " + y);
+                    System.out.println("Hidrolik Kilit Yok + (Kompanzasyon + İnişte Tek Hız) X: " + x + " yV: " + yV);
                 }
             }
         } else {
@@ -179,18 +180,19 @@ public class MainController {
 
                 if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
                     yV += 180 + 80;
-                    System.out.println("Hidrolik Kilit Var + (Kompanzasyon + İnişte Tek Hız) X: " + x + " Y: " + y);
+                    System.out.println("Hidrolik Kilit Var + (Kompanzasyon + İnişte Tek Hız) X: " + x + " yV: " + yV);
                 } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
                     yV += 90 + 80;
-                    System.out.println("Hidrolik Kilit Var + İnişte Çift Hız X: " + x + " Y: " + y);
+                    System.out.println("Hidrolik Kilit Var + İnişte Çift Hız X: " + x + " yV: " + yV);
                 } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
                     yV += 180 + 80;
-                    System.out.println("Hidrolik Kilit Var + İnişte Tek Hız X: " + x + " Y: " + y);
+                    System.out.println("Hidrolik Kilit Var + İnişte Tek Hız X: " + x + " yV: " + yV);
                 }
 
                 if(secilenKilitMotorVal != 0) {
                     yV += 300;
                     x += 360;
+                    System.out.println("Kilit Motor İçin X: " + x + " yV: " + yV);
                 }
             }
         }
@@ -199,6 +201,7 @@ public class MainController {
             y += 250;
             System.out.println("Soğutma Var X: " + x + " Y: " + y);
         }
+        System.out.println("yV ve yK için en büyüğü: yV: " + yV + " yK: " + yK + " Y: " + y);
         y = Math.max(yV, yK);
         h = 280;
         x += 110;
@@ -207,6 +210,7 @@ public class MainController {
         System.out.println("Boşluklar sonrası: X: " + x + " Y: " + y + " h: " + h);
         hacimText.setVisible(true);
         hacimText.setText("Hacim: " + ((x*h*y) / 1000000) + "L");
+        System.out.println("--------Hesaplama Bitti--------");
         finalValues[0] = x;
         finalValues[1] = y;
         finalValues[2] = h;
@@ -401,7 +405,6 @@ public class MainController {
     }
 
     private void initPompa() {
-        pompaComboBox.getItems().clear();
         if(Objects.equals(uniteTipiComboBox.getValue(), "Hidros")) {
             pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
         } else if(Objects.equals(uniteTipiComboBox.getValue(), "Klasik")) {
