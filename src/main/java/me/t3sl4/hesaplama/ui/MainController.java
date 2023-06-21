@@ -107,7 +107,7 @@ public class MainController {
         int h = 0; //Yükseklik
         int y = 0; //Derinlik
         int x = 0; //Genişlik
-        int[] kampanaDegerleri = {250, 250, 300, 300, 350, 350, 350, 400};
+        int[] kampanaDegerleri = {250, 300, 250, 300, 350, 300, 350, 350, 350, 400};
         int[] results;
         if (checkComboBox()) {
             showErrorMessage();
