@@ -550,63 +550,6 @@ public class MainController {
         });
     }
 
-    private void resetCombos(int stat) {
-        for(int i=stat; i==stat; i++) {
-            if(i == 1) {
-                if(!pompaComboBox.getSelectionModel().isEmpty()) {
-                    pompaComboBox.getSelectionModel().clearSelection();
-                    pompaComboBox.setDisable(true);
-                }
-            } else if(i == 2) {
-                if(!tankKapasitesiTextField.getText().isEmpty()) {
-                    tankKapasitesiTextField.clear();
-                    tankKapasitesiTextField.setDisable(true);
-                }
-            } else if(i == 3) {
-                if(!hidrolikKilitComboBox.getSelectionModel().isEmpty()) {
-                    hidrolikKilitComboBox.getSelectionModel().clearSelection();
-                    hidrolikKilitComboBox.setDisable(true);
-                }
-            } else if(i == 4) {
-                if(!valfTipiComboBox.getSelectionModel().isEmpty()) {
-                    valfTipiComboBox.getSelectionModel().clearSelection();
-                    valfTipiComboBox.setDisable(true);
-                }
-            } else if(i == 5) {
-                if(!kilitMotorComboBox.getSelectionModel().isEmpty()) {
-                    kilitMotorComboBox.getSelectionModel().clearSelection();
-                    kilitMotorComboBox.setDisable(true);
-                    disableKilitMotorSection();
-                }
-            } else if(i == 6) {
-                if(!kilitPompaComboBox.getSelectionModel().isEmpty()) {
-                    kilitPompaComboBox.getSelectionModel().clearSelection();
-                    kilitPompaComboBox.setDisable(true);
-                    disableKilitPompaSection();
-                }
-            } else if(i == 7) {
-                if(!sogutmaComboBox.getSelectionModel().isEmpty()) {
-                    sogutmaComboBox.getSelectionModel().clearSelection();
-                    sogutmaComboBox.setDisable(true);
-                }
-            }
-        }
-    }
-
-    private void disableKilitMotorSection() {
-        kilitMotorText.setVisible(false);
-        kilitMotorComboBox.setValue(null);
-        kilitMotorComboBox.setDisable(true);
-        kilitMotorComboBox.setVisible(false);
-    }
-
-    private void disableKilitPompaSection() {
-        kilitPompaText.setVisible(false);
-        kilitPompaComboBox.setValue(null);
-        kilitPompaComboBox.setDisable(true);
-        kilitPompaComboBox.setVisible(false);
-    }
-
     private void verileriSifirla() {
         uniteTipiComboBox.getSelectionModel().clearSelection();
         secilenMotor = null;
