@@ -81,6 +81,7 @@ public class MainController {
     private Button temizleButton;
 
     private String secilenMotor = null;
+    private int secilenKampana = 0;
     private String secilenPompa = null;
     private int girilenTankKapasitesiMiktari = 0;
     private String secilenValfTipi = null;
@@ -122,13 +123,14 @@ public class MainController {
             String secim =
                     "Hidrolik Ünitesi Tipi: " + uniteTipiComboBox.getValue() + "\n" +
                             "Seçilen Motor: " + secilenMotor + "\n" +
-                            "Kampana: " + "NaN\n" +
+                            "Kampana: " + secilenKampana + "\n" +
                             "Seçilen Pompa: " + secilenPompa + "\n" +
                             "Tank Kapasitesi: " + girilenTankKapasitesiMiktari + "\n" +
                             "Seçilen Valf Tipi: " + secilenValfTipi + "\n" +
                             "Hidrolik Kilit Durumu: " + secilenHidrolikKilitDurumu + "\n" +
                             "Soğutma Durumu: " + secilenSogutmaDurumu + "\n";
             hidrolikUnitesiTextArea.setText(secim);
+            //kilit motoru değeri
         }
     }
 
@@ -162,6 +164,7 @@ public class MainController {
         int yV = 0;
         int yK = 0;
         System.out.println("--------Hesaplama Başladı--------");
+        secilenKampana = kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
         String[] secPmp = secilenPompa.split(" cc");
         x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + kampanaBoslukX;
         yK += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + kampanaBoslukY + kampanaBoslukY;
@@ -246,6 +249,9 @@ public class MainController {
         y = Math.max(yV, yK);
         if(y <= 350) {
             y = 350;
+        }
+        if(x <= 550) {
+            x = 550;
         }
         h = 300;
 
@@ -435,13 +441,15 @@ public class MainController {
 
     private void initMotor() {
         motorComboBox.getItems().clear();
-        motorComboBox.getItems().addAll("4 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
+        motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
     }
 
     private void initKampana() {
         kampanaVerileri.add("250 mm");
+        kampanaVerileri.add("300 mm");
         kampanaVerileri.add("250 mm");
         kampanaVerileri.add("300 mm");
+        kampanaVerileri.add("350 mm");
         kampanaVerileri.add("300 mm");
         kampanaVerileri.add("350 mm");
         kampanaVerileri.add("350 mm");
