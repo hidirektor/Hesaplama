@@ -11,16 +11,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Box?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="470.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.ui.MainController">
+<VBox prefHeight="470.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.ui.MainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
                 <Menu fx:id="yardimButton" mnemonicParsing="false" text="Yardım">
                     <items>
                         <MenuItem fx:id="githubMenuItem" mnemonicParsing="false" onAction="#redirectGithub" text="Github" />
-                    </items></Menu>
+                    </items>
+                </Menu>
             </menus>
         </MenuBar>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -28,7 +30,7 @@
                 <ComboBox fx:id="motorComboBox" disable="true" layoutX="79.0" layoutY="75.0" onAction="#motorPressed" prefHeight="25.0" prefWidth="137.0" promptText="Motor" />
                 <ComboBox fx:id="pompaComboBox" disable="true" layoutX="277.0" layoutY="75.0" onAction="#pompaPressed" prefHeight="25.0" prefWidth="85.0" promptText="Pompa" />
                 <ComboBox fx:id="valfTipiComboBox" disable="true" layoutX="228.0" layoutY="125.0" onAction="#valfTipiPressed" prefHeight="25.0" prefWidth="185.0" promptText="Valf Tipi" />
-                <Button fx:id="hesaplaButton" layoutX="290.0" layoutY="174.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
+                <Button fx:id="hesaplaButton" layoutX="292.0" layoutY="209.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
                 <TextArea fx:id="hidrolikUnitesiTextArea" layoutX="14.0" layoutY="274.0" prefHeight="136.0" prefWidth="185.0" visible="false" />
                 <Text layoutX="14.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sonuç:" />
                 <ComboBox fx:id="hidrolikKilitComboBox" disable="true" layoutX="88.0" layoutY="125.0" onAction="#hidrolikKilitPressed" prefHeight="25.0" prefWidth="119.0" promptText="Hidrolik Kilit" />
@@ -38,7 +40,7 @@
                 <Text fx:id="hidrolikUnitesiText" layoutX="66.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidrolik Ünitesi" visible="false" />
                 <TextArea fx:id="parcaListesiTextArea" layoutX="208.0" layoutY="274.0" prefHeight="136.0" prefWidth="200.0" visible="false" />
                 <Text fx:id="parcaListesiText" layoutX="276.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parça Listesi" visible="false" />
-                <Text fx:id="programVersion" layoutX="567.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="v16.06.2023" />
+                <Text fx:id="programVersion" layoutX="567.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="v21.06.2023" />
                 <Text layoutX="130.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor" />
                 <Text layoutX="301.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
                 <Text layoutX="475.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Kapasitesi" />
@@ -50,9 +52,18 @@
                         <Point3D x="-1.0" y="1.0" />
                     </rotationAxis>
                 </Box>
+                <Text fx:id="hacimText" layoutX="516.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hacim: 60L" visible="false">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Text>
                 <Text fx:id="genislikSonucText" layoutX="475.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X: 120 mm" visible="false" />
-                <Text fx:id="yukseklikSonucText" layoutX="382.0" layoutY="319.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h: 120 mm" visible="false" />
+                <Text fx:id="yukseklikSonucText" layoutX="383.0" layoutY="319.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h: 120 mm" visible="false" />
                 <Text fx:id="derinlikSonucText" fill="WHITE" layoutX="440.0" layoutY="281.0" rotate="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 120 mm" visible="false" wrappingWidth="58.66666666666674" />
+                <ComboBox fx:id="kilitMotorComboBox" layoutX="141.0" layoutY="176.0" onAction="#kilitMotorPressed" prefWidth="150.0" promptText="Kilit Motor" visible="false" />
+                <ComboBox fx:id="kilitPompaComboBox" layoutX="357.0" layoutY="176.0" onAction="#kilitPompaPressed" prefWidth="150.0" promptText="Kilit Pompa" visible="false" />
+                <Text fx:id="kilitMotorText" layoutX="188.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" visible="false" />
+                <Text fx:id="kilitPompaText" layoutX="402.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Pompa" visible="false" />
             </children>
         </AnchorPane>
     </children>

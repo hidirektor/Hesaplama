@@ -3,37 +3,16 @@ package me.t3sl4.hesaplama.ui;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.CullFace;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javafx.stage.Stage;
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 
 public class MainController {
     @FXML
@@ -79,7 +58,22 @@ public class MainController {
     private Text derinlikSonucText;
 
     @FXML
+    private Text hacimText;
+
+    @FXML
     private Box hydraulicUnitShape;
+
+    @FXML
+    private Text kilitMotorText;
+
+    @FXML
+    private Text kilitPompaText;
+
+    @FXML
+    private ComboBox<String> kilitMotorComboBox;
+
+    @FXML
+    private ComboBox<String> kilitPompaComboBox;
 
     private String secilenMotor;
     private String secilenPompa;
@@ -87,10 +81,10 @@ public class MainController {
     private String secilenValfTipi;
     private String secilenHidrolikKilitDurumu;
     private String secilenSogutmaDurumu;
-
-    boolean valfTipiStat = false;
     boolean hidrolikKilitStat = false;
     boolean sogutmaStat = false;
+    private String secilenKilitMotor;
+    private String secilenKilitPompa;
 
     //Excel2List
     List<String> kampanaVerileri = new ArrayList<>();
@@ -142,19 +136,23 @@ public class MainController {
 
     int[] calcDimensions(int x, int y, int h, int[] kampanaDegerleri) {
         int[] finalValues = new int[3];
+        int yV = 0;
+        int yK = 0;
         String[] secPmp = secilenPompa.split(" cc");
         x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
+        yK += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + 140;
+        System.out.println("Motor + Kampana X: " + x);
+
         float secilenPompaVal = Float.parseFloat(secPmp[0]);
         if(secilenPompaVal > 28.1) {
-            //kilitli bloğu kapat
-            //kilit motoru çapı = 200
-            //kilit motoru devreye girdiğinde x'e +200 eklenecek (sağ ve sol olarak 100'e 100)
-            x += 200;
+            //silinecek
         } else {
             //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
             //kilitli blok ölçüsü olarak: X'e +100 olacak
             if(secilenHidrolikKilitDurumu == "Var" && secilenValfTipi == "Kilitli Blok || Çift Hız") {
-                x += 100;
+                x += 300;
+                yV += 280;
+                System.out.println("Pompa <= 28.1 && Hidorlik Kilit + Kilitli Blok Aktif X: " + x);
             }
         }
         //hidrolik kilit olmadığı durumlarda valf tipleri için
@@ -162,33 +160,63 @@ public class MainController {
             if(secilenValfTipi == "İnişte Tek Hız") {
                 // X yönünde +120 olacak Y yönünde 180 mm eklenecek
                 x += 120;
-                y += 180;
+                yV += 180 + 80;
+                System.out.println("Hidrolik Kilit Yok + İnişte Tek Hız X: " + x + " Y: " + y);
             } else if(secilenValfTipi == "İnişte Çift Hız") {
                 //X yönünde 190 Y yönünde 90
                 x += 190;
-                y += 90;
+                yV += 90 + 80;
+                System.out.println("Hidrolik Kilit Yok + İnişte Çift Hız X: " + x + " Y: " + y);
             } else {
                 //kompanzasyon seçilmişse:
                 //kilit yoksa: X'e 190 Y'ye 180
                 if(secilenHidrolikKilitDurumu == "Yok" && secilenValfTipi == "Kompanzasyon + İnişte Tek Hız") {
                     x += 190;
-                    y += 180;
+                    yV += 180 + 80;
+                    System.out.println("Hidrolik Kilit Yok + (Kompanzasyon + İnişte Tek Hız) X: " + x + " Y: " + y);
+                }
+            }
+        } else {
+            if(secilenPompaVal > 28.1) {
+                String[] secKilitMotor = secilenKilitMotor.split(" kW");
+                float secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
+                String[] secKilitPompa = secilenKilitPompa.split(" cc");
+                float secilenKilitPompaVal = Float.parseFloat(secKilitPompa[0]);
+
+                if(secilenValfTipi == "Kompanzasyon + İnişte Tek Hız") {
+                    yV += 180 + 80;
+                    System.out.println("Hidrolik Kilit Var + (Kompanzasyon + İnişte Tek Hız) X: " + x + " Y: " + y);
+                } else if(secilenValfTipi == "İnişte Çift Hız") {
+                    yV += 90 + 80;
+                    System.out.println("Hidrolik Kilit Var + İnişte Çift Hız X: " + x + " Y: " + y);
+                } else if(secilenValfTipi == "İnişte Tek Hız") {
+                    yV += 180 + 80;
+                    System.out.println("Hidrolik Kilit Var + İnişte Tek Hız X: " + x + " Y: " + y);
+                }
+
+                if(secilenKilitMotorVal != 0) {
+                    yV += 300;
+                    x += 360;
                 }
             }
         }
         if(secilenSogutmaDurumu == "Var") {
             x += 550;
             y += 250;
+            System.out.println("Soğutma Var X: " + x + " Y: " + y);
         }
-        if(secilenHidrolikKilitDurumu == "Var" || secilenValfTipi == "Kilitli Blok || Çift Hız") {
-            x += 100;
+        if(yV <= yK) {
+            y = yK;
         } else {
-            y = 100;
-            h = 380;
+            y = yV;
         }
-        y += 70;
-        h += 70;
-        x += 70;
+        h = 280;
+        x += 110;
+        System.out.println("yK: " + yK + " yV" + yV);
+        System.out.println(((x*h*y) / 1000000) + " L");
+        System.out.println("Boşluklar sonrası: X: " + x + " Y: " + y + " h: " + h);
+        hacimText.setVisible(true);
+        hacimText.setText("Hacim: " + ((x*h*y) / 1000000) + "L");
         finalValues[0] = x;
         finalValues[1] = y;
         finalValues[2] = h;
@@ -272,10 +300,18 @@ public class MainController {
         hidrolikKilitStat = true;
         if(secilenHidrolikKilitDurumu == "Yok") {
             initValf(0);
+        } else {
+            initValf(2);
         }
         hidrolikKilitComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            String[] secPmp = secilenPompa.split(" cc");
+            float secilenPompaVal = Float.parseFloat(secPmp[0]);
             if(newValue == "Var") {
-                initValf(1);
+                if(secilenPompaVal > 28.1) {
+                    initValf(0);
+                } else {
+                    initValf(1);
+                }
             } else {
                 initValf(0);
             }
@@ -285,8 +321,34 @@ public class MainController {
     @FXML
     public void valfTipiPressed() {
         secilenValfTipi = valfTipiComboBox.getValue();
+        String[] secPmp = secilenPompa.split(" cc");
+        float secilenPompaVal = Float.parseFloat(secPmp[0]);
+
+        if(secilenHidrolikKilitDurumu == "Var" && secilenPompaVal > 28.1) {
+            kilitMotorText.setVisible(true);
+            kilitPompaText.setVisible(true);
+            kilitMotorComboBox.setVisible(true);
+            kilitPompaComboBox.setVisible(true);
+            kilitPompaComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().addAll("1.5 kW", "2.2 kW");
+        } else {
+            sogutmaComboBox.setDisable(false);
+            sogutmaStat = true;
+        }
+    }
+
+    @FXML
+    public void kilitMotorPressed() {
+        kilitPompaComboBox.setDisable(false);
+        kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
+        secilenKilitMotor = kilitMotorComboBox.getValue();
+    }
+
+    @FXML
+    public void kilitPompaPressed() {
         sogutmaComboBox.setDisable(false);
-        sogutmaStat = true;
+        initSogutma();
+        secilenKilitPompa = kilitPompaComboBox.getValue();
     }
 
     @FXML
@@ -368,6 +430,7 @@ public class MainController {
     }
 
     private void initSogutma() {
+        sogutmaComboBox.getItems().clear();
         sogutmaComboBox.getItems().addAll("Var", "Yok");
     }
 
