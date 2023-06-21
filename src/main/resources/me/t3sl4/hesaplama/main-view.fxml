@@ -64,6 +64,7 @@
                 <ComboBox fx:id="kilitPompaComboBox" layoutX="357.0" layoutY="176.0" onAction="#kilitPompaPressed" prefWidth="150.0" promptText="Kilit Pompa" visible="false" />
                 <Text fx:id="kilitMotorText" layoutX="188.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" visible="false" />
                 <Text fx:id="kilitPompaText" layoutX="402.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Pompa" visible="false" />
+                <Button fx:id="temizleButton" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#temizlemeIslemi" text="Temizle" />
             </children>
         </AnchorPane>
     </children>
