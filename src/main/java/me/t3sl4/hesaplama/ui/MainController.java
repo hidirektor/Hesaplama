@@ -309,27 +309,27 @@ public class MainController {
             System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 160")) {
             atananKabin = "KD 1620";
-            gecisOlculeri = "NaN";
+            gecisOlculeri = "900x800x1100";
             System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 200")) {
             atananKabin = "KD 1620";
-            gecisOlculeri = "NaN";
+            gecisOlculeri = "900x800x1100";
             System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 250")) {
             atananKabin = "KD 2530";
-            gecisOlculeri = "NaN";
+            gecisOlculeri = "1100x900x1150";
             System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 300")) {
             atananKabin = "KD 2530";
-            gecisOlculeri = "NaN";
+            gecisOlculeri = "1100x900x1150";
             System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 350")) {
             atananKabin = "KD 3540";
-            gecisOlculeri = "NaN";
+            gecisOlculeri = "1100x900x1250";
             System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 400")) {
             atananKabin = "KD 3540";
-            gecisOlculeri = "NaN";
+            gecisOlculeri = "1100x900x1250";
             System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         }
 
