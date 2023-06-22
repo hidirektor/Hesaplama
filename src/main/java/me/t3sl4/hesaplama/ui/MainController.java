@@ -12,6 +12,7 @@ import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
@@ -92,11 +93,13 @@ public class MainController {
     private String secilenKilitMotor = null;
     private String secilenKilitPompa = null;
     List<String> kampanaVerileri = new ArrayList<>();
+    HashMap<Object, int[]> kabinOlculeri = new HashMap<Object, int[]>();
 
     private HostServices hostServices;
 
     public void initialize() {
         textFilter();
+        initKabinOlculeri();
         initUniteTipi();
         comboBoxListener();
     }
@@ -259,12 +262,32 @@ public class MainController {
         System.out.println("yK: " + yK + " yV" + yV);
         System.out.println(hesaplananHacim + " L");
         System.out.println("Boşluklar sonrası: X: " + x + " Y: " + y + " h: " + h);
-        hacimText.setVisible(true);
-        hacimText.setText("Hacim: " + hesaplananHacim + "L");
         System.out.println("--------Hesaplama Bitti--------");
+
+        int enKucukLitreFarki = Integer.MAX_VALUE;
+        int[] enKucukLitreOlculer = null;
+
+        for (int[] olculer : kabinOlculeri.values()) {
+            int litre = olculer[3];
+
+            if (litre >= girilenTankKapasitesiMiktari && litre - girilenTankKapasitesiMiktari < enKucukLitreFarki) {
+                enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
+                enKucukLitreOlculer = olculer;
+            }
+        }
+
+        if (enKucukLitreOlculer != null) {
+            x = enKucukLitreOlculer[0];
+            y = enKucukLitreOlculer[1];
+            h = enKucukLitreOlculer[2];
+            hesaplananHacim = enKucukLitreOlculer[3];
+        }
+
         finalValues[0] = x;
         finalValues[1] = y;
         finalValues[2] = h;
+        hacimText.setVisible(true);
+        hacimText.setText("Hacim: " + hesaplananHacim + "L");
         return finalValues;
     }
 
@@ -455,6 +478,20 @@ public class MainController {
         kampanaVerileri.add("350 mm");
         kampanaVerileri.add("350 mm");
         kampanaVerileri.add("400 mm");
+    }
+
+    private void initKabinOlculeri() {
+        int[] kabinOlcu = new int[4];
+        kabinOlcu[0] = 550;
+        kabinOlcu[1] = 350;
+        kabinOlcu[2] = 300;
+        kabinOlcu[3] = 40;
+        kabinOlculeri.put("HT 40", kabinOlcu);
+        kabinOlcu[0] = 600;
+        kabinOlcu[1] = 370;
+        kabinOlcu[2] = 300;
+        kabinOlcu[3] = 70;
+        kabinOlculeri.put("HT 70", kabinOlcu);
     }
 
     private void initPompa() {
