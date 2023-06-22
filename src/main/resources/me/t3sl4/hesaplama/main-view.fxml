@@ -65,6 +65,7 @@
                 <Text fx:id="kilitMotorText" layoutX="188.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" visible="false" />
                 <Text fx:id="kilitPompaText" layoutX="402.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Pompa" visible="false" />
                 <Button fx:id="temizleButton" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#temizlemeIslemi" text="Temizle" />
+                <Text fx:id="kullanilacakKabin" layoutX="39.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
             </children>
         </AnchorPane>
     </children>

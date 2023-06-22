@@ -11,10 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class MainController {
@@ -81,6 +78,9 @@ public class MainController {
     @FXML
     private Button temizleButton;
 
+    @FXML
+    private Text kullanilacakKabin;
+
     private String secilenMotor = null;
     private int secilenKampana = 0;
     private String secilenPompa = null;
@@ -93,13 +93,15 @@ public class MainController {
     private String secilenKilitMotor = null;
     private String secilenKilitPompa = null;
     List<String> kampanaVerileri = new ArrayList<>();
+    List<String> motorYukseklikVerileri = new ArrayList<>();
     HashMap<Object, int[]> kabinOlculeri = new HashMap<Object, int[]>();
+    HashMap<Object, int[]> kabinListesi = new HashMap<Object, int[]>();
 
     private HostServices hostServices;
 
     public void initialize() {
         textFilter();
-        initKabinOlculeri();
+        defineKabinOlcu();
         initUniteTipi();
         comboBoxListener();
     }
@@ -110,6 +112,7 @@ public class MainController {
         int h = 0; //Yükseklik
         int y = 0; //Derinlik
         int x = 0; //Genişlik
+        int hacim = 0; //Hacim
         int[] kampanaDegerleri = {250, 300, 250, 300, 350, 300, 350, 350, 350, 400};
         int[] results;
         if (checkComboBox()) {
@@ -120,9 +123,11 @@ public class MainController {
             x = results[0];
             y = results[1];
             h = results[2];
+            hacim = results[3];
             genislikSonucText.setText("X: " + x + " mm");
             derinlikSonucText.setText("Y: " + y + " mm");
             yukseklikSonucText.setText("Yükseklik: " + h + " mm");
+            hacimText.setText("Hacim: " + hacim + "L");
             String secim =
                     "Hidrolik Ünitesi Tipi: " + uniteTipiComboBox.getValue() + "\n" +
                             "Seçilen Motor: " + secilenMotor + "\n" +
@@ -163,7 +168,7 @@ public class MainController {
 
         int kayipLitre = 7;
         //hesaplama kısmı:
-        int[] finalValues = new int[3];
+        int[] finalValues = new int[4];
         int yV = 0;
         int yK = 0;
         System.out.println("--------Hesaplama Başladı--------");
@@ -262,11 +267,10 @@ public class MainController {
         System.out.println("yK: " + yK + " yV" + yV);
         System.out.println(hesaplananHacim + " L");
         System.out.println("Boşluklar sonrası: X: " + x + " Y: " + y + " h: " + h);
-        System.out.println("--------Hesaplama Bitti--------");
 
         int enKucukLitreFarki = Integer.MAX_VALUE;
         int[] enKucukLitreOlculer = null;
-
+        int mapVal = 0;
         for (int[] olculer : kabinOlculeri.values()) {
             int litre = olculer[3];
 
@@ -274,6 +278,7 @@ public class MainController {
                 enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
                 enKucukLitreOlculer = olculer;
             }
+            mapVal++;
         }
 
         if (enKucukLitreOlculer != null) {
@@ -283,12 +288,74 @@ public class MainController {
             hesaplananHacim = enKucukLitreOlculer[3];
         }
 
+        String atananHT = getKeyByValue(kabinOlculeri, enKucukLitreOlculer).toString();
+        String atananKabin = "";
+        String gecisOlculeri = "";
+        if(Objects.equals(atananHT, "HT 40")) {
+            atananKabin = "KD 40";
+            gecisOlculeri = "540x460x780";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 70")) {
+            atananKabin = "KD 70";
+            gecisOlculeri = "640x520x950";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 100")) {
+            atananKabin = "KD 70";
+            gecisOlculeri = "640x520x950";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 125")) {
+            atananKabin = "KD 125";
+            gecisOlculeri = "720x550x1000";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 160")) {
+            atananKabin = "KD 1620";
+            gecisOlculeri = "NaN";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 200")) {
+            atananKabin = "KD 1620";
+            gecisOlculeri = "NaN";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 250")) {
+            atananKabin = "KD 2530";
+            gecisOlculeri = "NaN";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 300")) {
+            atananKabin = "KD 2530";
+            gecisOlculeri = "NaN";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 350")) {
+            atananKabin = "KD 3540";
+            gecisOlculeri = "NaN";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        } else if(Objects.equals(atananHT, "HT 400")) {
+            atananKabin = "KD 3540";
+            gecisOlculeri = "NaN";
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        }
+
+        kullanilacakKabin.setText("Kullanmanız Gereken Kabin: " + atananKabin + " Geçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        //int secilenMotorIndeks = motorComboBox.getSelectionModel().getSelectedIndex();
+        //int motorYukseklikDegeri = Integer.parseInt(motorYukseklikVerileri.get(secilenMotorIndeks));
+
+
+        System.out.println("Seçim Sonrası: ");
+        System.out.println("X: " + x + " Y: " + y + " h: " + h);
+        System.out.println("--------Hesaplama Bitti--------");
+
         finalValues[0] = x;
         finalValues[1] = y;
         finalValues[2] = h;
-        hacimText.setVisible(true);
-        hacimText.setText("Hacim: " + hesaplananHacim + "L");
+        finalValues[3] = hesaplananHacim;
         return finalValues;
+    }
+
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     @FXML
@@ -480,18 +547,39 @@ public class MainController {
         kampanaVerileri.add("400 mm");
     }
 
-    private void initKabinOlculeri() {
+    private void initMotorYukseklik() {
+        motorYukseklikVerileri.add("345 mm");
+        motorYukseklikVerileri.add("375 mm");
+        motorYukseklikVerileri.add("365 mm");
+        motorYukseklikVerileri.add("410 mm");
+        motorYukseklikVerileri.add("500 mm");
+        motorYukseklikVerileri.add("470 mm");
+        motorYukseklikVerileri.add("540 mm");
+        motorYukseklikVerileri.add("565 mm");
+        motorYukseklikVerileri.add("565 mm");
+        motorYukseklikVerileri.add("600 mm");
+    }
+
+    private void initKabinOlculeri(int x, int y, int h, int litre, String key) {
         int[] kabinOlcu = new int[4];
-        kabinOlcu[0] = 550;
-        kabinOlcu[1] = 350;
-        kabinOlcu[2] = 300;
-        kabinOlcu[3] = 40;
-        kabinOlculeri.put("HT 40", kabinOlcu);
-        kabinOlcu[0] = 600;
-        kabinOlcu[1] = 370;
-        kabinOlcu[2] = 300;
-        kabinOlcu[3] = 70;
-        kabinOlculeri.put("HT 70", kabinOlcu);
+        kabinOlcu[0] = x;
+        kabinOlcu[1] = y;
+        kabinOlcu[2] = h;
+        kabinOlcu[3] = litre;
+        kabinOlculeri.put(key, kabinOlcu);
+    }
+
+    private void defineKabinOlcu() {
+        initKabinOlculeri(550, 350, 300, 40, "HT 40");
+        initKabinOlculeri(600, 370, 300, 70, "HT 70");
+        initKabinOlculeri(600, 470, 400, 100, "HT 100");
+        initKabinOlculeri(650, 500, 400, 125, "HT 125");
+        initKabinOlculeri(700, 600, 400, 160, "HT 160");
+        initKabinOlculeri(800, 650, 400, 200, "HT 200");
+        initKabinOlculeri(900, 700, 400, 250, "HT 250");
+        initKabinOlculeri(1000, 800, 400, 300, "HT 300");
+        initKabinOlculeri(1000, 800, 450, 350, "HT 350");
+        initKabinOlculeri(1000, 800, 500, 400, "HT 400");
     }
 
     private void initPompa() {
@@ -557,7 +645,9 @@ public class MainController {
         genislikSonucText.setVisible(true);
         yukseklikSonucText.setVisible(true);
         derinlikSonucText.setVisible(true);
+        hacimText.setVisible(true);
         hydraulicUnitShape.setVisible(true);
+        kullanilacakKabin.setVisible(true);
     }
 
     private void disableKilitAndSogutma() {
