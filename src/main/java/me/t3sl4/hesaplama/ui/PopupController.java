@@ -101,24 +101,28 @@ public class PopupController implements Initializable {
         this.kayipLitre = kayipLitre;
     }
 
+    public void showValues() {
+        label1.setText("kampanaBoslukX: " + this.kampanaBoslukX);
+        label2.setText("kampanaBoslukY: " + this.kampanaBoslukY);
+        label3.setText("valfBoslukX: " + this.valfBoslukX);
+        label4.setText("valfBoslukYArka: " + this.valfBoslukYArka);
+        label5.setText("valfBoslukYOn: " + this.valfBoslukYOn);
+        label6.setText("kilitliBlokAraBoslukX: " + this.kilitliBlokAraBoslukX);
+        label7.setText("tekHizAraBoslukX: " + this.tekHizAraBoslukX);
+        label8.setText("ciftHizAraBoslukX: " + this.ciftHizAraBoslukX);
+        label9.setText("kompanzasyonTekHizAraBoslukX: " + this.kompanzasyonTekHizAraBoslukX);
+        label10.setText("sogutmaAraBoslukX: " + this.sogutmaAraBoslukX);
+        label11.setText("sogutmaAraBoslukYkOn: " + this.sogutmaAraBoslukYkOn);
+        label12.setText("sogutmaAraBoslukYkArka: " + this.sogutmaAraBoslukYkArka);
+        label13.setText("kilitMotorKampanaBosluk: " + this.kilitMotorKampanaBosluk);
+        label14.setText("kilitMotorMotorBoslukX: " + this.kilitMotorMotorBoslukX);
+        label15.setText("kilitMotorBoslukYOn: " + this.kilitMotorBoslukYOn);
+        label16.setText("kilitMotorBoslukYArka: " + this.kilitMotorBoslukYArka);
+        label17.setText("kayipLitre: " + this.kayipLitre);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        label1.setText("kampanaBoslukX: " + this.kampanaBoslukX);
-        label2.setText("kampanaBoslukY: " + kampanaBoslukY);
-        label3.setText("valfBoslukX: " + valfBoslukX);
-        label4.setText("valfBoslukYArka: " + valfBoslukYArka);
-        label5.setText("valfBoslukYOn: " + valfBoslukYOn);
-        label6.setText("kilitliBlokAraBoslukX: " + kilitliBlokAraBoslukX);
-        label7.setText("tekHizAraBoslukX: " + tekHizAraBoslukX);
-        label8.setText("ciftHizAraBoslukX: " + ciftHizAraBoslukX);
-        label9.setText("kompanzasyonTekHizAraBoslukX: " + kompanzasyonTekHizAraBoslukX);
-        label10.setText("sogutmaAraBoslukX: " + sogutmaAraBoslukX);
-        label11.setText("sogutmaAraBoslukYkOn: " + sogutmaAraBoslukYkOn);
-        label12.setText("sogutmaAraBoslukYkArka: " + sogutmaAraBoslukYkArka);
-        label13.setText("kilitMotorKampanaBosluk: " + kilitMotorKampanaBosluk);
-        label14.setText("kilitMotorMotorBoslukX: " + kilitMotorMotorBoslukX);
-        label15.setText("kilitMotorBoslukYOn: " + kilitMotorBoslukYOn);
-        label16.setText("kilitMotorBoslukYArka: " + kilitMotorBoslukYArka);
-        label17.setText("kayipLitre: " + kayipLitre);
+        //Gerekli popup işlemleri...
     }
 }

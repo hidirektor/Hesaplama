@@ -185,7 +185,7 @@ public class MainController {
             genislikSonucText.setText("X: " + x + " mm");
             derinlikSonucText.setText("Y: " + y + " mm");
             yukseklikSonucText.setText("h: " + h + " mm");
-            hacimText.setText("Tank: " + hacim + "L");
+            hacimText.setText("Tank : " + hacim + "L");
 
             tabloGuncelle();
             Image image = new Image(Launcher.class.getResourceAsStream("/icons/test.png"));
@@ -563,7 +563,7 @@ public class MainController {
                     kompanzasyonTekHizAraBoslukX, sogutmaAraBoslukX, sogutmaAraBoslukYkOn,
                     sogutmaAraBoslukYkArka, kilitMotorKampanaBosluk, kilitMotorMotorBoslukX,
                     kilitMotorBoslukYOn, kilitMotorBoslukYArka, kayipLitre);
-
+            popupController.showValues();
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(root));
