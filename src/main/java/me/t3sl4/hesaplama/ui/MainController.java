@@ -3,6 +3,8 @@ package me.t3sl4.hesaplama.ui;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,8 +13,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import me.t3sl4.hesaplama.Launcher;
 import me.t3sl4.hesaplama.hydraulic.TableData;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
@@ -80,6 +86,9 @@ public class MainController {
     @FXML
     private TableColumn<TableData, String> sonucTabloSatir2;
 
+    @FXML
+    private Button parametreKontrol;
+
     private String secilenMotor = null;
     private int secilenKampana = 0;
     private String secilenPompa = null;
@@ -96,6 +105,31 @@ public class MainController {
     HashMap<Object, int[]> kabinOlculeri = new HashMap<Object, int[]>();
     HashMap<Object, int[]> kabinListesi = new HashMap<Object, int[]>();
     int hesaplananHacim = 0;
+
+    //boşluklar:
+    int kampanaBoslukX = 30;
+    int kampanaBoslukY = 30;
+
+    int valfBoslukX = 50;
+    int valfBoslukYArka = 50;
+    int valfBoslukYOn = 50;
+
+    int kilitliBlokAraBoslukX = 100;
+
+    int tekHizAraBoslukX = 50;
+    int ciftHizAraBoslukX = 50;
+    int kompanzasyonTekHizAraBoslukX = 100;
+
+    int sogutmaAraBoslukX = 200;
+    int sogutmaAraBoslukYkOn = 100;
+    int sogutmaAraBoslukYkArka = 40;
+
+    int kilitMotorKampanaBosluk = 100;
+    int kilitMotorMotorBoslukX = 100; //hidros kilit motor kampana ile tank dış ölçüsü ara boşluğu
+    int kilitMotorBoslukYOn = 100;
+    int kilitMotorBoslukYArka = 40;
+
+    int kayipLitre = 7;
     private HostServices hostServices;
 
     public void initialize() {
@@ -180,30 +214,7 @@ public class MainController {
 
     int[] calcDimensions(int x, int y, int h, int[] kampanaDegerleri) {
         int eskiX=0, eskiY=0, eskiH=0;
-        //boşluklar:
-        int kampanaBoslukX = 30;
-        int kampanaBoslukY = 30;
 
-        int valfBoslukX = 50;
-        int valfBoslukYArka = 50;
-        int valfBoslukYOn = 50;
-
-        int kilitliBlokAraBoslukX = 100;
-
-        int tekHizAraBoslukX = 50;
-        int ciftHizAraBoslukX = 50;
-        int kompanzasyonCiftHizAraBoslukX = 100;
-
-        int sogutmaAraBoslukX = 200;
-        int sogutmaAraBoslukYkOn = 100;
-        int sogutmaAraBoslukYkArka = 40;
-
-        int kilitMotorKampanaBosluk = 100;
-        int kilitMotorMotorBoslukX = 100; //hidros kilit motor kampana ile tank dış ölçüsü ara boşluğu
-        int kilitMotorBoslukYOn = 100;
-        int kilitMotorBoslukYArka = 40;
-
-        int kayipLitre = 7;
         //hesaplama kısmı:
         int[] finalValues = new int[4];
         int yV = 0;
@@ -247,10 +258,10 @@ public class MainController {
                 //kompanzasyon seçilmişse:
                 //kilit yoksa: X'e 190 Y'ye 180
                 if(secilenHidrolikKilitDurumu.equals("Yok") && Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
-                    x += 140 + kompanzasyonCiftHizAraBoslukX;
+                    x += 140 + kompanzasyonTekHizAraBoslukX;
                     yV += 180 + valfBoslukYOn + valfBoslukYArka;
                     System.out.println("Kompanzasyon + Tek Hız İçin: (Hidrolik Kilit Yok)");
-                    System.out.println("X += " + kompanzasyonCiftHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
+                    System.out.println("X += " + kompanzasyonTekHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
                     System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön) + " + valfBoslukYArka + " (Valf Boşluk Arka)");
                 }
             }
@@ -554,6 +565,28 @@ public class MainController {
     public void sogutmaPressed() {
         if(sogutmaComboBox.getValue() != null) {
             secilenSogutmaDurumu = sogutmaComboBox.getValue();
+        }
+    }
+
+    @FXML
+    public void parametrePressed() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("popup.fxml"));
+            VBox root = fxmlLoader.load();
+            PopupController popupController = fxmlLoader.getController();
+            popupController.setValues(kampanaBoslukX, kampanaBoslukY,
+                    valfBoslukX, valfBoslukYArka, valfBoslukYOn,
+                    kilitliBlokAraBoslukX, tekHizAraBoslukX, ciftHizAraBoslukX,
+                    kompanzasyonTekHizAraBoslukX, sogutmaAraBoslukX, sogutmaAraBoslukYkOn,
+                    sogutmaAraBoslukYkArka, kilitMotorKampanaBosluk, kilitMotorMotorBoslukX,
+                    kilitMotorBoslukYOn, kilitMotorBoslukYArka, kayipLitre);
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

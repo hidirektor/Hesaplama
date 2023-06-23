@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hesaplama.ui.PopupController">
+    <Label fx:id="label1" text="kampanaBoslukX: " />
+    <Label fx:id="label2" text="kampanaBoslukY: " />
+    <Label fx:id="label3" text="valfBoslukX: " />
+    <Label fx:id="label4" text="valfBoslukYArka: " />
+    <Label fx:id="label5" text="valfBoslukYOn: " />
+    <Label fx:id="label6" text="kilitliBlokAraBoslukX: " />
+    <Label fx:id="label7" text="tekHizAraBoslukX: " />
+    <Label fx:id="label8" text="ciftHizAraBoslukX: " />
+    <Label fx:id="label9" text="kompanzasyonTekHizAraBoslukX: " />
+    <Label fx:id="label10" text="sogutmaAraBoslukX: " />
+    <Label fx:id="label11" text="sogutmaAraBoslukYkOn: " />
+    <Label fx:id="label12" text="sogutmaAraBoslukYkArka: " />
+    <Label fx:id="label13" text="kilitMotorKampanaBosluk: " />
+    <Label fx:id="label14" text="kilitMotorMotorBoslukX: " />
+    <Label fx:id="label15" text="kilitMotorBoslukYOn: " />
+    <Label fx:id="label16" text="kilitMotorBoslukYArka: " />
+    <Label fx:id="label17" text="kayipLitre: " />
+</VBox>
