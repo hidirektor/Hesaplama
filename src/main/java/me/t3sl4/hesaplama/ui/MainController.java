@@ -143,6 +143,7 @@ public class MainController {
     }
 
     int[] calcDimensions(int x, int y, int h, int[] kampanaDegerleri) {
+        int eskiX=0, eskiY=0, eskiH=0;
         //boşluklar:
         int kampanaBoslukX = 30;
         int kampanaBoslukY = 30;
@@ -176,8 +177,9 @@ public class MainController {
         String[] secPmp = secilenPompa.split(" cc");
         x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + kampanaBoslukX;
         yK += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + kampanaBoslukY + kampanaBoslukY;
-        System.out.println("Kampana Boşluk X: " + kampanaBoslukX + " Kampana Boşluk Y: " + kampanaBoslukY);
-        System.out.println("Motor + Kampana için (X): " + x + " yK: " + yK);
+        System.out.println("Motor + Kampana için:");
+        System.out.println("X += " + kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + " (Kampana) " + kampanaBoslukX + " (Kampana Boşluk)");
+        System.out.println("yK += " + kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + " (Kampana) + " + kampanaBoslukY + " (Kampana Boşluk) + " + kampanaBoslukY + " (Kampana Boşluk)");
 
         float secilenPompaVal = Float.parseFloat(secPmp[0]);
         //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
@@ -185,9 +187,9 @@ public class MainController {
         if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
             x += 120 + kilitliBlokAraBoslukX + valfBoslukX;
             yV += 190 + valfBoslukYArka + valfBoslukYOn;
-            System.out.println("Kilitli Blok Ara Boşluk X: " + kilitliBlokAraBoslukX + " Valf Boşluk X: " + valfBoslukX);
-            System.out.println("Valf Boşluk Y Arka: " + valfBoslukYArka + " Valf Boşluk Y Ön: " + valfBoslukYOn);
-            System.out.println("Hidorlik Kilit + Kilitli Blok Aktif X: " + x + " yV: " + yV);
+            System.out.println("Kilitli Blok için:");
+            System.out.println("X += " + kilitliBlokAraBoslukX + " (Ara Boşluk) + " + valfBoslukX + " (Valf Boşluk)");
+            System.out.println("yV += " + valfBoslukYArka + " (Valf Boşluk Arka) + " + valfBoslukYOn + " (Valf Boşluk Ön)");
         }
         //hidrolik kilit olmadığı durumlarda valf tipleri için
         if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
@@ -195,25 +197,25 @@ public class MainController {
                 // X yönünde +120 olacak Y yönünde 180 mm eklenecek
                 x += 70 + valfBoslukX + tekHizAraBoslukX;
                 yV += 180 + valfBoslukYOn + valfBoslukYArka;
-                System.out.println("Valf Boşluk X: " + valfBoslukX + " Tek Hız Boşluk: " + tekHizAraBoslukX);
-                System.out.println("Valf Boşluk Y Ön: " + valfBoslukYOn + " Valf Boşluk Y Arka: " + valfBoslukYArka);
-                System.out.println("Hidrolik Kilit Yok + İnişte Tek Hız X: " + x + " yV: " + yV);
+                System.out.println("İnişte Tek Hız İçin: (Hidrolik Kilit Yok)");
+                System.out.println("X += " + valfBoslukX + " (Valf Boşluk) + " + tekHizAraBoslukX + " (Tek Hız Boşluk)");
+                System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön) + " + valfBoslukYArka + " (Valf Boşluk Arka)");
             } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
                 //X yönünde 190 Y yönünde 90
                 x += 140 + ciftHizAraBoslukX + valfBoslukX;
                 yV += 90 + valfBoslukYOn + valfBoslukYArka;
-                System.out.println("Valf Boşluk X: " + valfBoslukX + " Çift Hız Boşluk: " + ciftHizAraBoslukX);
-                System.out.println("Valf Boşluk Y Ön: " + valfBoslukYOn + " Valf Boşluk Y Arka: " + valfBoslukYArka);
-                System.out.println("Hidrolik Kilit Yok + İnişte Çift Hız X: " + x + " yV: " + yV);
+                System.out.println("İnişte Çift Hız İçin: (Hidrolik Kilit Yok)");
+                System.out.println("X += " + valfBoslukX + " (Valf Boşluk) + " + ciftHizAraBoslukX + " (Tek Hız Boşluk)");
+                System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön) + " + valfBoslukYArka + " (Valf Boşluk Arka)");
             } else {
                 //kompanzasyon seçilmişse:
                 //kilit yoksa: X'e 190 Y'ye 180
                 if(secilenHidrolikKilitDurumu.equals("Yok") && Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
                     x += 140 + kompanzasyonCiftHizAraBoslukX;
                     yV += 180 + valfBoslukYOn + valfBoslukYArka;
-                    System.out.println("Kompanzasyon Ara Boşluk: " + kompanzasyonCiftHizAraBoslukX);
-                    System.out.println("Valf Boşluk Y Ön: " + valfBoslukYOn + " Valf Boşluk Y Arka: " + valfBoslukYArka);
-                    System.out.println("Hidrolik Kilit Yok + (Kompanzasyon + İnişte Tek Hız) X: " + x + " yV: " + yV);
+                    System.out.println("Kompanzasyon + Tek Hız İçin: (Hidrolik Kilit Yok)");
+                    System.out.println("X += " + kompanzasyonCiftHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
+                    System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön) + " + valfBoslukYArka + " (Valf Boşluk Arka)");
                 }
             }
         } else {
@@ -225,35 +227,41 @@ public class MainController {
 
                 if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
                     yV += 180 + valfBoslukYArka + valfBoslukYOn;
-                    System.out.println("Valf Boşluk Y Ön: " + valfBoslukYOn + " Valf Boşluk Y Arka: " + valfBoslukYArka);
-                    System.out.println("Hidrolik Kilit Var + (Kompanzasyon + İnişte Tek Hız) X: " + x + " yV: " + yV);
+                    System.out.println("Kompanzasyon + İnişte Tek Hız (Kilitli Blok) (Pompa > 28.1) için:");
+                    System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön) + " + valfBoslukYArka + " (Valf Boşluk Arka)");
                 } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                    yV += 90 + valfBoslukYOn + valfBoslukYArka;
-                    System.out.println("Valf Boşluk Y Ön: " + valfBoslukYOn + " Valf Boşluk Y Arka: " + valfBoslukYArka);
-                    System.out.println("Hidrolik Kilit Var + İnişte Çift Hız X: " + x + " yV: " + yV);
+                    System.out.println("İnişte Çift Hız (Kilitli Blok) için:");
+                    if(secilenPompaVal > 28.1) {
+                        yV += 90 + valfBoslukYOn;
+                        System.out.println("(Pompa > 28.1) için:");
+                        System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön)");
+                    } else {
+                        yV += 90 + valfBoslukYOn + valfBoslukYArka;
+                        System.out.println("(Pompa <= 28.1) için:");
+                        System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön) + " + valfBoslukYArka + " (Valf Boşluk Arka)");
+                    }
                 } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
                     yV += 180 + valfBoslukYOn + valfBoslukYArka;
-                    System.out.println("Valf Boşluk Y Ön: " + valfBoslukYOn + " Valf Boşluk Y Arka: " + valfBoslukYArka);
-                    System.out.println("Hidrolik Kilit Var + İnişte Tek Hız X: " + x + " yV: " + yV);
+                    System.out.println("İnişte Tek Hız (Kilitli Blok) için:");
+                    System.out.println("yV += " + valfBoslukYOn + " (Valf Boşluk Ön) + " + valfBoslukYArka + " (Valf Boşluk Arka)");
                 }
 
                 if(secilenKilitMotorVal != 0) {
                     x += 200 + kilitMotorKampanaBosluk + kilitMotorMotorBoslukX;
                     yV += 200 + kilitMotorBoslukYOn + kilitMotorBoslukYArka;
-                    System.out.println("Kilit Motor Kampana Boşluk X: " + kilitMotorKampanaBosluk + " Kilit Motor Boşluk X: " + kilitMotorMotorBoslukX);
-                    System.out.println("Kilit Motor Boşluk Y: " + kilitMotorBoslukYOn + " Kilit Motor Boşluk Y Arka: " + kilitMotorBoslukYArka);
-                    System.out.println("Kilit Motor İçin X: " + x + " yV: " + yV);
+                    System.out.println("Kilit Motor için:");
+                    System.out.println("X += " + kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + kilitMotorMotorBoslukX + " (Kilit Mootr Boşluk)");
+                    System.out.println("yV += " + kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + kilitMotorBoslukYArka + " (Kilit Motor Arka)");
                 }
             }
         }
         if(Objects.equals(secilenSogutmaDurumu, "Var")) {
             x += 350 + sogutmaAraBoslukX;
             yK += 152 + sogutmaAraBoslukYkOn + sogutmaAraBoslukYkArka;
-            System.out.println("Soğutma Ara Boşluk X: " + sogutmaAraBoslukX);
-            System.out.println("Soğutma Ara Boşluk Y Ön: " + sogutmaAraBoslukYkOn + " Soğutma Ara Boşluk  Y Arka: " + sogutmaAraBoslukYkArka);
-            System.out.println("Soğutma Var X: " + x + " Y: " + y);
+            System.out.println("Soğutma için:");
+            System.out.println("X += " + sogutmaAraBoslukX + " (Ara Boşluk)");
+            System.out.println("yK += " + sogutmaAraBoslukYkOn + " (Ara Boşluk Ön) + " + sogutmaAraBoslukYkArka + " (Ara Boşluk Arka)");
         }
-        System.out.println("yV ve yK için en büyüğü: yV: " + yV + " yK: " + yK + " Y: " + y);
         y = Math.max(yV, yK);
         if(y <= 350) {
             y = 350;
@@ -264,19 +272,32 @@ public class MainController {
         h = 300;
 
         int hesaplananHacim = ((x*h*y) / 1000000) - kayipLitre;
-        System.out.println("yK: " + yK + " yV" + yV);
-        System.out.println(hesaplananHacim + " L");
-        System.out.println("Boşluklar sonrası: X: " + x + " Y: " + y + " h: " + h);
+        eskiX = x;
+        eskiY = y;
+        eskiH = h;
 
         int enKucukLitreFarki = Integer.MAX_VALUE;
         int[] enKucukLitreOlculer = null;
         int mapVal = 0;
         for (int[] olculer : kabinOlculeri.values()) {
             int litre = olculer[3];
+            int tempX = olculer[0];
+            int tempY = olculer[1];
 
-            if (litre >= girilenTankKapasitesiMiktari && litre - girilenTankKapasitesiMiktari < enKucukLitreFarki) {
-                enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
-                enKucukLitreOlculer = olculer;
+            if(hesaplananHacim > girilenTankKapasitesiMiktari) {
+                if(x <= tempX && y <= tempY) {
+                    //enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
+                    enKucukLitreOlculer = olculer;
+                }
+            } else {
+                if (litre >= girilenTankKapasitesiMiktari && litre - girilenTankKapasitesiMiktari < enKucukLitreFarki) {
+                    if(hesaplananHacim != litre && hesaplananHacim < litre) {
+                        if(x < tempX && y < tempY) {
+                            enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
+                            enKucukLitreOlculer = olculer;
+                        }
+                    }
+                }
             }
             mapVal++;
         }
@@ -294,43 +315,33 @@ public class MainController {
         if(Objects.equals(atananHT, "HT 40")) {
             atananKabin = "KD 40";
             gecisOlculeri = "540x460x780";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 70")) {
             atananKabin = "KD 70";
             gecisOlculeri = "640x520x950";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 100")) {
             atananKabin = "KD 70";
             gecisOlculeri = "640x520x950";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 125")) {
             atananKabin = "KD 125";
             gecisOlculeri = "720x550x1000";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 160")) {
             atananKabin = "KD 1620";
             gecisOlculeri = "900x800x1100";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 200")) {
             atananKabin = "KD 1620";
             gecisOlculeri = "900x800x1100";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 250")) {
             atananKabin = "KD 2530";
             gecisOlculeri = "1100x900x1150";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 300")) {
             atananKabin = "KD 2530";
             gecisOlculeri = "1100x900x1150";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 350")) {
             atananKabin = "KD 3540";
             gecisOlculeri = "1100x900x1250";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         } else if(Objects.equals(atananHT, "HT 400")) {
             atananKabin = "KD 3540";
             gecisOlculeri = "1100x900x1250";
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         }
 
         kullanilacakKabin.setText("Kullanmanız Gereken Kabin: " + atananKabin + " Geçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
@@ -338,9 +349,21 @@ public class MainController {
         //int motorYukseklikDegeri = Integer.parseInt(motorYukseklikVerileri.get(secilenMotorIndeks));
 
 
-        System.out.println("Seçim Sonrası: ");
-        System.out.println("X: " + x + " Y: " + y + " h: " + h);
         System.out.println("--------Hesaplama Bitti--------");
+        System.out.println("------------(Sonuç)------------");
+        System.out.println("yV: " + yV);
+        System.out.println("yK: " + yK);
+        System.out.println("Hesaplanan X: " + eskiX);
+        System.out.println("Hesaplanan Y: " + eskiY);
+        System.out.println("Hesaplanan h: " + eskiH);
+        System.out.println("Hesaplanan Hacim: " + hesaplananHacim);
+        System.out.println("Atanan X: " + x);
+        System.out.println("Atanan Y: " + y);
+        System.out.println("Atanan h: " + h);
+        System.out.println("Atanan Hacim: " + hesaplananHacim);
+        System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        System.out.println("Geçiş Ölçüleri: " + gecisOlculeri);
+        System.out.println("-------------------------------");
 
         finalValues[0] = x;
         finalValues[1] = y;
