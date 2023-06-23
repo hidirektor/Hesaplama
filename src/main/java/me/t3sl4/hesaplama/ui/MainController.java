@@ -96,7 +96,7 @@ public class MainController {
     List<String> motorYukseklikVerileri = new ArrayList<>();
     HashMap<Object, int[]> kabinOlculeri = new HashMap<Object, int[]>();
     HashMap<Object, int[]> kabinListesi = new HashMap<Object, int[]>();
-
+    int hesaplananHacim = 0;
     private HostServices hostServices;
 
     public void initialize() {
@@ -163,7 +163,7 @@ public class MainController {
         int sogutmaAraBoslukYkArka = 40;
 
         int kilitMotorKampanaBosluk = 100;
-        int kilitMotorMotorBoslukX = 100; //kampana ile tank dış ölçüsü ara boşluğu
+        int kilitMotorMotorBoslukX = 100; //hidros kilit motor kampana ile tank dış ölçüsü ara boşluğu
         int kilitMotorBoslukYOn = 100;
         int kilitMotorBoslukYArka = 40;
 
@@ -172,7 +172,7 @@ public class MainController {
         int[] finalValues = new int[4];
         int yV = 0;
         int yK = 0;
-        System.out.println("--------Hesaplama Başladı--------");
+        System.out.println("--------Hesaplama Başladı--------Ø");
         secilenKampana = kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
         String[] secPmp = secilenPompa.split(" cc");
         x += kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()] + kampanaBoslukX;
@@ -271,7 +271,7 @@ public class MainController {
         }
         h = 300;
 
-        int hesaplananHacim = ((x*h*y) / 1000000) - kayipLitre;
+        hesaplananHacim = ((x*h*y) / 1000000) - kayipLitre;
         eskiX = x;
         eskiY = y;
         eskiH = h;
@@ -668,7 +668,9 @@ public class MainController {
         genislikSonucText.setVisible(true);
         yukseklikSonucText.setVisible(true);
         derinlikSonucText.setVisible(true);
-        hacimText.setVisible(true);
+        if(hesaplananHacim == 0) {
+            hacimText.setVisible(true);
+        }
         hydraulicUnitShape.setVisible(true);
         kullanilacakKabin.setVisible(true);
     }

@@ -52,14 +52,14 @@
                         <Point3D x="-1.0" y="1.0" />
                     </rotationAxis>
                 </Box>
-                <Text fx:id="hacimText" layoutX="516.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hacim: 60L" visible="false">
+                <Text fx:id="hacimText" layoutX="517.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hacim: 60L" visible="false">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Text>
                 <Text fx:id="genislikSonucText" layoutX="475.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X: 120 mm" visible="false" />
-                <Text fx:id="yukseklikSonucText" layoutX="383.0" layoutY="319.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h: 120 mm" visible="false" />
-                <Text fx:id="derinlikSonucText" fill="WHITE" layoutX="440.0" layoutY="281.0" rotate="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 120 mm" visible="false" wrappingWidth="58.66666666666674" />
+                <Text fx:id="yukseklikSonucText" layoutX="382.0" layoutY="318.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h: 120 mm" visible="false" />
+                <Text fx:id="derinlikSonucText" fill="WHITE" layoutX="440.0" layoutY="281.0" rotate="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 120 mm" wrappingWidth="58.66666666666674" />
                 <ComboBox fx:id="kilitMotorComboBox" layoutX="141.0" layoutY="176.0" onAction="#kilitMotorPressed" prefWidth="150.0" promptText="Kilit Motor" visible="false" />
                 <ComboBox fx:id="kilitPompaComboBox" layoutX="357.0" layoutY="176.0" onAction="#kilitPompaPressed" prefWidth="150.0" promptText="Kilit Pompa" visible="false" />
                 <Text fx:id="kilitMotorText" layoutX="188.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" visible="false" />
