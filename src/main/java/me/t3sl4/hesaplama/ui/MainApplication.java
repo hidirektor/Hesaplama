@@ -13,8 +13,9 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 470);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 620);
         stage.setTitle("ÖnderLift -- Hidrolik Ünitesi Hesaplama Aracı");
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         stage.setScene(scene);
 
         stage.setResizable(false);

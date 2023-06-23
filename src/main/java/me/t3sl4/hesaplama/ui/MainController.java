@@ -5,11 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
+import me.t3sl4.hesaplama.hydraulic.TableData;
 
 import java.util.*;
 import java.util.function.UnaryOperator;
@@ -35,18 +37,6 @@ public class MainController {
 
     @FXML
     private TextField tankKapasitesiTextField;
-
-    @FXML
-    private TextArea hidrolikUnitesiTextArea;
-
-    @FXML
-    private TextArea parcaListesiTextArea;
-
-    @FXML
-    private Text hidrolikUnitesiText;
-
-    @FXML
-    private Text parcaListesiText;
 
     @FXML
     private Text genislikSonucText;
@@ -81,6 +71,15 @@ public class MainController {
     @FXML
     private Text kullanilacakKabin;
 
+    @FXML
+    private TableView<TableData> sonucTablo;
+
+    @FXML
+    private TableColumn<TableData, String> sonucTabloSatir1;
+
+    @FXML
+    private TableColumn<TableData, String> sonucTabloSatir2;
+
     private String secilenMotor = null;
     private int secilenKampana = 0;
     private String secilenPompa = null;
@@ -104,6 +103,10 @@ public class MainController {
         defineKabinOlcu();
         initUniteTipi();
         comboBoxListener();
+        sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
+        sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
+        sonucTabloSatir1.setGraphic(new Label());
+        sonucTabloSatir2.setGraphic(new Label());
     }
 
     @FXML
@@ -126,19 +129,52 @@ public class MainController {
             hacim = results[3];
             genislikSonucText.setText("X: " + x + " mm");
             derinlikSonucText.setText("Y: " + y + " mm");
-            yukseklikSonucText.setText("Yükseklik: " + h + " mm");
+            yukseklikSonucText.setText("h: " + h + " mm");
             hacimText.setText("Hacim: " + hacim + "L");
-            String secim =
-                    "Hidrolik Ünitesi Tipi: " + uniteTipiComboBox.getValue() + "\n" +
-                            "Seçilen Motor: " + secilenMotor + "\n" +
-                            "Kampana: " + secilenKampana + "\n" +
-                            "Seçilen Pompa: " + secilenPompa + "\n" +
-                            "Tank Kapasitesi: " + girilenTankKapasitesiMiktari + "\n" +
-                            "Seçilen Valf Tipi: " + secilenValfTipi + "\n" +
-                            "Hidrolik Kilit Durumu: " + secilenHidrolikKilitDurumu + "\n" +
-                            "Soğutma Durumu: " + secilenSogutmaDurumu + "\n";
-            hidrolikUnitesiTextArea.setText(secim);
-            //kilit motoru değeri
+
+            TableData data = new TableData("Sipariş Numarası:", "123");
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Ünite Tipi:", uniteTipiComboBox.getValue());
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Hidrolik Ünitesi Tipi:", uniteTipiComboBox.getValue());
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Seçilen Motor:", secilenMotor);
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Kampana:", String.valueOf(secilenKampana));
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Seçilen Pompa:", secilenPompa);
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Tank Kapasitesi:", String.valueOf(girilenTankKapasitesiMiktari));
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Seçilen Valf Tipi:", secilenValfTipi);
+            sonucTablo.getItems().add(data);
+
+            if(secilenKilitMotor != null) {
+                data = new TableData("Kilit Motoru:", secilenKilitMotor);
+            } else {
+                data = new TableData("Kilit Motoru:", "Yok");
+            }
+            sonucTablo.getItems().add(data);
+
+            if(secilenKilitPompa != null) {
+                data = new TableData("Kilit Pompa:", secilenKilitPompa);
+            } else {
+                data = new TableData("Kilit Pompa:", "Yok");
+            }
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Hidrolik Kilit Durumu:", secilenHidrolikKilitDurumu);
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("Soğutma Durumu:", secilenSogutmaDurumu);
+            sonucTablo.getItems().add(data);
         }
     }
 
@@ -661,10 +697,6 @@ public class MainController {
     }
 
     private void enableSonucSection() {
-        parcaListesiTextArea.setVisible(true);
-        hidrolikUnitesiTextArea.setVisible(true);
-        parcaListesiText.setVisible(true);
-        hidrolikUnitesiText.setVisible(true);
         genislikSonucText.setVisible(true);
         yukseklikSonucText.setVisible(true);
         derinlikSonucText.setVisible(true);
@@ -796,12 +828,6 @@ public class MainController {
     }
 
     private void sonucEkraniTemizle() {
-        hidrolikUnitesiText.setVisible(false);
-        hidrolikUnitesiTextArea.clear();
-        hidrolikUnitesiTextArea.setVisible(false);
-        parcaListesiText.setVisible(false);
-        parcaListesiTextArea.clear();
-        parcaListesiTextArea.setVisible(false);
         yukseklikSonucText.setVisible(false);
         genislikSonucText.setVisible(false);
         derinlikSonucText.setVisible(false);
