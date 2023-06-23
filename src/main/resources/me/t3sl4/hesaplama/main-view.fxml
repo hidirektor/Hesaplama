@@ -29,55 +29,58 @@
         </MenuBar>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" prefHeight="691.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
             <children>
-                <ComboBox fx:id="uniteTipiComboBox" layoutX="214.0" layoutY="14.0" onAction="#uniteTipiPressed" prefHeight="25.0" prefWidth="96.0" promptText="Ünite Tipi" />
-                <ComboBox fx:id="motorComboBox" disable="true" layoutX="20.0" layoutY="75.0" onAction="#motorPressed" prefHeight="25.0" prefWidth="137.0" promptText="Motor" />
-                <ComboBox fx:id="pompaComboBox" disable="true" layoutX="218.0" layoutY="75.0" onAction="#pompaPressed" prefHeight="25.0" prefWidth="85.0" promptText="Pompa" />
-                <TextField fx:id="tankKapasitesiTextField" disable="true" layoutX="382.0" layoutY="75.0" onKeyPressed="#tankKapasitesiBackSpacePressed" onKeyTyped="#tankKapasitesiEntered" promptText="Gerekli Yağ Miktarı (L)" />
-                <ComboBox fx:id="hidrolikKilitComboBox" disable="true" layoutX="29.0" layoutY="125.0" onAction="#hidrolikKilitPressed" prefHeight="25.0" prefWidth="119.0" promptText="Hidrolik Kilit" />
-                <ComboBox fx:id="valfTipiComboBox" disable="true" layoutX="169.0" layoutY="125.0" onAction="#valfTipiPressed" prefHeight="25.0" prefWidth="185.0" promptText="Valf Tipi" />
-                <ComboBox fx:id="kilitMotorComboBox" layoutX="82.0" layoutY="176.0" onAction="#kilitMotorPressed" prefWidth="150.0" promptText="Kilit Motor" visible="false" />
-                <ComboBox fx:id="kilitPompaComboBox" layoutX="298.0" layoutY="176.0" onAction="#kilitPompaPressed" prefWidth="150.0" promptText="Kilit Pompa" visible="false" />
-                <ComboBox fx:id="sogutmaComboBox" disable="true" layoutX="382.0" layoutY="125.0" onAction="#sogutmaPressed" prefWidth="150.0" promptText="Soğutma" />
-                <Button fx:id="hesaplaButton" layoutX="193.0" layoutY="209.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
-                <Button fx:id="temizleButton" layoutX="275.0" layoutY="209.0" mnemonicParsing="false" onAction="#temizlemeIslemi" text="Temizle" />
+                <TextField fx:id="siparisNumarasi" layoutX="26.0" layoutY="28.0" onKeyPressed="#tankKapasitesiBackSpacePressed" onKeyTyped="#tankKapasitesiEntered" promptText="Sipariş Numarası" />
+                <ComboBox fx:id="uniteTipiComboBox" disable="true" layoutX="230.0" layoutY="61.0" onAction="#uniteTipiPressed" prefHeight="25.0" prefWidth="96.0" promptText="Ünite Tipi" />
+                <ComboBox fx:id="motorComboBox" disable="true" layoutX="36.0" layoutY="122.0" onAction="#motorPressed" prefHeight="25.0" prefWidth="137.0" promptText="Motor" />
+                <ComboBox fx:id="pompaComboBox" disable="true" layoutX="234.0" layoutY="122.0" onAction="#pompaPressed" prefHeight="25.0" prefWidth="85.0" promptText="Pompa" />
+                <TextField fx:id="tankKapasitesiTextField" disable="true" layoutX="398.0" layoutY="122.0" onKeyPressed="#tankKapasitesiBackSpacePressed" onKeyTyped="#tankKapasitesiEntered" promptText="Gerekli Yağ Miktarı (L)" />
+                <ComboBox fx:id="hidrolikKilitComboBox" disable="true" layoutX="45.0" layoutY="172.0" onAction="#hidrolikKilitPressed" prefHeight="25.0" prefWidth="119.0" promptText="Hidrolik Kilit" />
+                <ComboBox fx:id="valfTipiComboBox" disable="true" layoutX="185.0" layoutY="172.0" onAction="#valfTipiPressed" prefHeight="25.0" prefWidth="185.0" promptText="Valf Tipi" />
+                <ComboBox fx:id="kilitMotorComboBox" layoutX="98.0" layoutY="223.0" onAction="#kilitMotorPressed" prefWidth="150.0" promptText="Kilit Motor" visible="false" />
+                <ComboBox fx:id="kilitPompaComboBox" layoutX="314.0" layoutY="223.0" onAction="#kilitPompaPressed" prefWidth="150.0" promptText="Kilit Pompa" visible="false" />
+                <ComboBox fx:id="sogutmaComboBox" disable="true" layoutX="398.0" layoutY="172.0" onAction="#sogutmaPressed" prefWidth="150.0" promptText="Soğutma" />
+                <Button fx:id="hesaplaButton" layoutX="209.0" layoutY="256.0" mnemonicParsing="false" onAction="#hesaplaFunc" text="Hesapla" />
+                <Button fx:id="temizleButton" layoutX="291.0" layoutY="256.0" mnemonicParsing="false" onAction="#temizlemeIslemi" text="Temizle" />
                 <TableView fx:id="sonucTablo" layoutX="35.0" layoutY="298.0" prefHeight="200.0" prefWidth="414.0">
                     <columns>
                         <TableColumn fx:id="sonucTabloSatir1" editable="false" prefWidth="207.0" sortable="false" />
                         <TableColumn fx:id="sonucTabloSatir2" editable="false" prefWidth="207.0" sortable="false" />
                     </columns>
                 </TableView>
-                <Box fx:id="hydraulicUnitShape" depth="400.0" height="125.0" layoutX="813.0" layoutY="155.0" rotate="-10.0" width="125.0">
+                <ImageView fx:id="sonucKapakImage" fitHeight="252.0" fitWidth="414.0" layoutX="551.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
+                <Box fx:id="hydraulicUnitShape" depth="400.0" height="125.0" layoutX="813.0" layoutY="155.0" rotate="-10.0" visible="false" width="125.0">
                     <rotationAxis>
                         <Point3D x="-1.0" y="1.0" />
                     </rotationAxis>
                 </Box>
-                <ImageView fx:id="sonucKapakImage" fitHeight="252.0" fitWidth="414.0" layoutX="551.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-                <Text layoutX="71.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor" />
-                <Text layoutX="242.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
-                <Text layoutX="416.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Kapasitesi" />
-                <Text layoutX="55.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidrolik Kilit" />
-                <Text layoutX="240.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Tipi" />
-                <Text fx:id="kilitMotorText" layoutX="129.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" visible="false" />
-                <Text fx:id="kilitPompaText" layoutX="343.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Pompa" visible="false" />
-                <Text layoutX="433.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma" />
+                <Text layoutX="417.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerekli Yağ Miktarı" />
+                <Text layoutX="87.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor" />
+                <Text layoutX="258.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
+                <Text layoutX="47.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası" />
+                <Text layoutX="71.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidrolik Kilit" />
+                <Text layoutX="256.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Tipi" />
+                <Text fx:id="kilitMotorText" layoutX="145.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" visible="false" />
+                <Text fx:id="kilitPompaText" layoutX="359.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Pompa" visible="false" />
+                <Text layoutX="449.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma" />
                 <Text layoutX="26.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sonuç:" />
                 <Text fx:id="kullanilacakKabin" layoutX="39.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
-                <Text fx:id="sonucAnaLabelTxt" layoutX="722.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş: 123123123">
+                <Text fx:id="sonucAnaLabelTxt" layoutX="692.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası: ">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Text>
-                <Text fx:id="genislikSonucText" layoutX="764.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X: 120 mm" />
-                <Text fx:id="derinlikSonucText" fill="WHITE" layoutX="729.0" layoutY="99.0" rotate="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 120 mm" wrappingWidth="58.66666666666674" />
-                <Text fx:id="yukseklikSonucText" layoutX="688.0" layoutY="136.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h: 120 mm" />
-                <Text fx:id="hacimText" layoutX="806.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hacim: 60L">
+                <Text fx:id="genislikSonucText" layoutX="764.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X: 120 mm" visible="false" />
+                <Text fx:id="derinlikSonucText" fill="WHITE" layoutX="729.0" layoutY="99.0" rotate="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 120 mm" visible="false" wrappingWidth="58.66666666666674" />
+                <Text fx:id="yukseklikSonucText" layoutX="688.0" layoutY="136.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h: 120 mm" visible="false" />
+                <Text fx:id="hacimText" layoutX="806.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank: 60L" visible="false">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Text>
                 <Text fx:id="programVersion" layoutX="852.0" layoutY="568.0" strokeType="OUTSIDE" strokeWidth="0.0" text="v23.06.2023" />
-                <Text fx:id="programVersion1" layoutX="783.0" layoutY="587.0" strokeType="OUTSIDE" strokeWidth="0.0" text="designed by Halil İbrahim Direktör" />
+                <Text fx:id="programVersion1" layoutX="783.0" layoutY="587.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Designed by Halil İbrahim Direktör" />
                 <Button fx:id="parametreKontrol" layoutX="29.0" layoutY="551.0" mnemonicParsing="false" onAction="#parametrePressed" text="Parametre Kontrol" />
+                <Text fx:id="testOlcu" layoutX="829.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Test Ölçü" visible="false" />
             </children>
         </AnchorPane>
     </children>

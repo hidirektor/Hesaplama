@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
@@ -89,21 +91,44 @@ public class MainController {
     @FXML
     private Button parametreKontrol;
 
+    @FXML
+    private TextField siparisNumarasi;
+
+    @FXML
+    private Text sonucAnaLabelTxt;
+
+    @FXML
+    private ImageView sonucKapakImage;
+
+    @FXML
+    private Text testOlcu;
+
+    /*
+    Seçilen Değerler:
+     */
+    private String girilenSiparisNumarasi = null;
+    private String secilenUniteTipi = null;
     private String secilenMotor = null;
     private int secilenKampana = 0;
     private String secilenPompa = null;
     private int girilenTankKapasitesiMiktari = 0;
-    private String secilenValfTipi = null;
     private String secilenHidrolikKilitDurumu = null;
-    private String secilenSogutmaDurumu = null;
-    boolean hidrolikKilitStat = false;
-    boolean sogutmaStat = false;
+    private String secilenValfTipi = null;
     private String secilenKilitMotor = null;
     private String secilenKilitPompa = null;
+    private String secilenSogutmaDurumu = null;
+
+    boolean hidrolikKilitStat = false;
+    boolean sogutmaStat = false;
+
+
+
     List<String> kampanaVerileri = new ArrayList<>();
     List<String> motorYukseklikVerileri = new ArrayList<>();
     HashMap<Object, int[]> kabinOlculeri = new HashMap<Object, int[]>();
     HashMap<Object, int[]> kabinListesi = new HashMap<Object, int[]>();
+    int[] kampanaDegerleri = {250, 300, 250, 300, 350, 300, 350, 350, 350, 400};
+
     int hesaplananHacim = 0;
 
     //boşluklar:
@@ -135,12 +160,9 @@ public class MainController {
     public void initialize() {
         textFilter();
         defineKabinOlcu();
-        initUniteTipi();
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
-        sonucTabloSatir1.setGraphic(new Label());
-        sonucTabloSatir2.setGraphic(new Label());
     }
 
     @FXML
@@ -150,7 +172,6 @@ public class MainController {
         int y = 0; //Derinlik
         int x = 0; //Genişlik
         int hacim = 0; //Hacim
-        int[] kampanaDegerleri = {250, 300, 250, 300, 350, 300, 350, 350, 350, 400};
         int[] results;
         if (checkComboBox()) {
             showErrorMessage();
@@ -164,51 +185,12 @@ public class MainController {
             genislikSonucText.setText("X: " + x + " mm");
             derinlikSonucText.setText("Y: " + y + " mm");
             yukseklikSonucText.setText("h: " + h + " mm");
-            hacimText.setText("Hacim: " + hacim + "L");
+            hacimText.setText("Tank: " + hacim + "L");
 
-            TableData data = new TableData("Sipariş Numarası:", "123");
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Ünite Tipi:", uniteTipiComboBox.getValue());
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Hidrolik Ünitesi Tipi:", uniteTipiComboBox.getValue());
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Seçilen Motor:", secilenMotor);
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Kampana:", String.valueOf(secilenKampana));
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Seçilen Pompa:", secilenPompa);
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Tank Kapasitesi:", String.valueOf(girilenTankKapasitesiMiktari));
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Seçilen Valf Tipi:", secilenValfTipi);
-            sonucTablo.getItems().add(data);
-
-            if(secilenKilitMotor != null) {
-                data = new TableData("Kilit Motoru:", secilenKilitMotor);
-            } else {
-                data = new TableData("Kilit Motoru:", "Yok");
-            }
-            sonucTablo.getItems().add(data);
-
-            if(secilenKilitPompa != null) {
-                data = new TableData("Kilit Pompa:", secilenKilitPompa);
-            } else {
-                data = new TableData("Kilit Pompa:", "Yok");
-            }
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Hidrolik Kilit Durumu:", secilenHidrolikKilitDurumu);
-            sonucTablo.getItems().add(data);
-
-            data = new TableData("Soğutma Durumu:", secilenSogutmaDurumu);
-            sonucTablo.getItems().add(data);
+            tabloGuncelle();
+            Image image = new Image(Launcher.class.getResourceAsStream("/icons/test.png"));
+            sonucKapakImage.setImage(image);
+            testOlcu.setVisible(true);
         }
     }
 
@@ -458,6 +440,7 @@ public class MainController {
     public void motorPressed() {
         if(motorComboBox.getValue() != null) {
             secilenMotor = motorComboBox.getValue();
+            secilenKampana = kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
             pompaComboBox.setDisable(false);
         }
     }
@@ -600,7 +583,7 @@ public class MainController {
     }
 
     private boolean checkComboBox() {
-        if(uniteTipiComboBox.getSelectionModel().isEmpty() || motorComboBox.getSelectionModel().isEmpty() || pompaComboBox.getSelectionModel().isEmpty() || valfTipiComboBox.getSelectionModel().isEmpty() || hidrolikKilitComboBox.getSelectionModel().isEmpty() || sogutmaComboBox.getSelectionModel().isEmpty()) {
+        if(siparisNumarasi.getText().isEmpty() || uniteTipiComboBox.getSelectionModel().isEmpty() || motorComboBox.getSelectionModel().isEmpty() || pompaComboBox.getSelectionModel().isEmpty() || valfTipiComboBox.getSelectionModel().isEmpty() || hidrolikKilitComboBox.getSelectionModel().isEmpty() || sogutmaComboBox.getSelectionModel().isEmpty()) {
             return true;
         }
         int girilenTankKapasitesi = 0;
@@ -617,6 +600,7 @@ public class MainController {
     }
 
     private void initUniteTipi() {
+        uniteTipiComboBox.setDisable(false);
         uniteTipiComboBox.getItems().clear();
         uniteTipiComboBox.getItems().addAll("Hidros", "Klasik");
     }
@@ -675,6 +659,7 @@ public class MainController {
     }
 
     private void initPompa() {
+        pompaComboBox.getItems().clear();
         if(Objects.equals(uniteTipiComboBox.getValue(), "Hidros")) {
             pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
         } else if(Objects.equals(uniteTipiComboBox.getValue(), "Klasik")) {
@@ -729,6 +714,18 @@ public class MainController {
         sogutmaComboBox.setDisable(true);
     }
 
+    private void disableMotorPompa(int stat) {
+        if(stat == 1) {
+            secilenKilitMotor = null;
+            secilenKilitPompa = null;
+            kilitMotorComboBox.setDisable(true);
+            kilitPompaComboBox.setDisable(true);
+        } else {
+            secilenKilitMotor = null;
+            kilitMotorComboBox.setDisable(false);
+        }
+    }
+
     private void enableSonucSection() {
         genislikSonucText.setVisible(true);
         yukseklikSonucText.setVisible(true);
@@ -752,17 +749,52 @@ public class MainController {
     }
 
     private void comboBoxListener() {
+        siparisNumarasi.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!siparisNumarasi.getText().isEmpty()) {
+                girilenSiparisNumarasi = newValue;
+            }
+            sonucAnaLabelTxt.setText("Sipariş Numarası: " + girilenSiparisNumarasi);
+            initUniteTipi();
+            if(girilenSiparisNumarasi != null) {
+                tabloGuncelle();
+            }
+        });
+
         uniteTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            secilenUniteTipi = newValue;
             initMotor();
+            if(secilenUniteTipi != null) {
+                tabloGuncelle();
+            }
         });
 
         motorComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            secilenMotor = newValue;
-            initPompa();
+            if(!motorComboBox.getItems().isEmpty()) {
+                secilenMotor = newValue;
+                secilenKampana = kampanaDegerleri[motorComboBox.getSelectionModel().getSelectedIndex()];
+                initPompa();
+                if(secilenMotor != null) {
+                    tabloGuncelle();
+                }
+            }
         });
 
         pompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenPompa = newValue;
+            if(oldValue != null) {
+                String[] oldSecPmp = oldValue.split(" cc");
+                float oldSecilenPompaVal = Float.parseFloat(oldSecPmp[0]);
+                String[] secPmp = secilenPompa.split(" cc");
+                float secilenPompaVal = Float.parseFloat(secPmp[0]);
+                if(oldSecilenPompaVal > 28.1 && secilenPompaVal < 28.1) {
+                    disableMotorPompa(1);
+                } else if(oldSecilenPompaVal < 28.1 && secilenPompaVal > 28.1) {
+                    disableMotorPompa(2);
+                }
+            }
+            if(secilenPompa != null) {
+                tabloGuncelle();
+            }
         });
 
         tankKapasitesiTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -770,6 +802,9 @@ public class MainController {
                 girilenTankKapasitesiMiktari = Integer.parseInt(newValue);
             }
             initHidrolikKilit();
+            if(girilenTankKapasitesiMiktari != 0) {
+                tabloGuncelle();
+            }
         });
 
         hidrolikKilitComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
@@ -787,6 +822,9 @@ public class MainController {
                 } else {
                     initValf(0);
                 }
+            }
+            if(secilenPompa != null) {
+                tabloGuncelle();
             }
         });
 
@@ -806,20 +844,32 @@ public class MainController {
                     initSogutma();
                 }
             }
+            if(secilenValfTipi != null) {
+                tabloGuncelle();
+            }
         });
 
         kilitMotorComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenKilitMotor = kilitMotorComboBox.getValue();
             initKilitPompa();
+            if(secilenKilitMotor != null) {
+                tabloGuncelle();
+            }
         });
 
         kilitPompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenKilitPompa = kilitPompaComboBox.getValue();
             initSogutma();
+            if(secilenKilitPompa != null) {
+                tabloGuncelle();
+            }
         });
 
         sogutmaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenSogutmaDurumu = sogutmaComboBox.getValue();
+            if(secilenSogutmaDurumu != null) {
+                tabloGuncelle();
+            }
         });
     }
 
@@ -858,6 +908,7 @@ public class MainController {
         sogutmaComboBox.setDisable(true);
 
         sonucEkraniTemizle();
+        sonucTablo.getItems().clear();
     }
 
     private void sonucEkraniTemizle() {
@@ -866,6 +917,50 @@ public class MainController {
         derinlikSonucText.setVisible(false);
         hacimText.setVisible(false);
         hydraulicUnitShape.setVisible(false);
+    }
+
+    private void tabloGuncelle() {
+        sonucTablo.getItems().clear();
+        TableData data = new TableData("Sipariş Numarası:", girilenSiparisNumarasi);
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Hidrolik Ünitesi Tipi:", uniteTipiComboBox.getValue());
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Seçilen Motor:", secilenMotor);
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Kampana:", String.valueOf(secilenKampana));
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Seçilen Pompa:", secilenPompa);
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Tank Kapasitesi:", String.valueOf(girilenTankKapasitesiMiktari));
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Hidrolik Kilit Durumu:", secilenHidrolikKilitDurumu);
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Seçilen Valf Tipi:", secilenValfTipi);
+        sonucTablo.getItems().add(data);
+
+        if(secilenKilitMotor != null) {
+            data = new TableData("Kilit Motoru:", secilenKilitMotor);
+        } else {
+            data = new TableData("Kilit Motoru:", "Yok");
+        }
+        sonucTablo.getItems().add(data);
+
+        if(secilenKilitPompa != null) {
+            data = new TableData("Kilit Pompa:", secilenKilitPompa);
+        } else {
+            data = new TableData("Kilit Pompa:", "Yok");
+        }
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Soğutma Durumu:", secilenSogutmaDurumu);
+        sonucTablo.getItems().add(data);
     }
 
     private void showErrorMessage() {
