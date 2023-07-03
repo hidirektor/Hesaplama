@@ -3,7 +3,8 @@ module me.t3sl4.hesaplama {
     requires javafx.fxml;
 
     requires java.desktop;
-    requires poi.ooxml;
+    requires itext.xtra;
+    requires itextpdf;
 
     opens me.t3sl4.hesaplama to javafx.fxml;
     exports me.t3sl4.hesaplama;

@@ -25,6 +25,7 @@
                         <MenuItem fx:id="githubMenuItem" mnemonicParsing="false" onAction="#redirectGithub" text="Github" />
                     </items>
                 </Menu>
+                <Menu mnemonicParsing="false" text="v03.07.2023" />
             </menus>
         </MenuBar>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" prefHeight="691.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
@@ -77,10 +78,12 @@
                         <Font size="16.0" />
                     </font>
                 </Text>
-                <Text fx:id="programVersion" layoutX="852.0" layoutY="568.0" strokeType="OUTSIDE" strokeWidth="0.0" text="v23.06.2023" />
-                <Text fx:id="programVersion1" layoutX="783.0" layoutY="587.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Designed by Halil İbrahim Direktör" />
+                <Text layoutX="828.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Designed and developed by" />
+                <Text fx:id="halilIbrahimDirektor" layoutX="839.0" layoutY="572.0" onMouseClicked="#openHid" strokeType="OUTSIDE" strokeWidth="0.0" text="Halil İbrahim DİREKTÖR" />
                 <Button fx:id="parametreKontrol" layoutX="29.0" layoutY="551.0" mnemonicParsing="false" onAction="#parametrePressed" text="Parametre Kontrol" />
                 <Text fx:id="testOlcu" layoutX="829.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Test Ölçü" visible="false" />
+                <Text fx:id="recepCanBaskurt" layoutX="847.0" layoutY="588.0" onMouseClicked="#openRecep" strokeType="OUTSIDE" strokeWidth="0.0" text="Recep Can BAŞKURT" />
+                <Button fx:id="exportButton" layoutX="172.0" layoutY="551.0" mnemonicParsing="false" onAction="#exportProcess" text="Dışa Aktar" />
             </children>
         </AnchorPane>
     </children>

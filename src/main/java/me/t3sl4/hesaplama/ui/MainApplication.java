@@ -2,6 +2,7 @@ package me.t3sl4.hesaplama.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -22,6 +23,11 @@ public class MainApplication extends Application {
 
         Image icon = new Image(Launcher.class.getResourceAsStream("/icons/logo.png"));
         stage.getIcons().add(icon);
+
+        scene.setCursor(javafx.scene.Cursor.NONE);
+        scene.setCursor(new ImageCursor(icon,
+                icon.getWidth() / 6,
+                icon.getHeight() / 6));
 
         stage.show();
 

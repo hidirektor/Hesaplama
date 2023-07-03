@@ -3,6 +3,7 @@ package me.t3sl4.hesaplama.ui;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,55 +11,55 @@ import java.util.ResourceBundle;
 public class PopupController implements Initializable {
 
     @FXML
-    private Label label1;
+    private TextField label1;
     @FXML
-    private Label label2;
+    private TextField label2;
     @FXML
-    private Label label3;
+    private TextField label3;
     @FXML
-    private Label label4;
+    private TextField label4;
     @FXML
-    private Label label5;
+    private TextField label5;
     @FXML
-    private Label label6;
+    private TextField label6;
     @FXML
-    private Label label7;
+    private TextField label7;
     @FXML
-    private Label label8;
+    private TextField label8;
     @FXML
-    private Label label9;
+    private TextField label9;
     @FXML
-    private Label label10;
+    private TextField label10;
     @FXML
-    private Label label11;
+    private TextField label11;
     @FXML
-    private Label label12;
+    private TextField label12;
     @FXML
-    private Label label13;
+    private TextField label13;
     @FXML
-    private Label label14;
+    private TextField label14;
     @FXML
-    private Label label15;
+    private TextField label15;
     @FXML
-    private Label label16;
+    private TextField label16;
     @FXML
-    private Label label17;
+    private TextField label17;
     @FXML
-    private Label label18;
+    private TextField label18;
     @FXML
-    private Label label19;
+    private TextField label19;
     @FXML
-    private Label label20;
+    private TextField label20;
     @FXML
-    private Label label21;
+    private TextField label21;
     @FXML
-    private Label label22;
+    private TextField label22;
     @FXML
-    private Label label23;
+    private TextField label23;
     @FXML
-    private Label label24;
+    private TextField label24;
     @FXML
-    private Label label25;
+    private TextField label25;
 
     private int kampanaBoslukX;
     private int kampanaBoslukY;
@@ -102,23 +103,24 @@ public class PopupController implements Initializable {
     }
 
     public void showValues() {
-        label1.setText("kampanaBoslukX: " + this.kampanaBoslukX);
-        label2.setText("kampanaBoslukY: " + this.kampanaBoslukY);
-        label3.setText("valfBoslukX: " + this.valfBoslukX);
-        label4.setText("valfBoslukYArka: " + this.valfBoslukYArka);
-        label5.setText("valfBoslukYOn: " + this.valfBoslukYOn);
-        label6.setText("kilitliBlokAraBoslukX: " + this.kilitliBlokAraBoslukX);
-        label7.setText("tekHizAraBoslukX: " + this.tekHizAraBoslukX);
-        label8.setText("ciftHizAraBoslukX: " + this.ciftHizAraBoslukX);
-        label9.setText("kompanzasyonTekHizAraBoslukX: " + this.kompanzasyonTekHizAraBoslukX);
-        label10.setText("sogutmaAraBoslukX: " + this.sogutmaAraBoslukX);
-        label11.setText("sogutmaAraBoslukYkOn: " + this.sogutmaAraBoslukYkOn);
-        label12.setText("sogutmaAraBoslukYkArka: " + this.sogutmaAraBoslukYkArka);
-        label13.setText("kilitMotorKampanaBosluk: " + this.kilitMotorKampanaBosluk);
-        label14.setText("kilitMotorMotorBoslukX: " + this.kilitMotorMotorBoslukX);
-        label15.setText("kilitMotorBoslukYOn: " + this.kilitMotorBoslukYOn);
-        label16.setText("kilitMotorBoslukYArka: " + this.kilitMotorBoslukYArka);
-        label17.setText("kayipLitre: " + this.kayipLitre);
+        //Tabloya dönüştür
+        label1.setText(String.valueOf(this.kampanaBoslukX));
+        label2.setText(String.valueOf(this.kampanaBoslukY));
+        label3.setText(String.valueOf(this.valfBoslukX));
+        label4.setText(String.valueOf(this.valfBoslukYArka));
+        label5.setText(String.valueOf(this.valfBoslukYOn));
+        label6.setText(String.valueOf(this.kilitliBlokAraBoslukX));
+        label7.setText(String.valueOf(this.tekHizAraBoslukX));
+        label8.setText(String.valueOf(this.ciftHizAraBoslukX));
+        label9.setText(String.valueOf(this.kompanzasyonTekHizAraBoslukX));
+        label10.setText(String.valueOf(this.sogutmaAraBoslukX));
+        label11.setText(String.valueOf(this.sogutmaAraBoslukYkOn));
+        label12.setText(String.valueOf(this.sogutmaAraBoslukYkArka));
+        label13.setText(String.valueOf(this.kilitMotorKampanaBosluk));
+        label14.setText(String.valueOf(this.kilitMotorMotorBoslukX));
+        label15.setText(String.valueOf(this.kilitMotorBoslukYOn));
+        label16.setText(String.valueOf(this.kilitMotorBoslukYArka));
+        label17.setText(String.valueOf(this.kayipLitre));
     }
 
     @Override

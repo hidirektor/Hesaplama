@@ -5,11 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
@@ -19,8 +19,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import me.t3sl4.hesaplama.Launcher;
 import me.t3sl4.hesaplama.hydraulic.TableData;
+import me.t3sl4.hesaplama.hydraulic.Util;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.nio.IntBuffer;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
@@ -103,6 +108,9 @@ public class MainController {
     @FXML
     private Text testOlcu;
 
+    @FXML
+    private Button exportButton;
+
     /*
     Seçilen Değerler:
      */
@@ -156,6 +164,8 @@ public class MainController {
 
     int kayipLitre = 7;
     private HostServices hostServices;
+    private static final String GITHUB_URL = "https://github.com/";
+    private static final String LINKEDIN_URL = "https://www.linkedin.com/in/";
 
     public void initialize() {
         textFilter();
@@ -553,6 +563,7 @@ public class MainController {
 
     @FXML
     public void parametrePressed() {
+        Image icon = new Image(Launcher.class.getResourceAsStream("/icons/logo.png"));
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("popup.fxml"));
             VBox root = fxmlLoader.load();
@@ -567,6 +578,7 @@ public class MainController {
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(root));
+            popupStage.getIcons().add(icon);
             popupStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -576,6 +588,89 @@ public class MainController {
     @FXML
     public void temizlemeIslemi() {
         verileriSifirla();
+    }
+
+    @FXML
+    public void exportProcess() {
+        int startX = 550;
+        int startY = 30;
+        int width = 414;
+        int height = 550;
+
+        coords2Png(startX, startY, width, height);
+        cropImage("screenshot.png");
+
+        //PDF kısmı:
+        Util.pdfGenerator("cropped_screenshot.png", "test.pdf", girilenSiparisNumarasi);
+    }
+
+    private void coords2Png(int startX, int startY, int width, int height) {
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setViewport(new javafx.geometry.Rectangle2D(startX, startY, width, height));
+
+        WritableImage screenshot = exportButton.getScene().snapshot(null);
+
+        File outputFile = new File("screenshot.png");
+
+        //Alan Testi:
+        /*PixelWriter pixelWriter = screenshot.getPixelWriter();
+
+        for (int y = startY; y < height; y++) {
+            for (int x = startX; x < width; x++) {
+                pixelWriter.setColor(x, y, javafx.scene.paint.Color.RED);
+            }
+        }*/
+
+        BufferedImage bufferedImage = convertToBufferedImage(screenshot);
+
+        try {
+            ImageIO.write(bufferedImage, "png", outputFile);
+            System.out.println("Ekran görüntüsü başarıyla kaydedildi: " + outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Ekran görüntüsü kaydedilirken bir hata oluştu: " + e.getMessage());
+        }
+    }
+
+    private BufferedImage convertToBufferedImage(WritableImage writableImage) {
+        int width = (int) writableImage.getWidth();
+        int height = (int) writableImage.getHeight();
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+
+        PixelReader pixelReader = writableImage.getPixelReader();
+        WritablePixelFormat<IntBuffer> pixelFormat = WritablePixelFormat.getIntArgbInstance();
+
+        int[] pixelData = new int[width * height];
+        pixelReader.getPixels(0, 0, width, height, pixelFormat, pixelData, 0, width);
+
+        bufferedImage.setRGB(0, 0, width, height, pixelData, 0, width);
+
+        return bufferedImage;
+    }
+
+    private void cropImage(String filePath) {
+        int startX = 550;
+        int startY = 30;
+        int width = 414;
+        int height = 525;
+
+        try {
+            BufferedImage originalImage = ImageIO.read(new File(filePath));
+
+            BufferedImage croppedImage = originalImage.getSubimage(startX, startY, width, height);
+
+            String croppedFilePath = "cropped_screenshot.png";
+            ImageIO.write(croppedImage, "png", new File(croppedFilePath));
+            System.out.println("Kırpılmış fotoğraf başarıyla kaydedildi: " + croppedFilePath);
+
+            File originalFile = new File(filePath);
+            if (originalFile.delete()) {
+                System.out.println("Eski fotoğraf başarıyla silindi: " + filePath);
+            } else {
+                System.out.println("Eski fotoğraf silinemedi: " + filePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setHostServices(HostServices hostServices) {
@@ -597,6 +692,24 @@ public class MainController {
     private void openGitHubDocumentation(ActionEvent event) {
         String url = "https://github.com/hidirektor/OnderGrup-Hydraulic-Tool";
         hostServices.showDocument(url);
+    }
+
+    @FXML
+    public void openRecep() {
+        openURL(LINKEDIN_URL + "recep-can-ba%C5%9Fkurt-1a9889174/");
+    }
+
+    @FXML
+    public void openHid() {
+        openURL(GITHUB_URL + "hidirektor");
+    }
+
+    private void openURL(String url) {
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        } catch (java.io.IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void initUniteTipi() {
@@ -781,7 +894,7 @@ public class MainController {
 
         pompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenPompa = newValue;
-            if(oldValue != null) {
+            if(oldValue != null && secilenPompa != null) {
                 String[] oldSecPmp = oldValue.split(" cc");
                 float oldSecilenPompaVal = Float.parseFloat(oldSecPmp[0]);
                 String[] secPmp = secilenPompa.split(" cc");
