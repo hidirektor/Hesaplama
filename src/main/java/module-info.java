@@ -5,6 +5,7 @@ module me.t3sl4.hesaplama {
     requires java.desktop;
     requires itext.xtra;
     requires itextpdf;
+    requires org.apache.poi.poi;
 
     opens me.t3sl4.hesaplama to javafx.fxml;
     exports me.t3sl4.hesaplama;
