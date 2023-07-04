@@ -114,7 +114,204 @@ public class Util {
                 data = data.trim();
                 data = data.replaceAll("[^0-9]", "");
                 dataManipulator.kampanaDegerleri.add(Integer.parseInt(data));
-                //dataManipulator.kampanaVerileri.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4Motor(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Motor";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.motorDegerleri.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4UniteTipi(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Ünite Tipi";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.uniteTipiDegerleri.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4PompaHidros(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Pompa-1";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.pompaDegerleriHidros.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4PompaKlasik(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Pompa-2";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.pompaDegerleriKlasik.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4PompaTumu(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Pompa-3";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.pompaDegerleriTumu.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4KilitMotor(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Kilit Motor";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.kilitMotorDegerleri.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4KilitPompa(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Kilit Pompa";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.kilitPompaDegerleri.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ValfTipi1(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Valf Tipi-1";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.valfTipiDegerleri1.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ValfTipi2(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Valf Tipi-2";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.valfTipiDegerleri2.add(data);
             }
 
             workbook.close();

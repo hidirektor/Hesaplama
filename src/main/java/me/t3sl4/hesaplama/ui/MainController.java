@@ -143,6 +143,15 @@ public class MainController {
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
         Util.readExcel4Bosluk(excelPath, dataManipulator);
         Util.readExcel4Kampana(excelPath, dataManipulator);
+        Util.readExcel4Motor(excelPath, dataManipulator);
+        Util.readExcel4UniteTipi(excelPath, dataManipulator);
+        Util.readExcel4PompaHidros(excelPath, dataManipulator);
+        Util.readExcel4PompaKlasik(excelPath, dataManipulator);
+        Util.readExcel4PompaTumu(excelPath, dataManipulator);
+        Util.readExcel4KilitMotor(excelPath, dataManipulator);
+        Util.readExcel4KilitPompa(excelPath, dataManipulator);
+        Util.readExcel4ValfTipi1(excelPath, dataManipulator);
+        Util.readExcel4ValfTipi2(excelPath, dataManipulator);
     }
 
     @FXML
@@ -473,7 +482,7 @@ public class MainController {
             if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
                 initValf(0);
             } else {
-                initValf(2);
+                initValf(1);
             }
         }
     }
@@ -501,7 +510,8 @@ public class MainController {
     public void kilitMotorPressed() {
         if(kilitMotorComboBox.getValue() != null) {
             kilitPompaComboBox.setDisable(false);
-            kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
+            kilitPompaComboBox.getItems().addAll(dataManipulator.kilitPompaDegerleri);
+            //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
             secilenKilitMotor = kilitMotorComboBox.getValue();
         }
     }
@@ -686,12 +696,14 @@ public class MainController {
     private void initUniteTipi() {
         uniteTipiComboBox.setDisable(false);
         uniteTipiComboBox.getItems().clear();
-        uniteTipiComboBox.getItems().addAll("Hidros", "Klasik");
+        uniteTipiComboBox.getItems().addAll(dataManipulator.uniteTipiDegerleri);
+        //uniteTipiComboBox.getItems().addAll("Hidros", "Klasik");
     }
 
     private void initMotor() {
         motorComboBox.getItems().clear();
-        motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
+        motorComboBox.getItems().addAll(dataManipulator.motorDegerleri);
+        //motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
     }
 
     private void initMotorYukseklik() {
@@ -732,11 +744,14 @@ public class MainController {
     private void initPompa() {
         pompaComboBox.getItems().clear();
         if(Objects.equals(uniteTipiComboBox.getValue(), "Hidros")) {
-            pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
+            pompaComboBox.getItems().addAll(dataManipulator.pompaDegerleriHidros);
+            //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
         } else if(Objects.equals(uniteTipiComboBox.getValue(), "Klasik")) {
-            pompaComboBox.getItems().addAll("9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
+            pompaComboBox.getItems().addAll(dataManipulator.pompaDegerleriKlasik);
+            //pompaComboBox.getItems().addAll("9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
         } else {
-            pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc", "9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
+            pompaComboBox.getItems().addAll(dataManipulator.pompaDegerleriTumu);
+            //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc", "9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
         }
     }
 
@@ -744,9 +759,11 @@ public class MainController {
         valfTipiComboBox.getItems().clear();
         valfTipiComboBox.setDisable(false);
         if(stat == 1) {
-            valfTipiComboBox.getItems().addAll("Kilitli Blok || Çift Hız");
+            valfTipiComboBox.getItems().addAll(dataManipulator.valfTipiDegerleri1);
+            //valfTipiComboBox.getItems().addAll("Kilitli Blok || Çift Hız");
         } else {
-            valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız");
+            valfTipiComboBox.getItems().addAll(dataManipulator.valfTipiDegerleri2);
+            //valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız");
         }
     }
 
@@ -765,7 +782,8 @@ public class MainController {
         kilitMotorComboBox.getItems().clear();
         kilitMotorText.setVisible(true);
         kilitMotorComboBox.setVisible(true);
-        kilitMotorComboBox.getItems().addAll("1.5 kW", "2.2 kW");
+        kilitMotorComboBox.getItems().addAll(dataManipulator.kilitMotorDegerleri);
+        //kilitMotorComboBox.getItems().addAll("1.5 kW", "2.2 kW");
     }
 
     private void initKilitPompa() {
@@ -773,7 +791,8 @@ public class MainController {
         kilitPompaComboBox.getItems().clear();
         kilitPompaText.setVisible(true);
         kilitPompaComboBox.setVisible(true);
-        kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
+        kilitPompaComboBox.getItems().addAll(dataManipulator.kilitPompaDegerleri);
+        //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
     }
 
     private void disableAllSections() {
@@ -892,9 +911,13 @@ public class MainController {
                     }
                 } else {
                     initValf(0);
+                    kilitPompaText.setVisible(false);
+                    kilitMotorText.setVisible(false);
+                    kilitPompaComboBox.setVisible(false);
+                    kilitMotorComboBox.setVisible(false);
+                    kilitMotorComboBox.setDisable(true);
+                    kilitPompaComboBox.setDisable(true);
                 }
-            }
-            if(secilenPompa != null) {
                 tabloGuncelle();
             }
         });

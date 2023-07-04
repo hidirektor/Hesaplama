@@ -27,6 +27,18 @@ public class DataManipulator {
     public HashMap<Object, int[]> kabinOlculeri = new HashMap<Object, int[]>();
 
     public List<String> motorYukseklikVerileri = new ArrayList<>();
+
+    public ArrayList<String> motorDegerleri = new ArrayList<>();
+
+    public ArrayList<String> uniteTipiDegerleri = new ArrayList<>();
+    public ArrayList<String> pompaDegerleriHidros = new ArrayList<>();
+    public ArrayList<String> pompaDegerleriKlasik = new ArrayList<>();
+    public ArrayList<String> pompaDegerleriTumu = new ArrayList<>();
+    public ArrayList<String> kilitMotorDegerleri = new ArrayList<>();
+    public ArrayList<String> kilitPompaDegerleri = new ArrayList<>();
+
+    public ArrayList<String> valfTipiDegerleri1 = new ArrayList<>();
+    public ArrayList<String> valfTipiDegerleri2 = new ArrayList<>();
     public DataManipulator() {
         //TODO
         //data update
