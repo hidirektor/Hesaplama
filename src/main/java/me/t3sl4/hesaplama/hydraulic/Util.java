@@ -330,4 +330,498 @@ public class Util {
             e.printStackTrace();
         }
     }
+
+    public static void readExcel4ParcaListesiKampana(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Kampana";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 5; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiKampana250.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 1) {
+                                dataManipulator.parcaListesiKampana300.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 2) {
+                                dataManipulator.parcaListesiKampana350.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 3) {
+                                dataManipulator.parcaListesiKampana400.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaListesiPompa(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Pompa";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 15; i++) {
+                for (int j = 0; j < 10; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiPompa95.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 1) {
+                                dataManipulator.parcaListesiPompa119.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 2) {
+                                dataManipulator.parcaListesiPompa14.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 3) {
+                                dataManipulator.parcaListesiPompa146.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 4) {
+                                dataManipulator.parcaListesiPompa168.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 5) {
+                                dataManipulator.parcaListesiPompa192.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 6) {
+                                dataManipulator.parcaListesiPompa229.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 7) {
+                                dataManipulator.parcaListesiPompa281.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 8) {
+                                dataManipulator.parcaListesiPompa288.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 9) {
+                                dataManipulator.parcaListesiPompa333.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 10) {
+                                dataManipulator.parcaListesiPompa379.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 11) {
+                                dataManipulator.parcaListesiPompa426.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 12) {
+                                dataManipulator.parcaListesiPompa455.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 13) {
+                                dataManipulator.parcaListesiPompa494.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 14) {
+                                dataManipulator.parcaListesiPompa561.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaListesiMotor(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Motor";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 1; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiMotor4.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 1) {
+                                dataManipulator.parcaListesiMotor55.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 2) {
+                                dataManipulator.parcaListesiMotor55Kompakt.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 3) {
+                                dataManipulator.parcaListesiMotor75Kompakt.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 4) {
+                                dataManipulator.parcaListesiMotor11.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 5) {
+                                dataManipulator.parcaListesiMotor11Kompakt.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 6) {
+                                dataManipulator.parcaListesiMotor15.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 7) {
+                                dataManipulator.parcaListesiMotor185.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 8) {
+                                dataManipulator.parcaListesiMotor22.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 9) {
+                                dataManipulator.parcaListesiMotor37.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaListesiKaplin(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Kaplin";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 1; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiKaplin1PN28.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 1) {
+                                dataManipulator.parcaListesiKaplin1PN38.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 2) {
+                                dataManipulator.parcaListesiKaplin1PN42.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 3) {
+                                dataManipulator.parcaListesiKaplin2PN28.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 4) {
+                                dataManipulator.parcaListesiKaplin2PN38.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 5) {
+                                dataManipulator.parcaListesiKaplin2PN42.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaListesiValfBlok(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Valf Blokları";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 11; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiValfBloklariTekHiz.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 1) {
+                                dataManipulator.parcaListesiValfBloklariCiftHiz.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 2) {
+                                dataManipulator.parcaListesiValfBloklariKilitliBlok.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 3) {
+                                dataManipulator.parcaListesiValfBloklariKompanzasyon.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaListesiBasincSalteri(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Basınç Şalteri";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 1; i++) {
+                for (int j = 0; j < 4; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiBasincSalteri.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaListesiStandart(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Standart";
+
+        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 1; i++) {
+                for (int j = 0; j < 4; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiStandart.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean isNumeric(Cell cell) {
+        if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA) {
+            return true;
+        }
+        return false;
+    }
 }

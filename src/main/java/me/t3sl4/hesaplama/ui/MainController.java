@@ -109,21 +109,23 @@ public class MainController {
     /*
     Seçilen Değerler:
      */
-    private String girilenSiparisNumarasi = null;
-    private String secilenUniteTipi = null;
-    private String secilenMotor = null;
-    private int secilenKampana = 0;
-    private String secilenPompa = null;
-    private int girilenTankKapasitesiMiktari = 0;
-    private String secilenHidrolikKilitDurumu = null;
-    private String secilenValfTipi = null;
-    private String secilenKilitMotor = null;
-    private String secilenKilitPompa = null;
-    private String secilenSogutmaDurumu = null;
+    public String girilenSiparisNumarasi = null;
+    public String secilenUniteTipi = null;
+    public static String secilenMotor = null;
+    public static int secilenKampana = 0;
+    public static String secilenPompa = null;
+    public int girilenTankKapasitesiMiktari = 0;
+    public String secilenHidrolikKilitDurumu = null;
+    public static String secilenValfTipi = null;
+    public String secilenKilitMotor = null;
+    public String secilenKilitPompa = null;
+    public String secilenSogutmaDurumu = null;
 
-    boolean hidrolikKilitStat = false;
-    boolean sogutmaStat = false;
-    boolean hesaplamaBitti = false;
+    public boolean hidrolikKilitStat = false;
+    public boolean sogutmaStat = false;
+    public boolean hesaplamaBitti = false;
+
+    public static String atananHT;
 
     int hesaplananHacim = 0;
 
@@ -131,7 +133,7 @@ public class MainController {
     private static final String GITHUB_URL = "https://github.com/";
     private static final String LINKEDIN_URL = "https://www.linkedin.com/in/";
 
-    public DataManipulator dataManipulator = new DataManipulator();
+    public static DataManipulator dataManipulator = new DataManipulator();
 
     public void initialize() {
         textFilter();
@@ -318,7 +320,7 @@ public class MainController {
             hesaplananHacim = enKucukLitreOlculer[3];
         }
 
-        String atananHT = Objects.requireNonNull(Util.getKeyByValue(dataManipulator.kabinOlculeri, enKucukLitreOlculer)).toString();
+        atananHT = Objects.requireNonNull(Util.getKeyByValue(dataManipulator.kabinOlculeri, enKucukLitreOlculer)).toString();
         String atananKabin = "";
         String gecisOlculeri = "";
         if(Objects.equals(atananHT, "HT 40")) {
@@ -1072,6 +1074,13 @@ public class MainController {
         Util.readExcel4KilitPompa(excelPath, dataManipulator);
         Util.readExcel4ValfTipi1(excelPath, dataManipulator);
         Util.readExcel4ValfTipi2(excelPath, dataManipulator);
+        Util.readExcel4ParcaListesiKampana(excelPath, dataManipulator);
+        Util.readExcel4ParcaListesiPompa(excelPath, dataManipulator);
+        Util.readExcel4ParcaListesiMotor(excelPath, dataManipulator);
+        Util.readExcel4ParcaListesiKaplin(excelPath, dataManipulator);
+        Util.readExcel4ParcaListesiValfBlok(excelPath, dataManipulator);
+        Util.readExcel4ParcaListesiBasincSalteri(excelPath, dataManipulator);
+        Util.readExcel4ParcaListesiStandart(excelPath, dataManipulator);
     }
 
     private void showErrorMessage(String hataMesaji) {
