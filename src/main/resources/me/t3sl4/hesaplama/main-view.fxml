@@ -85,6 +85,7 @@
                 <Text fx:id="recepCanBaskurt" layoutX="847.0" layoutY="572.0" onMouseClicked="#openRecep" strokeType="OUTSIDE" strokeWidth="0.0" text="Recep Can BAŞKURT" />
                 <Button fx:id="exportButton" layoutX="172.0" layoutY="551.0" mnemonicParsing="false" onAction="#exportProcess" text="PDF Oluştur" />
                 <Text fx:id="ipekSozer" layoutX="874.0" layoutY="588.0" onMouseClicked="#openIpek" strokeType="OUTSIDE" strokeWidth="0.0" text="İpek SÖZER" />
+                <Button fx:id="parcaListesiButton" layoutX="276.0" layoutY="551.0" mnemonicParsing="false" onAction="#parcaListesiGoster" text="Parça Listesi" />
             </children>
         </AnchorPane>
     </children>

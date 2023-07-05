@@ -2,7 +2,6 @@ package me.t3sl4.hesaplama.ui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -44,22 +43,6 @@ public class PopupController implements Initializable {
     private TextField label16;
     @FXML
     private TextField label17;
-    @FXML
-    private TextField label18;
-    @FXML
-    private TextField label19;
-    @FXML
-    private TextField label20;
-    @FXML
-    private TextField label21;
-    @FXML
-    private TextField label22;
-    @FXML
-    private TextField label23;
-    @FXML
-    private TextField label24;
-    @FXML
-    private TextField label25;
 
     private int kampanaBoslukX;
     private int kampanaBoslukY;

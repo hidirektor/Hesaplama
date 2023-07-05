@@ -68,10 +68,11 @@ public class Util {
         String sheetName = "Boşluk Değerleri";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
-            Row variableNamesRow = sheet.getRow(0);
+            //Row variableNamesRow = sheet.getRow(0);
             Row variableValuesRow = sheet.getRow(1);
 
             dataManipulator.kampanaBoslukX = (int) variableValuesRow.getCell(0).getNumericCellValue();
@@ -102,6 +103,7 @@ public class Util {
         String sheetName = "Kampana";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -126,6 +128,7 @@ public class Util {
         String sheetName = "Motor";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -148,6 +151,7 @@ public class Util {
         String sheetName = "Ünite Tipi";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -170,6 +174,7 @@ public class Util {
         String sheetName = "Pompa-1";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -192,6 +197,7 @@ public class Util {
         String sheetName = "Pompa-2";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -214,6 +220,7 @@ public class Util {
         String sheetName = "Pompa-3";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -236,6 +243,7 @@ public class Util {
         String sheetName = "Kilit Motor";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -258,6 +266,7 @@ public class Util {
         String sheetName = "Kilit Pompa";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -280,6 +289,7 @@ public class Util {
         String sheetName = "Valf Tipi-1";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -302,6 +312,7 @@ public class Util {
         String sheetName = "Valf Tipi-2";
 
         try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 

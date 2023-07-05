@@ -131,8 +131,6 @@ public class MainController {
     private static final String GITHUB_URL = "https://github.com/";
     private static final String LINKEDIN_URL = "https://www.linkedin.com/in/";
 
-    private String excelPath = "/data/Hidrolik.xlsx";
-
     public DataManipulator dataManipulator = new DataManipulator();
 
     public void initialize() {
@@ -141,17 +139,7 @@ public class MainController {
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
-        Util.readExcel4Bosluk(excelPath, dataManipulator);
-        Util.readExcel4Kampana(excelPath, dataManipulator);
-        Util.readExcel4Motor(excelPath, dataManipulator);
-        Util.readExcel4UniteTipi(excelPath, dataManipulator);
-        Util.readExcel4PompaHidros(excelPath, dataManipulator);
-        Util.readExcel4PompaKlasik(excelPath, dataManipulator);
-        Util.readExcel4PompaTumu(excelPath, dataManipulator);
-        Util.readExcel4KilitMotor(excelPath, dataManipulator);
-        Util.readExcel4KilitPompa(excelPath, dataManipulator);
-        Util.readExcel4ValfTipi1(excelPath, dataManipulator);
-        Util.readExcel4ValfTipi2(excelPath, dataManipulator);
+        excelDataRead();
     }
 
     @FXML
@@ -176,7 +164,12 @@ public class MainController {
             hacimText.setText("Tank : " + hacim + "L");
 
             tabloGuncelle();
-            Image image = new Image(Launcher.class.getResourceAsStream("/icons/test.png"));
+            Image image;
+            if(secilenHidrolikKilitDurumu != null && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/kilitliBlok.png")));
+            } else {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/normal.png")));
+            }
             sonucKapakImage.setImage(image);
             testOlcu.setVisible(true);
             hesaplamaBitti = true;
@@ -240,8 +233,8 @@ public class MainController {
             if(secilenPompaVal > 28.1) {
                 String[] secKilitMotor = secilenKilitMotor.split(" kW");
                 float secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
-                String[] secKilitPompa = secilenKilitPompa.split(" cc");
-                float secilenKilitPompaVal = Float.parseFloat(secKilitPompa[0]);
+                //String[] secKilitPompa = secilenKilitPompa.split(" cc");
+                //float secilenKilitPompaVal = Float.parseFloat(secKilitPompa[0]);
 
                 if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
                     yV += 180 + dataManipulator.valfBoslukYArka + dataManipulator.valfBoslukYOn;
@@ -296,7 +289,6 @@ public class MainController {
 
         int enKucukLitreFarki = Integer.MAX_VALUE;
         int[] enKucukLitreOlculer = null;
-        int mapVal = 0;
         for (int[] olculer : dataManipulator.kabinOlculeri.values()) {
             int litre = olculer[3];
             int tempX = olculer[0];
@@ -317,7 +309,6 @@ public class MainController {
                     }
                 }
             }
-            mapVal++;
         }
 
         if (enKucukLitreOlculer != null) {
@@ -327,7 +318,7 @@ public class MainController {
             hesaplananHacim = enKucukLitreOlculer[3];
         }
 
-        String atananHT = Util.getKeyByValue(dataManipulator.kabinOlculeri, enKucukLitreOlculer).toString();
+        String atananHT = Objects.requireNonNull(Util.getKeyByValue(dataManipulator.kabinOlculeri, enKucukLitreOlculer)).toString();
         String atananKabin = "";
         String gecisOlculeri = "";
         if(Objects.equals(atananHT, "HT 40")) {
@@ -534,7 +525,7 @@ public class MainController {
 
     @FXML
     public void parametrePressed() {
-        Image icon = new Image(Launcher.class.getResourceAsStream("/icons/logo.png"));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/logo.png")));
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("popup.fxml"));
             VBox root = fxmlLoader.load();
@@ -546,6 +537,23 @@ public class MainController {
                     dataManipulator.sogutmaAraBoslukYkArka, dataManipulator.kilitMotorKampanaBosluk, dataManipulator.kilitMotorMotorBoslukX,
                     dataManipulator.kilitMotorBoslukYOn, dataManipulator.kilitMotorBoslukYArka, dataManipulator.kayipLitre);
             popupController.showValues();
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(root));
+            popupStage.getIcons().add(icon);
+            popupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void parcaListesiGoster() {
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/logo.png")));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("parcaListesi.fxml"));
+            VBox root = fxmlLoader.load();
+            ParcaController parcaController = fxmlLoader.getController();
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(root));
@@ -571,7 +579,7 @@ public class MainController {
 
         if(hesaplamaBitti) {
             coords2Png(startX, startY, width, height);
-            cropImage("screenshot.png");
+            cropImage();
 
             //PDF kısmı:
             Util.pdfGenerator("cropped_screenshot.png", "test.pdf", girilenSiparisNumarasi);
@@ -623,14 +631,14 @@ public class MainController {
         return bufferedImage;
     }
 
-    private void cropImage(String filePath) {
+    private void cropImage() {
         int startX = 550;
         int startY = 30;
         int width = 414;
         int height = 525;
 
         try {
-            BufferedImage originalImage = ImageIO.read(new File(filePath));
+            BufferedImage originalImage = ImageIO.read(new File("screenshot.png"));
 
             BufferedImage croppedImage = originalImage.getSubimage(startX, startY, width, height);
 
@@ -638,11 +646,11 @@ public class MainController {
             ImageIO.write(croppedImage, "png", new File(croppedFilePath));
             System.out.println("Kırpılmış fotoğraf başarıyla kaydedildi: " + croppedFilePath);
 
-            File originalFile = new File(filePath);
+            File originalFile = new File("screenshot.png");
             if (originalFile.delete()) {
-                System.out.println("Eski fotoğraf başarıyla silindi: " + filePath);
+                System.out.println("Eski fotoğraf başarıyla silindi: " + "screenshot.png");
             } else {
-                System.out.println("Eski fotoğraf silinemedi: " + filePath);
+                System.out.println("Eski fotoğraf silinemedi: " + "screenshot.png");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -706,7 +714,7 @@ public class MainController {
         //motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
     }
 
-    private void initMotorYukseklik() {
+    /*private void initMotorYukseklik() {
         dataManipulator.motorYukseklikVerileri.add("345 mm");
         dataManipulator.motorYukseklikVerileri.add("375 mm");
         dataManipulator.motorYukseklikVerileri.add("365 mm");
@@ -717,7 +725,7 @@ public class MainController {
         dataManipulator.motorYukseklikVerileri.add("565 mm");
         dataManipulator.motorYukseklikVerileri.add("565 mm");
         dataManipulator.motorYukseklikVerileri.add("600 mm");
-    }
+    }*/
 
     private void initKabinOlculeri(int x, int y, int h, int litre, String key) {
         int[] kabinOlcu = new int[4];
@@ -981,7 +989,6 @@ public class MainController {
         if(secilenKilitPompa != null) {
             secilenKilitPompa = null;
         }
-        secilenSogutmaDurumu = null;
 
         tankKapasitesiTextField.clear();
         motorComboBox.getSelectionModel().clearSelection();
@@ -1042,22 +1049,29 @@ public class MainController {
         data = new TableData("Seçilen Valf Tipi:", secilenValfTipi);
         sonucTablo.getItems().add(data);
 
-        if(secilenKilitMotor != null) {
-            data = new TableData("Kilit Motoru:", secilenKilitMotor);
-        } else {
-            data = new TableData("Kilit Motoru:", "Yok");
-        }
+        data = new TableData("Kilit Motoru:", Objects.requireNonNullElse(secilenKilitMotor, "Yok"));
         sonucTablo.getItems().add(data);
 
-        if(secilenKilitPompa != null) {
-            data = new TableData("Kilit Pompa:", secilenKilitPompa);
-        } else {
-            data = new TableData("Kilit Pompa:", "Yok");
-        }
+        data = new TableData("Kilit Pompa:", Objects.requireNonNullElse(secilenKilitPompa, "Yok"));
         sonucTablo.getItems().add(data);
 
         data = new TableData("Soğutma Durumu:", secilenSogutmaDurumu);
         sonucTablo.getItems().add(data);
+    }
+
+    private void excelDataRead() {
+        String excelPath = "/data/Hidrolik.xlsx";
+        Util.readExcel4Bosluk(excelPath, dataManipulator);
+        Util.readExcel4Kampana(excelPath, dataManipulator);
+        Util.readExcel4Motor(excelPath, dataManipulator);
+        Util.readExcel4UniteTipi(excelPath, dataManipulator);
+        Util.readExcel4PompaHidros(excelPath, dataManipulator);
+        Util.readExcel4PompaKlasik(excelPath, dataManipulator);
+        Util.readExcel4PompaTumu(excelPath, dataManipulator);
+        Util.readExcel4KilitMotor(excelPath, dataManipulator);
+        Util.readExcel4KilitPompa(excelPath, dataManipulator);
+        Util.readExcel4ValfTipi1(excelPath, dataManipulator);
+        Util.readExcel4ValfTipi2(excelPath, dataManipulator);
     }
 
     private void showErrorMessage(String hataMesaji) {

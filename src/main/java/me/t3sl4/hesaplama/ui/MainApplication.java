@@ -2,13 +2,13 @@ package me.t3sl4.hesaplama.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import me.t3sl4.hesaplama.Launcher;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainApplication extends Application {
     @Override
@@ -21,7 +21,7 @@ public class MainApplication extends Application {
 
         stage.setResizable(false);
 
-        Image icon = new Image(Launcher.class.getResourceAsStream("/icons/logo.png"));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/logo.png")));
         stage.getIcons().add(icon);
 
         /*scene.setCursor(javafx.scene.Cursor.NONE);
