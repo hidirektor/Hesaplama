@@ -548,34 +548,39 @@ public class ParcaController {
     }
 
     private void loadBasincStandart() {
+        int index = 0;
+        int totalElements = MainController.dataManipulator.parcaListesiStandart.size();
+
         for (String veri : MainController.dataManipulator.parcaListesiStandart) {
             String[] veriParcalari = veri.split(";");
 
             String malzemeKodu = veriParcalari[0];
             String secilenMalzeme = veriParcalari[1];
             String adet = veriParcalari[2];
-            if(Objects.equals(MainController.atananHT, "HT 40")) {
-                adet = String.valueOf(10);
-            } else if(Objects.equals(MainController.atananHT, "HT 70")) {
-                adet = String.valueOf(14);
-            } else if(Objects.equals(MainController.atananHT, "HT 100")) {
-                adet = String.valueOf(14);
-            } else if(Objects.equals(MainController.atananHT, "HT 125")) {
-                adet = String.valueOf(14);
-            } else if(Objects.equals(MainController.atananHT, "HT 160")) {
-                adet = String.valueOf(16);
-            } else if(Objects.equals(MainController.atananHT, "HT 200")) {
-                adet = String.valueOf(18);
-            } else if(Objects.equals(MainController.atananHT, "HT 250")) {
-                adet = String.valueOf(18);
-            } else if(Objects.equals(MainController.atananHT, "HT 300")) {
-                adet = String.valueOf(22);
-            } else if(Objects.equals(MainController.atananHT, "HT 350")) {
-                adet = String.valueOf(22);
-            } else if(Objects.equals(MainController.atananHT, "HT 400")) {
-                adet = String.valueOf(22);
+            index++;
+            if(index == totalElements) {
+                if(Objects.equals(MainController.atananHT, "HT 40")) {
+                    adet = String.valueOf(10);
+                } else if(Objects.equals(MainController.atananHT, "HT 70")) {
+                    adet = String.valueOf(14);
+                } else if(Objects.equals(MainController.atananHT, "HT 100")) {
+                    adet = String.valueOf(14);
+                } else if(Objects.equals(MainController.atananHT, "HT 125")) {
+                    adet = String.valueOf(14);
+                } else if(Objects.equals(MainController.atananHT, "HT 160")) {
+                    adet = String.valueOf(16);
+                } else if(Objects.equals(MainController.atananHT, "HT 200")) {
+                    adet = String.valueOf(18);
+                } else if(Objects.equals(MainController.atananHT, "HT 250")) {
+                    adet = String.valueOf(18);
+                } else if(Objects.equals(MainController.atananHT, "HT 300")) {
+                    adet = String.valueOf(22);
+                } else if(Objects.equals(MainController.atananHT, "HT 350")) {
+                    adet = String.valueOf(22);
+                } else if(Objects.equals(MainController.atananHT, "HT 400")) {
+                    adet = String.valueOf(22);
+                }
             }
-
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         }
