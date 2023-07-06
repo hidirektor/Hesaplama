@@ -1150,7 +1150,15 @@ public class MainController {
             dolum2OlcuText2.setVisible(true);
             tahliye2OlcuText.setVisible(true);
             kampanaVeri2Text.setVisible(true);
-            kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø");
+            if(secilenKampana == 250) {
+                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 173);
+            } else if(secilenKampana == 300) {
+                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 236);
+            } else if(secilenKampana == 350) {
+                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 263);
+            } else if(secilenKampana == 400) {
+                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN");
+            }
             kilitMotorVeriText.setVisible(true);
             kilitMotorVeriText.setText("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa);
             kilitliBlokVeri2Text.setVisible(true);
