@@ -83,9 +83,9 @@
                 <Button fx:id="parametreKontrol" layoutX="29.0" layoutY="551.0" mnemonicParsing="false" onAction="#parametrePressed" text="Parametre Kontrol" />
                 <Text fx:id="testOlcu" layoutX="829.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Test Ölçü" visible="false" />
                 <Text fx:id="recepCanBaskurt" layoutX="861.0" layoutY="577.0" onMouseClicked="#openRecep" strokeType="OUTSIDE" strokeWidth="0.0" text="Recep Can BAŞKURT" />
-                <Button fx:id="exportButton" layoutX="172.0" layoutY="551.0" mnemonicParsing="false" onAction="#exportProcess" text="PDF Oluştur" />
+                <Button fx:id="exportButton" disable="true" layoutX="172.0" layoutY="551.0" mnemonicParsing="false" onAction="#exportProcess" text="PDF Oluştur" />
                 <Text fx:id="ipekSozer" layoutX="888.0" layoutY="593.0" onMouseClicked="#openIpek" strokeType="OUTSIDE" strokeWidth="0.0" text="İpek SÖZER" />
-                <Button fx:id="parcaListesiButton" layoutX="276.0" layoutY="551.0" mnemonicParsing="false" onAction="#parcaListesiGoster" text="Parça Listesi" />
+                <Button fx:id="parcaListesiButton" disable="true" layoutX="276.0" layoutY="551.0" mnemonicParsing="false" onAction="#parcaListesiGoster" text="Parça Listesi" />
             </children>
         </AnchorPane>
     </children>

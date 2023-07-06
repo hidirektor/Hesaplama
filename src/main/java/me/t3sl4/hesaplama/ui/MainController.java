@@ -106,6 +106,9 @@ public class MainController {
     @FXML
     private Button exportButton;
 
+    @FXML
+    private Button parcaListesiButton;
+
     /*
     Seçilen Değerler:
      */
@@ -173,6 +176,8 @@ public class MainController {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/normal.png")));
             }
             sonucKapakImage.setImage(image);
+            parcaListesiButton.setDisable(false);
+            exportButton.setDisable(false);
             testOlcu.setVisible(true);
             hesaplamaBitti = true;
         }
@@ -552,17 +557,21 @@ public class MainController {
     @FXML
     public void parcaListesiGoster() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/logo.png")));
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("parcaListesi.fxml"));
-            VBox root = fxmlLoader.load();
-            ParcaController parcaController = fxmlLoader.getController();
-            Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(root));
-            popupStage.getIcons().add(icon);
-            popupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(hesaplamaBitti) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("parcaListesi.fxml"));
+                VBox root = fxmlLoader.load();
+                ParcaController parcaController = fxmlLoader.getController();
+                Stage popupStage = new Stage();
+                popupStage.initModality(Modality.APPLICATION_MODAL);
+                popupStage.setScene(new Scene(root));
+                popupStage.getIcons().add(icon);
+                popupStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
         }
     }
 
@@ -1014,6 +1023,14 @@ public class MainController {
         sonucTablo.getItems().clear();
 
         sonucKapakImage.setImage(null);
+        parcaListesiButton.setDisable(true);
+        exportButton.setDisable(true);
+        kullanilacakKabin.setVisible(false);
+
+        imageTextDisable();
+    }
+
+    private void imageTextDisable() {
         testOlcu.setVisible(false);
     }
 
