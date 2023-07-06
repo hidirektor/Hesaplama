@@ -178,7 +178,7 @@ public class MainController {
             sonucKapakImage.setImage(image);
             parcaListesiButton.setDisable(false);
             exportButton.setDisable(false);
-            testOlcu.setVisible(true);
+            imageTextEnable();
             hesaplamaBitti = true;
         }
     }
@@ -839,9 +839,7 @@ public class MainController {
         genislikSonucText.setVisible(true);
         yukseklikSonucText.setVisible(true);
         derinlikSonucText.setVisible(true);
-        if(hesaplananHacim == 0) {
-            hacimText.setVisible(true);
-        }
+        hacimText.setVisible(true);
         hydraulicUnitShape.setVisible(true);
         kullanilacakKabin.setVisible(true);
     }
@@ -1032,6 +1030,10 @@ public class MainController {
 
     private void imageTextDisable() {
         testOlcu.setVisible(false);
+    }
+
+    private void imageTextEnable() {
+        testOlcu.setVisible(true);
     }
 
     private void sonucEkraniTemizle() {
