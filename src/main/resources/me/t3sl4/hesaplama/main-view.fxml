@@ -78,12 +78,12 @@
                         <Font size="16.0" />
                     </font>
                 </Text>
-                <Text layoutX="840.0" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Designed and developed by" />
-                <Text fx:id="halilIbrahimDirektor" layoutX="853.0" layoutY="561.0" onMouseClicked="#openHid" strokeType="OUTSIDE" strokeWidth="0.0" text="Halil İbrahim DİREKTÖR" />
+                <Text layoutX="840.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Designed and developed by" />
+                <Text fx:id="halilIbrahimDirektor" layoutX="853.0" layoutY="560.0" onMouseClicked="#openHid" strokeType="OUTSIDE" strokeWidth="0.0" text="Halil İbrahim DİREKTÖR" />
                 <Button fx:id="parametreKontrol" layoutX="29.0" layoutY="551.0" mnemonicParsing="false" onAction="#parametrePressed" text="Parametre Kontrol" />
-                <Text fx:id="recepCanBaskurt" layoutX="861.0" layoutY="577.0" onMouseClicked="#openRecep" strokeType="OUTSIDE" strokeWidth="0.0" text="Recep Can BAŞKURT" />
+                <Text fx:id="recepCanBaskurt" layoutX="861.0" layoutY="576.0" onMouseClicked="#openRecep" strokeType="OUTSIDE" strokeWidth="0.0" text="Recep Can BAŞKURT" />
                 <Button fx:id="exportButton" disable="true" layoutX="172.0" layoutY="551.0" mnemonicParsing="false" onAction="#exportProcess" text="PDF Oluştur" />
-                <Text fx:id="ipekSozer" layoutX="888.0" layoutY="593.0" onMouseClicked="#openIpek" strokeType="OUTSIDE" strokeWidth="0.0" text="İpek SÖZER" />
+                <Text fx:id="ipekSozer" layoutX="888.0" layoutY="592.0" onMouseClicked="#openIpek" strokeType="OUTSIDE" strokeWidth="0.0" text="İpek SÖZER" />
                 <Button fx:id="parcaListesiButton" disable="true" layoutX="276.0" layoutY="551.0" mnemonicParsing="false" onAction="#parcaListesiGoster" text="Parça Listesi" />
 
                 <Text fx:id="kampanaOlcuText" layoutX="949.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="70 mm" visible="false">
@@ -162,6 +162,26 @@
                     </font>
                 </Text>
                 <Text fx:id="tahliye2OlcuText" layoutX="762.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50 mm" visible="false">
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </Text>
+                <Text fx:id="kampanaVeriText" layoutX="845.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50 mm" visible="false" textAlignment="CENTER">
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </Text>
+                <Text fx:id="kampanaVeri2Text" layoutX="850.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50 mm" visible="false" textAlignment="CENTER">
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </Text>
+                <Text fx:id="kilitliBlokVeriText" layoutX="678.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50 mm" visible="false" textAlignment="CENTER">
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </Text>
+                <Text fx:id="kilitliBlokVeri2Text" layoutX="635.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50 mm" visible="false" textAlignment="CENTER">
                     <font>
                         <Font size="11.0" />
                     </font>

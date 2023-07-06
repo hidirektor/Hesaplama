@@ -146,6 +146,16 @@ public class MainController {
     private Text tahliye2OlcuText;
 
     @FXML
+    private Text kampanaVeriText;
+    @FXML
+    private Text kampanaVeri2Text;
+
+    @FXML
+    private Text kilitliBlokVeriText;
+    @FXML
+    private Text kilitliBlokVeri2Text;
+
+    @FXML
     private Button exportButton;
 
     @FXML
@@ -957,6 +967,9 @@ public class MainController {
         });
 
         hidrolikKilitComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if(oldValue != newValue) {
+                imageTextDisable(0);
+            }
             secilenHidrolikKilitDurumu = newValue;
             if(secilenPompa != null) {
                 String[] secPmp = secilenPompa.split(" cc");
@@ -1067,11 +1080,36 @@ public class MainController {
         exportButton.setDisable(true);
         kullanilacakKabin.setVisible(false);
 
-        imageTextDisable();
+        imageTextDisable(1);
     }
 
-    private void imageTextDisable() {
-        if(secilenHidrolikKilitDurumu != null && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+    private void imageTextDisable(int stat) {
+        if(stat == 1) {
+            if(secilenHidrolikKilitDurumu != null && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+                kampana2OlcuText.setVisible(false);
+                kampana2OlcuText2.setVisible(false);
+                kilitMotorOlcuText.setVisible(false);
+                kilitMotorOlcuText2.setVisible(false);
+                dolum2OlcuText.setVisible(false);
+                dolum2OlcuText2.setVisible(false);
+                tahliye2OlcuText.setVisible(false);
+                kampanaVeri2Text.setVisible(false);
+                kilitliBlokVeri2Text.setVisible(false);
+            } else {
+                kampanaOlcuText.setVisible(false);
+                kampanaOlcuText2.setVisible(false);
+                motorOlcuText.setVisible(false);
+                motorOlcuText2.setVisible(false);
+                kilitliBlokOlcuText.setVisible(false);
+                kilitliBlokOlcuText2.setVisible(false);
+                tahliyeOlcuText.setVisible(false);
+                dolumOlcuText.setVisible(false);
+                dolumOlcuText2.setVisible(false);
+                kampanaVeriText.setVisible(false);
+                kilitliBlokVeriText.setVisible(false);
+            }
+        } else {
+            sonucKapakImage.setImage(null);
             kampana2OlcuText.setVisible(false);
             kampana2OlcuText2.setVisible(false);
             kilitMotorOlcuText.setVisible(false);
@@ -1079,7 +1117,8 @@ public class MainController {
             dolum2OlcuText.setVisible(false);
             dolum2OlcuText2.setVisible(false);
             tahliye2OlcuText.setVisible(false);
-        } else {
+            kampanaVeri2Text.setVisible(false);
+            kilitliBlokVeri2Text.setVisible(false);
             kampanaOlcuText.setVisible(false);
             kampanaOlcuText2.setVisible(false);
             motorOlcuText.setVisible(false);
@@ -1089,6 +1128,8 @@ public class MainController {
             tahliyeOlcuText.setVisible(false);
             dolumOlcuText.setVisible(false);
             dolumOlcuText2.setVisible(false);
+            kampanaVeriText.setVisible(false);
+            kilitliBlokVeriText.setVisible(false);
         }
     }
 
@@ -1101,6 +1142,10 @@ public class MainController {
             dolum2OlcuText.setVisible(true);
             dolum2OlcuText2.setVisible(true);
             tahliye2OlcuText.setVisible(true);
+            kampanaVeri2Text.setVisible(true);
+            kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø");
+            kilitliBlokVeri2Text.setVisible(true);
+            kilitliBlokVeri2Text.setText(secilenValfTipi);
         } else {
             kampanaOlcuText.setVisible(true);
             kampanaOlcuText2.setVisible(true);
@@ -1111,6 +1156,10 @@ public class MainController {
             tahliyeOlcuText.setVisible(true);
             dolumOlcuText.setVisible(true);
             dolumOlcuText2.setVisible(true);
+            kampanaVeriText.setVisible(true);
+            kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø");
+            kilitliBlokVeriText.setVisible(true);
+            kilitliBlokVeriText.setText(secilenValfTipi);
         }
     }
 
