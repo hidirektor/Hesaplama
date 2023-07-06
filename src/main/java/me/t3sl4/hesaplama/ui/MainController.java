@@ -101,7 +101,49 @@ public class MainController {
     private ImageView sonucKapakImage;
 
     @FXML
-    private Text testOlcu;
+    private Text kampanaOlcuText;
+
+    @FXML
+    private Text kampanaOlcuText2;
+
+    @FXML
+    private Text motorOlcuText;
+
+    @FXML
+    private Text motorOlcuText2;
+
+    @FXML
+    private Text tahliyeOlcuText;
+
+    @FXML
+    private Text dolumOlcuText;
+    @FXML
+    private Text dolumOlcuText2;
+
+
+    @FXML
+    private Text kilitliBlokOlcuText;
+
+    @FXML
+    private Text kilitliBlokOlcuText2;
+
+    @FXML
+    private Text kampana2OlcuText;
+    @FXML
+    private Text kampana2OlcuText2;
+
+    @FXML
+    private Text kilitMotorOlcuText;
+    @FXML
+    private Text kilitMotorOlcuText2;
+
+    @FXML
+    private Text dolum2OlcuText;
+    @FXML
+    private Text dolum2OlcuText2;
+
+    @FXML
+    private Text tahliye2OlcuText;
 
     @FXML
     private Button exportButton;
@@ -1029,11 +1071,47 @@ public class MainController {
     }
 
     private void imageTextDisable() {
-        testOlcu.setVisible(false);
+        if(secilenHidrolikKilitDurumu != null && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+            kampana2OlcuText.setVisible(false);
+            kampana2OlcuText2.setVisible(false);
+            kilitMotorOlcuText.setVisible(false);
+            kilitMotorOlcuText2.setVisible(false);
+            dolum2OlcuText.setVisible(false);
+            dolum2OlcuText2.setVisible(false);
+            tahliye2OlcuText.setVisible(false);
+        } else {
+            kampanaOlcuText.setVisible(false);
+            kampanaOlcuText2.setVisible(false);
+            motorOlcuText.setVisible(false);
+            motorOlcuText2.setVisible(false);
+            kilitliBlokOlcuText.setVisible(false);
+            kilitliBlokOlcuText2.setVisible(false);
+            tahliyeOlcuText.setVisible(false);
+            dolumOlcuText.setVisible(false);
+            dolumOlcuText2.setVisible(false);
+        }
     }
 
     private void imageTextEnable() {
-        testOlcu.setVisible(true);
+        if(secilenHidrolikKilitDurumu != null && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+            kampana2OlcuText.setVisible(true);
+            kampana2OlcuText2.setVisible(true);
+            kilitMotorOlcuText.setVisible(true);
+            kilitMotorOlcuText2.setVisible(true);
+            dolum2OlcuText.setVisible(true);
+            dolum2OlcuText2.setVisible(true);
+            tahliye2OlcuText.setVisible(true);
+        } else {
+            kampanaOlcuText.setVisible(true);
+            kampanaOlcuText2.setVisible(true);
+            motorOlcuText.setVisible(true);
+            motorOlcuText2.setVisible(true);
+            kilitliBlokOlcuText.setVisible(true);
+            kilitliBlokOlcuText2.setVisible(true);
+            tahliyeOlcuText.setVisible(true);
+            dolumOlcuText.setVisible(true);
+            dolumOlcuText2.setVisible(true);
+        }
     }
 
     private void sonucEkraniTemizle() {
