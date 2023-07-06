@@ -585,7 +585,7 @@ public class MainController {
     public void exportProcess() {
         int startX = 550;
         int startY = 30;
-        int width = 414;
+        int width = 460;
         int height = 550;
 
         if(hesaplamaBitti) {
@@ -645,7 +645,7 @@ public class MainController {
     private void cropImage() {
         int startX = 550;
         int startY = 30;
-        int width = 414;
+        int width = 445;
         int height = 525;
 
         try {

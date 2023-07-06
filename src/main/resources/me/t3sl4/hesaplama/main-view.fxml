@@ -48,7 +48,7 @@
                         <TableColumn fx:id="sonucTabloSatir2" editable="false" prefWidth="207.0" sortable="false" />
                     </columns>
                 </TableView>
-                <ImageView fx:id="sonucKapakImage" fitHeight="252.0" fitWidth="414.0" layoutX="551.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="sonucKapakImage" fitHeight="252.0" fitWidth="414.0" layoutX="600.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" />
                 <Box fx:id="hydraulicUnitShape" depth="400.0" height="125.0" layoutX="813.0" layoutY="155.0" rotate="-10.0" visible="false" width="125.0">
                     <rotationAxis>
                         <Point3D x="-1.0" y="1.0" />
