@@ -165,6 +165,9 @@ public class MainController {
     @FXML
     private Button parcaListesiButton;
 
+    @FXML
+    private ImageView onderGrupLogo;
+
     /*
     Seçilen Değerler:
      */
@@ -195,6 +198,8 @@ public class MainController {
     public static DataManipulator dataManipulator = new DataManipulator();
 
     public void initialize() {
+        Image onderGrupMainLogo = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/onderGrupMain.png")));
+        onderGrupLogo.setImage(onderGrupMainLogo);
         textFilter();
         defineKabinOlcu();
         comboBoxListener();
@@ -746,6 +751,11 @@ public class MainController {
     }
 
     @FXML
+    public void onderGrupSiteOpen() {
+        openURL("https://ondergrup.com");
+    }
+
+    @FXML
     public void openRecep() {
         openURL(LINKEDIN_URL + "recep-can-ba%C5%9Fkurt-1a9889174/");
     }
@@ -1172,7 +1182,15 @@ public class MainController {
             dolumOlcuText2.setVisible(true);
             tahliyeOlcuText.setVisible(true);
             kampanaVeriText.setVisible(true);
-            kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø");
+            if(secilenKampana == 250) {
+                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 173);
+            } else if(secilenKampana == 300) {
+                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 236);
+            } else if(secilenKampana == 350) {
+                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 263);
+            } else if(secilenKampana == 400) {
+                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN");
+            }
             kilitliBlokVeriText.setVisible(true);
             kilitliBlokVeriText.setText("Kilitli Blok: \n" + secilenValfTipi);
         }
