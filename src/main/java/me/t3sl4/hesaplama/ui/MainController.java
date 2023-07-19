@@ -168,6 +168,9 @@ public class MainController {
     @FXML
     private ImageView onderGrupLogo;
 
+    @FXML
+    private Text kilitMotorIcOlcuText;
+
     /*
     Seçilen Değerler:
      */
@@ -189,6 +192,7 @@ public class MainController {
 
     public static String atananHT;
 
+    int atananHacim = 0;
     int hesaplananHacim = 0;
 
     private HostServices hostServices;
@@ -197,8 +201,9 @@ public class MainController {
 
     public static DataManipulator dataManipulator = new DataManipulator();
 
+    private Image onderGrupMainLogo = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/onderGrupMain.png")));
+
     public void initialize() {
-        Image onderGrupMainLogo = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/onderGrupMain.png")));
         onderGrupLogo.setImage(onderGrupMainLogo);
         textFilter();
         defineKabinOlcu();
@@ -364,15 +369,16 @@ public class MainController {
 
             if(hesaplananHacim > girilenTankKapasitesiMiktari) {
                 if(x <= tempX && y <= tempY) {
-                    //enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
                     enKucukLitreOlculer = olculer;
+                    break;
                 }
             } else {
-                if (litre >= girilenTankKapasitesiMiktari && litre - girilenTankKapasitesiMiktari < enKucukLitreFarki) {
+                if (litre >= girilenTankKapasitesiMiktari && litre - girilenTankKapasitesiMiktari <= enKucukLitreFarki) {
                     if(hesaplananHacim != litre && hesaplananHacim < litre) {
                         if(x < tempX && y < tempY) {
                             enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
                             enKucukLitreOlculer = olculer;
+                            break;
                         }
                     }
                 }
@@ -383,7 +389,7 @@ public class MainController {
             x = enKucukLitreOlculer[0];
             y = enKucukLitreOlculer[1];
             h = enKucukLitreOlculer[2];
-            hesaplananHacim = enKucukLitreOlculer[3];
+            atananHacim = enKucukLitreOlculer[3];
         }
 
         atananHT = Objects.requireNonNull(Util.getKeyByValue(dataManipulator.kabinOlculeri, enKucukLitreOlculer)).toString();
@@ -437,7 +443,7 @@ public class MainController {
         System.out.println("Atanan X: " + x);
         System.out.println("Atanan Y: " + y);
         System.out.println("Atanan h: " + h);
-        System.out.println("Atanan Hacim: " + hesaplananHacim);
+        System.out.println("Atanan Hacim: " + atananHacim);
         System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
         System.out.println("Geçiş Ölçüleri: " + gecisOlculeri);
         System.out.println("-------------------------------");
@@ -445,7 +451,7 @@ public class MainController {
         finalValues.add(x);
         finalValues.add(y);
         finalValues.add(h);
-        finalValues.add(hesaplananHacim);
+        finalValues.add(atananHacim);
         return finalValues;
     }
 
@@ -644,7 +650,7 @@ public class MainController {
 
     @FXML
     public void exportProcess() {
-        int startX = 550;
+        int startX = 570;
         int startY = 30;
         int width = 460;
         int height = 550;
@@ -653,8 +659,10 @@ public class MainController {
             coords2Png(startX, startY, width, height);
             cropImage();
 
+            Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/onderGrupMain.png")));
+
             //PDF kısmı:
-            Util.pdfGenerator("cropped_screenshot.png", "test.pdf", girilenSiparisNumarasi);
+            Util.pdfGenerator("/icons/onderGrupMain.png", "cropped_screenshot.png", "/icons/test.pdf", girilenSiparisNumarasi);
         } else {
             showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
@@ -704,9 +712,9 @@ public class MainController {
     }
 
     private void cropImage() {
-        int startX = 550;
+        int startX = 600;
         int startY = 30;
-        int width = 445;
+        int width = 400;
         int height = 525;
 
         try {
@@ -1103,6 +1111,7 @@ public class MainController {
                 kampana2OlcuText2.setVisible(false);
                 kilitMotorOlcuText.setVisible(false);
                 kilitMotorOlcuText2.setVisible(false);
+                kilitMotorIcOlcuText.setVisible(false);
                 kilitliBlok2OlcuText.setVisible(false);
                 kilitliBlok2OlcuText2.setVisible(false);
                 dolum2OlcuText.setVisible(false);
@@ -1169,6 +1178,8 @@ public class MainController {
             } else if(secilenKampana == 400) {
                 kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN");
             }
+            kilitMotorIcOlcuText.setVisible(true);
+            kilitMotorIcOlcuText.setText("Boğaz: Ø200\nKesim: Ø??");
             kilitMotorVeriText.setVisible(true);
             kilitMotorVeriText.setText("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa);
             kilitliBlokVeri2Text.setVisible(true);

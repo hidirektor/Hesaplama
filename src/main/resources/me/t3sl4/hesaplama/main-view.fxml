@@ -139,9 +139,14 @@
                         <Font size="10.0" />
                     </font>
                 </Text>
-                <Text fx:id="kilitMotorOlcuText2" layoutX="640.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50 mm" visible="false">
+                <Text fx:id="kilitMotorOlcuText2" layoutX="640.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100 mm" visible="false">
                     <font>
                         <Font size="8.5" />
+                    </font>
+                </Text>
+                <Text fx:id="kilitMotorIcOlcuText" layoutX="690.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Boğaz: " visible="false">
+                    <font>
+                        <Font size="8.0" />
                     </font>
                 </Text>
                 <Text fx:id="kilitliBlok2OlcuText" layoutX="632.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50 mm" visible="false">

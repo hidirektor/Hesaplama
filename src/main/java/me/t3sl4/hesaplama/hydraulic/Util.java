@@ -26,16 +26,33 @@ public class Util {
         return null;
     }
 
-    public static void pdfGenerator(String pngFilePath, String pdfFilePath, String girilenSiparisNumarasi) {
+    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pdfFilePath, String girilenSiparisNumarasi) {
         try {
             Document document = new Document();
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(girilenSiparisNumarasi + ".pdf"));
             document.open();
 
-            Image image = Image.getInstance(pngFilePath);
-            document.add(image);
+            Image image1 = Image.getInstance(Util.class.getResource(pngFilePath1));
+            float targetWidth1 = document.getPageSize().getWidth() * 0.5f; // Sayfanın genişliğinin %50'si
+            float targetHeight1 = (image1.getHeight() / (float) image1.getWidth()) * targetWidth1;
+            image1.scaleToFit(targetWidth1, targetHeight1);
+            image1.setAlignment(Image.ALIGN_CENTER);
+            document.add(image1);
 
-            PdfReader reader = new PdfReader(pdfFilePath);
+            Image image2 = Image.getInstance(pngFilePath2);
+
+            float documentWidth = document.getPageSize().getWidth();
+            float documentHeight = document.getPageSize().getHeight();
+            float imageWidth = image2.getWidth();
+            float imageHeight = image2.getHeight();
+
+            float x = (documentWidth - imageWidth) / 2;
+            float y = (documentHeight - imageHeight) / 2;
+
+            image2.setAbsolutePosition(x, y);
+            document.add(image2);
+
+            PdfReader reader = new PdfReader(Util.class.getResource(pdfFilePath));
             PdfImportedPage page = writer.getImportedPage(reader, 1);
             document.newPage();
             writer.getDirectContent().addTemplate(page, 0, 0);
@@ -44,11 +61,11 @@ public class Util {
 
             System.out.println("PDF oluşturuldu.");
 
-            File pngFile = new File(pngFilePath);
-            if (pngFile.delete()) {
-                System.out.println("PNG dosyası silindi.");
+            File pngFile2 = new File(pngFilePath2);
+            if (pngFile2.delete()) {
+                System.out.println("İkinci PNG dosyası silindi.");
             } else {
-                System.out.println("PNG dosyası silinemedi.");
+                System.out.println("İkinci PNG dosyası silinemedi.");
             }
 
             if (Desktop.isDesktopSupported()) {

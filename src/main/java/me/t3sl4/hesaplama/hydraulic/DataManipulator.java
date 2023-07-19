@@ -2,6 +2,7 @@ package me.t3sl4.hesaplama.hydraulic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DataManipulator {
@@ -24,7 +25,7 @@ public class DataManipulator {
     public int kayipLitre;
     public ArrayList<Integer> kampanaDegerleri = new ArrayList<>();
 
-    public HashMap<Object, int[]> kabinOlculeri = new HashMap<Object, int[]>();
+    public LinkedHashMap<Object, int[]> kabinOlculeri = new LinkedHashMap<Object, int[]>();
 
     public List<String> motorYukseklikVerileri = new ArrayList<>();
 
