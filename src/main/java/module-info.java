@@ -1,4 +1,4 @@
-module me.t3sl4.hesaplama {
+module me.t3sl4.hydraulic {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -6,11 +6,12 @@ module me.t3sl4.hesaplama {
     requires itext.xtra;
     requires itextpdf;
     requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
-    opens me.t3sl4.hesaplama to javafx.fxml;
-    exports me.t3sl4.hesaplama;
-    exports me.t3sl4.hesaplama.ui;
-    exports me.t3sl4.hesaplama.hydraulic;
-    opens me.t3sl4.hesaplama.ui to javafx.fxml;
-    opens me.t3sl4.hesaplama.hydraulic to javafx.base;
+    opens me.t3sl4.hydraulic to javafx.fxml;
+    exports me.t3sl4.hydraulic;
+    exports me.t3sl4.hydraulic.Controllers;
+    exports me.t3sl4.hydraulic.Util;
+    opens me.t3sl4.hydraulic.Controllers to javafx.fxml;
+    opens me.t3sl4.hydraulic.Util to javafx.base;
 }
