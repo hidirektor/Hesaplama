@@ -6,5 +6,5 @@ Description = Fixed crashing bug.
 URL = http://www.myupdateslocation.com/download/OnderGrupHidrolik25.07.2023.msi
 Size = 654321
 ServerFileName = OnderGrupHidrolik25.07.2023.exe
-FilePath = [APPDIR]OnderGrupHidrolik.exe
+FilePath = [APPDIR]Hesaplama.jar
 Version = 25.07.2023
