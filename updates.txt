@@ -1,0 +1,10 @@
+;aiu;
+
+[hidrolik25.07.2023]
+Name = Hidrolik v25.07.2023
+Description = Fixed crashing bug.
+URL = http://www.myupdateslocation.com/download/OnderGrupHidrolik25.07.2023.msi
+Size = 654321
+ServerFileName = OnderGrupHidrolik25.07.2023.exe
+FilePath = [APPDIR]OnderGrupHidrolik.exe
+Version = 25.07.2023
