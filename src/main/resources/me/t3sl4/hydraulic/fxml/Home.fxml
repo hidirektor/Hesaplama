@@ -13,20 +13,24 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.MainController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #05071F;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/jimmy-fallon.png" />
-                    </image>
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="50.0" />
-                    </VBox.margin></ImageView>
-                <Label text="/@KullanıcıAdı" textFill="#e7e5e5">
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                      <Circle fx:id="profilePhotoCircle" fill="#05071F" radius="63.0" />
+                      <ImageView fx:id="kullaniciProfilFoto" fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../images/jimmy-fallon.png" />
+                          </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+                <Label fx:id="kullaniciAdiIsimText" alignment="CENTER" text="/@KullanıcıAdı" textAlignment="CENTER" textFill="#e7e5e5">
                     <VBox.margin>
                         <Insets bottom="20.0" />
                     </VBox.margin>
@@ -144,7 +148,7 @@
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                  <Label fx:id="versionCode" layoutX="710.0" layoutY="4.0" text="v20.07.2023" textFill="#e7e5e5">
+                  <Label fx:id="versionCode" layoutX="710.0" layoutY="4.0" text="v25.07.2023" textFill="#e7e5e5">
                      <font>
                         <Font size="15.0" />
                      </font>

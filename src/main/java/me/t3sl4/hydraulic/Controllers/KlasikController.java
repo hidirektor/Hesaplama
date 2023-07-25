@@ -17,9 +17,9 @@ import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Main;
-import me.t3sl4.hydraulic.Util.TableData;
+import me.t3sl4.hydraulic.Util.Table.TableData;
 import me.t3sl4.hydraulic.Util.Util;
 
 import javax.imageio.ImageIO;
@@ -27,7 +27,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.IntBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 public class KlasikController {
@@ -165,6 +166,9 @@ public class KlasikController {
     @FXML
     private Text kilitMotorIcOlcuText;
 
+    @FXML
+    private ImageView sonucTankGorsel;
+
     /*
     Seçilen Değerler:
      */
@@ -193,6 +197,8 @@ public class KlasikController {
     private static final String GITHUB_URL = "https://github.com/";
     private static final String LINKEDIN_URL = "https://www.linkedin.com/in/";
 
+    private double x, y;
+
     public void initialize() {
         textFilter();
         defineKabinOlcu();
@@ -209,7 +215,7 @@ public class KlasikController {
         int hacim = 0; //Hacim
         ArrayList<Integer> results;
         if (checkComboBox()) {
-            showErrorMessage("Lütfen tüm girdileri kontrol edin.");
+            Util.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
         } else {
             enableSonucSection();
             results = calcDimensions(x, y, h, Util.dataManipulator.kampanaDegerleri);
@@ -225,10 +231,12 @@ public class KlasikController {
             tabloGuncelle();
             Image image;
             if(secilenKilitMotor != null) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/normal.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/normal.png")));
+
             } else {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/kilitMotor.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/kilitMotor.png")));
             }
+            //tankGorselLoad();
             sonucKapakImage.setImage(image);
             parcaListesiButton.setDisable(false);
             exportButton.setDisable(false);
@@ -576,7 +584,7 @@ public class KlasikController {
 
     @FXML
     public void parametrePressed() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("popup.fxml"));
             VBox root = fxmlLoader.load();
@@ -600,7 +608,7 @@ public class KlasikController {
 
     @FXML
     public void parcaListesiGoster() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
         if(hesaplamaBitti) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("fxml/ParcaListesi.fxml"));
@@ -608,14 +616,26 @@ public class KlasikController {
                 ParcaController parcaController = fxmlLoader.getController();
                 Stage popupStage = new Stage();
                 popupStage.initModality(Modality.APPLICATION_MODAL);
+                popupStage.initStyle(StageStyle.UNDECORATED);
                 popupStage.setScene(new Scene(root));
                 popupStage.getIcons().add(icon);
+
+                root.setOnMousePressed(event -> {
+                    x = event.getSceneX();
+                    y = event.getSceneY();
+                });
+                root.setOnMouseDragged(event -> {
+
+                    popupStage.setX(event.getScreenX() - x);
+                    popupStage.setY(event.getScreenY() - y);
+
+                });
                 popupStage.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
+            Util.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
         }
     }
 
@@ -637,9 +657,9 @@ public class KlasikController {
             cropImage(680, startY, 370, height);
 
             //PDF kısmı:
-            Util.pdfGenerator("/icons/onderGrupMainBeyaz.png", "cropped_screenshot.png", "/icons/test.pdf", girilenSiparisNumarasi);
+            Util.pdfGenerator("icons/onderGrupMainBeyaz.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
         } else {
-            showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
+            Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
     }
 
@@ -1197,11 +1217,16 @@ public class KlasikController {
         sonucTablo.getItems().add(data);
     }
 
-    private void showErrorMessage(String hataMesaji) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Hata");
-        alert.setHeaderText(null);
-        alert.setContentText(hataMesaji);
-        alert.showAndWait();
+    private void tankGorselLoad() {
+        Image image;
+
+        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitsiz.png")));
+        sonucTankGorsel.setImage(image);
+
+        derinlikSonucText.setVisible(false);
+        genislikSonucText.setVisible(false);
+        hacimText.setVisible(false);
+        yukseklikSonucText.setVisible(false);
+        hydraulicUnitShape.setVisible(false);
     }
 }

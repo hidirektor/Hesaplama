@@ -8,13 +8,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import me.t3sl4.hydraulic.Main;
-import me.t3sl4.hydraulic.Util.ParcaTableData;
+import javafx.stage.Stage;
+import me.t3sl4.hydraulic.Util.Table.ParcaTableData;
 import me.t3sl4.hydraulic.Util.Util;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
@@ -101,6 +100,13 @@ public class ParcaController {
         } catch (IOException e) {
             System.err.println("Excel dosyası oluşturulurken bir hata oluştu: " + e.getMessage());
         }
+    }
+
+    @FXML
+    public void popupKapat() {
+        Stage stage = (Stage) basincSalteriComboBox.getScene().getWindow();
+
+        stage.close();
     }
 
     @FXML

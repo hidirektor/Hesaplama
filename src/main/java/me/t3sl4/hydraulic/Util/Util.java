@@ -2,8 +2,8 @@ package me.t3sl4.hydraulic.Util;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
@@ -14,13 +14,16 @@ import java.io.*;
 import java.util.Map;
 import java.util.Objects;
 
+import javafx.scene.control.Alert;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Main;
+import me.t3sl4.hydraulic.Util.Data.DataManipulator;
 import org.apache.poi.ss.usermodel.*;
 
 public class Util {
 
     public static DataManipulator dataManipulator = new DataManipulator();
+
+    public static String BASE_URL = "http://85.95.231.92:3000";
     
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -43,7 +46,7 @@ public class Util {
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
 
-            Image image1 = Image.getInstance(Util.class.getResource(pngFilePath1));
+            Image image1 = Image.getInstance(Launcher.class.getResource(pngFilePath1));
             float targetWidth1 = document.getPageSize().getWidth() * 0.5f; // Sayfanın genişliğinin %50'si
             float targetHeight1 = (image1.getHeight() / (float) image1.getWidth()) * targetWidth1;
             image1.scaleToFit(targetWidth1, targetHeight1);
@@ -63,7 +66,7 @@ public class Util {
             image2.setAbsolutePosition(x, y);
             document.add(image2);
 
-            PdfReader reader = new PdfReader(Util.class.getResource(pdfFilePath));
+            PdfReader reader = new PdfReader(Launcher.class.getResource(pdfFilePath));
             PdfImportedPage page = writer.getImportedPage(reader, 1);
             document.newPage();
             writer.getDirectContent().addTemplate(page, 0, 0);
@@ -881,5 +884,13 @@ public class Util {
         readExcel4ParcaListesiValfBlok(excelPath, dataManipulator);
         readExcel4ParcaListesiBasincSalteri(excelPath, dataManipulator);
         readExcel4ParcaListesiStandart(excelPath, dataManipulator);
+    }
+
+    public static void showErrorMessage(String hataMesaji) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Hata");
+        alert.setHeaderText(null);
+        alert.setContentText(hataMesaji);
+        alert.showAndWait();
     }
 }
