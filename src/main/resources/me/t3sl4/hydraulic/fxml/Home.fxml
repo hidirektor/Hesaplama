@@ -125,7 +125,7 @@
                         <Insets left="50.0" />
                     </padding>
                 </Button>
-            <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/onderGrupMainBeyaz.png" />
                </image>
@@ -197,35 +197,11 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="178.0" prefHeight="42.0" prefWidth="712.0" spacing="80.0" style="-fx-background-color: #02030A;">
-                            <children>
-                                <Label prefHeight="18.0" prefWidth="113.0" text="Sipariş Numarası" textFill="#e7e5e5">
-                                    <HBox.margin>
-                                        <Insets left="50.0" />
-                                    </HBox.margin>
-                                </Label>
-                                <Label prefHeight="18.0" prefWidth="120.0" text="Oluşturma Tarihi" textFill="#e7e5e5">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Label>
-                                <Label text="Tür" textFill="#e7e5e5">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Label>
-                                <Label text="PDF" textFill="#e7e5e5">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Label>
-                                <Label text="Oluşturan" textFill="#e7e5e5">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Label>
-                            </children>
-                        </HBox>
+                          <Label layoutX="97.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Numarası" textFill="#e7e5e5" />
+                          <Label layoutX="246.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Tarihi" textFill="#e7e5e5" />
+                          <Label layoutX="388.0" layoutY="205.0" text="Tür" textFill="#e7e5e5" />
+                          <Label layoutX="531.0" layoutY="205.0" text="PDF" textFill="#e7e5e5" />
+                          <Label layoutX="638.0" layoutY="205.0" text="Oluşturan" textFill="#e7e5e5" />
                         <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="320.0" prefWidth="746.0" stylesheets="@../styling/style.css">
                             <content>
                                 <VBox fx:id="pnItems" prefHeight="318.0" prefWidth="744.0" spacing="5.0" style="-fx-background-color: #02030A;">

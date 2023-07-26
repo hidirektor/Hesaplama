@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import me.t3sl4.hydraulic.Util.Util;
+import me.t3sl4.hydraulic.Util.Gen.Util;
 
 public class Main extends Application {
     private double x, y;

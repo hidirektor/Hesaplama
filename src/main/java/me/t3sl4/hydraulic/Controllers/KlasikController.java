@@ -1,13 +1,10 @@
 package me.t3sl4.hydraulic.Controllers;
 
-import javafx.application.HostServices;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
@@ -19,17 +16,24 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.Table.TableData;
-import me.t3sl4.hydraulic.Util.Util;
+import me.t3sl4.hydraulic.Util.Gen.Util;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.IntBuffer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
+
+import static me.t3sl4.hydraulic.Util.Gen.FileUtil.encodeFileToBase64WString;
+import static me.t3sl4.hydraulic.Util.Gen.FileUtil.fileExists;
+import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
 public class KlasikController {
     @FXML
@@ -177,7 +181,7 @@ public class KlasikController {
     /*
     Seçilen Değerler:
      */
-    public String girilenSiparisNumarasi = null;
+    public static String girilenSiparisNumarasi = null;
     public String secilenUniteTipi = "Klasik";
     public static String secilenMotor = null;
     public static int secilenKampana = 0;
@@ -209,7 +213,7 @@ public class KlasikController {
     }
 
     @FXML
-    public void hesaplaFunc() {
+    public void hesaplaFunc() throws IOException {
         int h = 0; //Yükseklik
         int y = 0; //Derinlik
         int x = 0; //Genişlik
@@ -243,6 +247,33 @@ public class KlasikController {
             exportButton.setDisable(false);
             imageTextEnable(x, y);
             hesaplamaBitti = true;
+        }
+    }
+
+    @FXML
+    public void transferCalculation() throws IOException {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
+        String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
+
+        if(fileExists(pdfPath) && fileExists(excelPath)) {
+            String pdfBase64 = encodeFileToBase64WString(pdfPath);
+            String excelBase64 = encodeFileToBase64WString(excelPath);
+            String url = BASE_URL + "/api/insertHidrolik";
+            String jsonBody = "{\n" +
+                    "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
+                    "  \"OrderDate\": \"" + dtf.format(now) + "\",\n" +
+                    "  \"Type\": \"" + secilenUniteTipi + "\",\n" +
+                    "  \"InCharge\": \"" + LoginController.loggedInUser.getFullName() + "\",\n" +
+                    "  \"PDF\": \"" + pdfBase64 + "\",\n" +
+                    "  \"PartList\": \"" + excelBase64 + "\"\n" +
+                    "}";
+
+            HTTPUtil.sendPostRequest(url, jsonBody);
+        } else {
+            Util.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
     }
 

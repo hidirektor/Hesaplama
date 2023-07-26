@@ -10,7 +10,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Util.Table.ParcaTableData;
-import me.t3sl4.hydraulic.Util.Util;
+import me.t3sl4.hydraulic.Util.Gen.Util;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -71,7 +71,7 @@ public class ParcaController {
     @FXML
     public void exportExcelProcess() {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
-        String excelFileName = "malzemeListesi.xlsx";
+        String excelFileName = KlasikController.girilenSiparisNumarasi + ".xlsx";
 
         String desktopPath = Paths.get(System.getProperty("user.home"), "Desktop").toString();
         excelFileName = Paths.get(desktopPath, excelFileName).toString();

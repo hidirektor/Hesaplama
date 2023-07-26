@@ -26,8 +26,8 @@
                 <ComboBox fx:id="kilitMotorComboBox" disable="true" layoutX="9.0" layoutY="210.0" onAction="#kilitMotorPressed" prefWidth="150.0" promptText="Kilit Motor" />
                 <ComboBox fx:id="kilitPompaComboBox" disable="true" layoutX="177.0" layoutY="210.0" onAction="#kilitPompaPressed" prefWidth="150.0" promptText="Kilit Pompa" />
                 <ComboBox fx:id="sogutmaComboBox" disable="true" layoutX="84.0" layoutY="266.0" onAction="#sogutmaPressed" prefWidth="150.0" promptText="Soğutma" />
-                <Button fx:id="hesaplaButton" layoutX="35.0" layoutY="326.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
-                <Button fx:id="temizleButton" layoutX="107.0" layoutY="326.0" mnemonicParsing="false" onAction="#temizlemeIslemi" style="-fx-background-color: #1761ab;" text="Temizle" />
+                <Button fx:id="hesaplaButton" layoutX="16.0" layoutY="326.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
+                <Button fx:id="temizleButton" layoutX="84.0" layoutY="326.0" mnemonicParsing="false" onAction="#temizlemeIslemi" style="-fx-background-color: #1761ab;" text="Temizle" />
                 <TableView fx:id="sonucTablo" layoutY="365.0" prefHeight="212.0" prefWidth="414.0">
                     <columns>
                         <TableColumn fx:id="sonucTabloSatir1" editable="false" prefWidth="207.0" sortable="false" />
@@ -64,8 +64,8 @@
                         <Font size="16.0" />
                     </font>
                 </Text>
-                <Button fx:id="exportButton" disable="true" layoutX="183.0" layoutY="328.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
-                <Button fx:id="parcaListesiButton" disable="true" layoutX="287.0" layoutY="328.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
+                <Button fx:id="exportButton" disable="true" layoutX="149.0" layoutY="326.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
+                <Button fx:id="parcaListesiButton" disable="true" layoutX="236.0" layoutY="326.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
 
                 <Text fx:id="kampana2OlcuText" layoutX="735.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="70 mm" visible="false">
                     <font>
@@ -183,6 +183,7 @@
                 </Text>
             <Text fx:id="sonucUstText" layoutX="580.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X: 20 mm" visible="false" />
             <Text fx:id="sonucSagText" layoutX="750.0" layoutY="400.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 20 mm" visible="false" />
+            <Button fx:id="kaydetButton" layoutX="324.0" layoutY="326.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Kaydet" />
             </children>
         </AnchorPane>
     </children>

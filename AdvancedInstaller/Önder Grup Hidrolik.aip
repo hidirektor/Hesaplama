@@ -18,7 +18,7 @@
     <ROW Property="ProductCode" Value="2057:{C2C701D9-6556-4E9B-B709-B98781D724C6} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Onder Grup Hidrolik"/>
-    <ROW Property="ProductVersion" Value="25.07.2023" Options="32"/>
+    <ROW Property="ProductVersion" Value="26.07.2023" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{3E8D187B-3043-490F-8341-707800BF221B}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -33,15 +33,13 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
-    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_ExePath" ComponentId="{6481DA27-791A-4BD1-8012-2307B9614181}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{B17D0D4F-AE61-41CF-96C7-FA7873F96E7C}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="Hesaplama.jar" ComponentId="{6E45D934-90A2-4620-8003-71846EEAB389}" Directory_="APPDIR" Attributes="0" KeyPath="Hesaplama.jar" Type="0"/>
+    <ROW Component="Hidrolik.jar" ComponentId="{9A23CC04-29BF-451A-AEAF-3189680523E4}" Directory_="APPDIR" Attributes="0" KeyPath="Hidrolik.jar" Type="0"/>
     <ROW Component="ProductInformation" ComponentId="{B9F4A40A-3EAB-4B19-8B1B-556FE00C725C}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
-    <ROW Component="SHORTCUTDIR" ComponentId="{AD2BB8D4-8F35-413F-9A33-D47DEE676511}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="updater.exe" ComponentId="{08905978-E5A2-4752-9A55-190893ECB530}" Directory_="APPDIR" Attributes="0" KeyPath="updater.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
@@ -49,8 +47,8 @@
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="Hesaplama.jar" Component_="Hesaplama.jar" FileName="HESAPL~1.JAR|Hesaplama.jar" Attributes="0" SourcePath="Hesaplama.jar" SelfReg="false"/>
     <ROW File="updater.exe" Component_="updater.exe" FileName="updater.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="&lt;AI_STUBS&gt;updater.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="Hidrolik.jar" Component_="Hidrolik.jar" FileName="Hidrolik.jar" Attributes="0" SourcePath="..\..\..\Desktop\Hidrolik.jar" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="6" UpdatesUrl="https://github.com/hidirektor/OnderGrup-Hydraulic-Tool/blob/main/updates.txt"/>
@@ -62,6 +60,9 @@
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
     <ROW Path="&lt;AI_DICTS&gt;ui_en_GB.ail"/>
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" UseSha256="1" Thumbprint="5ac0c48a5f9c9b52b323c48d7e6ac4899af386e8 Subject: Önder Grup&#10;Issuer: Önder Grup&#10;Valid from 07/26/2023 to 07/26/2024" Subject="CN=Önder Grup" Store="Machine\Root"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -126,7 +127,6 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
-    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_AppSearchEx" Type="1" Source="Prereq.dll" Target="DoAppSearchEx"/>
@@ -159,10 +159,9 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
-    <ROW Feature_="MainFeature" Component_="Hesaplama.jar"/>
-    <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="MainFeature" Component_="AI_ExePath"/>
     <ROW Feature_="MainFeature" Component_="updater.exe"/>
+    <ROW Feature_="MainFeature" Component_="Hidrolik.jar"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="Hesaplama.exe" SourcePath="logo.ico" Index="0"/>
@@ -236,8 +235,7 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="Hidrolik" Directory_="SHORTCUTDIR" Name="Hidrolik" Component_="Hesaplama.jar" Target="[#Hesaplama.jar]" Description="Önder Grup Hidrolik" Hotkey="0" Icon_="Hesaplama.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="Hidrolik_1" Directory_="DesktopFolder" Name="Hidrolik" Component_="Hesaplama.jar" Target="[#Hesaplama.jar]" Description="Önder Grup Hidrolik" Hotkey="0" Icon_="Hesaplama.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="Hidrolik" Directory_="DesktopFolder" Name="Hidrolik" Component_="Hidrolik.jar" Target="[#Hidrolik.jar]" Description="Önder Grup Hidrolik Ünitesi Hesaplama Aracı" Hotkey="0" Icon_="Hesaplama.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
@@ -247,7 +245,7 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
-    <ROW PrereqKey="JavaTMPlatformSE" DisplayName="Java(TM) Platform SE 12" VersionMin="12.0.2.0" SetupFileUrl="..\..\Downloads\Programs\jdk-12.0.2_windows-x64_bin.exe" Location="0" ExactSize="0" Operator="1" Options="yi" TargetName="Java(TM) Platform SE 12\jdk-12.0.2_windows-x64_bin.exe"/>
+    <ROW PrereqKey="JavaTMPlatformSE" DisplayName="Java(TM) Platform SE 12" VersionMin="12.0.2.0" SetupFileUrl="..\..\..\Downloads\Programs\jdk-12.0.2_windows-x64_bin.exe" Location="0" ExactSize="0" Operator="1" Options="yi" TargetName="Java(TM) Platform SE 12\jdk-12.0.2_windows-x64_bin.exe"/>
     <ATTRIBUTE name="PrereqsOrder" value="JavaTMPlatformSE"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">

@@ -15,20 +15,18 @@ import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.User;
-import me.t3sl4.hydraulic.Util.Util;
+import me.t3sl4.hydraulic.Util.Gen.Util;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
 public class LoginController implements Initializable {
 
@@ -65,7 +63,6 @@ public class LoginController implements Initializable {
                 String url = BASE_URL + "/api/profileInfo/:NameSurname";
                 String jsonBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
                 loggedInUser = new User(txtUsername.getText(), HTTPUtil.parseNameSurname(HTTPUtil.sendPostRequest(url, jsonBody), "NameSurname"));
-                System.out.println();
                 openMainScreen();
             } else {
                 lblErrors.setText("Böyle bir kullanıcı bulunamadı !!");
