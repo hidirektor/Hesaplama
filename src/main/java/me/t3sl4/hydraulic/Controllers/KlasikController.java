@@ -169,6 +169,11 @@ public class KlasikController {
     @FXML
     private ImageView sonucTankGorsel;
 
+    @FXML
+    private Text sonucUstText;
+    @FXML
+    private Text sonucSagText;
+
     /*
     Seçilen Değerler:
      */
@@ -192,10 +197,6 @@ public class KlasikController {
 
     int atananHacim = 0;
     int hesaplananHacim = 0;
-
-    private HostServices hostServices;
-    private static final String GITHUB_URL = "https://github.com/";
-    private static final String LINKEDIN_URL = "https://www.linkedin.com/in/";
 
     private double x, y;
 
@@ -240,7 +241,7 @@ public class KlasikController {
             sonucKapakImage.setImage(image);
             parcaListesiButton.setDisable(false);
             exportButton.setDisable(false);
-            imageTextEnable();
+            imageTextEnable(x, y);
             hesaplamaBitti = true;
         }
     }
@@ -452,21 +453,6 @@ public class KlasikController {
     }
 
     @FXML
-    public void redirectGithub() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Yardım");
-        alert.setHeaderText("Yardım İçin GitHub Sayfasına Yönlendiriliyorsunuz");
-
-        Text text = new Text("Yardım dokümantasyonuna ulaşmak için aşağıdaki linke tıklayınız:");
-        Hyperlink link = new Hyperlink("GitHub Repo Sayfası");
-        link.setOnAction(this::openGitHubDocumentation);
-
-        VBox vbox = new VBox(text, link);
-        alert.getDialogPane().setContent(vbox);
-        alert.showAndWait();
-    }
-
-    @FXML
     public void motorPressed() {
         if(motorComboBox.getValue() != null) {
             secilenMotor = motorComboBox.getValue();
@@ -583,30 +569,6 @@ public class KlasikController {
     }
 
     @FXML
-    public void parametrePressed() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("popup.fxml"));
-            VBox root = fxmlLoader.load();
-            PopupController popupController = fxmlLoader.getController();
-            popupController.setValues(Util.dataManipulator.kampanaBoslukX, Util.dataManipulator.kampanaBoslukY,
-                    Util.dataManipulator.valfBoslukX, Util.dataManipulator.valfBoslukYArka, Util.dataManipulator.valfBoslukYOn,
-                    Util.dataManipulator.kilitliBlokAraBoslukX, Util.dataManipulator.tekHizAraBoslukX, Util.dataManipulator.ciftHizAraBoslukX,
-                    Util.dataManipulator.kompanzasyonTekHizAraBoslukX, Util.dataManipulator.sogutmaAraBoslukX, Util.dataManipulator.sogutmaAraBoslukYkOn,
-                    Util.dataManipulator.sogutmaAraBoslukYkArka, Util.dataManipulator.kilitMotorKampanaBosluk, Util.dataManipulator.kilitMotorMotorBoslukX,
-                    Util.dataManipulator.kilitMotorBoslukYOn, Util.dataManipulator.kilitMotorBoslukYArka, Util.dataManipulator.kayipLitre);
-            popupController.showValues();
-            Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(root));
-            popupStage.getIcons().add(icon);
-            popupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     public void parcaListesiGoster() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
         if(hesaplamaBitti) {
@@ -650,13 +612,12 @@ public class KlasikController {
         int startX = 500;
         int startY = 10;
         int width = 800;
-        int height = 550;
+        int height = 560;
 
         if(hesaplamaBitti) {
             coords2Png(startX, startY, width, height);
             cropImage(680, startY, 370, height);
 
-            //PDF kısmı:
             Util.pdfGenerator("icons/onderGrupMainBeyaz.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
         } else {
             Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
@@ -727,10 +688,6 @@ public class KlasikController {
         }
     }
 
-    public void setHostServices(HostServices hostServices) {
-        this.hostServices = hostServices;
-    }
-
     private boolean checkComboBox() {
         if(siparisNumarasi.getText().isEmpty() || motorComboBox.getSelectionModel().isEmpty() || pompaComboBox.getSelectionModel().isEmpty() || valfTipiComboBox.getSelectionModel().isEmpty() || hidrolikKilitComboBox.getSelectionModel().isEmpty() || sogutmaComboBox.getSelectionModel().isEmpty()) {
             return true;
@@ -741,31 +698,6 @@ public class KlasikController {
         if(tankKapasitesiTextField.getText() == null || girilenTankKapasitesi == 0) {
             return true;
         } else return girilenTankKapasitesi < 1 || girilenTankKapasitesi > 500;
-    }
-
-    private void openGitHubDocumentation(ActionEvent event) {
-        String url = "https://github.com/hidirektor/OnderGrup-Hydraulic-Tool";
-        hostServices.showDocument(url);
-    }
-
-    @FXML
-    public void onderGrupSiteOpen() {
-        Util.openURL("https://ondergrup.com");
-    }
-
-    @FXML
-    public void openRecep() {
-        Util.openURL(LINKEDIN_URL + "recep-can-ba%C5%9Fkurt-1a9889174/");
-    }
-
-    @FXML
-    public void openHid() {
-        Util.openURL(GITHUB_URL + "hidirektor");
-    }
-
-    @FXML
-    public void openIpek() {
-        Util.openURL(LINKEDIN_URL + "ipekszr/");
     }
 
     private void initMotor() {
@@ -862,15 +794,6 @@ public class KlasikController {
         kilitPompaComboBox.setVisible(true);
         kilitPompaComboBox.getItems().addAll(Util.dataManipulator.kilitPompaDegerleri);
         //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
-    }
-
-    private void disableAllSections() {
-        motorComboBox.setDisable(true);
-        pompaComboBox.setDisable(true);
-        tankKapasitesiTextField.setDisable(true);
-        valfTipiComboBox.setDisable(true);
-        hidrolikKilitComboBox.setDisable(true);
-        sogutmaComboBox.setDisable(true);
     }
 
     private void disableMotorPompa(int stat) {
@@ -1072,6 +995,8 @@ public class KlasikController {
     }
 
     private void imageTextDisable(int stat) {
+        sonucSagText.setVisible(false);
+        sonucUstText.setVisible(false);
         if(stat == 1) {
             if(secilenKilitMotor != null) {
                 kampana2OlcuText.setVisible(false);
@@ -1125,7 +1050,11 @@ public class KlasikController {
         }
     }
 
-    private void imageTextEnable() {
+    private void imageTextEnable(int x, int y) {
+        sonucUstText.setVisible(true);
+        sonucSagText.setVisible(true);
+        sonucUstText.setText("X: " + x + " mm");
+        sonucSagText.setText("Y: " + y + " mm");
         if(secilenKilitMotor != null) {
             kampana2OlcuText.setVisible(true);
             kampana2OlcuText2.setVisible(true);

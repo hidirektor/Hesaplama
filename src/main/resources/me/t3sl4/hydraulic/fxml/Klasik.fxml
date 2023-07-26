@@ -50,7 +50,7 @@
                 <Text fx:id="kilitMotorText" fill="#B7C3D7" layoutX="56.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" />
                 <Text fx:id="kilitPompaText" fill="#B7C3D7" layoutX="222.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Pompa" />
                 <Text fill="#B7C3D7" layoutX="135.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma" />
-                <Text fx:id="kullanilacakKabin" fill="#B7C3D7" layoutX="430.0" layoutY="525.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
+                <Text fx:id="kullanilacakKabin" fill="#B7C3D7" layoutX="430.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
                 <Text fx:id="sonucAnaLabelTxt" fill="#B7C3D7" layoutX="450.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası: ">
                     <font>
                         <Font size="18.0" />
@@ -181,6 +181,8 @@
                         <Font size="11.0" />
                     </font>
                 </Text>
+            <Text fx:id="sonucUstText" layoutX="580.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X: 20 mm" visible="false" />
+            <Text fx:id="sonucSagText" layoutX="750.0" layoutY="400.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y: 20 mm" visible="false" />
             </children>
         </AnchorPane>
     </children>

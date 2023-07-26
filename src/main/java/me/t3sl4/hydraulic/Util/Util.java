@@ -36,18 +36,21 @@ public class Util {
 
     public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pdfFilePath, String girilenSiparisNumarasi) {
         try {
+            String userHome = System.getProperty("user.home");
+            String ExPDFFilePath = userHome + File.separator + "Desktop" + File.separator + girilenSiparisNumarasi + ".pdf";
+
             Document document = new Document();
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(girilenSiparisNumarasi + ".pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(ExPDFFilePath));
             document.open();
 
             PdfContentByte contentByte = writer.getDirectContentUnder();
-            BaseColor backgroundColor = new BaseColor(53, 58, 70); // #353a46 rengi
+            BaseColor backgroundColor = new BaseColor(53, 58, 70);
             contentByte.setColorFill(backgroundColor);
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
 
             Image image1 = Image.getInstance(Launcher.class.getResource(pngFilePath1));
-            float targetWidth1 = document.getPageSize().getWidth() * 0.5f; // Sayfanın genişliğinin %50'si
+            float targetWidth1 = document.getPageSize().getWidth() * 0.5f;
             float targetHeight1 = (image1.getHeight() / (float) image1.getWidth()) * targetWidth1;
             image1.scaleToFit(targetWidth1, targetHeight1);
             image1.setAlignment(Image.ALIGN_CENTER);
@@ -84,7 +87,7 @@ public class Util {
 
             if (Desktop.isDesktopSupported()) {
                 try {
-                    File pdfFile = new File(girilenSiparisNumarasi + ".pdf");
+                    File pdfFile = new File(ExPDFFilePath);
                     Desktop.getDesktop().open(pdfFile);
                 } catch (IOException e) {
                     e.printStackTrace();
