@@ -1,5 +1,4 @@
 package me.t3sl4.hydraulic.Controllers;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,10 +30,6 @@ import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
 
-/**
- *
- * @author oXCToo
- */
 public class LoginController implements Initializable {
 
     @FXML
@@ -51,10 +46,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button btnSignup;
-
-    Connection con = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
     private double x, y;
 
     public static User loggedInUser;
@@ -98,13 +89,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        if (con == null) {
-            lblErrors.setTextFill(Color.TOMATO);
-            lblErrors.setText("Server Error : Bağlantı Hatası !!");
-        } else {
-            lblErrors.setTextFill(Color.GREEN);
-            lblErrors.setText("Server is up : Good to go");
-        }
     }
 
     private String logIn(String username, String password) throws IOException {

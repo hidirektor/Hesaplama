@@ -918,7 +918,7 @@ public class KlasikController {
         });
 
         motorComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            if(!motorComboBox.getItems().isEmpty()) {
+            if(!motorComboBox.getItems().isEmpty() && newValue != null) {
                 secilenMotor = newValue;
                 secilenKampana = Util.dataManipulator.kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
                 initPompa();
@@ -1027,6 +1027,7 @@ public class KlasikController {
     }
 
     private void verileriSifirla() {
+        siparisNumarasi.clear();
         secilenMotor = null;
         secilenPompa = null;
         girilenTankKapasitesiMiktari = 0;
@@ -1065,6 +1066,7 @@ public class KlasikController {
         parcaListesiButton.setDisable(true);
         exportButton.setDisable(true);
         kullanilacakKabin.setVisible(false);
+        sonucAnaLabelTxt.setText("Sipariş Numarası: ");
 
         imageTextDisable(0);
     }

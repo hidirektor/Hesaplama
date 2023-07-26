@@ -73,11 +73,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            updateLoggedInUserInfo();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        profilePhotoThread();
         Node[] nodes = new Node[10];
         for (int i = 0; i < nodes.length; i++) {
             try {
@@ -110,6 +106,19 @@ public class MainController implements Initializable {
     public void onderGrupSiteOpen() {
         Util.openURL("https://ondergrup.com");
     }
+
+    public void profilePhotoThread() {
+        Thread thread = new Thread(() -> {
+            try {
+                updateLoggedInUserInfo();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
+    }
+
 
 
     public void handleClicks(ActionEvent actionEvent) {

@@ -20,7 +20,7 @@
     <children>
         <Pane prefHeight="417.0" prefWidth="110.0" style="-fx-background-color: #0C39FF;">
             <children>
-                <ImageView fitHeight="25.0" fitWidth="21.0" layoutX="45.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="onderLogo" onMouseClicked="#onderWeb" fitHeight="45.0" fitWidth="45.0" layoutX="32.5" layoutY="186.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../icons/logo.png" />
                     </image>
@@ -38,7 +38,7 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <JFXButton layoutX="133.0" layoutY="349.0" prefHeight="25.0" prefWidth="94.0" text="Temizle" />
+        <JFXButton layoutX="133.0" layoutY="349.0" onMouseClicked="#kayitBilgiTemizle" prefHeight="25.0" prefWidth="94.0" text="Temizle" />
         <JFXButton fx:id="kayitOlma" layoutX="524.0" layoutY="349.0" prefHeight="25.0" prefWidth="116.0" onMouseClicked="#kayitOlma" style="-fx-background-color: #48A5EA;" text="Kayıt Ol" textFill="WHITE" />
         <Separator layoutX="133.0" layoutY="68.0" prefHeight="1.0" prefWidth="520.0" />
         <Label id="btn_exit" fx:id="btn_exit" layoutX="675.0" layoutY="2.0" onMousePressed="#handleButtonAction" prefHeight="25.0" prefWidth="21.0" text="X" textFill="#48a5ea">
@@ -46,17 +46,18 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-          <JFXButton layoutX="343.0" layoutY="190.0" onAction="#uploadProfilePhoto" prefHeight="25.0" prefWidth="100.0" text="Fotoğraf Yükle" />
-        <StackPane layoutX="320.0" layoutY="50.0">
-            <!-- Önce ImageView'ı ekleyin -->
+        <JFXButton layoutX="230.0" layoutY="130.0" onAction="#uploadProfilePhoto" prefHeight="25.0" prefWidth="100.0" text="Fotoğraf Yükle" />
+        <StackPane layoutX="320.0" layoutY="90.0">
             <ImageView fx:id="profilePhotoImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                 <VBox.margin>
-                    <Insets bottom="10.0" top="50.0" />
+                    <Insets bottom="0.0" top="50.0" />
                 </VBox.margin>
             </ImageView>
-
-            <!-- Sonra beyaz yuvarlağı ekleyin -->
-            <Circle fx:id="secilenFoto" radius="50.0" fill="#ffffff" layoutY="-10" />
+            <Circle fx:id="secilenFoto" radius="50.0" fill="#ffffff" layoutY="50" visible="false">
+                <effect>
+                    <DropShadow radius="25.0" offsetX="0.0" offsetY="2.0" color="WHITE" />
+                </effect>
+            </Circle>
         </StackPane>
     </children>
 </AnchorPane>

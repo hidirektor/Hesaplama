@@ -51,6 +51,9 @@ public class RegisterController implements Initializable {
     private TextField sirketText;
 
     @FXML
+    private ImageView onderLogo;
+
+    @FXML
     private Circle secilenFoto;
 
     private double x, y;
@@ -80,7 +83,7 @@ public class RegisterController implements Initializable {
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
             secilenFoto.setFill(new ImagePattern(image));
-            secilenFoto.setEffect(new DropShadow(+25d, 0d, +2d, Color.WHITE));
+            secilenFoto.setVisible(true);
             profilePhotoImageView.setImage(image);
             profilePhotoImageView.setVisible(false);
             secilenPhotoPath = selectedFile.getAbsolutePath();
@@ -120,6 +123,22 @@ public class RegisterController implements Initializable {
         } else {
             Util.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
         }
+    }
+
+    @FXML
+    public void onderWeb() {
+        Util.openURL("https://ondergrup.com");
+    }
+
+    @FXML
+    public void kayitBilgiTemizle() {
+        secilenFoto.setVisible(false);
+        isimSoyisimText.clear();
+        ePostaText.clear();
+        telefonText.clear();
+        kullaniciAdiText.clear();
+        sifreText.clear();
+        sirketText.clear();
     }
 
     private String sendReq(String jsonInputString) throws IOException {
