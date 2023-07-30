@@ -368,8 +368,10 @@ public class KlasikController {
             }
         }
         if(Objects.equals(secilenSogutmaDurumu, "Var")) {
-            x += 350 + Util.dataManipulator.sogutmaAraBoslukX;
-            yK += 152 + Util.dataManipulator.sogutmaAraBoslukYkOn + Util.dataManipulator.sogutmaAraBoslukYkArka;
+            x += 350;
+            //x += 350 + Util.dataManipulator.sogutmaAraBoslukX;
+            //yK += 152 + Util.dataManipulator.sogutmaAraBoslukYkOn + Util.dataManipulator.sogutmaAraBoslukYkArka;
+            //yK += 150 + Util.dataManipulator.sogutmaAraBoslukYkOn + Util.dataManipulator.sogutmaAraBoslukYkArka;
             System.out.println("Soğutma için:");
             System.out.println("X += " + Util.dataManipulator.sogutmaAraBoslukX + " (Ara Boşluk)");
             System.out.println("yK += " + Util.dataManipulator.sogutmaAraBoslukYkOn + " (Ara Boşluk Ön) + " + Util.dataManipulator.sogutmaAraBoslukYkArka + " (Ara Boşluk Arka)");

@@ -54,6 +54,8 @@ public class RegisterController implements Initializable {
     @FXML
     private Circle secilenFoto;
 
+    private String profilePhotoPath = null;
+
     private double x, y;
 
     String secilenPhotoPath = "";
@@ -97,10 +99,10 @@ public class RegisterController implements Initializable {
         String email = ePostaText.getText();
         String companyName = sirketText.getText();
         String phone = telefonText.getText();
-        String profilePhotoPath = ImageUtil.image2Base64(secilenPhotoPath);
-        System.out.println(profilePhotoPath);
+        //profilePhotoPath = ImageUtil.image2Base64(secilenPhotoPath);
 
         if (checkFields()) {
+            profilePhotoPath = ImageUtil.image2Base64(secilenPhotoPath);
             String jsonBody = String.format("{\"UserType\":\"%s\",\"UserName\":\"%s\",\"Password\":\"%s\",\"NameSurname\":\"%s\",\"Email\":\"%s\",\"CompanyName\":\"%s\",\"Phone\":\"%s\",\"ProfilePhoto\":\"%s\"}",
                     userType, userName, password, nameSurname, email, companyName, phone, profilePhotoPath);
 
@@ -182,7 +184,7 @@ public class RegisterController implements Initializable {
     }
 
     private boolean checkFields() {
-        return !isimSoyisimText.getText().isEmpty() && !ePostaText.getText().isEmpty() && !telefonText.getText().isEmpty() && !kullaniciAdiText.getText().isEmpty() && !sifreText.getText().isEmpty() && !sirketText.getText().isEmpty() && profilePhotoImageView.getImage() != null;
+        return !isimSoyisimText.getText().isEmpty() && !ePostaText.getText().isEmpty() && !telefonText.getText().isEmpty() && !kullaniciAdiText.getText().isEmpty() && !sifreText.getText().isEmpty() && !sirketText.getText().isEmpty() && profilePhotoImageView.getImage() != null && profilePhotoPath != null;
     }
 
 }
