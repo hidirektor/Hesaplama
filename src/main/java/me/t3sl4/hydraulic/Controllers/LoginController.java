@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
+import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.User;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 
@@ -50,23 +51,25 @@ public class LoginController implements Initializable {
 
     @FXML
     public void girisYap(MouseEvent event) throws IOException {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
+        if(Util.netIsAvailable()) {
+            Stage stage = (Stage) btnSignin.getScene().getWindow();
 
-        Stage stage = (Stage) btnSignin.getScene().getWindow();
-
-        if(txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-            lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
-        } else {
-            if (logIn(txtUsername.getText(), txtPassword.getText()).equals("Success")) {
-                stage.close();
-
-                String url = BASE_URL + "/api/profileInfo/:NameSurname";
-                String jsonBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
-                loggedInUser = new User(txtUsername.getText(), HTTPUtil.parseNameSurname(HTTPUtil.sendPostRequest(url, jsonBody), "NameSurname"));
-                openMainScreen();
+            if(txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
+                lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
             } else {
-                lblErrors.setText("Böyle bir kullanıcı bulunamadı !!");
+                if (logIn(txtUsername.getText(), txtPassword.getText()).equals("Success")) {
+                    stage.close();
+
+                    String url = BASE_URL + "/api/profileInfo/:NameSurname";
+                    String jsonBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
+                    loggedInUser = new User(txtUsername.getText(), HTTPUtil.parseNameSurname(HTTPUtil.sendPostRequest(url, jsonBody), "NameSurname"));
+                    openMainScreen();
+                } else {
+                    lblErrors.setText("Böyle bir kullanıcı bulunamadı !!");
+                }
             }
+        } else {
+            lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
         }
     }
 
@@ -74,8 +77,12 @@ public class LoginController implements Initializable {
     public void kayitOl() throws IOException {
         Stage stage = (Stage) btnSignup.getScene().getWindow();
 
-        stage.close();
-        openRegisterScreen();
+        if(Util.netIsAvailable()) {
+            stage.close();
+            openRegisterScreen();
+        } else {
+            lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
+        }
     }
 
     @FXML
@@ -85,7 +92,9 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if(!Util.netIsAvailable()) {
+            lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
+        }
     }
 
     private String logIn(String username, String password) throws IOException {
@@ -128,53 +137,11 @@ public class LoginController implements Initializable {
         stage.close();
     }
 
-    private void setLblError(Color color, String text) {
-        lblErrors.setTextFill(color);
-        lblErrors.setText(text);
-        System.out.println(text);
-    }
-
     private void openMainScreen() throws IOException {
-        Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(Launcher.class.getResource("fxml/Home.fxml"));
-        primaryStage.setScene(new Scene(root));
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-
-        Image icon = new Image(Launcher.class.getResourceAsStream("icons/logo.png"));
-        primaryStage.getIcons().add(icon);
-
-        root.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-        root.setOnMouseDragged(event -> {
-
-            primaryStage.setX(event.getScreenX() - x);
-            primaryStage.setY(event.getScreenY() - y);
-
-        });
-        primaryStage.show();
+        SceneUtil.changeScreen("fxml/Home.fxml");
     }
 
     private void openRegisterScreen() throws IOException {
-        Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(Launcher.class.getResource("fxml/Register.fxml"));
-        primaryStage.setScene(new Scene(root));
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-
-        Image icon = new Image(Launcher.class.getResourceAsStream("icons/logo.png"));
-        primaryStage.getIcons().add(icon);
-
-        root.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-        root.setOnMouseDragged(event -> {
-
-            primaryStage.setX(event.getScreenX() - x);
-            primaryStage.setY(event.getScreenY() - y);
-
-        });
-        primaryStage.show();
+        SceneUtil.changeScreen("fxml/Register.fxml");
     }
 }

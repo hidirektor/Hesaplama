@@ -11,10 +11,14 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.awt.*;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Map;
 import java.util.Objects;
 
 import javafx.scene.control.Alert;
+import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Data.DataManipulator;
 import org.apache.poi.ss.usermodel.*;
@@ -891,9 +895,24 @@ public class Util {
 
     public static void showErrorMessage(String hataMesaji) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initStyle(StageStyle.UNDECORATED);
         alert.setTitle("Hata");
         alert.setHeaderText(null);
         alert.setContentText(hataMesaji);
         alert.showAndWait();
+    }
+
+    public static boolean netIsAvailable() {
+        try {
+            final URL url = new URL("http://www.google.com");
+            final URLConnection conn = url.openConnection();
+            conn.connect();
+            conn.getInputStream().close();
+            return true;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

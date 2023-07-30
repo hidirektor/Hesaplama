@@ -44,19 +44,10 @@ public class MainController implements Initializable {
     private Button btnMenus;
 
     @FXML
-    private Button btnPackages;
-
-    @FXML
-    private Button btnSettings;
-
-    @FXML
     private Button btnSignout;
 
     @FXML
     private Pane pnlCustomer;
-
-    @FXML
-    private Pane pnlOrders;
 
     @FXML
     private Pane pnlOverview;
