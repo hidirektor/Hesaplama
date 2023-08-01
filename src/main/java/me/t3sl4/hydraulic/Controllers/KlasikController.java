@@ -55,16 +55,16 @@ public class KlasikController {
     private TextField tankKapasitesiTextField;
 
     @FXML
-    private Text genislikSonucText;
+    private Label genislikSonucText;
 
     @FXML
-    private Text yukseklikSonucText;
+    private Label yukseklikSonucText;
 
     @FXML
-    private Text derinlikSonucText;
+    private Label derinlikSonucText;
 
     @FXML
-    private Text hacimText;
+    private Label hacimText;
 
     @FXML
     private Box hydraulicUnitShape;
@@ -237,11 +237,11 @@ public class KlasikController {
             Image image;
             if(secilenKilitMotor != null) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/normal.png")));
-
             } else {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/kilitMotor.png")));
             }
-            //tankGorselLoad();
+            tankGorselLoad();
+
             sonucKapakImage.setImage(image);
             parcaListesiButton.setDisable(false);
             exportButton.setDisable(false);
@@ -287,108 +287,115 @@ public class KlasikController {
         System.out.println("--------Hesaplama Başladı--------Ø");
         secilenKampana = kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
         String[] secPmp = secilenPompa.split(" cc");
-        x += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukX;
-        yK += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukY + Util.dataManipulator.kampanaBoslukY;
-        System.out.println("Motor + Kampana için:");
-        System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + Util.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)");
-        System.out.println("yK += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk)");
+        if(Objects.equals(secilenSogutmaDurumu, "Var")) {
+            System.out.println("Motor + Kampana için:");
+            x += Util.dataManipulator.kampanaBoslukX + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukX + Util.dataManipulator.kilitPlatformMotorBosluk;
+            System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + Util.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)" + Util.dataManipulator.kilitPlatformMotorBosluk + " (Kilit Platform Motor Boşluk)");
 
-        float secilenPompaVal = Float.parseFloat(secPmp[0]);
-        //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
-        //kilitli blok ölçüsü olarak: X'e +100 olacak
-        if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-            x += 120 + Util.dataManipulator.kilitliBlokAraBoslukX + Util.dataManipulator.valfBoslukX;
-            yV += 190 + Util.dataManipulator.valfBoslukYArka + Util.dataManipulator.valfBoslukYOn;
-            System.out.println("Kilitli Blok için:");
-            System.out.println("X += " + Util.dataManipulator.kilitliBlokAraBoslukX + " (Ara Boşluk) + " + Util.dataManipulator.valfBoslukX + " (Valf Boşluk)");
-            System.out.println("yV += " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka) + " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
-        }
-        //hidrolik kilit olmadığı durumlarda valf tipleri için
-        if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
-            if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                // X yönünde +120 olacak Y yönünde 180 mm eklenecek
-                x += 70 + Util.dataManipulator.valfBoslukX + Util.dataManipulator.tekHizAraBoslukX;
-                yV += 180 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
-                System.out.println("İnişte Tek Hız İçin: (Hidrolik Kilit Yok)");
-                System.out.println("X += " + Util.dataManipulator.valfBoslukX + " (Valf Boşluk) + " + Util.dataManipulator.tekHizAraBoslukX + " (Tek Hız Boşluk)");
-                System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
-            } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                //X yönünde 190 Y yönünde 90
-                x += 140 + Util.dataManipulator.ciftHizAraBoslukX + Util.dataManipulator.valfBoslukX;
-                yV += 90 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
-                System.out.println("İnişte Çift Hız İçin: (Hidrolik Kilit Yok)");
-                System.out.println("X += " + Util.dataManipulator.valfBoslukX + " (Valf Boşluk) + " + Util.dataManipulator.ciftHizAraBoslukX + " (Tek Hız Boşluk)");
-                System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
-            } else {
-                //kompanzasyon seçilmişse:
-                //kilit yoksa: X'e 190 Y'ye 180
-                if(secilenHidrolikKilitDurumu.equals("Yok") && Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
-                    x += 140 + Util.dataManipulator.kompanzasyonTekHizAraBoslukX;
-                    yV += 180 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
-                    System.out.println("Kompanzasyon + Tek Hız İçin: (Hidrolik Kilit Yok)");
-                    System.out.println("X += " + Util.dataManipulator.kompanzasyonTekHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
-                    System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
-                }
-            }
+            x += 250;
+            System.out.println("X += " + 250 + " (Kilit Motor)");
+
+            x+= Util.dataManipulator.valfXBoslukSogutma;
+
+            y += 240 + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + 30;
+
+            h += 350;
         } else {
-            if(secilenPompaVal > 28.1) {
-                String[] secKilitMotor = secilenKilitMotor.split(" kW");
-                float secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
-                //String[] secKilitPompa = secilenKilitPompa.split(" cc");
-                //float secilenKilitPompaVal = Float.parseFloat(secKilitPompa[0]);
+            x += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukX;
+            yK += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukY + Util.dataManipulator.kampanaBoslukY;
+            System.out.println("Motor + Kampana için:");
+            System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + Util.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)");
+            System.out.println("yK += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk)");
 
-                if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
-                    yV += 180 + Util.dataManipulator.valfBoslukYArka + Util.dataManipulator.valfBoslukYOn;
-                    System.out.println("Kompanzasyon + İnişte Tek Hız (Kilitli Blok) (Pompa > 28.1) için:");
+            float secilenPompaVal = Float.parseFloat(secPmp[0]);
+            //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
+            //kilitli blok ölçüsü olarak: X'e +100 olacak
+            if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+                x += 120 + Util.dataManipulator.kilitliBlokAraBoslukX + Util.dataManipulator.valfBoslukX;
+                yV += 190 + Util.dataManipulator.valfBoslukYArka + Util.dataManipulator.valfBoslukYOn;
+                System.out.println("Kilitli Blok için:");
+                System.out.println("X += " + Util.dataManipulator.kilitliBlokAraBoslukX + " (Ara Boşluk) + " + Util.dataManipulator.valfBoslukX + " (Valf Boşluk)");
+                System.out.println("yV += " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka) + " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
+            }
+            //hidrolik kilit olmadığı durumlarda valf tipleri için
+            if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
+                if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
+                    // X yönünde +120 olacak Y yönünde 180 mm eklenecek
+                    x += 70 + Util.dataManipulator.valfBoslukX + Util.dataManipulator.tekHizAraBoslukX;
+                    yV += 180 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
+                    System.out.println("İnişte Tek Hız İçin: (Hidrolik Kilit Yok)");
+                    System.out.println("X += " + Util.dataManipulator.valfBoslukX + " (Valf Boşluk) + " + Util.dataManipulator.tekHizAraBoslukX + " (Tek Hız Boşluk)");
                     System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
                 } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                    System.out.println("İnişte Çift Hız (Kilitli Blok) için:");
-                    if(secilenPompaVal > 28.1) {
-                        yV += 90 + Util.dataManipulator.valfBoslukYOn;
-                        System.out.println("(Pompa > 28.1) için:");
-                        System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
-                    } else {
-                        yV += 90 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
-                        System.out.println("(Pompa <= 28.1) için:");
+                    //X yönünde 190 Y yönünde 90
+                    x += 140 + Util.dataManipulator.ciftHizAraBoslukX + Util.dataManipulator.valfBoslukX;
+                    yV += 90 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
+                    System.out.println("İnişte Çift Hız İçin: (Hidrolik Kilit Yok)");
+                    System.out.println("X += " + Util.dataManipulator.valfBoslukX + " (Valf Boşluk) + " + Util.dataManipulator.ciftHizAraBoslukX + " (Tek Hız Boşluk)");
+                    System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                } else {
+                    //kompanzasyon seçilmişse:
+                    //kilit yoksa: X'e 190 Y'ye 180
+                    if(secilenHidrolikKilitDurumu.equals("Yok") && Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
+                        x += 140 + Util.dataManipulator.kompanzasyonTekHizAraBoslukX;
+                        yV += 180 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
+                        System.out.println("Kompanzasyon + Tek Hız İçin: (Hidrolik Kilit Yok)");
+                        System.out.println("X += " + Util.dataManipulator.kompanzasyonTekHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
                         System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
                     }
-                } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                    yV += 180 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
-                    System.out.println("İnişte Tek Hız (Kilitli Blok) için:");
-                    System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
                 }
+            } else {
+                if(secilenPompaVal >= 28.1) {
+                    String[] secKilitMotor = secilenKilitMotor.split(" kW");
+                    float secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
+                    //String[] secKilitPompa = secilenKilitPompa.split(" cc");
+                    //float secilenKilitPompaVal = Float.parseFloat(secKilitPompa[0]);
 
-                if(secilenKilitMotorVal != 0) {
-                    x += 200 + Util.dataManipulator.kilitMotorKampanaBosluk + Util.dataManipulator.kilitMotorMotorBoslukX;
-                    yV += 200 + Util.dataManipulator.kilitMotorBoslukYOn + Util.dataManipulator.kilitMotorBoslukYArka;
-                    System.out.println("Kilit Motor için:");
-                    System.out.println("X += " + Util.dataManipulator.kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + Util.dataManipulator.kilitMotorMotorBoslukX + " (Kilit Mootr Boşluk)");
-                    System.out.println("yV += " + Util.dataManipulator.kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + Util.dataManipulator.kilitMotorBoslukYArka + " (Kilit Motor Arka)");
+                    if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
+                        yV += 180 + Util.dataManipulator.valfBoslukYArka + Util.dataManipulator.valfBoslukYOn;
+                        System.out.println("Kompanzasyon + İnişte Tek Hız (Kilitli Blok) (Pompa > 28.1) için:");
+                        System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                    } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
+                        System.out.println("İnişte Çift Hız (Kilitli Blok) için:");
+                        if(secilenPompaVal >= 28.1) {
+                            yV += 90 + Util.dataManipulator.valfBoslukYOn;
+                            System.out.println("(Pompa > 28.1) için:");
+                            System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
+                        } else {
+                            yV += 90 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
+                            System.out.println("(Pompa <= 28.1) için:");
+                            System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                        }
+                    } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
+                        yV += 180 + Util.dataManipulator.valfBoslukYOn + Util.dataManipulator.valfBoslukYArka;
+                        System.out.println("İnişte Tek Hız (Kilitli Blok) için:");
+                        System.out.println("yV += " + Util.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + Util.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                    }
+
+                    if(secilenKilitMotorVal != 0) {
+                        x += 200 + Util.dataManipulator.kilitMotorKampanaBosluk + Util.dataManipulator.kilitMotorMotorBoslukX;
+                        yV += 200 + Util.dataManipulator.kilitMotorBoslukYOn + Util.dataManipulator.kilitMotorBoslukYArka;
+                        System.out.println("Kilit Motor için:");
+                        System.out.println("X += " + Util.dataManipulator.kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + Util.dataManipulator.kilitMotorMotorBoslukX + " (Kilit Motor Boşluk)");
+                        System.out.println("yV += " + Util.dataManipulator.kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + Util.dataManipulator.kilitMotorBoslukYArka + " (Kilit Motor Arka)");
+                    }
                 }
             }
-        }
-        if(Objects.equals(secilenSogutmaDurumu, "Var")) {
-            x += 350;
-            //x += 350 + Util.dataManipulator.sogutmaAraBoslukX;
-            //yK += 152 + Util.dataManipulator.sogutmaAraBoslukYkOn + Util.dataManipulator.sogutmaAraBoslukYkArka;
-            //yK += 150 + Util.dataManipulator.sogutmaAraBoslukYkOn + Util.dataManipulator.sogutmaAraBoslukYkArka;
-            System.out.println("Soğutma için:");
-            System.out.println("X += " + Util.dataManipulator.sogutmaAraBoslukX + " (Ara Boşluk)");
-            System.out.println("yK += " + Util.dataManipulator.sogutmaAraBoslukYkOn + " (Ara Boşluk Ön) + " + Util.dataManipulator.sogutmaAraBoslukYkArka + " (Ara Boşluk Arka)");
-        }
-        y = Math.max(yV, yK);
-        if(y <= 350) {
-            y = 350;
-        }
-        if(x <= 550) {
-            x = 550;
-        }
-        h = 300;
 
-        hesaplananHacim = ((x*h*y) / 1000000) - Util.dataManipulator.kayipLitre;
-        eskiX = x;
-        eskiY = y;
-        eskiH = h;
+            y = Math.max(yV, yK);
+            if(y <= 350) {
+                y = 350;
+            }
+            if(x <= 550) {
+                x = 550;
+            }
+            h = 300;
+
+            hesaplananHacim = ((x*h*y) / 1000000) - Util.dataManipulator.kayipLitre;
+            eskiX = x;
+            eskiY = y;
+            eskiH = h;
+        }
 
         int enKucukLitreFarki = Integer.MAX_VALUE;
         int[] enKucukLitreOlculer = null;
@@ -1187,10 +1194,6 @@ public class KlasikController {
         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitsiz.png")));
         sonucTankGorsel.setImage(image);
 
-        derinlikSonucText.setVisible(false);
-        genislikSonucText.setVisible(false);
-        hacimText.setVisible(false);
-        yukseklikSonucText.setVisible(false);
         hydraulicUnitShape.setVisible(false);
     }
 }

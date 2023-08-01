@@ -130,6 +130,8 @@ public class Util {
             dataManipulator.kilitMotorBoslukYOn = (int) variableValuesRow.getCell(14).getNumericCellValue();
             dataManipulator.kilitMotorBoslukYArka = (int) variableValuesRow.getCell(15).getNumericCellValue();
             dataManipulator.kayipLitre = (int) variableValuesRow.getCell(16).getNumericCellValue();
+            dataManipulator.kilitPlatformMotorBosluk = (int) variableValuesRow.getCell(17).getNumericCellValue();
+            dataManipulator.valfXBoslukSogutma = (int) variableValuesRow.getCell(18).getNumericCellValue();
 
             workbook.close();
         } catch(Exception e) {

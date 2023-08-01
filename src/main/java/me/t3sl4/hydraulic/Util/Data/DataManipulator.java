@@ -7,6 +7,7 @@ import java.util.List;
 
 public class DataManipulator {
     public int kampanaBoslukX;
+    public int kilitPlatformMotorBosluk;
     public int kampanaBoslukY;
     public int valfBoslukX;
     public int valfBoslukYArka;
@@ -23,6 +24,7 @@ public class DataManipulator {
     public int kilitMotorBoslukYOn;
     public int kilitMotorBoslukYArka;
     public int kayipLitre;
+    public int valfXBoslukSogutma;
     public ArrayList<Integer> kampanaDegerleri = new ArrayList<>();
 
     public LinkedHashMap<Object, int[]> kabinOlculeri = new LinkedHashMap<Object, int[]>();

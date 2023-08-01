@@ -64,7 +64,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        profilePhotoThread();
+        //profilePhotoThread();
         Node[] nodes = new Node[10];
         for (int i = 0; i < nodes.length; i++) {
             try {
