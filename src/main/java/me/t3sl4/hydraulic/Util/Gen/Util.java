@@ -73,7 +73,7 @@ public class Util {
             image2.setAbsolutePosition(x, y);
             document.add(image2);
 
-            PdfReader reader = new PdfReader(Launcher.class.getResource(pdfFilePath));
+            PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
             PdfImportedPage page = writer.getImportedPage(reader, 1);
             document.newPage();
             writer.getDirectContent().addTemplate(page, 0, 0);

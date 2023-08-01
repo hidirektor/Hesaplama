@@ -652,7 +652,7 @@ public class KlasikController {
         int startX = 500;
         int startY = 10;
         int width = 800;
-        int height = 560;
+        int height = 565;
 
         if(hesaplamaBitti) {
             coords2Png(startX, startY, width, height);
