@@ -14,6 +14,8 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -27,7 +29,7 @@ public class Util {
 
     public static DataManipulator dataManipulator = new DataManipulator();
 
-    public static String BASE_URL = "http://85.95.231.92:3000";
+    public static String BASE_URL = "http://localhost:3000";
     
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -36,6 +38,12 @@ public class Util {
             }
         }
         return null;
+    }
+
+    public static String getCurrentDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
     public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pdfFilePath, String girilenSiparisNumarasi) {
@@ -53,7 +61,7 @@ public class Util {
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
 
-            Image image1 = Image.getInstance(Launcher.class.getResource(pngFilePath1));
+            Image image1 = Image.getInstance(Objects.requireNonNull(Launcher.class.getResource(pngFilePath1)));
             float targetWidth1 = document.getPageSize().getWidth() * 0.5f;
             float targetHeight1 = (image1.getHeight() / (float) image1.getWidth()) * targetWidth1;
             image1.scaleToFit(targetWidth1, targetHeight1);

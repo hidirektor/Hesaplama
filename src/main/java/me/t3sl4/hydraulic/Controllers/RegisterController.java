@@ -24,6 +24,7 @@ import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Data.ImageUtil;
 import me.t3sl4.hydraulic.Util.Gen.Util;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
@@ -53,8 +54,6 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Circle secilenFoto;
-
-    private String profilePhotoPath = null;
 
     private double x, y;
 
@@ -92,37 +91,85 @@ public class RegisterController implements Initializable {
 
     @FXML
     private void kayitOlma() throws IOException {
-        String userType = "NORMAL";
+        Stage stage = (Stage) kullaniciAdiText.getScene().getWindow();
+        String userRole = "NORMAL";
         String userName = kullaniciAdiText.getText();
         String password = sifreText.getText();
         String nameSurname = isimSoyisimText.getText();
-        String email = ePostaText.getText();
+        String eMail = ePostaText.getText();
         String companyName = sirketText.getText();
         String phone = telefonText.getText();
-        //profilePhotoPath = ImageUtil.image2Base64(secilenPhotoPath);
+        String profilePhotoPath = userName + "_profilePhoto.jpg";
 
         if (checkFields()) {
-            profilePhotoPath = ImageUtil.image2Base64(secilenPhotoPath);
-            String jsonBody = String.format("{\"UserType\":\"%s\",\"UserName\":\"%s\",\"Password\":\"%s\",\"NameSurname\":\"%s\",\"Email\":\"%s\",\"CompanyName\":\"%s\",\"Phone\":\"%s\",\"ProfilePhoto\":\"%s\"}",
-                    userType, userName, password, nameSurname, email, companyName, phone, profilePhotoPath);
+            String created_at = Util.getCurrentDateTime();
 
-            if (sendReq(jsonBody).equals("Success")) {
+            String registerJsonBody =
+                    "{" +
+                            "\"Role\":\"" + userRole + "\"," +
+                            "\"UserName\":\"" + userName + "\"," +
+                            "\"Email\":\"" + eMail + "\"," +
+                            "\"Password\":\"" + password + "\"," +
+                            "\"NameSurname\":\"" + nameSurname + "\"," +
+                            "\"Phone\":\"" + phone + "\"," +
+                            "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
+                            "\"CompanyName\":\"" + companyName + "\"," +
+                            "\"Created_At\":\"" + created_at + "\"" +
+                            "}";
+
+            sendRegisterRequest(registerJsonBody, stage);
+        } else {
+            Util.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
+        }
+    }
+
+    private void sendRegisterRequest(String jsonBody, Stage stage) {
+        String registerUrl = BASE_URL + "/api/register";
+        HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String response) throws IOException {
+                if (response.contains("Kullanıcı eklendi")) {
+                    uploadProfilePhoto2Server(stage);
+                } else {
+                    Util.showErrorMessage("Kayıt olurken hata meydana geldi !");
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                Util.showErrorMessage("Kayıt olurken hata meydana geldi !");
+            }
+        });
+    }
+
+    private void uploadProfilePhoto2Server(Stage stage) throws IOException {
+        String uploadUrl = BASE_URL + "/api/fileSystem/upload";
+        String username = kullaniciAdiText.getText();
+
+        File profilePhotoFile = new File(secilenPhotoPath);
+        if (!profilePhotoFile.exists()) {
+            Util.showErrorMessage("Profil fotoğrafı bulunamadı !");
+            return;
+        }
+
+        HTTPRequest.sendMultipartRequest(uploadUrl, username, profilePhotoFile, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String response) {
                 Platform.runLater(() -> {
-                    Stage regStage = (Stage) ePostaText.getScene().getWindow();
-                    regStage.close();
                     try {
+                        stage.close();
                         openMainScreen();
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
-            } else {
-                Util.showErrorMessage("Kayıt olurken hata meydana geldi !");
             }
-        } else {
-            Util.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
-        }
+
+            @Override
+            public void onFailure() {
+                Util.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
+            }
+        });
     }
 
     @FXML
@@ -141,26 +188,6 @@ public class RegisterController implements Initializable {
         sirketText.clear();
     }
 
-    private String sendReq(String jsonInputString) throws IOException {
-        URL url = new URL(BASE_URL + "/api/register");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setDoOutput(true);
-
-        try (OutputStream os = conn.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-
-        int responseCode = conn.getResponseCode();
-
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            return "Success";
-        } else {
-            return "Failure";
-        }
-    }
     private void openMainScreen() throws IOException {
         Stage primaryStage = new Stage();
         Parent root = FXMLLoader.load(Launcher.class.getResource("fxml/Login.fxml"));
@@ -184,7 +211,7 @@ public class RegisterController implements Initializable {
     }
 
     private boolean checkFields() {
-        return !isimSoyisimText.getText().isEmpty() && !ePostaText.getText().isEmpty() && !telefonText.getText().isEmpty() && !kullaniciAdiText.getText().isEmpty() && !sifreText.getText().isEmpty() && !sirketText.getText().isEmpty() && profilePhotoImageView.getImage() != null && profilePhotoPath != null;
+        return !isimSoyisimText.getText().isEmpty() && !ePostaText.getText().isEmpty() && !telefonText.getText().isEmpty() && !kullaniciAdiText.getText().isEmpty() && !sifreText.getText().isEmpty() && !sirketText.getText().isEmpty() && profilePhotoImageView.getImage() != null;
     }
 
 }

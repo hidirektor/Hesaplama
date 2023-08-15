@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.Controllers;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +18,17 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
-import me.t3sl4.hydraulic.Util.Data.ImageUtil;
+import me.t3sl4.hydraulic.Main;
 import me.t3sl4.hydraulic.Util.Gen.Util;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
@@ -64,13 +70,13 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //profilePhotoThread();
+        userInfo();
         Node[] nodes = new Node[10];
         for (int i = 0; i < nodes.length; i++) {
             try {
 
                 final int j = i;
-                nodes[i] = FXMLLoader.load(Launcher.class.getResource("fxml/Item.fxml"));
+                nodes[i] = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Item.fxml")));
 
                 nodes[i].setOnMouseEntered(event -> {
                     nodes[j].setStyle("-fx-background-color : #0A0E3F");
@@ -96,20 +102,6 @@ public class MainController implements Initializable {
     public void onderGrupSiteOpen() {
         Util.openURL("https://ondergrup.com");
     }
-
-    public void profilePhotoThread() {
-        Thread thread = new Thread(() -> {
-            try {
-                updateLoggedInUserInfo();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.setDaemon(true);
-        thread.start();
-    }
-
-
 
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnCustomers) {
@@ -175,26 +167,88 @@ public class MainController implements Initializable {
         }
     }
 
-    public void updateLoggedInUserInfo() throws IOException {
-        if (LoginController.loggedInUser != null) {
-            String username = LoginController.loggedInUser.getUsername();
-            String fullName = LoginController.loggedInUser.getFullName();
-            kullaniciAdiIsimText.setText(username + "\n" + fullName);
-            Image profilePhoto = downloadProfilePhoto(username);
+    public void userInfo() {
+        updateUser("Role", 0);
+        updateUser("Email", 1);
+        updateUser("NameSurname", 2);
+        updateUser("Phone", 3);
+        updateUser("CompanyName", 4);
+        updateUser("Created_At", 5);
+    }
 
-            profilePhotoCircle.setFill(new ImagePattern(profilePhoto));
-            profilePhotoCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.valueOf("#05071F")));
-            kullaniciProfilFoto.setImage(profilePhoto);
-            kullaniciProfilFoto.setVisible(false);
+    public void updateUser(String requestVal, int section) {
+        String profileInfoUrl = BASE_URL + "/api/profileInfo/:" + requestVal;
+        String profileInfoBody = "{\"Username\": \"" + Main.loggedInUser.getUsername() + "\"}";
 
+        HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String profileInfoResponse) {
+                String parsedVal = HTTPUtil.parseStringVal(profileInfoResponse, requestVal);
+                if (section == 0) {
+                    Main.loggedInUser.setRole(parsedVal);
+                    System.out.println(requestVal + ": " + Main.loggedInUser.getRole());
+                } else if (section == 1) {
+                    Main.loggedInUser.setEmail(parsedVal);
+                    System.out.println(requestVal + ": " + Main.loggedInUser.getEmail());
+                } else if (section == 2) {
+                    Main.loggedInUser.setFullName(parsedVal);
+                    System.out.println(requestVal + ": " + Main.loggedInUser.getFullName());
+                } else if (section == 3) {
+                    Main.loggedInUser.setPhone(parsedVal);
+                    System.out.println(requestVal + ": " + Main.loggedInUser.getPhone());
+                } else if (section == 4) {
+                    Main.loggedInUser.setCompanyName(parsedVal);
+                    System.out.println(requestVal + ": " + Main.loggedInUser.getCompanyName());
+                } else {
+                    Main.loggedInUser.setCreatedAt(parsedVal);
+                    System.out.println(requestVal + ": " + Main.loggedInUser.getCreatedAt());
+                }
+
+                kullaniciAdiIsimText.setText(Main.loggedInUser.getUsername() + "\n" + Main.loggedInUser.getFullName());
+                downloadAndSetProfilePhoto(Main.loggedInUser.getUsername());
+                setProfilePhoto(Main.loggedInUser.getUsername());
+            }
+
+            @Override
+            public void onFailure() {
+                System.out.println("Kullanıcı bilgileri alınamadı!");
+            }
+        });
+    }
+
+    private void downloadAndSetProfilePhoto(String username) {
+        String localFilePath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\";
+        String localFileName = username + "_profilePhoto.jpg";
+
+        File localFile = new File(localFilePath + localFileName);
+        if (localFile.exists()) {
+            setProfilePhoto(localFilePath + localFileName);
+        } else {
+            String photoUrl = BASE_URL + "/api/fileSystem/download/" + username;
+            String jsonBody = "{\"name\": \"" + localFileName + "\"}";
+
+            HTTPRequest.sendRequest(photoUrl, jsonBody, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    setProfilePhoto(localFilePath + localFileName);
+                }
+
+                @Override
+                public void onFailure() {
+                    System.out.println("Profil fotoğrafı indirilemedi.");
+                }
+            });
         }
     }
 
-    private static Image downloadProfilePhoto(String username) throws IOException {
-        String url = BASE_URL + "/api/profileInfo/:ProfilePhoto";
-        String jsonBody = "{\"Username\": \"" + username + "\"}";
-        String base64Text = HTTPUtil.parseProfilePhoto(HTTPUtil.sendPostRequest(url, jsonBody), "ProfilePhoto");
 
-        return ImageUtil.base64ToImage(base64Text);
+    private void setProfilePhoto(String username) {
+        String photoPath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\" + username + "_profilePhoto.jpg";
+        File photoFile = new File(photoPath);
+
+        if (photoFile.exists()) {
+            Image image = new Image(photoFile.toURI().toString());
+            kullaniciProfilFoto.setImage(image);
+        }
     }
 }

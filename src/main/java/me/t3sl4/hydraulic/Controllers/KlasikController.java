@@ -16,7 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
+import me.t3sl4.hydraulic.Main;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Table.TableData;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 
@@ -258,7 +259,7 @@ public class KlasikController {
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
-        if(fileExists(pdfPath) && fileExists(excelPath)) {
+        if (fileExists(pdfPath) && fileExists(excelPath)) {
             String pdfBase64 = encodeFileToBase64WString(pdfPath);
             String excelBase64 = encodeFileToBase64WString(excelPath);
             String url = BASE_URL + "/api/insertHidrolik";
@@ -266,16 +267,27 @@ public class KlasikController {
                     "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
                     "  \"OrderDate\": \"" + dtf.format(now) + "\",\n" +
                     "  \"Type\": \"" + secilenUniteTipi + "\",\n" +
-                    "  \"InCharge\": \"" + LoginController.loggedInUser.getFullName() + "\",\n" +
+                    "  \"InCharge\": \"" + Main.loggedInUser.getFullName() + "\",\n" +
                     "  \"PDF\": \"" + pdfBase64 + "\",\n" +
                     "  \"PartList\": \"" + excelBase64 + "\"\n" +
                     "}";
 
-            HTTPUtil.sendPostRequest(url, jsonBody);
+            HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    // İstek başarılı olduğunda yapılacak işlemler
+                }
+
+                @Override
+                public void onFailure() {
+                    // İstek başarısız olduğunda yapılacak işlemler
+                }
+            });
         } else {
             Util.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
     }
+
 
     ArrayList<Integer> calcDimensions(int x, int y, int h, ArrayList<Integer> kampanaDegerleri) {
         int eskiX=0, eskiY=0, eskiH=0;

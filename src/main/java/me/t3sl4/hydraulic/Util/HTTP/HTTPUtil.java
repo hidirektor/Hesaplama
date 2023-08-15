@@ -1,65 +1,49 @@
 package me.t3sl4.hydraulic.Util.HTTP;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.util.stream.Collectors;
 
 public class HTTPUtil {
 
+    public static String readResponse(InputStream inputStream) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        }
+    }
+
     public static String sendPostRequest(String url, String jsonBody) throws IOException {
         HttpURLConnection connection = null;
-        BufferedReader reader = null;
         try {
-            URL urlObject = new URL(url);
-            connection = (HttpURLConnection) urlObject.openConnection();
+            URL urlObj = new URL(url);
+            connection = (HttpURLConnection) urlObj.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoOutput(true);
 
-            OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(jsonBody.getBytes());
-            outputStream.flush();
-            outputStream.close();
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonBody.getBytes("UTF-8");
+                os.write(input, 0, input.length);
+            }
 
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                return readResponse(connection.getInputStream());
             } else {
-                reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                return null; // veya hata mesajı
             }
-
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            return response.toString();
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
-            if (reader != null) {
-                reader.close();
-            }
         }
     }
 
-    public static String parseNameSurname(String jsonResponse, String parserPart) {
-        JsonParser parser = new JsonParser();
-        JsonObject jsonObject = parser.parse(jsonResponse).getAsJsonObject();
-        return jsonObject.get(parserPart).getAsString();
-    }
-
-    public static String parseProfilePhoto(String jsonResponse, String parserPart) {
-        JsonParser parser = new JsonParser();
-        JsonObject jsonObject = parser.parse(jsonResponse).getAsJsonObject();
-        return jsonObject.get(parserPart).getAsString();
+    public static String parseStringVal(String response, String field) {
+        JSONObject jsonObject = new JSONObject(response);
+        return jsonObject.getString(field);
     }
 }

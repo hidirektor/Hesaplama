@@ -1,18 +1,13 @@
 package me.t3sl4.hydraulic.Controllers;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.Main;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.User;
@@ -23,8 +18,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
@@ -45,28 +38,42 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button btnSignup;
-    private double x, y;
-
-    public static User loggedInUser;
 
     @FXML
-    public void girisYap(MouseEvent event) throws IOException {
-        if(Util.netIsAvailable()) {
+    public void girisYap(MouseEvent event) {
+        if (Util.netIsAvailable()) {
             Stage stage = (Stage) btnSignin.getScene().getWindow();
 
-            if(txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
+            if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
                 lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
             } else {
-                if (logIn(txtUsername.getText(), txtPassword.getText()).equals("Success")) {
-                    stage.close();
+                String url = BASE_URL + "/api/login";
+                String jsonBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
 
-                    String url = BASE_URL + "/api/profileInfo/:NameSurname";
-                    String jsonBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
-                    loggedInUser = new User(txtUsername.getText(), HTTPUtil.parseNameSurname(HTTPUtil.sendPostRequest(url, jsonBody), "NameSurname"));
-                    openMainScreen();
-                } else {
-                    lblErrors.setText("Böyle bir kullanıcı bulunamadı !!");
-                }
+                HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        if (response.contains("Giriş başarılı")) {
+                            stage.close();
+
+                            Main.loggedInUser = new User(txtUsername.getText());
+
+                            try {
+                                openMainScreen();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else {
+                            lblErrors.setText("Böyle bir kullanıcı bulunamadı!");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        lblErrors.setText("Giriş yapılamadı. Lütfen tekrar deneyin.");
+                    }
+                });
             }
         } else {
             lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
@@ -94,29 +101,6 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         if(!Util.netIsAvailable()) {
             lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
-        }
-    }
-
-    private String logIn(String username, String password) throws IOException {
-        URL url = new URL(BASE_URL + "/api/login");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setDoOutput(true);
-
-        String jsonInputString = "{ \"Username\": \"" + username + "\", \"Password\": \"" + password + "\" }";
-
-        try (OutputStream os = conn.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-
-        int responseCode = conn.getResponseCode();
-
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            return "Success";
-        } else {
-            return "Failure";
         }
     }
 
