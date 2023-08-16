@@ -22,6 +22,11 @@ import me.t3sl4.hydraulic.Main;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -68,9 +73,19 @@ public class MainController implements Initializable {
     @FXML
     private Circle profilePhotoCircle;
 
+    @FXML
+    private Label toplamSiparisCount;
+    @FXML
+    private Label klasikUniteCount;
+    @FXML
+    private Label hidrosUntiteCount;
+    @FXML
+    private Label parametreCount;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userInfo();
+        hidrolikUnitStats();
         Node[] nodes = new Node[10];
         for (int i = 0; i < nodes.length; i++) {
             try {
@@ -176,6 +191,31 @@ public class MainController implements Initializable {
         updateUser("Created_At", 5);
     }
 
+    public void hidrolikUnitStats() {
+        String profileInfoUrl = BASE_URL + "/api/getStatistics";
+
+        HTTPRequest.sendRequestNormal(profileInfoUrl, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String hydraulicResponse) {
+                JSONObject responseJson = new JSONObject(hydraulicResponse);
+                int siparisSayisi = responseJson.getInt("Sipariş Sayısı");
+                int klasik = responseJson.getInt("Klasik");
+                int hidros = responseJson.getInt("Hidros");
+
+                toplamSiparisCount.setText(String.valueOf(siparisSayisi));
+                klasikUniteCount.setText(String.valueOf(klasik));
+                hidrosUntiteCount.setText(String.valueOf(hidros));
+            }
+
+            @Override
+            public void onFailure() {
+                System.out.println("Kullanıcı bilgileri alınamadı!");
+            }
+        });
+
+        excelVoidCount();
+    }
+
     public void updateUser(String requestVal, int section) {
         String profileInfoUrl = BASE_URL + "/api/profileInfo/:" + requestVal;
         String profileInfoBody = "{\"Username\": \"" + Main.loggedInUser.getUsername() + "\"}";
@@ -244,6 +284,40 @@ public class MainController implements Initializable {
             profilePhotoCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.valueOf("#05071F")));
             kullaniciProfilFoto.setImage(image);
             kullaniciProfilFoto.setVisible(false);
+        }
+    }
+
+    private void excelVoidCount() {
+        String excelPath = "/data/Hidrolik.xlsx";
+        String sheetName = "Boşluk Değerleri";
+
+        try (InputStream file = Launcher.class.getResourceAsStream(excelPath)) {
+            Workbook workbook = new XSSFWorkbook(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            if (sheet != null) {
+                int rowCount = sheet.getPhysicalNumberOfRows();
+                int maxColumnCount = 0;
+
+                for (int i = 0; i < rowCount; i++) {
+                    Row row = sheet.getRow(i);
+                    if (row != null) {
+                        int columnCount = row.getPhysicalNumberOfCells();
+                        if (columnCount > maxColumnCount) {
+                            maxColumnCount = columnCount;
+                        }
+                    }
+                }
+
+                System.out.println("Dolu sütun sayısı: " + maxColumnCount);
+                parametreCount.setText(String.valueOf(maxColumnCount));
+            } else {
+                System.out.println("Sayfa bulunamadı: " + sheetName);
+            }
+
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

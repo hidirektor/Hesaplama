@@ -62,6 +62,43 @@ public class HTTPRequest {
         thread.start();
     }
 
+    public static void sendRequestNormal(String url, RequestCallback callback) {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    URL urlObj = new URL(url);
+                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+
+                    int responseCode = conn.getResponseCode();
+
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        String response = HTTPUtil.readResponse(conn.getInputStream());
+                        Platform.runLater(() -> {
+                            try {
+                                callback.onSuccess(response);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    } else {
+                        Platform.runLater(callback::onFailure);
+                    }
+                } catch (IOException e) {
+                    Platform.runLater(callback::onFailure);
+                }
+
+                return null;
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.start();
+    }
+
+
     public static void sendRequest4File(String url, String jsonBody, String localFilePath, RequestCallback callback) {
         OkHttpClient client = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
