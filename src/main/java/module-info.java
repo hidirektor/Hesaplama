@@ -10,6 +10,7 @@ module me.t3sl4.hydraulic {
     requires java.sql;
     requires org.json;
     requires com.google.gson;
+    requires okhttp3;
 
     opens me.t3sl4.hydraulic to javafx.fxml;
     exports me.t3sl4.hydraulic;

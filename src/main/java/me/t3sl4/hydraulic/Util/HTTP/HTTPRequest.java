@@ -10,6 +10,8 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import okhttp3.*;
+
 public class HTTPRequest {
 
     public interface RequestCallback {
@@ -57,6 +59,44 @@ public class HTTPRequest {
         };
 
         Thread thread = new Thread(task);
+        thread.start();
+    }
+
+    public static void sendRequest4File(String url, String jsonBody, String localFilePath, RequestCallback callback) {
+        OkHttpClient client = new OkHttpClient();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, jsonBody);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        Thread thread = new Thread(() -> {
+            try (Response response = client.newCall(request).execute()) {
+                if (!response.isSuccessful()) {
+                    throw new IOException("Unexpected code " + response);
+                }
+
+                try (ResponseBody responseBody = response.body()) {
+                    if (responseBody != null) {
+                        try (FileOutputStream fos = new FileOutputStream(localFilePath)) {
+                            fos.write(responseBody.bytes());
+                        }
+
+                        System.out.println("Photo saved to " + localFilePath);
+                        callback.onSuccess("Photo saved to " + localFilePath);
+                    } else {
+                        System.out.println("Response body is empty.");
+                        callback.onFailure();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                callback.onFailure();
+            }
+        });
+
         thread.start();
     }
 

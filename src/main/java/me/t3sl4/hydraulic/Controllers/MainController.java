@@ -186,27 +186,20 @@ public class MainController implements Initializable {
                 String parsedVal = HTTPUtil.parseStringVal(profileInfoResponse, requestVal);
                 if (section == 0) {
                     Main.loggedInUser.setRole(parsedVal);
-                    System.out.println(requestVal + ": " + Main.loggedInUser.getRole());
                 } else if (section == 1) {
                     Main.loggedInUser.setEmail(parsedVal);
-                    System.out.println(requestVal + ": " + Main.loggedInUser.getEmail());
                 } else if (section == 2) {
                     Main.loggedInUser.setFullName(parsedVal);
-                    System.out.println(requestVal + ": " + Main.loggedInUser.getFullName());
                 } else if (section == 3) {
                     Main.loggedInUser.setPhone(parsedVal);
-                    System.out.println(requestVal + ": " + Main.loggedInUser.getPhone());
                 } else if (section == 4) {
                     Main.loggedInUser.setCompanyName(parsedVal);
-                    System.out.println(requestVal + ": " + Main.loggedInUser.getCompanyName());
                 } else {
                     Main.loggedInUser.setCreatedAt(parsedVal);
-                    System.out.println(requestVal + ": " + Main.loggedInUser.getCreatedAt());
                 }
 
                 kullaniciAdiIsimText.setText(Main.loggedInUser.getUsername() + "\n" + Main.loggedInUser.getFullName());
                 downloadAndSetProfilePhoto(Main.loggedInUser.getUsername());
-                setProfilePhoto(Main.loggedInUser.getUsername());
             }
 
             @Override
@@ -217,20 +210,20 @@ public class MainController implements Initializable {
     }
 
     private void downloadAndSetProfilePhoto(String username) {
-        String localFilePath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\";
-        String localFileName = username + "_profilePhoto.jpg";
+        String localFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
+        String localFileFinalPath = localFilePath + username + ".jpg";
 
-        File localFile = new File(localFilePath + localFileName);
+        File localFile = new File(localFileFinalPath);
         if (localFile.exists()) {
-            setProfilePhoto(localFilePath + localFileName);
+            setProfilePhoto(username);
         } else {
-            String photoUrl = BASE_URL + "/api/fileSystem/download/" + username;
-            String jsonBody = "{\"name\": \"" + localFileName + "\"}";
+            String photoUrl = BASE_URL + "/api/fileSystem/downloadPhoto";
+            String jsonBody = "{\"username\":\"" + username + "\"} ";
 
-            HTTPRequest.sendRequest(photoUrl, jsonBody, new HTTPRequest.RequestCallback() {
+            HTTPRequest.sendRequest4File(photoUrl, jsonBody, localFileFinalPath, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    setProfilePhoto(localFilePath + localFileName);
+                    setProfilePhoto(username);
                 }
 
                 @Override
@@ -241,14 +234,16 @@ public class MainController implements Initializable {
         }
     }
 
-
     private void setProfilePhoto(String username) {
-        String photoPath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\" + username + "_profilePhoto.jpg";
+        String photoPath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\" + username + ".jpg";
         File photoFile = new File(photoPath);
 
         if (photoFile.exists()) {
             Image image = new Image(photoFile.toURI().toString());
+            profilePhotoCircle.setFill(new ImagePattern(image));
+            profilePhotoCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.valueOf("#05071F")));
             kullaniciProfilFoto.setImage(image);
+            kullaniciProfilFoto.setVisible(false);
         }
     }
 }
