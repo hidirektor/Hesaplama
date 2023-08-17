@@ -16,6 +16,9 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.layout.StackPane?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import jdk.javadoc.internal.doclets.formats.html.markup.Script?>
+<?import javafx.event.EventHandler?>
 <AnchorPane id="AnchorPane" prefHeight="417.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.RegisterController">
     <children>
         <Pane prefHeight="417.0" prefWidth="110.0" style="-fx-background-color: #0C39FF;">
@@ -31,7 +34,19 @@
         <JFXTextField fx:id="ePostaText" focusColor="#48a5ea" layoutX="133.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="E-Posta" />
         <JFXTextField fx:id="telefonText" focusColor="#48a5ea" layoutX="133.0" layoutY="298.0" prefHeight="25.0" prefWidth="217.0" promptText="Telefon Numarası" />
         <JFXTextField fx:id="kullaniciAdiText" focusColor="#48a5ea" layoutX="436.0" layoutY="211.0" prefHeight="25.0" prefWidth="217.0" promptText="Kullanıcı Adı" />
-        <JFXTextField fx:id="sifreText" focusColor="#48a5ea" layoutX="436.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="Şifre" />
+        <JFXPasswordField fx:id="sifreText" focusColor="#48a5ea" layoutX="436.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="Şifre" />
+
+        <JFXButton fx:id="togglePasswordButton" layoutX="653.0" layoutY="251.0" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
+            <graphic>
+                <ImageView fx:id="passwordVisibilityIcon" fitHeight="15.0" fitWidth="15.0">
+                    <image>
+                        <Image url="@../icons/showPass.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </JFXButton>
+
+        <JFXPasswordField fx:id="sifrePassword" focusColor="#48a5ea" layoutX="436.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="Şifre" managed="false" visible="false" />
         <JFXTextField fx:id="sirketText" focusColor="#48a5ea" layoutX="436.0" layoutY="298.0" prefHeight="25.0" prefWidth="217.0" promptText="Şirket" />
         <Label layoutX="133.0" layoutY="31.0" text="Kullanıcı Bilgileri" textFill="#48a5ea">
             <font>

@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -55,13 +56,41 @@ public class RegisterController implements Initializable {
     @FXML
     private Circle secilenFoto;
 
+    @FXML
+    private Button togglePasswordButton;
+    @FXML
+    private TextField sifrePassword;
+    @FXML
+    private ImageView passwordVisibilityIcon;
+
     private double x, y;
 
     String secilenPhotoPath = "";
+    private String girilenSifre = "";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
+        sifreText.textProperty().addListener((observable, oldValue, newValue) -> {
+            girilenSifre = newValue;
+            System.out.println(girilenSifre);
+        });
+    }
+
+    private void togglePasswordVisibility() {
+        if (sifreText.isVisible()) {
+            sifreText.setManaged(false);
+            sifreText.setVisible(false);
+            sifrePassword.setManaged(true);
+            sifrePassword.setVisible(true);
+            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
+        } else {
+            sifreText.setManaged(true);
+            sifreText.setVisible(true);
+            sifrePassword.setManaged(false);
+            sifrePassword.setVisible(false);
+            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
+        }
     }
 
     @FXML
