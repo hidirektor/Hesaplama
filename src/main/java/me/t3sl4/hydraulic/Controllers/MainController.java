@@ -234,7 +234,7 @@ public class MainController implements Initializable {
     }
 
     public void hydraulicUnitInit() {
-        HTTPRequest.sendRequestNormal("http://localhost:3000/api/getHydraulicInfo", new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendRequestNormal(BASE_URL + "/api/getHydraulicInfo", new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
