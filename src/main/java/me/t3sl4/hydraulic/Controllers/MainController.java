@@ -69,6 +69,9 @@ public class MainController implements Initializable {
     private Button btnMenus;
 
     @FXML
+    private Button btnProfil;
+
+    @FXML
     private Button btnSignout;
 
     @FXML
@@ -176,6 +179,30 @@ public class MainController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    public void profileEditScreen() {
+        pnlMenus.setStyle("-fx-background-color : #353a46");
+        pnlMenus.toFront();
+        try {
+            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/ProfileEdit.fxml"));
+            Pane profilPane = loader.load();
+            pnlMenus.getChildren().setAll(profilPane);
+
+            double paneWidth = pnlMenus.getWidth();
+            double paneHeight = pnlMenus.getHeight();
+
+            double parametreWidth = profilPane.getPrefWidth();
+            double parametreHeight = profilPane.getPrefHeight();
+
+            double centerX = (paneWidth - parametreWidth) / 2;
+            double centerY = (paneHeight - parametreHeight) / 2;
+            profilPane.setLayoutX(centerX-100);
+            profilPane.setLayoutY(centerY+20);
+        } catch(IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -17,8 +17,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.layout.StackPane?>
 <?import com.jfoenix.controls.JFXPasswordField?>
-<?import jdk.javadoc.internal.doclets.formats.html.markup.Script?>
-<?import javafx.event.EventHandler?>
 <AnchorPane id="AnchorPane" prefHeight="417.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.RegisterController">
     <children>
         <Pane prefHeight="417.0" prefWidth="110.0" style="-fx-background-color: #0C39FF;">
@@ -53,15 +51,15 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <JFXButton layoutX="133.0" layoutY="349.0" onMouseClicked="#kayitBilgiTemizle" prefHeight="25.0" prefWidth="94.0" text="Temizle" />
-        <JFXButton fx:id="kayitOlma" layoutX="524.0" layoutY="349.0" prefHeight="25.0" prefWidth="116.0" onMouseClicked="#kayitOlma" style="-fx-background-color: #48A5EA;" text="Kayıt Ol" textFill="WHITE" />
+        <JFXButton layoutX="133.0" layoutY="349.0" onMouseClicked="#kayitBilgiTemizle" style="-fx-background-color: #FF6961;" prefHeight="25.0" prefWidth="94.0" text="Temizle" />
+        <JFXButton fx:id="kayitOlma" layoutX="524.0" layoutY="349.0" prefHeight="25.0" prefWidth="116.0" onMouseClicked="#kayitOlma" style="-fx-background-color: #77DD77;" text="Kayıt Ol" textFill="WHITE" />
         <Separator layoutX="133.0" layoutY="68.0" prefHeight="1.0" prefWidth="520.0" />
         <Label id="btn_exit" fx:id="btn_exit" layoutX="675.0" layoutY="2.0" onMousePressed="#handleButtonAction" prefHeight="25.0" prefWidth="21.0" text="X" textFill="#48a5ea">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <JFXButton layoutX="230.0" layoutY="130.0" onAction="#uploadProfilePhoto" prefHeight="25.0" prefWidth="100.0" text="Fotoğraf Yükle" />
+        <JFXButton layoutX="230.0" layoutY="130.0" onAction="#uploadProfilePhoto" style="-fx-background-color: #48A5EA;" prefHeight="25.0" prefWidth="100.0" text="Fotoğraf Yükle" />
         <StackPane layoutX="320.0" layoutY="90.0">
             <ImageView fx:id="profilePhotoImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                 <VBox.margin>

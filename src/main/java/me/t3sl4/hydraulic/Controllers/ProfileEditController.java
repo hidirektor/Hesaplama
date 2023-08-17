@@ -1,14 +1,8 @@
 package me.t3sl4.hydraulic.Controllers;
 
-import java.io.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,14 +17,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.Data.ImageUtil;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 
+import java.io.File;
+import java.io.IOException;
+
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
-public class RegisterController implements Initializable {
-
+public class ProfileEditController {
     @FXML
     private Label btn_exit;
 
@@ -68,29 +63,15 @@ public class RegisterController implements Initializable {
     String secilenPhotoPath = "";
     private String girilenSifre = "";
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
-        sifreText.textProperty().addListener((observable, oldValue, newValue) -> {
-            girilenSifre = newValue;
-            System.out.println(girilenSifre);
-        });
-    }
-
-    private void togglePasswordVisibility() {
-        if (sifreText.isVisible()) {
-            sifreText.setManaged(false);
-            sifreText.setVisible(false);
-            sifrePassword.setManaged(true);
-            sifrePassword.setVisible(true);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
-        } else {
-            sifreText.setManaged(true);
-            sifreText.setVisible(true);
-            sifrePassword.setManaged(false);
-            sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
-        }
+    @FXML
+    public void kayitBilgiTemizle() {
+        secilenFoto.setVisible(false);
+        isimSoyisimText.clear();
+        ePostaText.clear();
+        telefonText.clear();
+        kullaniciAdiText.clear();
+        sifreText.clear();
+        sirketText.clear();
     }
 
     @FXML
@@ -153,7 +134,7 @@ public class RegisterController implements Initializable {
     }
 
     private void sendRegisterRequest(String jsonBody, Stage stage) {
-        String registerUrl = BASE_URL + "/api/update";
+        String registerUrl = BASE_URL + "/api/register";
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
@@ -201,22 +182,6 @@ public class RegisterController implements Initializable {
         });
     }
 
-    @FXML
-    public void onderWeb() {
-        Util.openURL("https://ondergrup.com");
-    }
-
-    @FXML
-    public void kayitBilgiTemizle() {
-        secilenFoto.setVisible(false);
-        isimSoyisimText.clear();
-        ePostaText.clear();
-        telefonText.clear();
-        kullaniciAdiText.clear();
-        sifreText.clear();
-        sirketText.clear();
-    }
-
     private void openMainScreen() throws IOException {
         Stage primaryStage = new Stage();
         Parent root = FXMLLoader.load(Launcher.class.getResource("fxml/Login.fxml"));
@@ -242,5 +207,4 @@ public class RegisterController implements Initializable {
     private boolean checkFields() {
         return !isimSoyisimText.getText().isEmpty() && !ePostaText.getText().isEmpty() && !telefonText.getText().isEmpty() && !kullaniciAdiText.getText().isEmpty() && !sifreText.getText().isEmpty() && !sirketText.getText().isEmpty() && profilePhotoImageView.getImage() != null;
     }
-
 }
