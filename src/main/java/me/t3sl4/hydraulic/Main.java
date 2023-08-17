@@ -19,6 +19,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Util.excelDataRead();
+
+        Util.filePath();
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/Login.fxml")));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);

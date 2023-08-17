@@ -46,6 +46,28 @@ public class Util {
         return dateFormat.format(date);
     }
 
+    public static void filePath() {
+        String profilePhotoLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
+        String pdfFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
+        String excelFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/partList/";
+
+        File profilePhotoTestFile = new File(profilePhotoLocalPath);
+        File pdfFileTestFile = new File(pdfFileLocalPath);
+        File excelFileTestFile = new File(excelFileLocalPath);
+
+        if(!profilePhotoTestFile.exists()) {
+            profilePhotoTestFile.mkdirs();
+        }
+
+        if(!pdfFileTestFile.exists()) {
+            pdfFileTestFile.mkdirs();
+        }
+
+        if(!excelFileTestFile.exists()) {
+            excelFileTestFile.mkdirs();
+        }
+    }
+
     public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pdfFilePath, String girilenSiparisNumarasi) {
         try {
             String userHome = System.getProperty("user.home");

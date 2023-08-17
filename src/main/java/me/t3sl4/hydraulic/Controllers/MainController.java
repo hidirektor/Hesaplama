@@ -213,26 +213,6 @@ public class MainController implements Initializable {
         excelVoidCount();
     }
 
-    public void hydraulicUnitInit23() {
-        Node[] nodes = new Node[getHydraulicUnitCount()];
-        for (int i = 0; i < nodes.length; i++) {
-            try {
-                final int j = i;
-                nodes[i] = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Item.fxml")));
-
-                nodes[i].setOnMouseEntered(event -> {
-                    nodes[j].setStyle("-fx-background-color : #0A0E3F");
-                });
-                nodes[i].setOnMouseExited(event -> {
-                    nodes[j].setStyle("-fx-background-color : #02030A");
-                });
-                pnItems.getChildren().add(nodes[i]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public void hydraulicUnitInit() {
         HTTPRequest.sendRequestNormal(BASE_URL + "/api/getHydraulicInfo", new HTTPRequest.RequestCallback() {
             @Override
@@ -380,6 +360,7 @@ public class MainController implements Initializable {
         if (localFile.exists()) {
             setProfilePhoto(username);
         } else {
+
             String photoUrl = BASE_URL + "/api/fileSystem/downloadPhoto";
             String jsonBody = "{\"username\":\"" + username + "\"} ";
 
