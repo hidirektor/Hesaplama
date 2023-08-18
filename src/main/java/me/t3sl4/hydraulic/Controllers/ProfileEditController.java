@@ -8,21 +8,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.Main;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 
+import static me.t3sl4.hydraulic.Main.loggedInUser;
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
 public class ProfileEditController {
@@ -64,6 +69,12 @@ public class ProfileEditController {
     private String girilenSifre = "";
 
     @FXML
+    public void initialize() {
+        getUserInfo();
+        downloadAndSetProfilePhoto(Main.loggedInUser.getUsername());
+    }
+
+    @FXML
     public void kayitBilgiTemizle() {
         secilenFoto.setVisible(false);
         isimSoyisimText.clear();
@@ -102,7 +113,6 @@ public class ProfileEditController {
     @FXML
     private void kayitOlma() throws IOException {
         Stage stage = (Stage) kullaniciAdiText.getScene().getWindow();
-        String userRole = "NORMAL";
         String userName = kullaniciAdiText.getText();
         String password = sifreText.getText();
         String nameSurname = isimSoyisimText.getText();
@@ -116,7 +126,6 @@ public class ProfileEditController {
 
             String registerJsonBody =
                     "{" +
-                            "\"Role\":\"" + userRole + "\"," +
                             "\"UserName\":\"" + userName + "\"," +
                             "\"Email\":\"" + eMail + "\"," +
                             "\"Password\":\"" + password + "\"," +
@@ -206,5 +215,73 @@ public class ProfileEditController {
 
     private boolean checkFields() {
         return !isimSoyisimText.getText().isEmpty() && !ePostaText.getText().isEmpty() && !telefonText.getText().isEmpty() && !kullaniciAdiText.getText().isEmpty() && !sifreText.getText().isEmpty() && !sirketText.getText().isEmpty() && profilePhotoImageView.getImage() != null;
+    }
+
+    private void getUserInfo() {
+        String profileInfoUrl = BASE_URL + "/api/getWholeProfile";
+        String jsonBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
+
+        HTTPRequest.sendRequest(profileInfoUrl, jsonBody, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String hydraulicResponse) {
+                JSONObject responseJson = new JSONObject(hydraulicResponse);
+                String isimSoyisim = responseJson.getString("NameSurname");
+                String kullaniciAdi = responseJson.getString("UserName");
+                String ePosta = responseJson.getString("Email");
+                String phone = responseJson.getString("Phone");
+                String companyName = responseJson.getString("CompanyName");
+
+                isimSoyisimText.setText(isimSoyisim);
+                kullaniciAdiText.setText(kullaniciAdi);
+                ePostaText.setText(ePosta);
+                telefonText.setText(phone);
+                sirketText.setText(companyName);
+            }
+
+            @Override
+            public void onFailure() {
+                System.out.println("Kullanıcı bilgileri alınamadı!");
+            }
+        });
+    }
+
+    private void downloadAndSetProfilePhoto(String username) {
+        String localFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
+        String localFileFinalPath = localFilePath + username + ".jpg";
+
+        File localFile = new File(localFileFinalPath);
+        if (localFile.exists()) {
+            setProfilePhoto(username);
+        } else {
+
+            String photoUrl = BASE_URL + "/api/fileSystem/downloadPhoto";
+            String jsonBody = "{\"username\":\"" + username + "\"} ";
+
+            HTTPRequest.sendRequest4File(photoUrl, jsonBody, localFileFinalPath, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    setProfilePhoto(username);
+                }
+
+                @Override
+                public void onFailure() {
+                    System.out.println("Profil fotoğrafı indirilemedi.");
+                }
+            });
+        }
+    }
+
+    private void setProfilePhoto(String username) {
+        String photoPath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\" + username + ".jpg";
+        File photoFile = new File(photoPath);
+
+        if (photoFile.exists()) {
+            Image image = new Image(photoFile.toURI().toString());
+            secilenFoto.setFill(new ImagePattern(image));
+            secilenFoto.setEffect(new DropShadow(+25d, 0d, +2d, Color.valueOf("#05071F")));
+            secilenFoto.setVisible(true);
+            profilePhotoImageView.setImage(image);
+            profilePhotoImageView.setVisible(false);
+        }
     }
 }
