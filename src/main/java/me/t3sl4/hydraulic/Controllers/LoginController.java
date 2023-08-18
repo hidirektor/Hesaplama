@@ -73,7 +73,7 @@ public class LoginController implements Initializable {
                     //response kodlarına göre hata mesjaını revize et ()
                     @Override
                     public void onFailure() {
-                        lblErrors.setText("Giriş yapılamadı. Lütfen tekrar deneyin.");
+                        lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
                     }
                 });
             }

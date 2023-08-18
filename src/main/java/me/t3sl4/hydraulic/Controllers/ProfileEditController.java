@@ -22,6 +22,7 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Main;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Util.Data.Profile;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -71,7 +72,7 @@ public class ProfileEditController {
     @FXML
     public void initialize() {
         getUserInfo();
-        downloadAndSetProfilePhoto(Main.loggedInUser.getUsername());
+        Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
     }
 
     @FXML
@@ -243,45 +244,5 @@ public class ProfileEditController {
                 System.out.println("Kullanıcı bilgileri alınamadı!");
             }
         });
-    }
-
-    private void downloadAndSetProfilePhoto(String username) {
-        String localFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
-        String localFileFinalPath = localFilePath + username + ".jpg";
-
-        File localFile = new File(localFileFinalPath);
-        if (localFile.exists()) {
-            setProfilePhoto(username);
-        } else {
-
-            String photoUrl = BASE_URL + "/api/fileSystem/downloadPhoto";
-            String jsonBody = "{\"username\":\"" + username + "\"} ";
-
-            HTTPRequest.sendRequest4File(photoUrl, jsonBody, localFileFinalPath, new HTTPRequest.RequestCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    setProfilePhoto(username);
-                }
-
-                @Override
-                public void onFailure() {
-                    System.out.println("Profil fotoğrafı indirilemedi.");
-                }
-            });
-        }
-    }
-
-    private void setProfilePhoto(String username) {
-        String photoPath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\" + username + ".jpg";
-        File photoFile = new File(photoPath);
-
-        if (photoFile.exists()) {
-            Image image = new Image(photoFile.toURI().toString());
-            secilenFoto.setFill(new ImagePattern(image));
-            secilenFoto.setEffect(new DropShadow(+25d, 0d, +2d, Color.valueOf("#05071F")));
-            secilenFoto.setVisible(true);
-            profilePhotoImageView.setImage(image);
-            profilePhotoImageView.setVisible(false);
-        }
     }
 }

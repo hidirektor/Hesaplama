@@ -50,6 +50,7 @@ import java.util.ResourceBundle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import me.t3sl4.hydraulic.Util.Data.Profile;
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
 public class MainController implements Initializable {
@@ -369,7 +370,7 @@ public class MainController implements Initializable {
                 }
 
                 kullaniciAdiIsimText.setText(Main.loggedInUser.getUsername() + "\n" + Main.loggedInUser.getFullName());
-                downloadAndSetProfilePhoto(Main.loggedInUser.getUsername());
+                Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
             }
 
             @Override
@@ -377,45 +378,6 @@ public class MainController implements Initializable {
                 System.out.println("Kullanıcı bilgileri alınamadı!");
             }
         });
-    }
-
-    private void downloadAndSetProfilePhoto(String username) {
-        String localFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
-        String localFileFinalPath = localFilePath + username + ".jpg";
-
-        File localFile = new File(localFileFinalPath);
-        if (localFile.exists()) {
-            setProfilePhoto(username);
-        } else {
-
-            String photoUrl = BASE_URL + "/api/fileSystem/downloadPhoto";
-            String jsonBody = "{\"username\":\"" + username + "\"} ";
-
-            HTTPRequest.sendRequest4File(photoUrl, jsonBody, localFileFinalPath, new HTTPRequest.RequestCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    setProfilePhoto(username);
-                }
-
-                @Override
-                public void onFailure() {
-                    System.out.println("Profil fotoğrafı indirilemedi.");
-                }
-            });
-        }
-    }
-
-    private void setProfilePhoto(String username) {
-        String photoPath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\" + username + ".jpg";
-        File photoFile = new File(photoPath);
-
-        if (photoFile.exists()) {
-            Image image = new Image(photoFile.toURI().toString());
-            profilePhotoCircle.setFill(new ImagePattern(image));
-            profilePhotoCircle.setEffect(new DropShadow(+25d, 0d, +2d, Color.valueOf("#05071F")));
-            kullaniciProfilFoto.setImage(image);
-            kullaniciProfilFoto.setVisible(false);
-        }
     }
 
     private void excelVoidCount() {
