@@ -69,6 +69,8 @@ public class LoginController implements Initializable {
                         }
                     }
 
+                    //TODO
+                    //response kodlarına göre hata mesjaını revize et ()
                     @Override
                     public void onFailure() {
                         lblErrors.setText("Giriş yapılamadı. Lütfen tekrar deneyin.");
