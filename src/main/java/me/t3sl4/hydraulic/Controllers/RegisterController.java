@@ -24,6 +24,7 @@ import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Util.SceneUtil;
 
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
@@ -61,6 +62,9 @@ public class RegisterController implements Initializable {
     @FXML
     private ImageView passwordVisibilityIcon;
 
+    @FXML
+    private ImageView goBack;
+
     private double x, y;
 
     String secilenPhotoPath = "";
@@ -73,6 +77,19 @@ public class RegisterController implements Initializable {
             girilenSifre = newValue;
             System.out.println(girilenSifre);
         });
+    }
+
+    @FXML
+    private void programiKapat(MouseEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
+    private void goBackAction() throws IOException {
+        Stage stage = (Stage) goBack.getScene().getWindow();
+
+        stage.close();
+        SceneUtil.changeScreen("fxml/Login.fxml");
     }
 
     private void togglePasswordVisibility() {

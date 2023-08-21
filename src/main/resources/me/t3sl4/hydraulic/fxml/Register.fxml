@@ -21,6 +21,11 @@
     <children>
         <Pane prefHeight="417.0" prefWidth="110.0" style="-fx-background-color: #0C39FF;">
             <children>
+                <ImageView fx:id="goBack" onMouseClicked="#goBackAction" fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/goBack.png" />
+                    </image>
+                </ImageView>
                 <ImageView fx:id="onderLogo" onMouseClicked="#onderWeb" fitHeight="45.0" fitWidth="45.0" layoutX="32.5" layoutY="186.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../icons/logo.png" />
@@ -54,7 +59,7 @@
         <JFXButton layoutX="133.0" layoutY="349.0" onMouseClicked="#kayitBilgiTemizle" style="-fx-background-color: #FF6961;" prefHeight="25.0" prefWidth="94.0" text="Temizle" />
         <JFXButton fx:id="kayitOlma" layoutX="524.0" layoutY="349.0" prefHeight="25.0" prefWidth="116.0" onMouseClicked="#kayitOlma" style="-fx-background-color: #77DD77;" text="Kayıt Ol" textFill="WHITE" />
         <Separator layoutX="133.0" layoutY="68.0" prefHeight="1.0" prefWidth="520.0" />
-        <Label id="btn_exit" fx:id="btn_exit" layoutX="675.0" layoutY="2.0" onMousePressed="#handleButtonAction" prefHeight="25.0" prefWidth="21.0" text="X" textFill="#48a5ea">
+        <Label id="btn_exit" fx:id="btn_exit" layoutX="675.0" layoutY="2.0" onMousePressed="#programiKapat" prefHeight="25.0" prefWidth="21.0" text="X" textFill="#48a5ea">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>

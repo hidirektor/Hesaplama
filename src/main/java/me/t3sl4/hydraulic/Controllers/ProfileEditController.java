@@ -109,11 +109,6 @@ public class ProfileEditController {
     }
 
     @FXML
-    private void handleButtonAction(MouseEvent event) {
-        System.exit(0);
-    }
-
-    @FXML
     private void uploadProfilePhoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
