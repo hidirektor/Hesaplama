@@ -127,7 +127,7 @@
                 </Button>
             <ImageView fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/onderGrupMainBeyaz.png" />
+                  <Image url="@../icons/ondergrupMain.png" />
                </image>
                <VBox.margin>
                   <Insets top="40.0" />

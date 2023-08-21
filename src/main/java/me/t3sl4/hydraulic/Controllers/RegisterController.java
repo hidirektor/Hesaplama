@@ -75,7 +75,6 @@ public class RegisterController implements Initializable {
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         sifreText.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
-            System.out.println(girilenSifre);
         });
     }
 
