@@ -70,8 +70,6 @@ public class LoginController implements Initializable {
                         }
                     }
 
-                    //TODO
-                    //response kodlarına göre hata mesjaını revize et ()
                     @Override
                     public void onFailure() {
                         lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
