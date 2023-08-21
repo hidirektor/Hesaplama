@@ -5,43 +5,47 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/20.0.1" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.PopupController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="700.0" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.PopupController">
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="350.0">
         <children>
-            <TextField fx:id="label1" editable="false" layoutX="230.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kampana Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label2" editable="false" layoutX="230.0" layoutY="39.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kampana Boşluk Y" fill="#B7C3D7"/>
-            <TextField fx:id="label3" editable="false" layoutX="230.0" layoutY="68.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label4" editable="false" layoutX="230.0" layoutY="97.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Boşluk Y Arka" fill="#B7C3D7"/>
-            <TextField fx:id="label5" editable="false" layoutX="230.0" layoutY="126.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Boşluk Y Ön" fill="#B7C3D7"/>
-            <TextField fx:id="label6" editable="false" layoutX="230.0" layoutY="155.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilitli Blok Ara Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label7" editable="false" layoutX="230.0" layoutY="184.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tek Hız Ara Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label8" editable="false" layoutX="230.0" layoutY="213.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Çift Hız Ara Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label9" editable="false" layoutX="230.0" layoutY="242.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kompanzasyon Tek Hız Ara Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label10" editable="false" layoutX="230.0" layoutY="271.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma Ara Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label11" editable="false" layoutX="230.0" layoutY="300.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma Ara Boşluk Yk Ön" fill="#B7C3D7"/>
-            <TextField fx:id="label12" editable="false" layoutX="230.0" layoutY="329.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma Ara Boşluk Yk Arka" fill="#B7C3D7"/>
-            <TextField fx:id="label13" editable="false" layoutX="230.0" layoutY="358.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Kampana Boşluk" fill="#B7C3D7"/>
-            <TextField fx:id="label14" editable="false" layoutX="230.0" layoutY="387.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Boşluk X" fill="#B7C3D7"/>
-            <TextField fx:id="label15" editable="false" layoutX="230.0" layoutY="416.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Boşluk Y Ön" fill="#B7C3D7"/>
-            <TextField fx:id="label16" editable="false" layoutX="230.0" layoutY="445.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Boşluk Y Arka" fill="#B7C3D7"/>
-            <TextField fx:id="label17" editable="false" layoutX="230.0" layoutY="474.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <Text layoutX="3.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kayıp Litre" fill="#B7C3D7"/>
+            <TextField fx:id="label1" editable="false" layoutX="254.0" layoutY="10.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kampana Boşluk X" />
+            <TextField fx:id="label2" editable="false" layoutX="254.0" layoutY="39.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kampana Boşluk Y" />
+            <TextField fx:id="label3" editable="false" layoutX="254.0" layoutY="68.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Boşluk X" />
+            <TextField fx:id="label4" editable="false" layoutX="254.0" layoutY="97.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Boşluk Y Arka" />
+            <TextField fx:id="label5" editable="false" layoutX="254.0" layoutY="126.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Boşluk Y Ön" />
+            <TextField fx:id="label6" editable="false" layoutX="254.0" layoutY="155.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilitli Blok Ara Boşluk X" />
+            <TextField fx:id="label7" editable="false" layoutX="254.0" layoutY="184.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tek Hız Ara Boşluk X" />
+            <TextField fx:id="label8" editable="false" layoutX="254.0" layoutY="213.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Çift Hız Ara Boşluk X" />
+            <TextField fx:id="label9" editable="false" layoutX="254.0" layoutY="242.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kompanzasyon Tek Hız Ara Boşluk X" />
+            <TextField fx:id="label10" editable="false" layoutX="254.0" layoutY="271.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma Ara Boşluk X" />
+            <TextField fx:id="label11" editable="false" layoutX="254.0" layoutY="300.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma Ara Boşluk Yk Ön" />
+            <TextField fx:id="label12" editable="false" layoutX="254.0" layoutY="329.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soğutma Ara Boşluk Yk Arka" />
+            <TextField fx:id="label13" editable="false" layoutX="254.0" layoutY="358.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Kampana Boşluk" />
+            <TextField fx:id="label14" editable="false" layoutX="254.0" layoutY="387.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Boşluk X" />
+            <TextField fx:id="label15" editable="false" layoutX="254.0" layoutY="416.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Boşluk Y Ön" />
+            <TextField fx:id="label16" editable="false" layoutX="254.0" layoutY="445.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor Boşluk Y Arka" />
+            <TextField fx:id="label17" editable="false" layoutX="254.0" layoutY="474.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+            <Text fill="#B7C3D7" layoutX="27.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kayıp Litre" />
+         <TextField fx:id="label18" editable="false" layoutX="551.0" layoutY="12.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kilitPlatformMotorBosluk" />
+         <TextField fx:id="label19" editable="false" layoutX="551.0" layoutY="41.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="valfXBoslukSogutma" />
         </children>
     </AnchorPane>
 </VBox>

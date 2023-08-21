@@ -43,6 +43,10 @@ public class PopupController implements Initializable {
     private TextField label16;
     @FXML
     private TextField label17;
+    @FXML
+    private TextField label18;
+    @FXML
+    private TextField label19;
 
     private int kampanaBoslukX;
     private int kampanaBoslukY;
@@ -61,11 +65,13 @@ public class PopupController implements Initializable {
     private int kilitMotorBoslukYOn;
     private int kilitMotorBoslukYArka;
     private int kayipLitre;
+    private int kilitPlatformMotorBosluk;
+    private int valfXBoslukSogutma;
 
     public void setValues(int kampanaBoslukX, int kampanaBoslukY, int valfBoslukX, int valfBoslukYArka, int valfBoslukYOn,
                           int kilitliBlokAraBoslukX, int tekHizAraBoslukX, int ciftHizAraBoslukX, int kompanzasyonTekHizAraBoslukX,
                           int sogutmaAraBoslukX, int sogutmaAraBoslukYkOn, int sogutmaAraBoslukYkArka, int kilitMotorKampanaBosluk,
-                          int kilitMotorMotorBoslukX, int kilitMotorBoslukYOn, int kilitMotorBoslukYArka, int kayipLitre) {
+                          int kilitMotorMotorBoslukX, int kilitMotorBoslukYOn, int kilitMotorBoslukYArka, int kayipLitre, int kilitPlatformMotorBosluk, int valfXBoslukSogutma) {
         this.kampanaBoslukX = kampanaBoslukX;
         this.kampanaBoslukY = kampanaBoslukY;
         this.valfBoslukX = valfBoslukX;
@@ -83,6 +89,8 @@ public class PopupController implements Initializable {
         this.kilitMotorBoslukYOn = kilitMotorBoslukYOn;
         this.kilitMotorBoslukYArka = kilitMotorBoslukYArka;
         this.kayipLitre = kayipLitre;
+        this.kilitPlatformMotorBosluk = kilitPlatformMotorBosluk;
+        this.valfXBoslukSogutma = valfXBoslukSogutma;
     }
 
     public void showValues() {
@@ -104,6 +112,8 @@ public class PopupController implements Initializable {
         label15.setText(String.valueOf(this.kilitMotorBoslukYOn));
         label16.setText(String.valueOf(this.kilitMotorBoslukYArka));
         label17.setText(String.valueOf(this.kayipLitre));
+        label18.setText(String.valueOf(this.kilitPlatformMotorBosluk));
+        label19.setText(String.valueOf(this.valfXBoslukSogutma));
     }
 
     @Override
