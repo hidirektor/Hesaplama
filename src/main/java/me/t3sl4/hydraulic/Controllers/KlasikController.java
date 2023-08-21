@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
-import static me.t3sl4.hydraulic.Util.Gen.FileUtil.encodeFileToBase64WString;
-import static me.t3sl4.hydraulic.Util.Gen.FileUtil.fileExists;
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
 public class KlasikController {
@@ -259,7 +257,7 @@ public class KlasikController {
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
-        if (fileExists(pdfPath) && fileExists(excelPath)) {
+        /*if (fileExists(pdfPath) && fileExists(excelPath)) {
             String pdfBase64 = encodeFileToBase64WString(pdfPath);
             String excelBase64 = encodeFileToBase64WString(excelPath);
             String url = BASE_URL + "/api/insertHidrolik";
@@ -285,7 +283,7 @@ public class KlasikController {
             });
         } else {
             Util.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
-        }
+        }*/
     }
 
 

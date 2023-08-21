@@ -200,7 +200,7 @@ public class MainController implements Initializable {
 
             double centerX = (paneWidth - parametreWidth) / 2;
             double centerY = (paneHeight - parametreHeight) / 2;
-            profilPane.setLayoutX(centerX-100);
+            profilPane.setLayoutX(centerX);
             profilPane.setLayoutY(centerY+20);
         } catch(IOException e) {
             e.printStackTrace();

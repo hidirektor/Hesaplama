@@ -2,7 +2,6 @@ package me.t3sl4.hydraulic.Controllers;
 
 import java.io.*;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -23,7 +22,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.Data.ImageUtil;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 
@@ -83,6 +81,7 @@ public class RegisterController implements Initializable {
             sifreText.setVisible(false);
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
+            sifrePassword.setText(girilenSifre);
             passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
         } else {
             sifreText.setManaged(true);
@@ -91,11 +90,6 @@ public class RegisterController implements Initializable {
             sifrePassword.setVisible(false);
             passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
         }
-    }
-
-    @FXML
-    private void handleButtonAction(MouseEvent event) {
-        System.exit(0);
     }
 
     @FXML

@@ -10,7 +10,7 @@ import java.util.List;
 
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
-public class OrderFetcher {
+public class HydraulicUnitFetcher {
     private static final String API_URL = BASE_URL + "/api/orderNumbers";
 
     public static List<String> fetchOrderNumbers() throws IOException {

@@ -73,6 +73,28 @@ public class ProfileEditController {
     public void initialize() {
         getUserInfo();
         Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
+        togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
+        sifreText.textProperty().addListener((observable, oldValue, newValue) -> {
+            girilenSifre = newValue;
+            System.out.println(girilenSifre);
+        });
+    }
+
+    private void togglePasswordVisibility() {
+        if (sifreText.isVisible()) {
+            sifreText.setManaged(false);
+            sifreText.setVisible(false);
+            sifrePassword.setManaged(true);
+            sifrePassword.setVisible(true);
+            sifrePassword.setText(girilenSifre);
+            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
+        } else {
+            sifreText.setManaged(true);
+            sifreText.setVisible(true);
+            sifrePassword.setManaged(false);
+            sifrePassword.setVisible(false);
+            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
+        }
     }
 
     @FXML
@@ -148,16 +170,16 @@ public class ProfileEditController {
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
-                if (response.contains("Kullanıcı eklendi")) {
+                if (response.contains("Profil güncellendi")) {
                     uploadProfilePhoto2Server(stage);
                 } else {
-                    Util.showErrorMessage("Kayıt olurken hata meydana geldi !");
+                    Util.showErrorMessage("Profil güncellenirken hata meydana geldi !");
                 }
             }
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Kayıt olurken hata meydana geldi !");
+                Util.showErrorMessage("Profil güncellenirken hata meydana geldi !");
             }
         });
     }

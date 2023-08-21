@@ -44,7 +44,7 @@
             </graphic>
         </JFXButton>
 
-        <JFXPasswordField fx:id="sifrePassword" focusColor="#48a5ea" layoutX="436.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="Şifre" managed="false" visible="false" />
+        <JFXTextField fx:id="sifrePassword" focusColor="#48a5ea" layoutX="436.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="Şifre" visible="false" />
         <JFXTextField fx:id="sirketText" focusColor="#48a5ea" layoutX="436.0" layoutY="298.0" prefHeight="25.0" prefWidth="217.0" promptText="Şirket" />
         <Label layoutX="133.0" layoutY="31.0" text="Kullanıcı Bilgileri" textFill="#48a5ea">
             <font>
