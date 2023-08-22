@@ -13,19 +13,19 @@
 
 <AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="854.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.LoginController">
     <children>
-        <AnchorPane prefHeight="503.0" prefWidth="382.0" style="-fx-background-color: #0C39FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane prefHeight="503.0" prefWidth="382.0" style="-fx-background-color: #F9F871;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <ImageView fitHeight="52.0" fitWidth="52.0" layoutX="166.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/scissor-lift2.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="105.0" layoutY="262.0" prefHeight="23.0" prefWidth="173.0" text="Önder Grup Hidrolik" textFill="WHITE">
+                <Label alignment="CENTER" layoutX="105.0" layoutY="262.0" prefHeight="23.0" prefWidth="173.0" text="Önder Grup Hidrolik" textFill="BLACK">
                     <font>
                         <Font name="Segoe UI" size="18.0" />
                     </font>
                 </Label>
-                <Label alignment="CENTER" layoutX="19.0" layoutY="295.0" prefHeight="23.0" prefWidth="352.0" text="Felsefemiz, müşteri odaklı tasarımlar, kalite ve esnekliktir." textFill="WHITE">
+                <Label alignment="CENTER" layoutX="19.0" layoutY="295.0" prefHeight="23.0" prefWidth="352.0" text="Felsefemiz, müşteri odaklı tasarımlar, kalite ve esnekliktir." textFill="BLACK">
                     <font>
                         <Font name="Segoe UI" size="12.0" />
                     </font>

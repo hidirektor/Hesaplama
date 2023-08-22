@@ -25,6 +25,7 @@ import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.HydraulicInfo;
+import me.t3sl4.hydraulic.Util.SceneUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -99,6 +100,8 @@ public class MainController implements Initializable {
     private Label hidrosUntiteCount;
     @FXML
     private Label parametreCount;
+    @FXML
+    private ImageView closeIcon;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -108,10 +111,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void programiKapat() {
-        Stage stage = (Stage) btnSignout.getScene().getWindow();
+    public void anaEkranaDon() throws IOException {
+        Stage stage = (Stage) parametreCount.getScene().getWindow();
+        Main.loggedInUser = null;
 
         stage.close();
+        SceneUtil.changeScreen("fxml/Login.fxml");
     }
 
     @FXML
@@ -205,6 +210,11 @@ public class MainController implements Initializable {
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void programiKapat() {
+        System.exit(0);
     }
 
     public void userInfo() {

@@ -668,7 +668,7 @@ public class KlasikController {
             coords2Png(startX, startY, width, height);
             cropImage(680, startY, 370, height);
 
-            Util.pdfGenerator("icons/onderGrupMainBeyaz.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
+            Util.pdfGenerator("icons/ondergrupMain.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
         } else {
             Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
