@@ -83,10 +83,11 @@ public class LoginController implements Initializable {
 
     @FXML
     public void kayitOl() throws IOException {
+        SceneUtil.changeScreen("fxml/Register.fxml");
         Stage stage = (Stage) btnSignup.getScene().getWindow();
 
         stage.close();
-        openRegisterScreen();
+        //openRegisterScreen();
     }
 
     @FXML

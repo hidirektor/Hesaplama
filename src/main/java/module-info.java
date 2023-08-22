@@ -1,4 +1,4 @@
-module me.t3sl4.hydraulic {
+module me.t3sl.hydraulic {
     requires javafx.controls;
     requires javafx.fxml;
 
