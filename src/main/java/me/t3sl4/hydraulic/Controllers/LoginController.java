@@ -124,8 +124,11 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void sifremiUnuttum() {
+    public void sifremiUnuttum() throws IOException {
+        Stage stage = (Stage) btnSignin.getScene().getWindow();
 
+        stage.close();
+        openResetPasswordScreen();
     }
 
     @Override
@@ -179,5 +182,9 @@ public class LoginController implements Initializable {
 
     private void openRegisterScreen() throws IOException {
         SceneUtil.changeScreen("fxml/Register.fxml");
+    }
+
+    private void openResetPasswordScreen() throws IOException {
+        SceneUtil.changeScreen("fxml/ResetPassword.fxml");
     }
 }
