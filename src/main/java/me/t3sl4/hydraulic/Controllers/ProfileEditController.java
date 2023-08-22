@@ -66,7 +66,7 @@ public class ProfileEditController {
 
     private double x, y;
 
-    String secilenPhotoPath = "";
+    String secilenPhotoPath = null;
     private String girilenSifre = "";
 
     @FXML
@@ -76,7 +76,6 @@ public class ProfileEditController {
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         sifreText.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
-            System.out.println(girilenSifre);
         });
     }
 
@@ -129,7 +128,7 @@ public class ProfileEditController {
     }
 
     @FXML
-    private void kayitOlma() throws IOException {
+    private void profilGuncelleme() throws IOException {
         Stage stage = (Stage) kullaniciAdiText.getScene().getWindow();
         String userName = kullaniciAdiText.getText();
         String password = sifreText.getText();
@@ -139,34 +138,37 @@ public class ProfileEditController {
         String phone = telefonText.getText();
         String profilePhotoPath = userName + ".jpg";
 
-        if (checkFields()) {
-            String created_at = Util.getCurrentDateTime();
+        String created_at = Util.getCurrentDateTime();
 
-            String registerJsonBody =
-                    "{" +
-                            "\"UserName\":\"" + userName + "\"," +
-                            "\"Email\":\"" + eMail + "\"," +
-                            "\"Password\":\"" + password + "\"," +
-                            "\"NameSurname\":\"" + nameSurname + "\"," +
-                            "\"Phone\":\"" + phone + "\"," +
-                            "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
-                            "\"CompanyName\":\"" + companyName + "\"," +
-                            "\"Created_At\":\"" + created_at + "\"" +
-                            "}";
-
-            sendRegisterRequest(registerJsonBody, stage);
-        } else {
-            Util.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
+        if (password.isEmpty()) {
+            password = null;
         }
+
+        String registerJsonBody =
+                "{" +
+                        "\"UserName\":\"" + userName + "\"," +
+                        "\"Email\":\"" + eMail + "\"," +
+                        "\"Password\":\"" + password + "\"," +
+                        "\"NameSurname\":\"" + nameSurname + "\"," +
+                        "\"Phone\":\"" + phone + "\"," +
+                        "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
+                        "\"CompanyName\":\"" + companyName + "\"," +
+                        "\"Created_At\":\"" + created_at + "\"" +
+                        "}";
+        sendUpdateRequest(registerJsonBody, stage);
     }
 
-    private void sendRegisterRequest(String jsonBody, Stage stage) {
+    private void sendUpdateRequest(String jsonBody, Stage stage) {
         String registerUrl = BASE_URL + "/api/update";
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
                 if (response.contains("Profil güncellendi")) {
-                    uploadProfilePhoto2Server(stage);
+                    if(secilenPhotoPath != null) {
+                        uploadProfilePhoto2Server(stage);
+                    }
+                    Util.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
+                    refreshScreen();
                 } else {
                     Util.showErrorMessage("Profil güncellenirken hata meydana geldi !");
                 }
@@ -231,8 +233,10 @@ public class ProfileEditController {
         primaryStage.show();
     }
 
-    private boolean checkFields() {
-        return !isimSoyisimText.getText().isEmpty() && !ePostaText.getText().isEmpty() && !telefonText.getText().isEmpty() && !kullaniciAdiText.getText().isEmpty() && !sifreText.getText().isEmpty() && !sirketText.getText().isEmpty() && profilePhotoImageView.getImage() != null;
+    private void refreshScreen() {
+        getUserInfo();
+        Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
+        sifreText.clear();
     }
 
     private void getUserInfo() {

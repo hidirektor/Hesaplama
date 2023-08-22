@@ -32,7 +32,7 @@ public class Util {
 
     public static DataManipulator dataManipulator = new DataManipulator();
 
-    public static String BASE_URL = "http://85.95.231.92:3000";
+    public static String BASE_URL = "http://localhost:3000";
     
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -942,6 +942,15 @@ public class Util {
         alert.setTitle("Hata");
         alert.setHeaderText(null);
         alert.setContentText(hataMesaji);
+        alert.showAndWait();
+    }
+
+    public static void showSuccessMessage(String basariMesaji) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setTitle("Başarılı !");
+        alert.setHeaderText(null);
+        alert.setContentText(basariMesaji);
         alert.showAndWait();
     }
 
