@@ -82,12 +82,20 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void kayitOl() throws IOException {
-        SceneUtil.changeScreen("fxml/Register.fxml");
-        Stage stage = (Stage) btnSignup.getScene().getWindow();
+    public void kayitOl() {
+        if (Util.netIsAvailable()) {
+            Stage stage = (Stage) btnSignup.getScene().getWindow();
 
-        stage.close();
-        //openRegisterScreen();
+            stage.close();
+
+            try {
+                openRegisterScreen();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
+        }
     }
 
     @FXML

@@ -10,6 +10,11 @@ import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.User;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -18,6 +23,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        fileCopy();
         Util.filePath();
 
         Util.excelDataRead();
@@ -42,6 +48,24 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public void fileCopy() {
+        String dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
+        String destPath = dataFileLocalPath + "Hidrolik.xlsx";
+        Path targetPath = Paths.get(destPath);
+
+        if (!Files.exists(targetPath)) {
+            try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
+                if (inputStream != null) {
+                    Files.copy(inputStream, targetPath);
+                    System.out.println("Hidrolik.xlsx kopyalandı: " + destPath);
+                } else {
+                    System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
