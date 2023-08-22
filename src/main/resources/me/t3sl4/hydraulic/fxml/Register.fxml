@@ -19,7 +19,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <AnchorPane id="AnchorPane" prefHeight="417.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.RegisterController">
     <children>
-        <Pane prefHeight="417.0" prefWidth="110.0" style="-fx-background-color: #0C39FF;">
+        <Pane prefHeight="417.0" prefWidth="110.0" style="-fx-background-color: #F9F871;">
             <children>
                 <ImageView fx:id="goBack" onMouseClicked="#goBackAction" fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                     <image>
