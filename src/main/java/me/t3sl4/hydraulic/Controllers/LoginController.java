@@ -4,9 +4,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Main;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
@@ -41,6 +44,15 @@ public class LoginController implements Initializable {
     private Button btnSignup;
 
     @FXML
+    private Button togglePasswordButton;
+    @FXML
+    private TextField sifrePassword;
+    @FXML
+    private ImageView passwordVisibilityIcon;
+
+    private String girilenSifre = "";
+
+    @FXML
     public void girisYap(MouseEvent event) {
         if (Util.netIsAvailable()) {
             Stage stage = (Stage) btnSignin.getScene().getWindow();
@@ -48,23 +60,36 @@ public class LoginController implements Initializable {
             if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
                 lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
             } else {
-                String url = BASE_URL + "/api/login";
-                String jsonBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
+                String loginUrl = BASE_URL + "/api/login";
+                String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
 
-                HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
+                HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
                     @Override
-                    public void onSuccess(String response) {
-                        if (response.contains("Giriş başarılı")) {
-                            stage.close();
+                    public void onSuccess(String loginResponse) {
+                        if (loginResponse.contains("Giriş başarılı")) {
+                            String profileInfoUrl = BASE_URL + "/api/profileInfo/:Role";
+                            String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
+                            HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
+                                @Override
+                                public void onSuccess(String profileInfoResponse) {
+                                    if (profileInfoResponse.equals("TECHNICIAN") || profileInfoResponse.equals("ENGINEER") || profileInfoResponse.equals("SYSOP")) {
+                                        stage.close();
 
-                            Main.loggedInUser = new User(txtUsername.getText());
+                                        try {
+                                            openMainScreen();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
+                                    }
+                                }
 
-                            try {
-                                openMainScreen();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
+                                @Override
+                                public void onFailure() {
+                                    lblErrors.setText("Profil bilgileri alınamadı!");
+                                }
+                            });
                         } else {
                             lblErrors.setText("Böyle bir kullanıcı bulunamadı!");
                         }
@@ -107,6 +132,27 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         if(!Util.netIsAvailable()) {
             lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
+        }
+        togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
+        txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+            girilenSifre = newValue;
+        });
+    }
+
+    private void togglePasswordVisibility() {
+        if (txtPassword.isVisible()) {
+            txtPassword.setManaged(false);
+            txtPassword.setVisible(false);
+            sifrePassword.setManaged(true);
+            sifrePassword.setVisible(true);
+            sifrePassword.setText(girilenSifre);
+            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
+        } else {
+            txtPassword.setManaged(true);
+            txtPassword.setVisible(true);
+            sifrePassword.setManaged(false);
+            sifrePassword.setVisible(false);
+            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
         }
     }
 
