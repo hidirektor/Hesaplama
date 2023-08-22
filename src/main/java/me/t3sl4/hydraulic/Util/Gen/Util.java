@@ -14,6 +14,8 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -50,10 +52,12 @@ public class Util {
         String profilePhotoLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
         String pdfFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
         String excelFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/partList/";
+        String dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
 
         File profilePhotoTestFile = new File(profilePhotoLocalPath);
         File pdfFileTestFile = new File(pdfFileLocalPath);
         File excelFileTestFile = new File(excelFileLocalPath);
+        File dataFileTestFile = new File(dataFileLocalPath);
 
         if(!profilePhotoTestFile.exists()) {
             profilePhotoTestFile.mkdirs();
@@ -65,6 +69,23 @@ public class Util {
 
         if(!excelFileTestFile.exists()) {
             excelFileTestFile.mkdirs();
+        }
+
+        if(!dataFileTestFile.exists()) {
+            dataFileTestFile.mkdirs();
+
+            String excelPath = "/data/Hidrolik.xlsx";
+            try (InputStream inputStream = Launcher.class.getResourceAsStream(excelPath)) {
+                if (inputStream != null) {
+                    String destPath = dataFileLocalPath + "Hidrolik.xlsx";
+                    Files.copy(inputStream, Paths.get(destPath));
+                    System.out.println("Hidrolik.xlsx kopyalandı: " + destPath);
+                } else {
+                    System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -904,7 +925,9 @@ public class Util {
     }
 
     public static void excelDataRead() {
-        String excelPath = "/data/Hidrolik.xlsx";
+        String excelPath2 = "/data/Hidrolik.xlsx";
+        //Yeni sistem:
+        String excelPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
         readExcel4Bosluk(excelPath, dataManipulator);
         readExcel4Kampana(excelPath, dataManipulator);
         readExcel4Motor(excelPath, dataManipulator);
