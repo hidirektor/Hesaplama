@@ -156,7 +156,7 @@ public class Util {
     public static void readExcel4Bosluk(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Boşluk Değerleri";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -193,7 +193,7 @@ public class Util {
     public static void readExcel4Kampana(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Kampana";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -218,7 +218,7 @@ public class Util {
     public static void readExcel4Motor(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Motor";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -241,7 +241,7 @@ public class Util {
     public static void readExcel4UniteTipi(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Ünite Tipi";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -264,7 +264,7 @@ public class Util {
     public static void readExcel4PompaHidros(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Pompa-1";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -287,7 +287,7 @@ public class Util {
     public static void readExcel4PompaKlasik(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Pompa-2";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -310,7 +310,7 @@ public class Util {
     public static void readExcel4PompaTumu(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Pompa-3";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -333,7 +333,7 @@ public class Util {
     public static void readExcel4KilitMotor(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Kilit Motor";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -356,7 +356,7 @@ public class Util {
     public static void readExcel4KilitPompa(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Kilit Pompa";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -379,7 +379,7 @@ public class Util {
     public static void readExcel4ValfTipi1(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Valf Tipi-1";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -402,7 +402,7 @@ public class Util {
     public static void readExcel4ValfTipi2(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Valf Tipi-2";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -425,7 +425,7 @@ public class Util {
     public static void readExcel4ParcaListesiKampana(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Kampana";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -489,7 +489,7 @@ public class Util {
     public static void readExcel4ParcaListesiPompa(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Pompa";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -586,7 +586,7 @@ public class Util {
     public static void readExcel4ParcaListesiMotor(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Motor";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -668,7 +668,7 @@ public class Util {
     public static void readExcel4ParcaListesiKaplin(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Kaplin";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -738,7 +738,7 @@ public class Util {
     public static void readExcel4ParcaListesiValfBlok(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Valf Blokları";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -802,7 +802,7 @@ public class Util {
     public static void readExcel4ParcaListesiBasincSalteri(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Basınç Şalteri";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -857,7 +857,7 @@ public class Util {
     public static void readExcel4ParcaListesiStandart(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Standart";
 
-        try(InputStream file = Launcher.class.getResourceAsStream(filePath)) {
+        try(InputStream file = new FileInputStream(filePath)) {
             assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
