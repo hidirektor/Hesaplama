@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,20 +72,23 @@ public class Util {
             excelFileTestFile.mkdirs();
         }
 
-        if(!dataFileTestFile.exists()) {
+        if (!dataFileTestFile.exists()) {
             dataFileTestFile.mkdirs();
 
-            String excelPath = "/data/Hidrolik.xlsx";
-            try (InputStream inputStream = Launcher.class.getResourceAsStream(excelPath)) {
-                if (inputStream != null) {
-                    String destPath = dataFileLocalPath + "Hidrolik.xlsx";
-                    Files.copy(inputStream, Paths.get(destPath));
-                    System.out.println("Hidrolik.xlsx kopyalandı: " + destPath);
-                } else {
-                    System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
+            String destPath = dataFileLocalPath + "Hidrolik.xlsx";
+            Path targetPath = Paths.get(destPath);
+
+            if (!Files.exists(targetPath)) {
+                try (InputStream inputStream = Launcher.class.getResourceAsStream("/data/Hidrolik.xlsx")) {
+                    if (inputStream != null) {
+                        Files.copy(inputStream, targetPath);
+                        System.out.println("Hidrolik.xlsx kopyalandı: " + destPath);
+                    } else {
+                        System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
