@@ -163,7 +163,7 @@ public class RegisterController implements Initializable {
     }
 
     private void sendRegisterRequest(String jsonBody, Stage stage) {
-        String registerUrl = BASE_URL + "/api/update";
+        String registerUrl = BASE_URL + "/api/register";
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
