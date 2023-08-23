@@ -16,6 +16,7 @@ import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.User;
 import me.t3sl4.hydraulic.Util.Gen.Util;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -72,8 +73,12 @@ public class LoginController implements Initializable {
                             HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
                                 @Override
                                 public void onSuccess(String profileInfoResponse) {
-                                    if (profileInfoResponse.equals("TECHNICIAN") || profileInfoResponse.equals("ENGINEER") || profileInfoResponse.equals("SYSOP")) {
+                                    JSONObject roleObject = new JSONObject(profileInfoResponse);
+                                    String roleValue = roleObject.getString("Role");
+                                    if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
                                         stage.close();
+
+                                        Main.loggedInUser = new User(txtUsername.getText());
 
                                         try {
                                             openMainScreen();
