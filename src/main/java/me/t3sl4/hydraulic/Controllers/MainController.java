@@ -53,6 +53,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.t3sl4.hydraulic.Util.Data.Profile;
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Util.Gen.Util.openURL;
 
 public class MainController implements Initializable {
 
@@ -262,30 +263,27 @@ public class MainController implements Initializable {
                         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Launcher.class.getResource("fxml/Item.fxml")));
                         Node node = loader.load();
 
-                        // Bind UI components to the loaded FXML
                         HBox itemC = (HBox) loader.getNamespace().get("itemC");
                         Label orderNumberLabel = (Label) loader.getNamespace().get("orderNumberLabel");
                         Label orderDateLabel = (Label) loader.getNamespace().get("orderDateLabel");
                         Label typeLabel = (Label) loader.getNamespace().get("typeLabel");
                         Label InChargeLabel = (Label) loader.getNamespace().get("InChargeLabel");
                         Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
+                        ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
 
-                        // Set data from HydraulicInfo object
                         orderNumberLabel.setText(info.getSiparisNumarasi());
                         orderDateLabel.setText(formatDateTime(info.getSiparisTarihi()));
                         typeLabel.setText(info.getUniteTipi());
                         InChargeLabel.setText(info.getCreatedBy());
 
-                        // Open PDF file in browser on button click
                         pdfViewButton.setOnAction(event -> {
-                            try {
-                                Desktop.getDesktop().browse(new URI(info.getPdfFile()));
-                            } catch (IOException | URISyntaxException e) {
-                                e.printStackTrace();
-                            }
+                            openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".pdf");
                         });
 
-                        // Mouse hover effects
+                        excelViewButton.setOnMouseClicked(event -> {
+                            openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".xlsx");
+                        });
+
                         final int j = pnItems.getChildren().size();
                         node.setOnMouseEntered(event -> {
                             itemC.setStyle("-fx-background-color : #0A0E3F");
@@ -303,7 +301,6 @@ public class MainController implements Initializable {
 
             @Override
             public void onFailure() {
-                // Handle failure case
                 System.out.println("API request failed.");
             }
         });
