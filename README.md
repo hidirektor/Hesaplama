@@ -83,7 +83,7 @@ Programın geliştirilme sürecinde kullanılan teknolojiler aşağıdaki gibidi
 
 Aşağıdaki dokümanı kullanarak programın kullanımına ve hata kodlarına ilişkin tüm detaylara ulaşabilirsiniz.
 
-_For more examples, please refer to the [Documentation](https://www.notion.so/Teamspace-Home-0c63f5fdeb054503a2b66944317b6a6a)_
+[Documentation](https://www.notion.so/Teamspace-Home-0c63f5fdeb054503a2b66944317b6a6a)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
