@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic;
+package me.t3sl4.hydraulic.MainModel;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.User;
 
@@ -28,7 +29,7 @@ public class Main extends Application {
 
         Util.excelDataRead();
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/Login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Login.fxml")));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
 

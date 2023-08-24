@@ -8,18 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Main;
+import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Data.Profile;
@@ -28,7 +25,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 
-import static me.t3sl4.hydraulic.Main.loggedInUser;
+import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
 
 public class ProfileEditController {

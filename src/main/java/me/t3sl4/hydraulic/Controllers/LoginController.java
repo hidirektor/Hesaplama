@@ -6,23 +6,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Main;
+import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.User;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;

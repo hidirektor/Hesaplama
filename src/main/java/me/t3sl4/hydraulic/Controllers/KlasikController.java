@@ -1,6 +1,5 @@
 package me.t3sl4.hydraulic.Controllers;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,7 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Main;
+import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Table.TableData;
 import me.t3sl4.hydraulic.Util.Gen.Util;
