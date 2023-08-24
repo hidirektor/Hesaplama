@@ -99,11 +99,11 @@ _For more examples, please refer to the [Documentation](https://www.notion.so/Te
 - [x] Export calculation result as PDF
 - [x] Export calculation result based part list as XLSX
 - [x] "Copy Clipboard" option for part list
-- [ ] General statistics system for whole generated data from calculation program
-- [ ] Password reset system
+- [x] General statistics system for whole generated data from calculation program
+- [x] Password reset system
 - [ ] Hidros calculation method
-- [ ] Profile update screen
-- [ ] Program settings screen
+- [x] Profile update screen
+- [x] Program settings screen
 - [ ] Multi-language Support
     - [ ] English
 
