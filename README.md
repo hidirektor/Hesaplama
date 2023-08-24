@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/hidirektor/OnderGrup-Hydraulic-Tool">
-    <img src="readme/onderGrupMainBeyaz.png" alt="Logo" width="320" height="80">
+    <img src="readme/onderGrupMain.png" alt="Logo" width="320" height="80">
   </a>
 
   <h3 align="center">Önder Grup Hidrolik</h3>
