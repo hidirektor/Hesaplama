@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.Controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -203,6 +204,9 @@ public class KlasikController {
 
     private double x, y;
 
+    boolean pdfSucc = false;
+    boolean excelSucc = false;
+
     public void initialize() {
         textFilter();
         defineKabinOlcu();
@@ -257,23 +261,29 @@ public class KlasikController {
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
-        /*if (fileExists(pdfPath) && fileExists(excelPath)) {
-            String pdfBase64 = encodeFileToBase64WString(pdfPath);
-            String excelBase64 = encodeFileToBase64WString(excelPath);
+        if (fileExists(pdfPath) && fileExists(excelPath)) {
+            String pdfURL = "C:/Server Side/data/hydraulicUnits/" + girilenSiparisNumarasi + ".pdf";
+            String excelURL = "C:/Server Side/data/partList/" + girilenSiparisNumarasi + ".xlsx";
             String url = BASE_URL + "/api/insertHidrolik";
             String jsonBody = "{\n" +
                     "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
                     "  \"OrderDate\": \"" + dtf.format(now) + "\",\n" +
                     "  \"Type\": \"" + secilenUniteTipi + "\",\n" +
                     "  \"InCharge\": \"" + Main.loggedInUser.getFullName() + "\",\n" +
-                    "  \"PDF\": \"" + pdfBase64 + "\",\n" +
-                    "  \"PartList\": \"" + excelBase64 + "\"\n" +
+                    "  \"PDF\": \"" + pdfURL + "\",\n" +
+                    "  \"PartList\": \"" + excelURL + "\"\n" +
                     "}";
 
             HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
                 @Override
-                public void onSuccess(String response) {
-                    // İstek başarılı olduğunda yapılacak işlemler
+                public void onSuccess(String response) throws IOException {
+                    uploadPDFFile2Server(pdfPath);
+                    uploadExcelFile2Server(excelPath);
+                    if(excelSucc && pdfSucc) {
+                        Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
+                        excelSucc = false;
+                        pdfSucc = false;
+                    }
                 }
 
                 @Override
@@ -283,7 +293,57 @@ public class KlasikController {
             });
         } else {
             Util.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
-        }*/
+        }
+    }
+
+    private void uploadPDFFile2Server(String filePath) throws IOException {
+        String uploadUrl = BASE_URL + "/api/fileSystem/uploadPDF";
+
+        File pdfFile = new File(filePath);
+        if (!pdfFile.exists()) {
+            Util.showErrorMessage("PDF dosyası bulunamadı !");
+            return;
+        }
+
+        HTTPRequest.sendMultipartRequest(uploadUrl,girilenSiparisNumarasi, pdfFile, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String response) {
+                pdfSucc = true;
+                /*Platform.runLater(() -> {
+                    Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
+                });*/
+            }
+
+            @Override
+            public void onFailure() {
+                Util.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+            }
+        });
+    }
+
+    private void uploadExcelFile2Server(String filePath) throws IOException {
+        String uploadUrl = BASE_URL + "/api/fileSystem/uploadExcel";
+
+        File pdfFile = new File(filePath);
+        if (!pdfFile.exists()) {
+            Util.showErrorMessage("Excel dosyası bulunamadı !");
+            return;
+        }
+
+        HTTPRequest.sendMultipartRequest(uploadUrl, girilenSiparisNumarasi, pdfFile, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String response) {
+                excelSucc = true;
+                /*Platform.runLater(() -> {
+                    Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
+                });*/
+            }
+
+            @Override
+            public void onFailure() {
+                Util.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+            }
+        });
     }
 
 
@@ -1205,5 +1265,10 @@ public class KlasikController {
         sonucTankGorsel.setImage(image);
 
         hydraulicUnitShape.setVisible(false);
+    }
+
+    public static boolean fileExists(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
     }
 }
