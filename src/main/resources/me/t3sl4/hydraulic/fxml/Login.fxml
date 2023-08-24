@@ -38,14 +38,13 @@
         <Pane layoutX="487.0" layoutY="136.0" AnchorPane.bottomAnchor="37.0" AnchorPane.topAnchor="136.0">
             <children>
                 <JFXTextField fx:id="txtUsername" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="Kullanıcı Adı" />
+                <JFXPasswordField fx:id="txtPassword" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="Şifre" stylesheets="@../styling/fullpackstyling.css" />
                 <Button fx:id="btnSignin" layoutX="145.0" layoutY="125.0" mnemonicParsing="false" onMouseClicked="#girisYap" prefHeight="34.0" prefWidth="137.0" stylesheets="@../styling/fullpackstyling.css" text="Giriş Yap" />
                 <Label fx:id="btnForgot" alignment="CENTER" layoutX="8.0" layoutY="131.0" onMouseClicked="#sifremiUnuttum" prefHeight="23.0" prefWidth="93.0" text="Şifremi Unuttum" textFill="#5383ff">
                     <font>
                         <Font name="Segoe UI" size="12.0" />
                     </font>
                 </Label>
-
-                <JFXPasswordField fx:id="txtPassword" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="Şifre" stylesheets="@../styling/fullpackstyling.css" />
 
                 <JFXButton fx:id="togglePasswordButton" layoutX="282.0" layoutY="67.0" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
                     <graphic>
