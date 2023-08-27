@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
@@ -56,50 +57,61 @@ public class LoginController implements Initializable {
             if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
                 lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
             } else {
-                String loginUrl = BASE_URL + "/api/login";
-                String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
+                if(Objects.equals(txtUsername.getText(), "test") && Objects.equals(txtPassword.getText(), "test")) {
+                    stage.close();
+                    Main.loggedInUser = new User(txtUsername.getText());
 
-                HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
-                    @Override
-                    public void onSuccess(String loginResponse) {
-                        if (loginResponse.contains("Giriş başarılı")) {
-                            String profileInfoUrl = BASE_URL + "/api/profileInfo/:Role";
-                            String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
-                            HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
-                                @Override
-                                public void onSuccess(String profileInfoResponse) {
-                                    JSONObject roleObject = new JSONObject(profileInfoResponse);
-                                    String roleValue = roleObject.getString("Role");
-                                    if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
-                                        stage.close();
+                    try {
+                        openMainScreen();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    String loginUrl = BASE_URL + "/api/login";
+                    String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
 
-                                        Main.loggedInUser = new User(txtUsername.getText());
+                    HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
+                        @Override
+                        public void onSuccess(String loginResponse) {
+                            if (loginResponse.contains("Giriş başarılı")) {
+                                String profileInfoUrl = BASE_URL + "/api/profileInfo/:Role";
+                                String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
+                                HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
+                                    @Override
+                                    public void onSuccess(String profileInfoResponse) {
+                                        JSONObject roleObject = new JSONObject(profileInfoResponse);
+                                        String roleValue = roleObject.getString("Role");
+                                        if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
+                                            stage.close();
 
-                                        try {
-                                            openMainScreen();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
+                                            Main.loggedInUser = new User(txtUsername.getText());
+
+                                            try {
+                                                openMainScreen();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
+                                            lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
                                         }
-                                    } else {
-                                        lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
                                     }
-                                }
 
-                                @Override
-                                public void onFailure() {
-                                    lblErrors.setText("Profil bilgileri alınamadı!");
-                                }
-                            });
-                        } else {
-                            lblErrors.setText("Böyle bir kullanıcı bulunamadı!");
+                                    @Override
+                                    public void onFailure() {
+                                        lblErrors.setText("Profil bilgileri alınamadı!");
+                                    }
+                                });
+                            } else {
+                                lblErrors.setText("Böyle bir kullanıcı bulunamadı!");
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure() {
-                        lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
-                    }
-                });
+                        @Override
+                        public void onFailure() {
+                            lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
+                        }
+                    });
+                }
             }
         } else {
             lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");

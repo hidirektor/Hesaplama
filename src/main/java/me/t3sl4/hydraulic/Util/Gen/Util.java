@@ -32,7 +32,7 @@ public class Util {
 
     public static DataManipulator dataManipulator = new DataManipulator();
 
-    public static String BASE_URL = "http://localhost:3000";
+    public static String BASE_URL = "https://85.95.231.92:3000";
     
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
