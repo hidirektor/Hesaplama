@@ -72,6 +72,7 @@ public class LoginController implements Initializable {
                     String loginUrl = BASE_URL + "/api/login";
                     String cipheredPass = DigestUtils.sha256Hex(txtPassword.getText());
                     String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
+                    System.out.println("Girilen Şifre Cipher: " + cipheredPass);
 
                     HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
                         @Override
