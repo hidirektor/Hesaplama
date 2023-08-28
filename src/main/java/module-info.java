@@ -12,6 +12,7 @@ module me.t3sl.hydraulic {
     requires com.google.gson;
     requires okhttp3;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.commons.codec;
 
     opens me.t3sl4.hydraulic to javafx.fxml;
     exports me.t3sl4.hydraulic;

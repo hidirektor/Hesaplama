@@ -1,4 +1,5 @@
 package me.t3sl4.hydraulic.Controllers;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.User;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import org.json.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,7 +70,8 @@ public class LoginController implements Initializable {
                     }
                 } else {
                     String loginUrl = BASE_URL + "/api/login";
-                    String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
+                    String cipheredPass = DigestUtils.sha256Hex(txtPassword.getText());
+                    String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
 
                     HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
                         @Override

@@ -20,6 +20,7 @@ import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.Gen.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Data.Profile;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -128,7 +129,7 @@ public class ProfileEditController {
     private void profilGuncelleme() throws IOException {
         Stage stage = (Stage) kullaniciAdiText.getScene().getWindow();
         String userName = kullaniciAdiText.getText();
-        String password = sifreText.getText();
+        String password = DigestUtils.sha256Hex(sifreText.getText());
         String nameSurname = isimSoyisimText.getText();
         String eMail = ePostaText.getText();
         String companyName = sirketText.getText();
