@@ -207,12 +207,8 @@ public class MainController implements Initializable {
     }
 
     public void userInfo() {
-        updateUser("Role", 0);
-        updateUser("Email", 1);
-        updateUser("NameSurname", 2);
-        updateUser("Phone", 3);
-        updateUser("CompanyName", 4);
-        updateUser("Created_At", 5);
+        kullaniciAdiIsimText.setText(Main.loggedInUser.getUsername() + "\n" + Main.loggedInUser.getFullName());
+        Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
     }
 
     public void hidrolikUnitStats() {
@@ -340,39 +336,6 @@ public class MainController implements Initializable {
         });
 
         return totalCount[0];
-    }
-
-    public void updateUser(String requestVal, int section) {
-        String profileInfoUrl = BASE_URL + "/api/profileInfo/:" + requestVal;
-        String profileInfoBody = "{\"Username\": \"" + Main.loggedInUser.getUsername() + "\"}";
-
-        HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String profileInfoResponse) {
-                String parsedVal = HTTPUtil.parseStringVal(profileInfoResponse, requestVal);
-                if (section == 0) {
-                    Main.loggedInUser.setRole(parsedVal);
-                } else if (section == 1) {
-                    Main.loggedInUser.setEmail(parsedVal);
-                } else if (section == 2) {
-                    Main.loggedInUser.setFullName(parsedVal);
-                } else if (section == 3) {
-                    Main.loggedInUser.setPhone(parsedVal);
-                } else if (section == 4) {
-                    Main.loggedInUser.setCompanyName(parsedVal);
-                } else {
-                    Main.loggedInUser.setCreatedAt(parsedVal);
-                }
-
-                kullaniciAdiIsimText.setText(Main.loggedInUser.getUsername() + "\n" + Main.loggedInUser.getFullName());
-                Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
-            }
-
-            @Override
-            public void onFailure() {
-                System.out.println("Kullanıcı bilgileri alınamadı!");
-            }
-        });
     }
 
     private void excelVoidCount() {

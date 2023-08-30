@@ -32,7 +32,7 @@ public class Util {
 
     public static DataManipulator dataManipulator = new DataManipulator();
 
-    public static String BASE_URL = "https://api.ondergrup.hidirektor.com.tr:3000";
+    public static String BASE_URL = "http://78.135.82.253:3000";
     
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {

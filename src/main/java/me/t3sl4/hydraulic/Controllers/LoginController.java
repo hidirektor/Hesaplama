@@ -11,7 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.MainModel.Main;
+import me.t3sl4.hydraulic.Util.Data.Profile;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.User;
 import me.t3sl4.hydraulic.Util.Gen.Util;
@@ -72,7 +74,6 @@ public class LoginController implements Initializable {
                     String loginUrl = BASE_URL + "/api/login";
                     String cipheredPass = DigestUtils.sha256Hex(txtPassword.getText());
                     String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
-                    System.out.println("Girilen Şifre Cipher: " + cipheredPass);
 
                     HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
                         @Override
@@ -86,15 +87,11 @@ public class LoginController implements Initializable {
                                         JSONObject roleObject = new JSONObject(profileInfoResponse);
                                         String roleValue = roleObject.getString("Role");
                                         if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
-                                            stage.close();
-
                                             Main.loggedInUser = new User(txtUsername.getText());
 
-                                            try {
-                                                openMainScreen();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
+                                            girisProcess();
+
+                                            stage.close();
                                         } else {
                                             lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
                                         }
@@ -202,5 +199,50 @@ public class LoginController implements Initializable {
 
     private void openResetPasswordScreen() throws IOException {
         SceneUtil.changeScreen("fxml/ResetPassword.fxml");
+    }
+
+    private void girisProcess() {
+        updateUser("Role", 0);
+        updateUser("Email", 1);
+        updateUser("NameSurname", 2);
+        updateUser("Phone", 3);
+        updateUser("CompanyName", 4);
+        updateUser("Created_At", 5);
+
+        try {
+            openMainScreen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUser(String requestVal, int section) {
+        String profileInfoUrl = BASE_URL + "/api/profileInfo/:" + requestVal;
+        String profileInfoBody = "{\"Username\": \"" + Main.loggedInUser.getUsername() + "\"}";
+
+        HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String profileInfoResponse) {
+                String parsedVal = HTTPUtil.parseStringVal(profileInfoResponse, requestVal);
+                if (section == 0) {
+                    Main.loggedInUser.setRole(parsedVal);
+                } else if (section == 1) {
+                    Main.loggedInUser.setEmail(parsedVal);
+                } else if (section == 2) {
+                    Main.loggedInUser.setFullName(parsedVal);
+                } else if (section == 3) {
+                    Main.loggedInUser.setPhone(parsedVal);
+                } else if (section == 4) {
+                    Main.loggedInUser.setCompanyName(parsedVal);
+                } else {
+                    Main.loggedInUser.setCreatedAt(parsedVal);
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                System.out.println("Kullanıcı bilgileri alınamadı!");
+            }
+        });
     }
 }
