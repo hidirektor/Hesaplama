@@ -199,9 +199,9 @@
                         </HBox>
                           <Label layoutX="97.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Numarası" textFill="#e7e5e5" />
                           <Label layoutX="246.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Tarihi" textFill="#e7e5e5" />
-                          <Label layoutX="388.0" layoutY="205.0" text="Ünite Tipi" textFill="#e7e5e5" />
-                          <Label layoutX="531.0" layoutY="205.0" text="PDF" textFill="#e7e5e5" />
-                          <Label layoutX="638.0" layoutY="205.0" text="Oluşturan" textFill="#e7e5e5" />
+                          <Label layoutX="395.0" layoutY="205.0" text="Ünite Tipi" textFill="#e7e5e5" />
+                          <Label layoutX="537.0" layoutY="205.0" text="PDF" textFill="#e7e5e5" />
+                          <Label layoutX="657.0" layoutY="205.0" text="Oluşturan" textFill="#e7e5e5" />
                         <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="320.0" prefWidth="746.0" stylesheets="@../styling/style.css">
                             <content>
                                 <VBox fx:id="pnItems" prefHeight="318.0" prefWidth="744.0" spacing="5.0" style="-fx-background-color: #02030A;">

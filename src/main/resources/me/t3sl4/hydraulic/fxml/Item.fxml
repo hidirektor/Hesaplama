@@ -18,13 +18,13 @@
                 <Insets left="10.0" />
             </HBox.margin>
         </ImageView>
-        <Label fx:id="orderNumberLabel" text="KeepToo" textFill="#b7c3d7" />
-        <Label fx:id="orderDateLabel" text="JFK" textFill="#b7c3d7">
+        <Label fx:id="orderNumberLabel" text="KeepToo" textFill="#b7c3d7" HBox.hgrow="ALWAYS" />
+        <Label fx:id="orderDateLabel" text="JFK" textFill="#b7c3d7" HBox.hgrow="ALWAYS">
             <HBox.margin>
                 <Insets />
             </HBox.margin>
         </Label>
-        <Label fx:id="typeLabel" text="10/11/2018" textFill="#b7c3d7">
+        <Label fx:id="typeLabel" text="10/11/2018" textFill="#b7c3d7" HBox.hgrow="ALWAYS">
             <HBox.margin>
                 <Insets />
             </HBox.margin>
@@ -34,7 +34,7 @@
                 <Insets />
             </HBox.margin>
         </Button>
-        <Label fx:id="InChargeLabel" text="\$200" textFill="#b7c3d7">
+        <Label fx:id="InChargeLabel" text="\$200" textFill="#b7c3d7" HBox.hgrow="ALWAYS">
             <HBox.margin>
                 <Insets />
             </HBox.margin>

@@ -34,10 +34,11 @@
             </children>
         </Pane>
         <JFXTextField fx:id="isimSoyisimText" focusColor="#48a5ea" layoutX="133.0" layoutY="211.0" prefHeight="25.0" prefWidth="217.0" promptText="İsim Soyisim" />
-        <JFXTextField fx:id="ePostaText" focusColor="#48a5ea" layoutX="133.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="E-Posta" />
-        <JFXTextField fx:id="telefonText" focusColor="#48a5ea" layoutX="133.0" layoutY="298.0" prefHeight="25.0" prefWidth="217.0" promptText="Telefon Numarası" />
         <JFXTextField fx:id="kullaniciAdiText" focusColor="#48a5ea" layoutX="436.0" layoutY="211.0" prefHeight="25.0" prefWidth="217.0" promptText="Kullanıcı Adı" />
+        <JFXTextField fx:id="ePostaText" focusColor="#48a5ea" layoutX="133.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="E-Posta" />
         <JFXPasswordField fx:id="sifreText" focusColor="#48a5ea" layoutX="436.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="Şifre" />
+        <JFXTextField fx:id="telefonText" focusColor="#48a5ea" layoutX="133.0" layoutY="298.0" prefHeight="25.0" prefWidth="217.0" promptText="Telefon Numarası" />
+        <JFXTextField fx:id="sirketText" focusColor="#48a5ea" layoutX="436.0" layoutY="298.0" prefHeight="25.0" prefWidth="217.0" promptText="Şirket" />
 
         <JFXButton fx:id="togglePasswordButton" layoutX="653.0" layoutY="251.0" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
             <graphic>
@@ -50,14 +51,13 @@
         </JFXButton>
 
         <JFXTextField fx:id="sifrePassword" focusColor="#48a5ea" layoutX="436.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="Şifre" visible="false" />
-        <JFXTextField fx:id="sirketText" focusColor="#48a5ea" layoutX="436.0" layoutY="298.0" prefHeight="25.0" prefWidth="217.0" promptText="Şirket" />
         <Label layoutX="133.0" layoutY="31.0" text="Kullanıcı Bilgileri" textFill="#48a5ea">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
         <JFXButton layoutX="133.0" layoutY="349.0" onMouseClicked="#kayitBilgiTemizle" style="-fx-background-color: #FF6961;" prefHeight="25.0" prefWidth="94.0" text="Temizle" />
-        <JFXButton fx:id="kayitOlma" layoutX="524.0" layoutY="349.0" prefHeight="25.0" prefWidth="116.0" onMouseClicked="#kayitOlma" style="-fx-background-color: #77DD77;" text="Kayıt Ol" textFill="WHITE" />
+        <JFXButton fx:id="kayitOlma" layoutX="524.0" layoutY="349.0" prefHeight="25.0" prefWidth="116.0" onMouseClicked="#kayitOlma" style="-fx-background-color: #77DD77;" text="Kayıt Ol" textFill="BLACK" />
         <Separator layoutX="133.0" layoutY="68.0" prefHeight="1.0" prefWidth="520.0" />
         <Label id="btn_exit" fx:id="btn_exit" layoutX="675.0" layoutY="2.0" onMousePressed="#programiKapat" prefHeight="25.0" prefWidth="21.0" text="X" textFill="#48a5ea">
             <font>
