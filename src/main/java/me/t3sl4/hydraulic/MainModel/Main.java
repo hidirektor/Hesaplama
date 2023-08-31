@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.Gen.Util;
-import me.t3sl4.hydraulic.Util.User;
+import me.t3sl4.hydraulic.Util.Util;
+import me.t3sl4.hydraulic.Util.Data.User.User;
 
 import java.io.IOException;
 import java.io.InputStream;

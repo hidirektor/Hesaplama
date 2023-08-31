@@ -16,10 +16,9 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.MainModel.Main;
-import me.t3sl4.hydraulic.Util.Gen.Util;
+import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
-import me.t3sl4.hydraulic.Util.HydraulicInfo;
+import me.t3sl4.hydraulic.Util.Data.HydraulicUnit.HydraulicInfo;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -39,9 +38,9 @@ import java.util.ResourceBundle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import me.t3sl4.hydraulic.Util.Data.Profile;
-import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
-import static me.t3sl4.hydraulic.Util.Gen.Util.openURL;
+import me.t3sl4.hydraulic.Util.Data.User.Profile;
+import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Util.Util.openURL;
 
 public class MainController implements Initializable {
 

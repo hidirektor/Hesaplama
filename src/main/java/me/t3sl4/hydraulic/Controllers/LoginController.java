@@ -11,12 +11,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.MainModel.Main;
-import me.t3sl4.hydraulic.Util.Data.Profile;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.SceneUtil;
-import me.t3sl4.hydraulic.Util.User;
-import me.t3sl4.hydraulic.Util.Gen.Util;
+import me.t3sl4.hydraulic.Util.Data.User.User;
+import me.t3sl4.hydraulic.Util.Util;
 import org.json.JSONObject;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -25,7 +24,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
 
 public class LoginController implements Initializable {
 

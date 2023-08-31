@@ -15,33 +15,6 @@ public class HTTPUtil {
         }
     }
 
-    public static String sendPostRequest(String url, String jsonBody) throws IOException {
-        HttpURLConnection connection = null;
-        try {
-            URL urlObj = new URL(url);
-            connection = (HttpURLConnection) urlObj.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setDoOutput(true);
-
-            try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("UTF-8");
-                os.write(input, 0, input.length);
-            }
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                return readResponse(connection.getInputStream());
-            } else {
-                return null; // veya hata mesajı
-            }
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-    }
-
     public static String parseStringVal(String response, String field) {
         JSONObject jsonObject = new JSONObject(response);
         return jsonObject.getString(field);

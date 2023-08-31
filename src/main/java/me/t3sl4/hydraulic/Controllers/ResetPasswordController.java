@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.Util.Gen.Util;
+import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import org.json.JSONException;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
 
 public class ResetPasswordController implements Initializable {
 

@@ -18,8 +18,8 @@ import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Util.Table.TableData;
-import me.t3sl4.hydraulic.Util.Gen.Util;
+import me.t3sl4.hydraulic.Util.Data.Table.TableData;
+import me.t3sl4.hydraulic.Util.Util;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
-import static me.t3sl4.hydraulic.Util.Gen.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
 
 public class KlasikController {
     @FXML

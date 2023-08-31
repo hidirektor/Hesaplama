@@ -22,12 +22,18 @@ module me.t3sl.hydraulic {
     opens me.t3sl4.hydraulic.Util to javafx.base;
     exports me.t3sl4.hydraulic.Util.HTTP;
     opens me.t3sl4.hydraulic.Util.HTTP to javafx.base;
-    exports me.t3sl4.hydraulic.Util.Table;
-    opens me.t3sl4.hydraulic.Util.Table to javafx.base;
+    exports me.t3sl4.hydraulic.Util.Data.Table;
+    opens me.t3sl4.hydraulic.Util.Data.Table to javafx.base;
     exports me.t3sl4.hydraulic.Util.Data;
     opens me.t3sl4.hydraulic.Util.Data to javafx.base;
     exports me.t3sl4.hydraulic.Util.Gen;
     opens me.t3sl4.hydraulic.Util.Gen to javafx.base;
     exports me.t3sl4.hydraulic.MainModel;
     opens me.t3sl4.hydraulic.MainModel to javafx.fxml;
+    exports me.t3sl4.hydraulic.Util.Data.Excel;
+    opens me.t3sl4.hydraulic.Util.Data.Excel to javafx.base;
+    exports me.t3sl4.hydraulic.Util.Data.User;
+    opens me.t3sl4.hydraulic.Util.Data.User to javafx.base;
+    exports me.t3sl4.hydraulic.Util.Data.HydraulicUnit;
+    opens me.t3sl4.hydraulic.Util.Data.HydraulicUnit to javafx.base;
 }
