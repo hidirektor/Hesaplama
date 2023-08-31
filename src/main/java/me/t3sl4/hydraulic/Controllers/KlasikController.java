@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 
 public class KlasikController {
     @FXML
@@ -263,7 +263,7 @@ public class KlasikController {
         if (fileExists(pdfPath) && fileExists(excelPath)) {
             String pdfURL = girilenSiparisNumarasi + ".pdf";
             String excelURL = girilenSiparisNumarasi + ".xlsx";
-            String url = BASE_URL + "/api/insertHidrolik";
+            String url = BASE_URL + insertHydraulicURLPrefix;
             String jsonBody = "{\n" +
                     "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
                     "  \"OrderDate\": \"" + dtf.format(now) + "\",\n" +
@@ -297,7 +297,7 @@ public class KlasikController {
     }
 
     private void uploadPDFFile2Server(String filePath) throws IOException {
-        String uploadUrl = BASE_URL + "/api/fileSystem/uploadPDF";
+        String uploadUrl = BASE_URL + uploadPDFURLPrefix;
 
         File pdfFile = new File(filePath);
         if (!pdfFile.exists()) {
@@ -322,7 +322,7 @@ public class KlasikController {
     }
 
     private void uploadExcelFile2Server(String filePath) throws IOException {
-        String uploadUrl = BASE_URL + "/api/fileSystem/uploadExcel";
+        String uploadUrl = BASE_URL + uploadExcelURLPrefix;
 
         File pdfFile = new File(filePath);
         if (!pdfFile.exists()) {

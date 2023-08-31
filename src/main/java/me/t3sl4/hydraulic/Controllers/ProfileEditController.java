@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 
 public class ProfileEditController {
     @FXML
@@ -157,7 +157,7 @@ public class ProfileEditController {
     }
 
     private void sendUpdateRequest(String jsonBody, Stage stage) {
-        String registerUrl = BASE_URL + "/api/update";
+        String registerUrl = BASE_URL + updateProfileURLPrefix;
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
@@ -176,7 +176,7 @@ public class ProfileEditController {
     }
 
     private void uploadProfilePhoto2Server(Stage stage) throws IOException {
-        String uploadUrl = BASE_URL + "/api/fileSystem/upload";
+        String uploadUrl = BASE_URL + uploadURLPrefix;
         String username = kullaniciAdiText.getText();
 
         File profilePhotoFile = new File(secilenPhotoPath);
@@ -234,7 +234,7 @@ public class ProfileEditController {
     }
 
     private void getUserInfo() {
-        String profileInfoUrl = BASE_URL + "/api/getWholeProfile";
+        String profileInfoUrl = BASE_URL + wholeProfileURLPrefix;
         String jsonBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
 
         HTTPRequest.sendRequest(profileInfoUrl, jsonBody, new HTTPRequest.RequestCallback() {

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 
 public class ResetPasswordController implements Initializable {
 
@@ -66,7 +66,7 @@ public class ResetPasswordController implements Initializable {
         } else {
             if (isValidEmail(email)) {
 
-                String otpUrl = BASE_URL + "/api/sendOTP";
+                String otpUrl = BASE_URL + otpURLPrefix;
                 String jsonOTPBody = "{\"Email\": \"" + email + "\"}";
 
                 HTTPRequest.sendRequest(otpUrl, jsonOTPBody, new HTTPRequest.RequestCallback() {

@@ -24,7 +24,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 
 public class LoginController implements Initializable {
 
@@ -70,14 +70,14 @@ public class LoginController implements Initializable {
                         e.printStackTrace();
                     }
                 } else {
-                    String loginUrl = BASE_URL + "/api/login";
+                    String loginUrl = BASE_URL + loginURLPrefix;
                     String cipheredPass = DigestUtils.sha256Hex(txtPassword.getText());
                     String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
 
                     HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
                         @Override
                         public void onSuccess(String loginResponse) {
-                            String profileInfoUrl = BASE_URL + "/api/profileInfo/:Role";
+                            String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
                             String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
                             HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
                                 @Override
@@ -212,7 +212,7 @@ public class LoginController implements Initializable {
     }
 
     public void updateUser(String requestVal, int section) {
-        String profileInfoUrl = BASE_URL + "/api/profileInfo/:" + requestVal;
+        String profileInfoUrl = BASE_URL + profileInfoURLPrefix + ":" + requestVal;
         String profileInfoBody = "{\"Username\": \"" + Main.loggedInUser.getUsername() + "\"}";
 
         HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {

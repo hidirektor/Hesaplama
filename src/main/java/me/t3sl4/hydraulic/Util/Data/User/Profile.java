@@ -10,7 +10,7 @@ import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 
 import java.io.File;
 
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 
 public class Profile {
     public static void downloadAndSetProfilePhoto(String username, Circle secilenFoto, ImageView profilePhotoImageView) {
@@ -22,7 +22,7 @@ public class Profile {
             setProfilePhoto(username, secilenFoto, profilePhotoImageView);
         } else {
 
-            String photoUrl = BASE_URL + "/api/fileSystem/downloadPhoto";
+            String photoUrl = BASE_URL + downloadPhotoURLPrefix;
             String jsonBody = "{\"username\":\"" + username + "\"} ";
 
             HTTPRequest.sendRequest4File(photoUrl, jsonBody, localFileFinalPath, new HTTPRequest.RequestCallback() {

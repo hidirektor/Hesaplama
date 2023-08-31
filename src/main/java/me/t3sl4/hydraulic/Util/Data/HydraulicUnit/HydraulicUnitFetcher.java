@@ -8,10 +8,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 
 public class HydraulicUnitFetcher {
-    private static final String API_URL = BASE_URL + "/api/orderNumbers";
+    private static final String API_URL = BASE_URL + orderNumbersURLPrefix;
 
     public static List<String> fetchOrderNumbers() throws IOException {
         List<String> orderNumbers = new ArrayList<>();

@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.t3sl4.hydraulic.Util.Data.User.Profile;
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 import static me.t3sl4.hydraulic.Util.Util.openURL;
 
 public class MainController implements Initializable {
@@ -218,7 +218,7 @@ public class MainController implements Initializable {
     }
 
     public void hidrolikUnitStats() {
-        String profileInfoUrl = BASE_URL + "/api/getStatistics";
+        String profileInfoUrl = BASE_URL + hydraulicGetStatsURLPrefix;
 
         HTTPRequest.sendRequestNormal(profileInfoUrl, new HTTPRequest.RequestCallback() {
             @Override
@@ -245,7 +245,7 @@ public class MainController implements Initializable {
     public void hydraulicUnitInit() {
         populateUIWithCachedData();
 
-        HTTPRequest.sendRequestNormal(BASE_URL + "/api/getHydraulicInfo", new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendRequestNormal(BASE_URL + hydraulicGetInfoURLPrefix, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
@@ -282,11 +282,11 @@ public class MainController implements Initializable {
                 InChargeLabel.setText(info.getUserName());
 
                 pdfViewButton.setOnAction(event -> {
-                    openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".pdf");
+                    openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".pdf");
                 });
 
                 excelViewButton.setOnMouseClicked(event -> {
-                    openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".xlsx");
+                    openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".xlsx");
                 });
 
                 final int j = pnItems.getChildren().size();

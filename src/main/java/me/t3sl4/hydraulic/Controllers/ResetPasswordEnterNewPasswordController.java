@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static me.t3sl4.hydraulic.Util.Util.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.*;
 
 public class ResetPasswordEnterNewPasswordController implements Initializable {
 
@@ -73,7 +73,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
         if (yeniSifre.isEmpty()) {
             lblErrors.setText("E-posta adresi boş olamaz.");
         } else {
-            String otpUrl = BASE_URL + "/api/updatePass";
+            String otpUrl = BASE_URL + updatePassURLPrefix;
             String jsonUpdatePassBody = "{\"Email\": \"" + ResetPasswordController.enteredEmail + "\", \"Password\": \"" + yeniSifre + "\"}";
 
             HTTPRequest.sendRequest(otpUrl, jsonUpdatePassBody, new HTTPRequest.RequestCallback() {
