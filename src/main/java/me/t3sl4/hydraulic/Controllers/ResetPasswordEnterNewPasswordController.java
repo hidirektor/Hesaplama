@@ -79,11 +79,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
             HTTPRequest.sendRequest(otpUrl, jsonUpdatePassBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String changeResponse) throws IOException {
-                    if (changeResponse.contains("Şifre güncellendi")) {
-                        backMainScreen();
-                    } else {
-                        lblErrors.setText("Şifre güncelleme hatası!");
-                    }
+                    backMainScreen();
                 }
 
                 @Override

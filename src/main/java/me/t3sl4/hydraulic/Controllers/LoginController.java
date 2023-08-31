@@ -77,33 +77,29 @@ public class LoginController implements Initializable {
                     HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
                         @Override
                         public void onSuccess(String loginResponse) {
-                            if (loginResponse.contains("Giriş başarılı")) {
-                                String profileInfoUrl = BASE_URL + "/api/profileInfo/:Role";
-                                String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
-                                HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
-                                    @Override
-                                    public void onSuccess(String profileInfoResponse) {
-                                        JSONObject roleObject = new JSONObject(profileInfoResponse);
-                                        String roleValue = roleObject.getString("Role");
-                                        if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
-                                            Main.loggedInUser = new User(txtUsername.getText());
+                            String profileInfoUrl = BASE_URL + "/api/profileInfo/:Role";
+                            String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
+                            HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
+                                @Override
+                                public void onSuccess(String profileInfoResponse) {
+                                    JSONObject roleObject = new JSONObject(profileInfoResponse);
+                                    String roleValue = roleObject.getString("Role");
+                                    if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
+                                        Main.loggedInUser = new User(txtUsername.getText());
 
-                                            girisProcess();
+                                        girisProcess();
 
-                                            stage.close();
-                                        } else {
-                                            lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
-                                        }
+                                        stage.close();
+                                    } else {
+                                        lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
                                     }
+                                }
 
-                                    @Override
-                                    public void onFailure() {
-                                        lblErrors.setText("Profil bilgileri alınamadı!");
-                                    }
-                                });
-                            } else {
-                                lblErrors.setText("Böyle bir kullanıcı bulunamadı!");
-                            }
+                                @Override
+                                public void onFailure() {
+                                    lblErrors.setText("Profil bilgileri alınamadı!");
+                                }
+                            });
                         }
 
                         @Override

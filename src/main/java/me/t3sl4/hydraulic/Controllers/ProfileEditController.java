@@ -161,15 +161,11 @@ public class ProfileEditController {
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
-                if (response.contains("Profil güncellendi")) {
-                    if(secilenPhotoPath != null) {
-                        uploadProfilePhoto2Server(stage);
-                    }
-                    Util.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
-                    refreshScreen();
-                } else {
-                    Util.showErrorMessage("Profil güncellenirken hata meydana geldi !");
+                if(secilenPhotoPath != null) {
+                    uploadProfilePhoto2Server(stage);
                 }
+                Util.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
+                refreshScreen();
             }
 
             @Override

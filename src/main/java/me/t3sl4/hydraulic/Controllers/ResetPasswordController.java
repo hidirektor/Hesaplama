@@ -72,17 +72,13 @@ public class ResetPasswordController implements Initializable {
                 HTTPRequest.sendRequest(otpUrl, jsonOTPBody, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String otpResponse) throws IOException {
-                        if (otpResponse.contains("E-posta gönderildi")) {
-                            otpCode = parseOTPCodeFromResponse(otpResponse);
-                            if (otpCode != null) {
-                                System.out.println("OTP Code: " + otpCode);
-                                enteredEmail = email;
-                                changeOTPScreen();
-                            } else {
-                                lblErrors.setText("OTP kodu alınamadı.");
-                            }
+                        otpCode = parseOTPCodeFromResponse(otpResponse);
+                        if (otpCode != null) {
+                            System.out.println("OTP Code: " + otpCode);
+                            enteredEmail = email;
+                            changeOTPScreen();
                         } else {
-                            lblErrors.setText("Böyle bir kullanıcı bulunamadı!");
+                            lblErrors.setText("OTP kodu alınamadı.");
                         }
                     }
 
@@ -114,10 +110,8 @@ public class ResetPasswordController implements Initializable {
             JSONObject jsonResponse = new JSONObject(response);
             if (jsonResponse.has("message") && jsonResponse.has("otpCode")) {
                 String message = jsonResponse.getString("message");
-                if (message.equals("E-posta gönderildi")) {
-                    String otpCode = jsonResponse.getString("otpCode");
-                    return otpCode;
-                }
+                String otpCode = jsonResponse.getString("otpCode");
+                return otpCode;
             }
         } catch (JSONException e) {
             e.printStackTrace();

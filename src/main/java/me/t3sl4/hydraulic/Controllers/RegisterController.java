@@ -168,11 +168,7 @@ public class RegisterController implements Initializable {
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
-                if (response.contains("Kullanıcı eklendi")) {
-                    uploadProfilePhoto2Server(stage);
-                } else {
-                    Util.showErrorMessage("Kayıt olurken hata meydana geldi !");
-                }
+                uploadProfilePhoto2Server(stage);
             }
 
             @Override

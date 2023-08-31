@@ -47,22 +47,25 @@ public class MainController implements Initializable {
     @FXML
     private VBox pnItems = null;
     @FXML
-    private Button btnOverview;
+    private Button btnHome;
 
     @FXML
-    private Button btnOrders;
+    private Button btnKlasik;
 
     @FXML
-    private Button btnCustomers;
+    private Button btnHidros;
 
     @FXML
-    private Button btnMenus;
+    private Button btnParametreler;
 
     @FXML
     private Button btnProfil;
 
     @FXML
     private Button btnSignout;
+
+    @FXML
+    private Button btnCloseProgram;
 
     @FXML
     private Pane pnlCustomer;
@@ -113,11 +116,11 @@ public class MainController implements Initializable {
     }
 
     public void handleClicks(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == btnCustomers) {
+        if (actionEvent.getSource() == btnHidros) {
             pnlCustomer.setStyle("-fx-background-color : #02030A");
             pnlCustomer.toFront();
         }
-        if (actionEvent.getSource() == btnMenus) {
+        if (actionEvent.getSource() == btnParametreler) {
             pnlMenus.setStyle("-fx-background-color : #02030A");
             pnlMenus.toFront();
             try {
@@ -148,11 +151,13 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
         }
-        if (actionEvent.getSource() == btnOverview) {
+        if (actionEvent.getSource() == btnHome) {
             pnlOverview.setStyle("-fx-background-color : #02030A");
             pnlOverview.toFront();
+            hidrolikUnitStats();
+            hydraulicUnitInit();
         }
-        if(actionEvent.getSource()==btnOrders) {
+        if(actionEvent.getSource()==btnKlasik) {
             pnlMenus.setStyle("-fx-background-color : #353a46");
             pnlMenus.toFront();
             try {
@@ -313,28 +318,6 @@ public class MainController implements Initializable {
         }
 
         return hydraulicInfos;
-    }
-
-    public int getHydraulicUnitCount() {
-        String profileInfoUrl = BASE_URL + "/api/getStatistics";
-        final int[] totalCount = {0};
-
-        HTTPRequest.sendRequestNormal(profileInfoUrl, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String hydraulicResponse) {
-                JSONObject responseJson = new JSONObject(hydraulicResponse);
-                totalCount[0] = responseJson.getInt("Sipariş Sayısı");
-                int klasik = responseJson.getInt("Klasik");
-                int hidros = responseJson.getInt("Hidros");
-            }
-
-            @Override
-            public void onFailure() {
-                System.out.println("Kullanıcı bilgileri alınamadı!");
-            }
-        });
-
-        return totalCount[0];
     }
 
     private void excelVoidCount() {
