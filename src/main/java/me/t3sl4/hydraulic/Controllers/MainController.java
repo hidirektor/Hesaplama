@@ -94,6 +94,8 @@ public class MainController implements Initializable {
     @FXML
     private ImageView closeIcon;
 
+    private List<HydraulicInfo> cachedHydraulicInfos = new ArrayList<>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userInfo();
@@ -241,50 +243,14 @@ public class MainController implements Initializable {
     }
 
     public void hydraulicUnitInit() {
+        populateUIWithCachedData();
+
         HTTPRequest.sendRequestNormal(BASE_URL + "/api/getHydraulicInfo", new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
-
-                for (HydraulicInfo info : hydraulicInfos) {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Launcher.class.getResource("fxml/Item.fxml")));
-                        Node node = loader.load();
-
-                        HBox itemC = (HBox) loader.getNamespace().get("itemC");
-                        Label orderNumberLabel = (Label) loader.getNamespace().get("orderNumberLabel");
-                        Label orderDateLabel = (Label) loader.getNamespace().get("orderDateLabel");
-                        Label typeLabel = (Label) loader.getNamespace().get("typeLabel");
-                        Label InChargeLabel = (Label) loader.getNamespace().get("InChargeLabel");
-                        Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
-                        ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
-
-                        orderNumberLabel.setText(info.getSiparisNumarasi());
-                        orderDateLabel.setText(formatDateTime(info.getSiparisTarihi()));
-                        typeLabel.setText(info.getUniteTipi());
-                        InChargeLabel.setText(info.getCreatedBy());
-
-                        pdfViewButton.setOnAction(event -> {
-                            openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".pdf");
-                        });
-
-                        excelViewButton.setOnMouseClicked(event -> {
-                            openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".xlsx");
-                        });
-
-                        final int j = pnItems.getChildren().size();
-                        node.setOnMouseEntered(event -> {
-                            itemC.setStyle("-fx-background-color : #0A0E3F");
-                        });
-                        node.setOnMouseExited(event -> {
-                            itemC.setStyle("-fx-background-color : #02030A");
-                        });
-
-                        pnItems.getChildren().add(node);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                cachedHydraulicInfos = hydraulicInfos;
+                populateUIWithCachedData();
             }
 
             @Override
@@ -292,6 +258,50 @@ public class MainController implements Initializable {
                 System.out.println("API request failed.");
             }
         });
+    }
+
+    private void populateUIWithCachedData() {
+        pnItems.getChildren().clear();
+
+        for (HydraulicInfo info : cachedHydraulicInfos) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Launcher.class.getResource("fxml/Item.fxml")));
+                Node node = loader.load();
+
+                HBox itemC = (HBox) loader.getNamespace().get("itemC");
+                Label orderNumberLabel = (Label) loader.getNamespace().get("orderNumberLabel");
+                Label orderDateLabel = (Label) loader.getNamespace().get("orderDateLabel");
+                Label typeLabel = (Label) loader.getNamespace().get("typeLabel");
+                Label InChargeLabel = (Label) loader.getNamespace().get("InChargeLabel");
+                Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
+                ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
+
+                orderNumberLabel.setText(info.getSiparisNumarasi());
+                orderDateLabel.setText(formatDateTime(info.getSiparisTarihi()));
+                typeLabel.setText(info.getUniteTipi());
+                InChargeLabel.setText(info.getCreatedBy());
+
+                pdfViewButton.setOnAction(event -> {
+                    openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".pdf");
+                });
+
+                excelViewButton.setOnMouseClicked(event -> {
+                    openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".xlsx");
+                });
+
+                final int j = pnItems.getChildren().size();
+                node.setOnMouseEntered(event -> {
+                    itemC.setStyle("-fx-background-color : #0A0E3F");
+                });
+                node.setOnMouseExited(event -> {
+                    itemC.setStyle("-fx-background-color : #02030A");
+                });
+
+                pnItems.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public String formatDateTime(String dateTimeString) {
