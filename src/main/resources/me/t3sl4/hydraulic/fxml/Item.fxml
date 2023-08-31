@@ -29,7 +29,7 @@
                 <Insets />
             </HBox.margin>
         </Label>
-        <Button fx:id="pdfViewButton" mnemonicParsing="false" prefHeight="10.0" prefWidth="60.0" style="-fx-border-color: #2A73FF; -fx-border-radius: 20; -fx-background-color: transparent;" stylesheets="@../styling/style.css" text="İndir">
+        <Button fx:id="pdfViewButton" mnemonicParsing="false" prefHeight="10.0" prefWidth="60.0" style="-fx-border-color: #2A73FF; -fx-border-radius: 20; -fx-background-color: transparent;" stylesheets="@../styling/styleitem.css" text="İndir">
             <HBox.margin>
                 <Insets />
             </HBox.margin>
