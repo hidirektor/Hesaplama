@@ -261,8 +261,8 @@ public class KlasikController {
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
         if (fileExists(pdfPath) && fileExists(excelPath)) {
-            String pdfURL = "C:/Server Side/data/hydraulicUnits/" + girilenSiparisNumarasi + ".pdf";
-            String excelURL = "C:/Server Side/data/partList/" + girilenSiparisNumarasi + ".xlsx";
+            String pdfURL = girilenSiparisNumarasi + ".pdf";
+            String excelURL = girilenSiparisNumarasi + ".xlsx";
             String url = BASE_URL + "/api/insertHidrolik";
             String jsonBody = "{\n" +
                     "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
