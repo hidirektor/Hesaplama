@@ -119,7 +119,8 @@ public class Util {
             System.out.println("PDF oluşturuldu.");
 
             File pngFile2 = new File(pngFilePath2);
-            if (pngFile2.delete()) {
+            if (pngFile2.exists()) {
+                pngFile2.delete();
                 System.out.println("İkinci PNG dosyası silindi.");
             } else {
                 System.out.println("İkinci PNG dosyası silinemedi.");

@@ -279,7 +279,7 @@ public class MainController implements Initializable {
                 orderNumberLabel.setText(info.getSiparisNumarasi());
                 orderDateLabel.setText(formatDateTime(info.getSiparisTarihi()));
                 typeLabel.setText(info.getUniteTipi());
-                InChargeLabel.setText(info.getCreatedBy());
+                InChargeLabel.setText(info.getUserName());
 
                 pdfViewButton.setOnAction(event -> {
                     openURL(BASE_URL + "/api/viewer/" + info.getSiparisNumarasi() + ".pdf");

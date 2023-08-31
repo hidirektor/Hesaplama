@@ -268,9 +268,10 @@ public class KlasikController {
                     "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
                     "  \"OrderDate\": \"" + dtf.format(now) + "\",\n" +
                     "  \"Type\": \"" + secilenUniteTipi + "\",\n" +
-                    "  \"InCharge\": \"" + Main.loggedInUser.getFullName() + "\",\n" +
+                    "  \"InCharge\": \"" + Main.loggedInUser.getUsername() + "\",\n" +
                     "  \"PDF\": \"" + pdfURL + "\",\n" +
-                    "  \"PartList\": \"" + excelURL + "\"\n" +
+                    "  \"PartList\": \"" + excelURL + "\",\n" +
+                    "  \"InChargeName\": \"" + Main.loggedInUser.getFullName() + "\"\n" +
                     "}";
 
             HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
