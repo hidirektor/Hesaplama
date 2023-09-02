@@ -10,9 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
+import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.Data.User.User;
 import me.t3sl4.hydraulic.Util.Util;
@@ -60,54 +60,41 @@ public class LoginController implements Initializable {
             if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
                 lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
             } else {
-                if(Objects.equals(txtUsername.getText(), "test") && Objects.equals(txtPassword.getText(), "test")) {
-                    stage.close();
-                    Main.loggedInUser = new User(txtUsername.getText());
+                String loginUrl = BASE_URL + loginURLPrefix;
+                String cipheredPass = DigestUtils.sha256Hex(txtPassword.getText());
+                String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
 
-                    try {
-                        openMainScreen();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
+                    @Override
+                    public void onSuccess(String loginResponse) {
+                        String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
+                        String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
+                        HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
+                            @Override
+                            public void onSuccess(String profileInfoResponse) {
+                                JSONObject roleObject = new JSONObject(profileInfoResponse);
+                                String roleValue = roleObject.getString("Role");
+                                if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
+                                    loggedInUser = new User(txtUsername.getText());
+
+                                    updateUserAndOpenMainScreen(stage);
+                                } else {
+                                    lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure() {
+                                lblErrors.setText("Profil bilgileri alınamadı!");
+                            }
+                        });
                     }
-                } else {
-                    String loginUrl = BASE_URL + loginURLPrefix;
-                    String cipheredPass = DigestUtils.sha256Hex(txtPassword.getText());
-                    String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
 
-                    HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
-                        @Override
-                        public void onSuccess(String loginResponse) {
-                            String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
-                            String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
-                            HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
-                                @Override
-                                public void onSuccess(String profileInfoResponse) {
-                                    JSONObject roleObject = new JSONObject(profileInfoResponse);
-                                    String roleValue = roleObject.getString("Role");
-                                    if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
-                                        Main.loggedInUser = new User(txtUsername.getText());
-
-                                        girisProcess();
-
-                                        stage.close();
-                                    } else {
-                                        lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure() {
-                                    lblErrors.setText("Profil bilgileri alınamadı!");
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
-                        }
-                    });
-                }
+                    @Override
+                    public void onFailure() {
+                        lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
+                    }
+                });
             }
         } else {
             lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
@@ -196,42 +183,41 @@ public class LoginController implements Initializable {
         SceneUtil.changeScreen("fxml/ResetPassword.fxml");
     }
 
-    private void girisProcess() {
-        updateUser("Role", 0);
-        updateUser("Email", 1);
-        updateUser("NameSurname", 2);
-        updateUser("Phone", 3);
-        updateUser("CompanyName", 4);
-        updateUser("Created_At", 5);
-
-        try {
-            openMainScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void updateUserAndOpenMainScreen(Stage stage) {
+        updateUser(() -> {
+            try {
+                openMainScreen();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.close();
+        });
     }
 
-    public void updateUser(String requestVal, int section) {
-        String profileInfoUrl = BASE_URL + profileInfoURLPrefix + ":" + requestVal;
-        String profileInfoBody = "{\"Username\": \"" + Main.loggedInUser.getUsername() + "\"}";
+    public void updateUser(Runnable onUserUpdateComplete) {
+        String profileInfoUrl = BASE_URL + wholeProfileURLPrefix;
+        String profileInfoBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
+        System.out.println("Req Username: " + loggedInUser.getUsername());
 
         HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String profileInfoResponse) {
-                String parsedVal = HTTPUtil.parseStringVal(profileInfoResponse, requestVal);
-                if (section == 0) {
-                    Main.loggedInUser.setRole(parsedVal);
-                } else if (section == 1) {
-                    Main.loggedInUser.setEmail(parsedVal);
-                } else if (section == 2) {
-                    Main.loggedInUser.setFullName(parsedVal);
-                } else if (section == 3) {
-                    Main.loggedInUser.setPhone(parsedVal);
-                } else if (section == 4) {
-                    Main.loggedInUser.setCompanyName(parsedVal);
-                } else {
-                    Main.loggedInUser.setCreatedAt(parsedVal);
-                }
+                JSONObject responseJson = new JSONObject(profileInfoResponse);
+                String parsedRole = responseJson.getString("Role");
+                String parsedFullName = responseJson.getString("NameSurname");
+                String parsedEmail = responseJson.getString("Email");
+                String parsedPhone = responseJson.getString("Phone");
+                String parsedCompanyName = responseJson.getString("CompanyName");
+
+                System.out.println("Req Result: ");
+                System.out.println(parsedRole + "\n" + parsedFullName + "\n" + parsedEmail + "\n" + parsedPhone + "\n" + parsedCompanyName);
+
+                loggedInUser.setRole(parsedRole);
+                loggedInUser.setFullName(parsedFullName);
+                loggedInUser.setEmail(parsedEmail);
+                loggedInUser.setPhone(parsedPhone);
+                loggedInUser.setCompanyName(parsedCompanyName);
+                onUserUpdateComplete.run();
             }
 
             @Override

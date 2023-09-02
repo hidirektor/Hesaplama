@@ -16,6 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.MainModel.Main;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Data.HydraulicUnit.HydraulicInfo;
@@ -40,6 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.t3sl4.hydraulic.Util.Data.User.Profile;
 import static me.t3sl4.hydraulic.Launcher.*;
+import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 import static me.t3sl4.hydraulic.Util.Util.openURL;
 
 public class MainController implements Initializable {
@@ -106,7 +108,7 @@ public class MainController implements Initializable {
     @FXML
     public void anaEkranaDon() throws IOException {
         Stage stage = (Stage) parametreCount.getScene().getWindow();
-        Main.loggedInUser = null;
+        loggedInUser = null;
 
         stage.close();
         SceneUtil.changeScreen("fxml/Login.fxml");
@@ -213,8 +215,8 @@ public class MainController implements Initializable {
     }
 
     public void userInfo() {
-        kullaniciAdiIsimText.setText(Main.loggedInUser.getUsername() + "\n" + Main.loggedInUser.getFullName());
-        Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
+        kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName());
+        Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
     }
 
     public void hidrolikUnitStats() {
