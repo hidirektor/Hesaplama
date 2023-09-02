@@ -148,7 +148,7 @@
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                  <Label fx:id="versionCode" layoutX="710.0" layoutY="4.0" text="v22.08.2023" textFill="#e7e5e5">
+                  <Label fx:id="versionCode" layoutX="710.0" layoutY="4.0" text="v02.09.2023" textFill="#e7e5e5">
                      <font>
                         <Font size="15.0" />
                      </font>

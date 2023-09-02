@@ -156,6 +156,7 @@
         <app.dir>${project.build.directory}/app</app.dir>
         <app.installerdir>${project.build.directory}/installer</app.installerdir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <junit.version>5.9.2</junit.version>
     </properties>
 
@@ -168,6 +169,7 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>

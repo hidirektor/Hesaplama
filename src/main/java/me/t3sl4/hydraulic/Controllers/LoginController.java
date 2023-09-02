@@ -197,7 +197,6 @@ public class LoginController implements Initializable {
     public void updateUser(Runnable onUserUpdateComplete) {
         String profileInfoUrl = BASE_URL + wholeProfileURLPrefix;
         String profileInfoBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
-        System.out.println("Req Username: " + loggedInUser.getUsername());
 
         HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {
             @Override
@@ -208,9 +207,6 @@ public class LoginController implements Initializable {
                 String parsedEmail = responseJson.getString("Email");
                 String parsedPhone = responseJson.getString("Phone");
                 String parsedCompanyName = responseJson.getString("CompanyName");
-
-                System.out.println("Req Result: ");
-                System.out.println(parsedRole + "\n" + parsedFullName + "\n" + parsedEmail + "\n" + parsedPhone + "\n" + parsedCompanyName);
 
                 loggedInUser.setRole(parsedRole);
                 loggedInUser.setFullName(parsedFullName);

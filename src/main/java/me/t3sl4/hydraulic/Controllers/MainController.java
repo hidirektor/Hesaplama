@@ -97,11 +97,14 @@ public class MainController implements Initializable {
     private ImageView closeIcon;
 
     private List<HydraulicInfo> cachedHydraulicInfos = new ArrayList<>();
+    int siparisSayisi;
+    int klasik;
+    int hidros;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userInfo();
-        hidrolikUnitStats();
+        updateHydraulicText();
         hydraulicUnitInit();
     }
 
@@ -158,7 +161,7 @@ public class MainController implements Initializable {
         if (actionEvent.getSource() == btnHome) {
             pnlOverview.setStyle("-fx-background-color : #02030A");
             pnlOverview.toFront();
-            hidrolikUnitStats();
+            updateHydraulicText();
             hydraulicUnitInit();
         }
         if(actionEvent.getSource()==btnKlasik) {
@@ -219,20 +222,26 @@ public class MainController implements Initializable {
         Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
     }
 
-    public void hidrolikUnitStats() {
+    public void updateHydraulicText() {
+        hidrolikUnitStats(() -> {
+            toplamSiparisCount.setText(String.valueOf(siparisSayisi));
+            klasikUniteCount.setText(String.valueOf(klasik));
+            hidrosUntiteCount.setText(String.valueOf(hidros));
+        });
+        excelVoidCount();
+    }
+
+    public void hidrolikUnitStats(Runnable updateHydraulicText) {
         String profileInfoUrl = BASE_URL + hydraulicGetStatsURLPrefix;
 
         HTTPRequest.sendRequestNormal(profileInfoUrl, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String hydraulicResponse) {
                 JSONObject responseJson = new JSONObject(hydraulicResponse);
-                int siparisSayisi = responseJson.getInt("Sipariş Sayısı");
-                int klasik = responseJson.getInt("Klasik");
-                int hidros = responseJson.getInt("Hidros");
-
-                toplamSiparisCount.setText(String.valueOf(siparisSayisi));
-                klasikUniteCount.setText(String.valueOf(klasik));
-                hidrosUntiteCount.setText(String.valueOf(hidros));
+                siparisSayisi = responseJson.getInt("Sipariş Sayısı");
+                klasik = responseJson.getInt("Klasik");
+                hidros = responseJson.getInt("Hidros");
+                updateHydraulicText.run();
             }
 
             @Override
@@ -240,8 +249,6 @@ public class MainController implements Initializable {
                 System.out.println("Kullanıcı bilgileri alınamadı!");
             }
         });
-
-        excelVoidCount();
     }
 
     public void hydraulicUnitInit() {
