@@ -110,8 +110,18 @@ public class MainController implements Initializable {
 
     @FXML
     public void anaEkranaDon() throws IOException {
+        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
+        File loginFile = new File(loginFilePath);
         Stage stage = (Stage) parametreCount.getScene().getWindow();
+
         loggedInUser = null;
+        if (loginFile.exists()) {
+            if (loginFile.delete()) {
+                System.out.println("loginInfo.txt dosyası silindi.");
+            } else {
+                System.err.println("loginInfo.txt dosyası silinemedi.");
+            }
+        }
 
         stage.close();
         SceneUtil.changeScreen("fxml/Login.fxml");

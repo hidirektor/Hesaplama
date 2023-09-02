@@ -49,11 +49,13 @@ public class Util {
         String pdfFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
         String excelFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/partList/";
         String dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
+        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
 
         File profilePhotoTestFile = new File(profilePhotoLocalPath);
         File pdfFileTestFile = new File(pdfFileLocalPath);
         File excelFileTestFile = new File(excelFileLocalPath);
         File dataFileTestFile = new File(dataFileLocalPath);
+        File loginFileTestFile = new File(loginFilePath);
 
         if(!profilePhotoTestFile.exists()) {
             profilePhotoTestFile.mkdirs();
@@ -69,6 +71,10 @@ public class Util {
 
         if (!dataFileTestFile.exists()) {
             dataFileTestFile.mkdirs();
+        }
+
+        if (!loginFileTestFile.exists()) {
+            loginFileTestFile.mkdirs();
         }
     }
 

@@ -1,14 +1,26 @@
 package me.t3sl4.hydraulic.Controllers;
 
+import javafx.animation.FillTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
@@ -19,7 +31,8 @@ import me.t3sl4.hydraulic.Util.Util;
 import org.json.JSONObject;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -49,6 +62,8 @@ public class LoginController implements Initializable {
     private TextField sifrePassword;
     @FXML
     private ImageView passwordVisibilityIcon;
+    @FXML
+    private ToggleButton beniHatirla;
 
     private String girilenSifre = "";
 
@@ -128,12 +143,121 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        beniHatirlaKontrol();
+        girisKontrol();
+        beniHatirla();
         if(!Util.netIsAvailable()) {
             lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
         }
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
+        });
+    }
+
+    public void beniHatirla() {
+        beniHatirla.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
+
+            if (newValue) {
+                String username = txtUsername.getText().trim();
+                String password = DigestUtils.sha256Hex(txtPassword.getText());
+
+                if (!username.isEmpty() && !password.isEmpty()) {
+                    try {
+                        FileWriter writer = new FileWriter(loginFilePath + "loginInfo.txt");
+                        writer.write(username + "\n");
+                        writer.write(password);
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Util.showErrorMessage("Kullanıcı adı ve şifre alanları boş olamaz!");
+                    beniHatirla.setSelected(false);
+                }
+            } else {
+                File loginFile = new File(loginFilePath + "loginInfo.txt");
+                if (loginFile.exists()) {
+                    if (loginFile.delete()) {
+                        System.out.println("loginInfo.txt dosyası silindi.");
+                    } else {
+                        System.err.println("loginInfo.txt dosyası silinemedi.");
+                    }
+                }
+            }
+        });
+    }
+
+    private void beniHatirlaKontrol() {
+        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
+        File loginFile = new File(loginFilePath + "loginInfo.txt");
+
+        if (loginFile.exists()) {
+            beniHatirla.setSelected(true);
+        } else {
+            beniHatirla.setSelected(false);
+        }
+    }
+
+    private void girisKontrol() {
+        String kullaniciAdi = null;
+        String sifre = null;
+        if (beniHatirla.isSelected()) {
+            String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
+            try (BufferedReader reader = new BufferedReader(new FileReader(loginFilePath))) {
+                kullaniciAdi = reader.readLine();
+                sifre = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            directLogin(kullaniciAdi, sifre);
+        }
+    }
+
+    private void directLogin(String kullaniciAdi, String sifre) {
+        String loginUrl = BASE_URL + loginURLPrefix;
+        String jsonLoginBody = "{\"Username\": \"" + kullaniciAdi + "\", \"Password\": \"" + sifre + "\"}";
+
+        HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String loginResponse) {
+                String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
+                String jsonProfileInfoBody = "{\"Username\": \"" + kullaniciAdi + "\"}";
+                HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
+                    @Override
+                    public void onSuccess(String profileInfoResponse) {
+                        JSONObject roleObject = new JSONObject(profileInfoResponse);
+                        String roleValue = roleObject.getString("Role");
+                        if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
+                            loggedInUser = new User(kullaniciAdi);
+
+                            updateUser(() -> {
+                                try {
+                                    openMainScreen();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Stage loginStage = (Stage) btnSignin.getScene().getWindow();
+                                loginStage.close();
+                            });
+                        } else {
+                            lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        lblErrors.setText("Profil bilgileri alınamadı!");
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure() {
+                lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
+            }
         });
     }
 
