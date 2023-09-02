@@ -361,7 +361,6 @@ public class MainController implements Initializable {
                     }
                 }
 
-                System.out.println("Dolu sütun sayısı: " + maxColumnCount);
                 parametreCount.setText(String.valueOf(maxColumnCount));
             } else {
                 System.out.println("Sayfa bulunamadı: " + sheetName);
