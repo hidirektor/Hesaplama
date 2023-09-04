@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 public class Launcher {
-    public static String BASE_URL = "http://78.135.82.253:3000";
+    public static String BASE_URL = "http://85.95.231.92:3000";
 
     public static String loginURLPrefix = "/api/login";
     public static String registerURLPrefix = "/api/register";
