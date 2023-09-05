@@ -13,7 +13,6 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.SceneUtil;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,7 +67,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
 
     @FXML
     public void sifreDegistir() {
-        String yeniSifre = DigestUtils.sha256Hex(sifreText.getText());
+        String yeniSifre = sifreText.getText();
 
         if (yeniSifre.isEmpty()) {
             lblErrors.setText("E-posta adresi boş olamaz.");

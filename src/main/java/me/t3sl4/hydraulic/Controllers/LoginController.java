@@ -29,7 +29,6 @@ import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.Data.User.User;
 import me.t3sl4.hydraulic.Util.Util;
 import org.json.JSONObject;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.awt.*;
 import java.io.*;
@@ -76,7 +75,7 @@ public class LoginController implements Initializable {
                 lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
             } else {
                 String loginUrl = BASE_URL + loginURLPrefix;
-                String cipheredPass = DigestUtils.sha256Hex(txtPassword.getText());
+                String cipheredPass = txtPassword.getText();
                 String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
 
                 HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
@@ -161,7 +160,7 @@ public class LoginController implements Initializable {
 
             if (newValue) {
                 String username = txtUsername.getText().trim();
-                String password = DigestUtils.sha256Hex(txtPassword.getText());
+                String password = txtPassword.getText();
 
                 if (!username.isEmpty() && !password.isEmpty()) {
                     try {

@@ -25,7 +25,6 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.SceneUtil;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import static me.t3sl4.hydraulic.Launcher.*;
 
@@ -134,7 +133,7 @@ public class RegisterController implements Initializable {
         Stage stage = (Stage) kullaniciAdiText.getScene().getWindow();
         String userRole = "NORMAL";
         String userName = kullaniciAdiText.getText();
-        String password = DigestUtils.sha256Hex(sifreText.getText());
+        String password = sifreText.getText();
         String nameSurname = isimSoyisimText.getText();
         String eMail = ePostaText.getText();
         String companyName = sirketText.getText();
