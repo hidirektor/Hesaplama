@@ -324,13 +324,13 @@ public class KlasikController {
     private void uploadExcelFile2Server(String filePath) throws IOException {
         String uploadUrl = BASE_URL + uploadExcelURLPrefix;
 
-        File pdfFile = new File(filePath);
-        if (!pdfFile.exists()) {
+        File excelFile = new File(filePath);
+        if (!excelFile.exists()) {
             Util.showErrorMessage("Excel dosyası bulunamadı !");
             return;
         }
 
-        HTTPRequest.sendMultipartRequest(uploadUrl, girilenSiparisNumarasi, pdfFile, new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendMultipartRequest(uploadUrl, girilenSiparisNumarasi, excelFile, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 excelSucc = true;
