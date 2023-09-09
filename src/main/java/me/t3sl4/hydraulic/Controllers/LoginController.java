@@ -75,8 +75,7 @@ public class LoginController implements Initializable {
                 lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
             } else {
                 String loginUrl = BASE_URL + loginURLPrefix;
-                String cipheredPass = txtPassword.getText();
-                String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + cipheredPass + "\"}";
+                String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
 
                 HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
                     @Override
@@ -92,6 +91,7 @@ public class LoginController implements Initializable {
                                     loggedInUser = new User(txtUsername.getText());
 
                                     updateUserAndOpenMainScreen(stage);
+                                    beniHatirla();
                                 } else {
                                     lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
                                 }
@@ -107,6 +107,7 @@ public class LoginController implements Initializable {
                     @Override
                     public void onFailure() {
                         lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
+                        removeBeniHatirla();
                     }
                 });
             }
@@ -159,22 +160,37 @@ public class LoginController implements Initializable {
             String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
 
             if (newValue) {
-                String username = txtUsername.getText().trim();
-                String password = txtPassword.getText();
+                String getCipheredPassUrl = BASE_URL + getPassURLPrefix;
+                String jsonGetCipheredPassBody = "{\"Password\": \"" + txtPassword.getText() + "\"}";
 
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    try {
-                        FileWriter writer = new FileWriter(loginFilePath + "loginInfo.txt");
-                        writer.write(username + "\n");
-                        writer.write(password);
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                String username = txtUsername.getText().trim();
+
+                HTTPRequest.sendRequest(getCipheredPassUrl, jsonGetCipheredPassBody, new HTTPRequest.RequestCallback() {
+                    @Override
+                    public void onSuccess(String getPassResponse) {
+                        JSONObject passObject = new JSONObject(getPassResponse);
+                        String password = passObject.getString("pass");
+                        System.out.println("Pass: " + password);
+                        if (!username.isEmpty() && password != null && !password.isEmpty()) {
+                            try {
+                                FileWriter writer = new FileWriter(loginFilePath + "loginInfo.txt");
+                                writer.write(username + "\n");
+                                writer.write(password);
+                                writer.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Util.showErrorMessage("Kullanıcı adı veya şifre alanları boş olamaz!");
+                            beniHatirla.setSelected(false);
+                        }
                     }
-                } else {
-                    Util.showErrorMessage("Kullanıcı adı ve şifre alanları boş olamaz!");
-                    beniHatirla.setSelected(false);
-                }
+
+                    @Override
+                    public void onFailure() {
+                        lblErrors.setText("Gizli şifre alınamadı!");
+                    }
+                });
             } else {
                 File loginFile = new File(loginFilePath + "loginInfo.txt");
                 if (loginFile.exists()) {
@@ -186,6 +202,15 @@ public class LoginController implements Initializable {
                 }
             }
         });
+    }
+
+    private void removeBeniHatirla() {
+        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
+        File loginFile = new File(loginFilePath + "loginInfo.txt");
+        if(loginFile.exists()) {
+            loginFile.delete();
+        }
+        beniHatirla.setSelected(false);
     }
 
     private void beniHatirlaKontrol() {
@@ -216,7 +241,7 @@ public class LoginController implements Initializable {
     }
 
     private void directLogin(String kullaniciAdi, String sifre) {
-        String loginUrl = BASE_URL + loginURLPrefix;
+        String loginUrl = BASE_URL + directLoginURLPrefix;
         String jsonLoginBody = "{\"Username\": \"" + kullaniciAdi + "\", \"Password\": \"" + sifre + "\"}";
 
         HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
