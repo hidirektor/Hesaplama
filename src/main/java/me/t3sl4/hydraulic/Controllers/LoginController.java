@@ -165,8 +165,6 @@ public class LoginController implements Initializable {
 
                 String username = txtUsername.getText().trim();
 
-                //TODO
-                //İstek atmıyor.
                 HTTPRequest.sendRequest(getCipheredPassUrl, jsonGetCipheredPassBody, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String getPassResponse) {
