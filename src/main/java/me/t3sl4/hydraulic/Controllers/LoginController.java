@@ -165,12 +165,13 @@ public class LoginController implements Initializable {
 
                 String username = txtUsername.getText().trim();
 
+                //TODO
+                //İstek atmıyor.
                 HTTPRequest.sendRequest(getCipheredPassUrl, jsonGetCipheredPassBody, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String getPassResponse) {
                         JSONObject passObject = new JSONObject(getPassResponse);
                         String password = passObject.getString("pass");
-                        System.out.println("Pass: " + password);
                         if (!username.isEmpty() && password != null && !password.isEmpty()) {
                             try {
                                 FileWriter writer = new FileWriter(loginFilePath + "loginInfo.txt");
@@ -188,7 +189,7 @@ public class LoginController implements Initializable {
 
                     @Override
                     public void onFailure() {
-                        lblErrors.setText("Gizli şifre alınamadı!");
+                        lblErrors.setText("Hashlenmiş şifre alınamadı!");
                     }
                 });
             } else {
