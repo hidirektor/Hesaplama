@@ -1100,6 +1100,7 @@ public class KlasikController {
         exportButton.setDisable(true);
         kullanilacakKabin.setVisible(false);
         sonucAnaLabelTxt.setText("Sipariş Numarası: ");
+        sonucTankGorsel.setImage(null);
 
         imageTextDisable(0);
     }
@@ -1261,8 +1262,19 @@ public class KlasikController {
     private void tankGorselLoad() {
         Image image;
 
-        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitsiz.png")));
-        sonucTankGorsel.setImage(image);
+        if(secilenHidrolikKilitDurumu.contains("Var")) {
+            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
+            sonucTankGorsel.setImage(image);
+        } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
+            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/tekhiz.png")));
+            sonucTankGorsel.setImage(image);
+        } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
+            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/cifthiz.png")));
+            sonucTankGorsel.setImage(image);
+        } else {
+            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
+            sonucTankGorsel.setImage(image);
+        }
 
         hydraulicUnitShape.setVisible(false);
     }
