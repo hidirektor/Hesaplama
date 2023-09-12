@@ -19,8 +19,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Data.Excel.DataManipulator;
 import org.apache.poi.ss.usermodel.*;
@@ -954,6 +958,19 @@ public class Util {
         alert.setHeaderText(null);
         alert.setContentText(basariMesaji);
         alert.showAndWait();
+    }
+
+    public static void showErrorOnLabel(Label mainLabel, String message) {
+        mainLabel.setText(message);
+
+        Duration delay = Duration.seconds(1.5);
+
+        KeyFrame keyFrame = new KeyFrame(delay, event -> {
+            mainLabel.setText(null);
+        });
+
+        Timeline timeline = new Timeline(keyFrame);
+        timeline.play();
     }
 
     public static boolean netIsAvailable() {

@@ -1,15 +1,7 @@
 package me.t3sl4.hydraulic.Controllers;
 
-import javafx.animation.FillTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.TranslateTransition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,23 +9,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.Data.User.User;
 import me.t3sl4.hydraulic.Util.Util;
 import org.json.JSONObject;
 
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Launcher.*;
@@ -72,7 +58,7 @@ public class LoginController implements Initializable {
             Stage stage = (Stage) btnSignin.getScene().getWindow();
 
             if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-                lblErrors.setText("Şifre veya kullanıcı adı girmediniz !");
+                Util.showErrorOnLabel(lblErrors, "Şifre veya kullanıcı adı girmediniz !");
             } else {
                 String loginUrl = BASE_URL + loginURLPrefix;
                 String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
@@ -93,26 +79,26 @@ public class LoginController implements Initializable {
                                     updateUserAndOpenMainScreen(stage);
                                     beniHatirla();
                                 } else {
-                                    lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
+                                    Util.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
                                 }
                             }
 
                             @Override
                             public void onFailure() {
-                                lblErrors.setText("Profil bilgileri alınamadı!");
+                                Util.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
                             }
                         });
                     }
 
                     @Override
                     public void onFailure() {
-                        lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
+                        Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
                         removeBeniHatirla();
                     }
                 });
             }
         } else {
-            lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
+            Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
         }
     }
 
@@ -129,7 +115,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace();
             }
         } else {
-            lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
+            Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
         }
     }
 
@@ -147,7 +133,7 @@ public class LoginController implements Initializable {
         girisKontrol();
         beniHatirla();
         if(!Util.netIsAvailable()) {
-            lblErrors.setText("Lütfen internet bağlantınızı kontrol edin!");
+            Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
         }
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -187,7 +173,7 @@ public class LoginController implements Initializable {
 
                     @Override
                     public void onFailure() {
-                        lblErrors.setText("Hashlenmiş şifre alınamadı!");
+                        Util.showErrorOnLabel(lblErrors, "Hashlenmiş şifre alınamadı!");
                     }
                 });
             } else {
@@ -266,20 +252,20 @@ public class LoginController implements Initializable {
                                 loginStage.close();
                             });
                         } else {
-                            lblErrors.setText("Hidrolik aracını normal kullanıcılar kullanamaz.");
+                            Util.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        lblErrors.setText("Profil bilgileri alınamadı!");
+                        Util.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
                     }
                 });
             }
 
             @Override
             public void onFailure() {
-                lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
+                Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
             }
         });
     }
