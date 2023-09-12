@@ -1265,6 +1265,10 @@ public class KlasikController {
         if(secilenSogutmaDurumu.contains("Var")) {
             image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
             sonucTankGorsel.setImage(image);
+            genislikSonucText.setLayoutY(225.0);
+            genislikSonucText.setRotate(35.5);
+            derinlikSonucText.setRotate(-36.0);
+            derinlikSonucText.setLayoutX(638.0);
         } else {
             if(secilenValfTipi.contains("Kilitli Blok")) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
