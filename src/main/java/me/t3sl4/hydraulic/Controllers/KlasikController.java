@@ -1262,18 +1262,20 @@ public class KlasikController {
     private void tankGorselLoad() {
         Image image;
 
-        if(secilenHidrolikKilitDurumu.contains("Var")) {
-            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
-            sonucTankGorsel.setImage(image);
-        } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
-            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/tekhiz.png")));
-            sonucTankGorsel.setImage(image);
-        } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
-            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/cifthiz.png")));
-            sonucTankGorsel.setImage(image);
-        } else {
+        if(secilenSogutmaDurumu.contains("Var")) {
             image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
             sonucTankGorsel.setImage(image);
+        } else {
+            if(secilenValfTipi.contains("Kilitli Blok")) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
+                sonucTankGorsel.setImage(image);
+            } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/tekhiz.png")));
+                sonucTankGorsel.setImage(image);
+            } else if(secilenValfTipi.contains("İnişte Çift Hız")) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/cifthiz.png")));
+                sonucTankGorsel.setImage(image);
+            }
         }
 
         hydraulicUnitShape.setVisible(false);
