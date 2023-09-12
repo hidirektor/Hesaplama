@@ -62,7 +62,7 @@ public class ResetPasswordController implements Initializable {
         String email = txtEmail.getText();
 
         if (email.isEmpty()) {
-            lblErrors.setText("E-posta adresi boş olamaz.");
+            Util.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
         } else {
             if (isValidEmail(email)) {
 
@@ -78,18 +78,18 @@ public class ResetPasswordController implements Initializable {
                             enteredEmail = email;
                             changeOTPScreen();
                         } else {
-                            lblErrors.setText("OTP kodu alınamadı.");
+                            Util.showErrorOnLabel(lblErrors, "OTP kodu alınamadı.");
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        lblErrors.setText("Kullanıcı adı veya şifre hatalı !");
+                        Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
                     }
                 });
 
             } else {
-                lblErrors.setText("Geçerli bir e-posta adresi girin.");
+                Util.showErrorOnLabel(lblErrors, "Geçerli bir e-posta adresi girin.");
             }
         }
     }

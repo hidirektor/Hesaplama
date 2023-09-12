@@ -70,7 +70,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
         String yeniSifre = sifreText.getText();
 
         if (yeniSifre.isEmpty()) {
-            lblErrors.setText("E-posta adresi boş olamaz.");
+            Util.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
         } else {
             String otpUrl = BASE_URL + updatePassURLPrefix;
             String jsonUpdatePassBody = "{\"Email\": \"" + ResetPasswordController.enteredEmail + "\", \"Password\": \"" + yeniSifre + "\"}";
@@ -83,7 +83,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
 
                 @Override
                 public void onFailure() {
-                    lblErrors.setText("Eski şifre ile yeni şifre aynı olamaz !");
+                    Util.showErrorOnLabel(lblErrors, "Eski şifre ile yeni şifre aynı olamaz !");
                 }
             });
         }

@@ -91,10 +91,10 @@ public class ResetPasswordEnterOTPController implements Initializable {
             if(ResetPasswordController.otpCode.equals(girilenOTP)) {
                 changeOTPScreen();
             } else {
-                lblErrors.setText("Girdiğin OTP kodu hatalı !");
+                Util.showErrorOnLabel(lblErrors, "Girdiğin OTP kodu hatalı !");
             }
         } else {
-            lblErrors.setText("OTP kodunu girmedin !");
+            Util.showErrorOnLabel(lblErrors, "OTP kodunu girmedin !");
         }
     }
 
