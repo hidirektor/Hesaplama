@@ -128,10 +128,13 @@ public class Util {
 
             File pngFile2 = new File(pngFilePath2);
             if (pngFile2.exists()) {
-                pngFile2.delete();
-                System.out.println("İkinci PNG dosyası silindi.");
+                if (pngFile2.delete()) {
+                    System.out.println("İkinci PNG dosyası silindi.");
+                } else {
+                    System.out.println("İkinci PNG dosyası silinemedi.");
+                }
             } else {
-                System.out.println("İkinci PNG dosyası silinemedi.");
+                System.out.println("İkinci PNG dosyası bulunamadı.");
             }
 
             if (Desktop.isDesktopSupported()) {

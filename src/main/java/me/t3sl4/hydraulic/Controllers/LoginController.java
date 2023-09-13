@@ -174,6 +174,7 @@ public class LoginController implements Initializable {
                     @Override
                     public void onFailure() {
                         Util.showErrorOnLabel(lblErrors, "Hashlenmiş şifre alınamadı!");
+                        beniHatirla.setSelected(false);
                     }
                 });
             } else {

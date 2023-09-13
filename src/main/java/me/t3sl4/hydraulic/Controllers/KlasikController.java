@@ -1184,7 +1184,7 @@ public class KlasikController {
                 kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN");
             }
             kilitMotorIcOlcuText.setVisible(true);
-            kilitMotorIcOlcuText.setText("Boğaz: Ø200\nKesim: Ø??");
+            kilitMotorIcOlcuText.setText("Boğaz: Ø200\nKesim: Ø115");
             kilitMotorVeriText.setVisible(true);
             kilitMotorVeriText.setText("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa);
             kilitliBlokVeri2Text.setVisible(true);
