@@ -92,7 +92,8 @@ public class Util {
             document.open();
 
             PdfContentByte contentByte = writer.getDirectContentUnder();
-            BaseColor backgroundColor = new BaseColor(53, 58, 70);
+            //BaseColor backgroundColor = new BaseColor(53, 58, 70);
+            BaseColor backgroundColor = new BaseColor(249, 248, 113);
             contentByte.setColorFill(backgroundColor);
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
@@ -123,6 +124,7 @@ public class Util {
             writer.getDirectContent().addTemplate(page, 0, 0);
 
             document.close();
+            writer.close();
 
             System.out.println("PDF oluşturuldu.");
 

@@ -10,6 +10,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -176,6 +177,9 @@ public class KlasikController {
     private Text sonucUstText;
     @FXML
     private Text sonucSagText;
+
+    @FXML
+    private VBox klasikVBox;
 
     /*
     Seçilen Değerler:
@@ -735,10 +739,24 @@ public class KlasikController {
         int height = 565;
 
         if(hesaplamaBitti) {
+            klasikVBox.setStyle("-fx-background-color: #F9F871;");
+            sonucAnaLabelTxt.setFill(Color.BLACK);
+            genislikSonucText.setTextFill(Color.BLACK);
+            derinlikSonucText.setTextFill(Color.BLACK);
+            yukseklikSonucText.setTextFill(Color.BLACK);
+            hacimText.setTextFill(Color.BLACK);
+            kullanilacakKabin.setFill(Color.BLACK);
             coords2Png(startX, startY, width, height);
+            klasikVBox.setStyle("-fx-background-color: #353a46;");
+            genislikSonucText.setTextFill(Color.WHITE);
+            derinlikSonucText.setTextFill(Color.WHITE);
+            yukseklikSonucText.setTextFill(Color.WHITE);
+            hacimText.setTextFill(Color.WHITE);
+            sonucAnaLabelTxt.setFill(Color.web("#B7C3D7"));
+            kullanilacakKabin.setFill(Color.web("#B7C3D7"));
             cropImage(680, startY, 370, height);
 
-            Util.pdfGenerator("icons/ondergrupMain.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
+            Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
         } else {
             Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
