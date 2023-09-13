@@ -260,7 +260,7 @@ public class KlasikController {
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
-        if (fileExists(pdfPath) && fileExists(excelPath)) {
+        if (Util.fileExists(pdfPath) && Util.fileExists(excelPath)) {
             String pdfURL = girilenSiparisNumarasi + ".pdf";
             String excelURL = girilenSiparisNumarasi + ".xlsx";
             String url = BASE_URL + insertHydraulicURLPrefix;
@@ -288,7 +288,7 @@ public class KlasikController {
 
                 @Override
                 public void onFailure() {
-                    // İstek başarısız olduğunda yapılacak işlemler
+                    Util.showErrorMessage("Oluşturulan hidrolik ünitesi kaydedilemedi !");
                 }
             });
         } else {
@@ -460,6 +460,16 @@ public class KlasikController {
                 x = 550;
             }
             h = 300;
+
+            String veri = Util.dataManipulator.motorYukseklikVerileri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+            String sayiKismi = veri.replaceAll("[^0-9]", "");
+            int yukseklik = Integer.parseInt(sayiKismi);
+
+            if(h >= yukseklik) {
+                h = 300;
+            } else {
+                h = yukseklik;
+            }
 
             hesaplananHacim = ((x*h*y) / 1000000) - Util.dataManipulator.kayipLitre;
             eskiX = x;
@@ -816,19 +826,6 @@ public class KlasikController {
         motorComboBox.getItems().addAll(Util.dataManipulator.motorDegerleri);
         //motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
     }
-
-    /*private void initMotorYukseklik() {
-        Util.dataManipulator.motorYukseklikVerileri.add("345 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("375 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("365 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("410 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("500 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("470 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("540 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("565 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("565 mm");
-        Util.dataManipulator.motorYukseklikVerileri.add("600 mm");
-    }*/
 
     private void initKabinOlculeri(int x, int y, int h, int litre, String key) {
         int[] kabinOlcu = new int[4];
@@ -1283,10 +1280,5 @@ public class KlasikController {
         }
 
         hydraulicUnitShape.setVisible(false);
-    }
-
-    public static boolean fileExists(String filePath) {
-        File file = new File(filePath);
-        return file.exists();
     }
 }

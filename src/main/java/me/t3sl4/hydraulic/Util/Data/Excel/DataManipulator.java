@@ -29,7 +29,7 @@ public class DataManipulator {
 
     public LinkedHashMap<Object, int[]> kabinOlculeri = new LinkedHashMap<Object, int[]>();
 
-    public List<String> motorYukseklikVerileri = new ArrayList<>();
+    public ArrayList<String> motorYukseklikVerileri = new ArrayList<>();
 
     public ArrayList<String> motorDegerleri = new ArrayList<>();
 

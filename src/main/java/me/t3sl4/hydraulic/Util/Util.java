@@ -903,6 +903,19 @@ public class Util {
         }
     }
 
+    public static void initMotorYukseklik() {
+        Util.dataManipulator.motorYukseklikVerileri.add("345 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("375 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("365 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("410 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("500 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("470 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("540 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("565 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("565 mm");
+        Util.dataManipulator.motorYukseklikVerileri.add("600 mm");
+    }
+
     private static boolean isNumeric(Cell cell) {
         if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA) {
             return true;
@@ -940,6 +953,7 @@ public class Util {
         readExcel4ParcaListesiValfBlok(excelPath, dataManipulator);
         readExcel4ParcaListesiBasincSalteri(excelPath, dataManipulator);
         readExcel4ParcaListesiStandart(excelPath, dataManipulator);
+        initMotorYukseklik();
     }
 
     public static void showErrorMessage(String hataMesaji) {
@@ -985,5 +999,10 @@ public class Util {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public static boolean fileExists(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
     }
 }
