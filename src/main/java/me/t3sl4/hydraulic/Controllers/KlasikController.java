@@ -739,7 +739,8 @@ public class KlasikController {
         int height = 565;
 
         if(hesaplamaBitti) {
-            klasikVBox.setStyle("-fx-background-color: #F9F871;");
+            //klasikVBox.setStyle("-fx-background-color: #F9F871;");
+            klasikVBox.setStyle("-fx-background-color: #FFFFFF;");
             sonucAnaLabelTxt.setFill(Color.BLACK);
             genislikSonucText.setTextFill(Color.BLACK);
             derinlikSonucText.setTextFill(Color.BLACK);

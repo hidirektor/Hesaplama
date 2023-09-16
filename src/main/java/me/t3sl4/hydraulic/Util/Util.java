@@ -93,7 +93,8 @@ public class Util {
 
             PdfContentByte contentByte = writer.getDirectContentUnder();
             //BaseColor backgroundColor = new BaseColor(53, 58, 70);
-            BaseColor backgroundColor = new BaseColor(249, 248, 113);
+            //BaseColor backgroundColor = new BaseColor(249, 248, 113);
+            BaseColor backgroundColor = new BaseColor(255, 255, 255);
             contentByte.setColorFill(backgroundColor);
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
