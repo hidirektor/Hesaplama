@@ -52,15 +52,13 @@ public class Main extends Application {
     }
 
     public void fileCopy() {
-        String dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
-        String destPath = dataFileLocalPath + "Hidrolik.xlsx";
-        Path targetPath = Paths.get(destPath);
+        Path targetPath = Paths.get(Launcher.excelDBPath);
 
         if (!Files.exists(targetPath)) {
             try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
                 if (inputStream != null) {
                     Files.copy(inputStream, targetPath);
-                    System.out.println("Hidrolik.xlsx kopyalandı: " + destPath);
+                    System.out.println("Hidrolik.xlsx kopyalandı: " + Launcher.excelDBPath);
                 } else {
                     System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
                 }

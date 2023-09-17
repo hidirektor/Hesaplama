@@ -49,17 +49,11 @@ public class Util {
     }
 
     public static void filePath() {
-        String profilePhotoLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
-        String pdfFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
-        String excelFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/partList/";
-        String dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
-        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
-
-        File profilePhotoTestFile = new File(profilePhotoLocalPath);
-        File pdfFileTestFile = new File(pdfFileLocalPath);
-        File excelFileTestFile = new File(excelFileLocalPath);
-        File dataFileTestFile = new File(dataFileLocalPath);
-        File loginFileTestFile = new File(loginFilePath);
+        File profilePhotoTestFile = new File(Launcher.profilePhotoLocalPath);
+        File pdfFileTestFile = new File(Launcher.pdfFileLocalPath);
+        File excelFileTestFile = new File(Launcher.excelFileLocalPath);
+        File dataFileTestFile = new File(Launcher.dataFileLocalPath);
+        File loginFileTestFile = new File(Launcher.loginFilePath);
 
         if(!profilePhotoTestFile.exists()) {
             profilePhotoTestFile.mkdirs();
@@ -923,10 +917,7 @@ public class Util {
     }
 
     private static boolean isNumeric(Cell cell) {
-        if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA) {
-            return true;
-        }
-        return false;
+        return cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA;
     }
 
     public static void openURL(String url) {
@@ -938,27 +929,24 @@ public class Util {
     }
 
     public static void excelDataRead() {
-        String excelPath2 = "/data/Hidrolik.xlsx";
-        //Yeni sistem:
-        String excelPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
-        readExcel4Bosluk(excelPath, dataManipulator);
-        readExcel4Kampana(excelPath, dataManipulator);
-        readExcel4Motor(excelPath, dataManipulator);
-        readExcel4UniteTipi(excelPath, dataManipulator);
-        readExcel4PompaHidros(excelPath, dataManipulator);
-        readExcel4PompaKlasik(excelPath, dataManipulator);
-        readExcel4PompaTumu(excelPath, dataManipulator);
-        readExcel4KilitMotor(excelPath, dataManipulator);
-        readExcel4KilitPompa(excelPath, dataManipulator);
-        readExcel4ValfTipi1(excelPath, dataManipulator);
-        readExcel4ValfTipi2(excelPath, dataManipulator);
-        readExcel4ParcaListesiKampana(excelPath, dataManipulator);
-        readExcel4ParcaListesiPompa(excelPath, dataManipulator);
-        readExcel4ParcaListesiMotor(excelPath, dataManipulator);
-        readExcel4ParcaListesiKaplin(excelPath, dataManipulator);
-        readExcel4ParcaListesiValfBlok(excelPath, dataManipulator);
-        readExcel4ParcaListesiBasincSalteri(excelPath, dataManipulator);
-        readExcel4ParcaListesiStandart(excelPath, dataManipulator);
+        readExcel4Bosluk(Launcher.excelDBPath, dataManipulator);
+        readExcel4Kampana(Launcher.excelDBPath, dataManipulator);
+        readExcel4Motor(Launcher.excelDBPath, dataManipulator);
+        readExcel4UniteTipi(Launcher.excelDBPath, dataManipulator);
+        readExcel4PompaHidros(Launcher.excelDBPath, dataManipulator);
+        readExcel4PompaKlasik(Launcher.excelDBPath, dataManipulator);
+        readExcel4PompaTumu(Launcher.excelDBPath, dataManipulator);
+        readExcel4KilitMotor(Launcher.excelDBPath, dataManipulator);
+        readExcel4KilitPompa(Launcher.excelDBPath, dataManipulator);
+        readExcel4ValfTipi1(Launcher.excelDBPath, dataManipulator);
+        readExcel4ValfTipi2(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiKampana(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiPompa(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiMotor(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiKaplin(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiValfBlok(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiBasincSalteri(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiStandart(Launcher.excelDBPath, dataManipulator);
         initMotorYukseklik();
     }
 
@@ -1010,5 +998,27 @@ public class Util {
     public static boolean fileExists(String filePath) {
         File file = new File(filePath);
         return file.exists();
+    }
+
+    public static String getOperatingSystem() {
+        return System.getProperty("os.name");
+    }
+
+    public static void changeDataStoragePath() {
+        if(getOperatingSystem().contains("Windows")) {
+            Launcher.profilePhotoLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
+            Launcher.pdfFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
+            Launcher.excelFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/partList/";
+            Launcher.dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
+            Launcher.loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
+            Launcher.excelDBPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
+        } else {
+            Launcher.profilePhotoLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
+            Launcher.pdfFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
+            Launcher.excelFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/partList/";
+            Launcher.dataFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/data/";
+            Launcher.loginFilePath = "/home/" + System.getProperty("user.name") + "/OnderGrup/login/";
+            Launcher.excelDBPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
+        }
     }
 }
