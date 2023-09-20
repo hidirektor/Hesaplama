@@ -120,7 +120,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         userInfo();
         updateHydraulicText();
-        hydraulicUnitInit();
+        hydraulicUnitInit(1);
         initializeSwitchs();
     }
 
@@ -134,22 +134,26 @@ public class MainController implements Initializable {
         klasikSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 if(!isHidros.getValue()) {
-                    //hidrosTest();
+                    hydraulicUnitInit(2);
                 } else {
                     hidrosSwitch.setIsToggled(false);
-                    //hidrosTest();
+                    hydraulicUnitInit(2);
                 }
+            } else {
+                hydraulicUnitInit(1);
             }
         });
 
         hidrosSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 if(!isKlasik.getValue()) {
-                    //hidrosTest();
+                    hydraulicUnitInit(3);
                 } else {
                     klasikSwitch.setIsToggled(false);
-                    //hidrosTest();
+                    hydraulicUnitInit(3);
                 }
+            } else {
+                hydraulicUnitInit(1);
             }
         });
 
@@ -221,7 +225,7 @@ public class MainController implements Initializable {
             pnlOverview.setStyle("-fx-background-color : #02030A");
             pnlOverview.toFront();
             updateHydraulicText();
-            hydraulicUnitInit();
+            hydraulicUnitInit(1);
         }
         if(actionEvent.getSource()==btnKlasik) {
             pnlMenus.setStyle("-fx-background-color : #353a46");
@@ -310,22 +314,59 @@ public class MainController implements Initializable {
         });
     }
 
-    public void hydraulicUnitInit() {
+    public void hydraulicUnitInit(int type) {
         populateUIWithCachedData();
 
-        HTTPRequest.sendRequestNormal(BASE_URL + hydraulicGetInfoURLPrefix, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String response) {
-                List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
-                cachedHydraulicInfos = hydraulicInfos;
-                populateUIWithCachedData();
-            }
+        if(type == 1) {
+            //Tümü
+            HTTPRequest.sendRequestNormal(BASE_URL + hydraulicGetInfoURLPrefix, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
+                    cachedHydraulicInfos = hydraulicInfos;
+                    populateUIWithCachedData();
+                }
 
-            @Override
-            public void onFailure() {
-                System.out.println("API request failed.");
-            }
-        });
+                @Override
+                public void onFailure() {
+                    System.out.println("API request failed.");
+                }
+            });
+        } else if(type == 2) {
+            //Klasik
+            String reqURL = BASE_URL + hydraulicGetCustomInfoURLPrefix;
+            String jsonHydraulicBody = "{\"UnitType\": \"" + "Klasik" + "\"}";
+            HTTPRequest.sendRequest(reqURL, jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
+                    cachedHydraulicInfos = hydraulicInfos;
+                    populateUIWithCachedData();
+                }
+
+                @Override
+                public void onFailure() {
+                    System.out.println("API request failed.");
+                }
+            });
+        } else if(type == 3) {
+            //Hidros
+            String reqURL = BASE_URL + hydraulicGetCustomInfoURLPrefix;
+            String jsonHydraulicBody = "{\"UnitType\": \"" + "Hidros" + "\"}";
+            HTTPRequest.sendRequest(reqURL, jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
+                    cachedHydraulicInfos = hydraulicInfos;
+                    populateUIWithCachedData();
+                }
+
+                @Override
+                public void onFailure() {
+                    System.out.println("API request failed.");
+                }
+            });
+        }
     }
 
     private void populateUIWithCachedData() {

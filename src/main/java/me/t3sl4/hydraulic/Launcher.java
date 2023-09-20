@@ -24,6 +24,7 @@ public class Launcher {
 
     public static String hydraulicGetStatsURLPrefix = "/api/hydraulic/getStatistics";
     public static String hydraulicGetInfoURLPrefix = "/api/hydraulic/getHydraulicInfo";
+    public static String hydraulicGetCustomInfoURLPrefix = "/api/hydraulic/getCustomHydraulicInfo";
     public static String insertHydraulicURLPrefix = "/api/hydraulic/insertHidrolik";
     public static String orderNumbersURLPrefix = "/api/hydraulic/orderNumbers";
 
