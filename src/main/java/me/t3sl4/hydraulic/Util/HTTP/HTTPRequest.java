@@ -98,7 +98,6 @@ public class HTTPRequest {
         thread.start();
     }
 
-
     public static void sendRequest4File(String url, String jsonBody, String localFilePath, RequestCallback callback) {
         OkHttpClient client = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
