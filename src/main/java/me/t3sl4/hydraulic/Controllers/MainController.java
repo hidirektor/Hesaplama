@@ -132,16 +132,24 @@ public class MainController implements Initializable {
         hidrosSwitchVBox.getChildren().addAll(hidrosSwitch);
 
         klasikSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue && !isHidros.getValue()) {
-                hidrosSwitch.setIsToggled(false);
-                //klasikTest();
+            if (newValue) {
+                if(!isHidros.getValue()) {
+                    //hidrosTest();
+                } else {
+                    hidrosSwitch.setIsToggled(false);
+                    //hidrosTest();
+                }
             }
         });
 
         hidrosSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue && !isKlasik.getValue()) {
-                klasikSwitch.setIsToggled(false);
-                //hidrosTest();
+            if (newValue) {
+                if(!isKlasik.getValue()) {
+                    //hidrosTest();
+                } else {
+                    klasikSwitch.setIsToggled(false);
+                    //hidrosTest();
+                }
             }
         });
 
