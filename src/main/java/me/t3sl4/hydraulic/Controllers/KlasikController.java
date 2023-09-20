@@ -67,9 +67,6 @@ public class KlasikController {
     private Label hacimText;
 
     @FXML
-    private Box hydraulicUnitShape;
-
-    @FXML
     private Text kilitMotorText;
 
     @FXML
@@ -939,7 +936,6 @@ public class KlasikController {
         yukseklikSonucText.setVisible(true);
         derinlikSonucText.setVisible(true);
         hacimText.setVisible(true);
-        hydraulicUnitShape.setVisible(true);
         kullanilacakKabin.setVisible(true);
     }
 
@@ -1236,7 +1232,6 @@ public class KlasikController {
         genislikSonucText.setVisible(false);
         derinlikSonucText.setVisible(false);
         hacimText.setVisible(false);
-        hydraulicUnitShape.setVisible(false);
     }
 
     private void tabloGuncelle() {
@@ -1289,6 +1284,9 @@ public class KlasikController {
             if(secilenValfTipi.contains("Kilitli Blok")) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
                 sonucTankGorsel.setImage(image);
+                genislikSonucText.setRotate(27.5);
+                derinlikSonucText.setRotate(-27.5);
+                derinlikSonucText.setLayoutX(635.0);
             } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/tekhiz.png")));
                 sonucTankGorsel.setImage(image);
@@ -1297,7 +1295,5 @@ public class KlasikController {
                 sonucTankGorsel.setImage(image);
             }
         }
-
-        hydraulicUnitShape.setVisible(false);
     }
 }

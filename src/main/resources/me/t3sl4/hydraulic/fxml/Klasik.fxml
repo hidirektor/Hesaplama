@@ -38,11 +38,6 @@
                     </columns>
                 </TableView>
                 <ImageView fx:id="sonucKapakImage" fitHeight="252.0" fitWidth="365.0" layoutX="428.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true" />
-                <Box fx:id="hydraulicUnitShape" depth="400.0" height="125.0" layoutX="600.0" layoutY="155.0" rotate="-10.0" visible="false" width="125.0">
-                    <rotationAxis>
-                        <Point3D x="-1.0" y="1.0" />
-                    </rotationAxis>
-                </Box>
                 <Text fill="#B7C3D7" layoutX="196.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerekli Yağ Miktarı" />
                 <Text fill="#B7C3D7" layoutX="236.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor" />
                 <Text fill="#B7C3D7" layoutX="61.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
