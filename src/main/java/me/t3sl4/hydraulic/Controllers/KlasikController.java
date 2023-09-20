@@ -208,7 +208,7 @@ public class KlasikController {
     boolean excelSucc = false;
 
     public void initialize() {
-        textFilter();
+        Util.textFilter(tankKapasitesiTextField);
         defineKabinOlcu();
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
@@ -216,7 +216,7 @@ public class KlasikController {
     }
 
     @FXML
-    public void hesaplaFunc() throws IOException {
+    public void hesaplaFunc() {
         int h = 0; //Yükseklik
         int y = 0; //Derinlik
         int x = 0; //Genişlik
@@ -254,7 +254,7 @@ public class KlasikController {
     }
 
     @FXML
-    public void transferCalculation() throws IOException {
+    public void transferCalculation() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
@@ -297,7 +297,7 @@ public class KlasikController {
         }
     }
 
-    private void uploadPDFFile2Server(String filePath) throws IOException {
+    private void uploadPDFFile2Server(String filePath) {
         String uploadUrl = BASE_URL + uploadPDFURLPrefix;
 
         File pdfFile = new File(filePath);
@@ -322,7 +322,7 @@ public class KlasikController {
         });
     }
 
-    private void uploadExcelFile2Server(String filePath) throws IOException {
+    private void uploadExcelFile2Server(String filePath) {
         String uploadUrl = BASE_URL + uploadExcelURLPrefix;
 
         File excelFile = new File(filePath);
@@ -617,18 +617,6 @@ public class KlasikController {
             hidrolikKilitStat = true;
 
         }
-    }
-
-    private void textFilter() {
-        UnaryOperator<TextFormatter.Change> filter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d*")) {
-                return change;
-            }
-            return null;
-        };
-        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-        tankKapasitesiTextField.setTextFormatter(textFormatter);
     }
 
     @FXML
@@ -1274,12 +1262,25 @@ public class KlasikController {
         Image image;
 
         if(secilenSogutmaDurumu.contains("Var")) {
-            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
-            sonucTankGorsel.setImage(image);
-            genislikSonucText.setLayoutY(225.0);
-            genislikSonucText.setRotate(35.5);
-            derinlikSonucText.setRotate(-36.0);
-            derinlikSonucText.setLayoutX(638.0);
+            String[] secPmp = secilenPompa.split(" cc");
+            float secilenPompaVal = Float.parseFloat(secPmp[0]);
+            float tolerans = 0.01F;
+
+            if(Math.abs(secilenPompaVal - 33.3) <= tolerans) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/sogutuculuotuzuc.png")));
+                sonucTankGorsel.setImage(image);
+                genislikSonucText.setLayoutY(230.0);
+                genislikSonucText.setRotate(30.5);
+                derinlikSonucText.setRotate(-30.5);
+                derinlikSonucText.setLayoutX(635.0);
+            } else {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
+                sonucTankGorsel.setImage(image);
+                genislikSonucText.setLayoutY(216.0);
+                genislikSonucText.setRotate(33.5);
+                derinlikSonucText.setRotate(-30.0);
+                derinlikSonucText.setLayoutX(638.0);
+            }
         } else {
             if(secilenValfTipi.contains("Kilitli Blok")) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
