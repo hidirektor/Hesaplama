@@ -159,7 +159,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void anaEkranaDon() throws IOException {
-        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
+        String loginFilePath = Launcher.loginFilePath + "loginInfo.txt";
         File loginFile = new File(loginFilePath);
         Stage stage = (Stage) parametreCount.getScene().getWindow();
 
