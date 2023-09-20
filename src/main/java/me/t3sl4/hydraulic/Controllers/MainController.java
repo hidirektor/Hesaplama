@@ -1,10 +1,14 @@
 package me.t3sl4.hydraulic.Controllers;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,8 +18,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import org.controlsfx.control.ToggleSwitch;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.MainModel.Main;
+import me.t3sl4.hydraulic.Util.Component.FilterSwitch;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
@@ -101,11 +107,46 @@ public class MainController implements Initializable {
     int klasik;
     int hidros;
 
+    private final BooleanProperty isKlasik = new SimpleBooleanProperty();
+    private final BooleanProperty isHidros = new SimpleBooleanProperty();
+    private FilterSwitch klasikSwitch;
+    private FilterSwitch hidrosSwitch;
+    @FXML
+    private VBox klasikSwitchVBox;
+    @FXML
+    private VBox hidrosSwitchVBox;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userInfo();
         updateHydraulicText();
         hydraulicUnitInit();
+        initializeSwitchs();
+    }
+
+    private void initializeSwitchs() {
+        klasikSwitch = new FilterSwitch();
+        hidrosSwitch = new FilterSwitch();
+
+        klasikSwitchVBox.getChildren().addAll(klasikSwitch);
+        hidrosSwitchVBox.getChildren().addAll(hidrosSwitch);
+
+        klasikSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && !isHidros.getValue()) {
+                hidrosSwitch.setIsToggled(false);
+                //klasikTest();
+            }
+        });
+
+        hidrosSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && !isKlasik.getValue()) {
+                klasikSwitch.setIsToggled(false);
+                //hidrosTest();
+            }
+        });
+
+        klasikSwitch.isToggledProperty().bindBidirectional(isKlasik);
+        hidrosSwitch.isToggledProperty().bindBidirectional(isHidros);
     }
 
     @FXML

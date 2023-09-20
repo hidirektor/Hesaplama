@@ -14,6 +14,7 @@ module me.t3sl.hydraulic {
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.codec;
     requires javafx.web;
+    requires org.controlsfx.controls;
 
     opens me.t3sl4.hydraulic to javafx.fxml;
     exports me.t3sl4.hydraulic;

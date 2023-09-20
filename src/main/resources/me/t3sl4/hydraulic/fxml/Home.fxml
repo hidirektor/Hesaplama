@@ -16,7 +16,8 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #F9F871;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.MainController">
+<?import org.controlsfx.control.ToggleSwitch?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #F9F871;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.MainController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #F9F871;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -89,7 +90,7 @@
                         <Insets left="50.0" />
                     </padding>
                 </Button>
-                <Button fx:id="btnProfil" onMouseClicked="#profileEditScreen" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../styling/style.css" text="Profil">
+                <Button fx:id="btnProfil" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onMouseClicked="#profileEditScreen" prefHeight="42.0" prefWidth="259.0" stylesheets="@../styling/style.css" text="Profil">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -130,7 +131,7 @@
                   <Image url="@../icons/onderGrupMain.png" />
                </image>
                <VBox.margin>
-                  <Insets top="40.0" bottom="10.0" />
+                  <Insets bottom="10.0" top="40.0" />
                </VBox.margin>
             </ImageView>
             </children>
@@ -142,17 +143,28 @@
                 <Pane fx:id="pnlMenus" prefHeight="200.0" prefWidth="200.0" />
                 <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0">
                     <children>
-                        <TextField layoutX="590.0" layoutY="47.0" prefHeight="27.0" prefWidth="183.0" promptText="ara..." style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
+                        <Label fx:id="justKlasik" layoutX="630.0" layoutY="38.0" text="Klasik" textFill="#e7e5e5">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Label>
+                        <VBox fx:id="klasikSwitchVBox" layoutX="620.0" layoutY="47.0" prefWidth="50.0" prefHeight="15.0" />
+                        <Label fx:id="justHidros" layoutX="718.0" layoutY="38.0" text="Hidros" textFill="#e7e5e5">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Label>
+                        <VBox fx:id="hidrosSwitchVBox" layoutX="710.0" layoutY="47.0" prefWidth="50.0" prefHeight="15.0" />
                         <Label layoutX="57.0" layoutY="25.0" text="Hydraulic Calculation" textFill="#e7e5e5">
                             <font>
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                  <Label fx:id="versionCode" layoutX="710.0" layoutY="4.0" text="v12.09.2023" textFill="#e7e5e5">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
+                        <Label fx:id="versionCode" layoutX="710.0" layoutY="4.0" text="v21.09.2023" textFill="#e7e5e5">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Label>
                         <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="72.0" prefHeight="92.0" prefWidth="661.0" spacing="50.0">
                             <children>
                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -202,20 +214,15 @@
                           <Label layoutX="395.0" layoutY="205.0" text="Ünite Tipi" textFill="#e7e5e5" />
                           <Label layoutX="537.0" layoutY="205.0" text="PDF" textFill="#e7e5e5" />
                           <Label layoutX="657.0" layoutY="205.0" text="Oluşturan" textFill="#e7e5e5" />
-                        <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="320.0" prefWidth="746.0" stylesheets="@../styling/style.css">
-                            <content>
-                                <VBox fx:id="pnItems" prefHeight="318.0" prefWidth="744.0" spacing="5.0" style="-fx-background-color: #02030A;">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                </VBox>
-                            </content>
-                        </ScrollPane>
-                        <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="749.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/icons8_Search_52px.png" />
-                            </image>
-                        </ImageView>
+                            <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="320.0" prefWidth="746.0" stylesheets="@../styling/style.css">
+                                <content>
+                                    <VBox fx:id="pnItems" prefHeight="318.0" prefWidth="744.0" spacing="5.0" style="-fx-background-color: #02030A;">
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </padding>
+                                    </VBox>
+                                </content>
+                            </ScrollPane>
                     </children>
                 </Pane>
             </children>
