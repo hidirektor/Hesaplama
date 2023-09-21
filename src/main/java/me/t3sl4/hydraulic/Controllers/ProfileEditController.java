@@ -152,15 +152,16 @@ public class ProfileEditController {
                         "\"CompanyName\":\"" + companyName + "\"," +
                         "\"Created_At\":\"" + created_at + "\"" +
                         "}";
-        sendUpdateRequest(registerJsonBody, stage);
+        sendUpdateRequest(registerJsonBody, userName, stage);
     }
 
-    private void sendUpdateRequest(String jsonBody, Stage stage) {
+    private void sendUpdateRequest(String jsonBody, String username, Stage stage) {
         String registerUrl = BASE_URL + updateProfileURLPrefix;
         HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
                 if(secilenPhotoPath != null) {
+                    deleteOldPhoto(username);
                     uploadProfilePhoto2Server(stage);
                 }
                 Util.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
@@ -224,6 +225,22 @@ public class ProfileEditController {
 
         });
         primaryStage.show();
+    }
+
+    private void deleteOldPhoto(String username) {
+        String dosyaYolu = Launcher.profilePhotoLocalPath + username + ".jpg";
+
+        File dosya = new File(dosyaYolu);
+
+        if (dosya.exists()) {
+            if (dosya.delete()) {
+                System.out.println("Dosya başarıyla silindi.");
+            } else {
+                System.out.println("Dosya silinemedi.");
+            }
+        } else {
+            System.out.println("Dosya mevcut değil.");
+        }
     }
 
     private void refreshScreen() {
