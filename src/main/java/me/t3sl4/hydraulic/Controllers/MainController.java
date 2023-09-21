@@ -187,8 +187,26 @@ public class MainController implements Initializable {
 
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnHidros) {
-            pnlCustomer.setStyle("-fx-background-color : #02030A");
-            pnlCustomer.toFront();
+            pnlMenus.setStyle("-fx-background-color : #353a46");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
+                Pane parametrePane = loader.load();
+                pnlMenus.getChildren().setAll(parametrePane);
+
+                double paneWidth = pnlMenus.getWidth();
+                double paneHeight = pnlMenus.getHeight();
+
+                double parametreWidth = parametrePane.getPrefWidth();
+                double parametreHeight = parametrePane.getPrefHeight();
+
+                double centerX = (paneWidth - parametreWidth) / 2;
+                double centerY = (paneHeight - parametreHeight) / 2;
+                parametrePane.setLayoutX(centerX-100);
+                parametrePane.setLayoutY(centerY+20);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if (actionEvent.getSource() == btnParametreler) {
             pnlMenus.setStyle("-fx-background-color : #02030A");

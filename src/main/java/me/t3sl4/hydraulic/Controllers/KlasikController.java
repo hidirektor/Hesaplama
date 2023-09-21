@@ -722,22 +722,9 @@ public class KlasikController {
         int height = 565;
 
         if(hesaplamaBitti) {
-            //klasikVBox.setStyle("-fx-background-color: #F9F871;");
-            klasikVBox.setStyle("-fx-background-color: #FFFFFF;");
-            sonucAnaLabelTxt.setFill(Color.BLACK);
-            genislikSonucText.setTextFill(Color.BLACK);
-            derinlikSonucText.setTextFill(Color.BLACK);
-            yukseklikSonucText.setTextFill(Color.BLACK);
-            hacimText.setTextFill(Color.BLACK);
-            kullanilacakKabin.setFill(Color.BLACK);
+            pdfShaper(0);
             coords2Png(startX, startY, width, height);
-            klasikVBox.setStyle("-fx-background-color: #353a46;");
-            genislikSonucText.setTextFill(Color.WHITE);
-            derinlikSonucText.setTextFill(Color.WHITE);
-            yukseklikSonucText.setTextFill(Color.WHITE);
-            hacimText.setTextFill(Color.WHITE);
-            sonucAnaLabelTxt.setFill(Color.web("#B7C3D7"));
-            kullanilacakKabin.setFill(Color.web("#B7C3D7"));
+            pdfShaper(1);
             cropImage(680, startY, 370, height);
 
             Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
@@ -1260,24 +1247,30 @@ public class KlasikController {
         Image image;
 
         if(secilenSogutmaDurumu.contains("Var")) {
-            String[] secPmp = secilenPompa.split(" cc");
-            float secilenPompaVal = Float.parseFloat(secPmp[0]);
-            float tolerans = 0.01F;
+            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
+            sonucTankGorsel.setImage(image);
+            genislikSonucText.setLayoutY(216.0);
+            genislikSonucText.setRotate(33.5);
+            derinlikSonucText.setRotate(-30.0);
+            derinlikSonucText.setLayoutX(638.0);
 
-            if(Math.abs(secilenPompaVal - 33.3) <= tolerans) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/sogutuculuotuzuc.png")));
-                sonucTankGorsel.setImage(image);
-                genislikSonucText.setLayoutY(230.0);
-                genislikSonucText.setRotate(30.5);
-                derinlikSonucText.setRotate(-30.5);
-                derinlikSonucText.setLayoutX(635.0);
-            } else {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
-                sonucTankGorsel.setImage(image);
-                genislikSonucText.setLayoutY(216.0);
-                genislikSonucText.setRotate(33.5);
-                derinlikSonucText.setRotate(-30.0);
-                derinlikSonucText.setLayoutX(638.0);
+
+
+
+        } else if(secilenHidrolikKilitDurumu.contains("Var")) {
+            if(secilenSogutmaDurumu.contains("Yok")) {
+                String[] secPmp = secilenPompa.split(" cc");
+                float secilenPompaVal = Float.parseFloat(secPmp[0]);
+                float tolerans = 0.01F;
+
+                if(Math.abs(secilenPompaVal - 33.3) <= tolerans) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/sogutuculuotuzuc.png")));
+                    sonucTankGorsel.setImage(image);
+                    genislikSonucText.setLayoutY(230.0);
+                    genislikSonucText.setRotate(30.5);
+                    derinlikSonucText.setRotate(-30.5);
+                    derinlikSonucText.setLayoutX(635.0);
+                }
             }
         } else {
             if(secilenValfTipi.contains("Kilitli Blok")) {
@@ -1293,6 +1286,88 @@ public class KlasikController {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/cifthiz.png")));
                 sonucTankGorsel.setImage(image);
             }
+        }
+    }
+
+    private void textColorChange(int type) {
+        if(type == 1) {
+            kampana2OlcuText.setFill(Color.WHITE);
+            kampana2OlcuText2.setFill(Color.WHITE);
+            kilitMotorOlcuText.setFill(Color.WHITE);
+            kilitMotorOlcuText2.setFill(Color.WHITE);
+            kilitliBlok2OlcuText.setFill(Color.WHITE);
+            kilitliBlok2OlcuText2.setFill(Color.WHITE);
+            dolum2OlcuText.setFill(Color.WHITE);
+            dolum2OlcuText2.setFill(Color.WHITE);
+            tahliye2OlcuText.setFill(Color.WHITE);
+            kampanaVeri2Text.setFill(Color.WHITE);
+            kilitMotorIcOlcuText.setFill(Color.WHITE);
+            kilitMotorVeriText.setFill(Color.WHITE);
+            kilitliBlokVeri2Text.setFill(Color.WHITE);
+
+            kampanaOlcuText.setFill(Color.WHITE);
+            kampanaOlcuText2.setFill(Color.WHITE);
+            kilitliBlokOlcuText.setFill(Color.WHITE);
+            kilitliBlokOlcuText2.setFill(Color.WHITE);
+            dolumOlcuText.setFill(Color.WHITE);
+            dolumOlcuText2.setFill(Color.WHITE);
+            tahliyeOlcuText.setFill(Color.WHITE);
+            kampanaVeriText.setFill(Color.WHITE);
+            kilitliBlokVeriText.setFill(Color.WHITE);
+
+            sonucUstText.setFill(Color.WHITE);
+            sonucSagText.setFill(Color.WHITE);
+        }  else {
+            kampana2OlcuText.setFill(Color.BLACK);
+            kampana2OlcuText2.setFill(Color.BLACK);
+            kilitMotorOlcuText.setFill(Color.BLACK);
+            kilitMotorOlcuText2.setFill(Color.BLACK);
+            kilitliBlok2OlcuText.setFill(Color.BLACK);
+            kilitliBlok2OlcuText2.setFill(Color.BLACK);
+            dolum2OlcuText.setFill(Color.BLACK);
+            dolum2OlcuText2.setFill(Color.BLACK);
+            tahliye2OlcuText.setFill(Color.BLACK);
+            kampanaVeri2Text.setFill(Color.BLACK);
+            kilitMotorIcOlcuText.setFill(Color.BLACK);
+            kilitMotorVeriText.setFill(Color.BLACK);
+            kilitliBlokVeri2Text.setFill(Color.BLACK);
+
+            kampanaOlcuText.setFill(Color.BLACK);
+            kampanaOlcuText2.setFill(Color.BLACK);
+            kilitliBlokOlcuText.setFill(Color.BLACK);
+            kilitliBlokOlcuText2.setFill(Color.BLACK);
+            dolumOlcuText.setFill(Color.BLACK);
+            dolumOlcuText2.setFill(Color.BLACK);
+            tahliyeOlcuText.setFill(Color.BLACK);
+            kampanaVeriText.setFill(Color.BLACK);
+            kilitliBlokVeriText.setFill(Color.BLACK);
+
+            sonucUstText.setFill(Color.BLACK);
+            sonucSagText.setFill(Color.BLACK);
+        }
+    }
+
+    private void pdfShaper(int type) {
+        if(type == 0) {
+            //pdf oluşturma öncesi
+            klasikVBox.setStyle("-fx-background-color: #FFFFFF;"); //sarı: #F9F871
+            sonucAnaLabelTxt.setFill(Color.BLACK);
+            genislikSonucText.setTextFill(Color.BLACK);
+            derinlikSonucText.setTextFill(Color.BLACK);
+            yukseklikSonucText.setTextFill(Color.BLACK);
+            hacimText.setTextFill(Color.BLACK);
+            kullanilacakKabin.setFill(Color.BLACK);
+            textColorChange(0);
+        } else {
+            //pdf oluşturma sonrası
+            klasikVBox.setStyle("-fx-background-color: #353a46;");
+            genislikSonucText.setTextFill(Color.WHITE);
+            derinlikSonucText.setTextFill(Color.WHITE);
+            yukseklikSonucText.setTextFill(Color.WHITE);
+            hacimText.setTextFill(Color.WHITE);
+            sonucAnaLabelTxt.setFill(Color.web("#B7C3D7"));
+            kullanilacakKabin.setFill(Color.web("#B7C3D7"));
+            textColorChange(1);
         }
     }
 }
