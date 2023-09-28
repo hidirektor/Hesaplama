@@ -135,8 +135,6 @@ public class ProfileEditController {
         String phone = telefonText.getText();
         String profilePhotoPath = userName + ".jpg";
 
-        String created_at = Util.getCurrentDateTime();
-
         if (password.isEmpty()) {
             password = null;
         }
@@ -149,8 +147,7 @@ public class ProfileEditController {
                         "\"NameSurname\":\"" + nameSurname + "\"," +
                         "\"Phone\":\"" + phone + "\"," +
                         "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
-                        "\"CompanyName\":\"" + companyName + "\"," +
-                        "\"Created_At\":\"" + created_at + "\"" +
+                        "\"CompanyName\":\"" + companyName + "\"," + "\"" +
                         "}";
         sendUpdateRequest(registerJsonBody, userName, stage);
     }
