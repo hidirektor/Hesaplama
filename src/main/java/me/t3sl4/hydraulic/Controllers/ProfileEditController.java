@@ -125,7 +125,7 @@ public class ProfileEditController {
     }
 
     @FXML
-    private void profilGuncelleme() throws IOException {
+    private void profilGuncelleme() {
         Stage stage = (Stage) kullaniciAdiText.getScene().getWindow();
         String userName = kullaniciAdiText.getText();
         String password = sifreText.getText();
