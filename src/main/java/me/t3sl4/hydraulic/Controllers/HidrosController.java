@@ -1,21 +1,28 @@
 package me.t3sl4.hydraulic.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Data.Table.TableData;
 import me.t3sl4.hydraulic.Util.Util;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.IntBuffer;
 import java.util.Objects;
 
 public class HidrosController {
+    @FXML
+    private VBox klasikVBox;
+
     @FXML
     private TextField siparisNumarasi;
 
@@ -47,6 +54,15 @@ public class HidrosController {
     private ComboBox selenoidComboBox;
 
     @FXML
+    private Button exportButton;
+
+    @FXML
+    private Button parcaListesiButton;
+
+    @FXML
+    private Button kaydetButton;
+
+    @FXML
     private TableView<TableData> sonucTablo;
 
     @FXML
@@ -73,6 +89,8 @@ public class HidrosController {
     public String secilenPlatformTipi = null;
     public String secilenSelenoidDurumu = null;
 
+    public boolean hesaplamaBitti = false;
+
     public void initialize() {
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
@@ -81,8 +99,33 @@ public class HidrosController {
 
     @FXML
     public void hesaplaFunc() {
-        Image image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ornek.png")));
-        sonucTankGorsel.setImage(image);
+        if(checkComboBox()) {
+            Util.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
+        } else {
+            enableSonucSection();
+            hesaplamaBitti = true;
+        }
+    }
+
+    @FXML
+    public void temizleFunc() {
+        siparisNumarasi.setText("");
+        sonucAnaLabelTxt.setText("Sipariş Numarası: ");
+        motorComboBox.getSelectionModel().clearSelection();
+        motorGucuComboBox.getSelectionModel().clearSelection();
+        pompaComboBox.getSelectionModel().clearSelection();
+        tankTipiComboBox.getSelectionModel().clearSelection();
+        tankKapasitesiComboBox.getSelectionModel().clearSelection();
+        valfTipiComboBox.getSelectionModel().clearSelection();
+        valfSekliComboBox.getSelectionModel().clearSelection();
+        platformTipiComboBox.getSelectionModel().clearSelection();
+        selenoidComboBox.getSelectionModel().clearSelection();
+        sonucTankGorsel.setImage(null);
+        hesaplamaBitti = false;
+        disableAllCombos();
+        exportButton.setDisable(true);
+        kaydetButton.setDisable(true);
+        parcaListesiButton.setDisable(true);
     }
 
     public void comboBoxListener() {
@@ -345,6 +388,121 @@ public class HidrosController {
     public void selenoidPressed() {
         if(selenoidComboBox.getValue() != null) {
             secilenSelenoidDurumu = selenoidComboBox.getValue().toString();
+        }
+    }
+
+    private boolean checkComboBox() {
+        if(siparisNumarasi.getText().isEmpty() || motorComboBox.getSelectionModel().isEmpty() || motorGucuComboBox.getSelectionModel().isEmpty() || pompaComboBox.getSelectionModel().isEmpty() || tankTipiComboBox.getSelectionModel().isEmpty() || tankKapasitesiComboBox.getSelectionModel().isEmpty() || valfTipiComboBox.getSelectionModel().isEmpty() || valfSekliComboBox.getSelectionModel().isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty() || selenoidComboBox.getSelectionModel().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    private void enableSonucSection() {
+        Image image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ornek.png")));
+        sonucTankGorsel.setImage(image);
+
+        //Butonlar:
+        exportButton.setDisable(false);
+        parcaListesiButton.setDisable(false);
+        kaydetButton.setDisable(false);
+    }
+
+    @FXML
+    public void exportProcess() {
+        int startX = 500;
+        int startY = 10;
+        int width = 800;
+        int height = 565;
+
+        if(hesaplamaBitti) {
+            pdfShaper(0);
+            coords2Png(startX, startY, width, height);
+            pdfShaper(1);
+            cropImage(680, startY, 370, height);
+
+            Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
+        } else {
+            Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
+        }
+    }
+
+    private void coords2Png(int startX, int startY, int width, int height) {
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setViewport(new javafx.geometry.Rectangle2D(startX, startY, width, height));
+
+        WritableImage screenshot = exportButton.getScene().snapshot(null);
+
+        File outputFile = new File("screenshot.png");
+
+        BufferedImage bufferedImage = convertToBufferedImage(screenshot);
+
+        try {
+            ImageIO.write(bufferedImage, "png", outputFile);
+            System.out.println("Ekran görüntüsü başarıyla kaydedildi: " + outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Ekran görüntüsü kaydedilirken bir hata oluştu: " + e.getMessage());
+        }
+    }
+
+    private BufferedImage convertToBufferedImage(WritableImage writableImage) {
+        int width = (int) writableImage.getWidth();
+        int height = (int) writableImage.getHeight();
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+
+        PixelReader pixelReader = writableImage.getPixelReader();
+        WritablePixelFormat<IntBuffer> pixelFormat = WritablePixelFormat.getIntArgbInstance();
+
+        int[] pixelData = new int[width * height];
+        pixelReader.getPixels(0, 0, width, height, pixelFormat, pixelData, 0, width);
+
+        bufferedImage.setRGB(0, 0, width, height, pixelData, 0, width);
+
+        return bufferedImage;
+    }
+
+    private void cropImage(int startX, int startY, int width, int height) {
+        try {
+            BufferedImage originalImage = ImageIO.read(new File("screenshot.png"));
+
+            BufferedImage croppedImage = originalImage.getSubimage(startX, startY, width, height);
+
+            String croppedFilePath = "cropped_screenshot.png";
+            ImageIO.write(croppedImage, "png", new File(croppedFilePath));
+            System.out.println("Kırpılmış fotoğraf başarıyla kaydedildi: " + croppedFilePath);
+
+            File originalFile = new File("screenshot.png");
+            if (originalFile.delete()) {
+                System.out.println("Eski fotoğraf başarıyla silindi: " + "screenshot.png");
+            } else {
+                System.out.println("Eski fotoğraf silinemedi: " + "screenshot.png");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void disableAllCombos() {
+        motorComboBox.setDisable(true);
+        motorGucuComboBox.setDisable(true);
+        pompaComboBox.setDisable(true);
+        tankTipiComboBox.setDisable(true);
+        tankKapasitesiComboBox.setDisable(true);
+        valfTipiComboBox.setDisable(true);
+        valfSekliComboBox.setDisable(true);
+        platformTipiComboBox.setDisable(true);
+        selenoidComboBox.setDisable(true);
+    }
+
+    private void pdfShaper(int type) {
+        if(type == 0) {
+            //pdf oluşturma öncesi
+            klasikVBox.setStyle("-fx-background-color: #FFFFFF;"); //sarı: #F9F871
+            sonucAnaLabelTxt.setFill(Color.BLACK);
+        } else {
+            //pdf oluşturma sonrası
+            klasikVBox.setStyle("-fx-background-color: #353a46;");
+            sonucAnaLabelTxt.setFill(Color.web("#B7C3D7"));
         }
     }
 }

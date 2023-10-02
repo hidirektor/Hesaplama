@@ -12,14 +12,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="klasikVBox" prefHeight="620.0" prefWidth="592" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.HidrosController">
+<VBox fx:id="klasikVBox" prefHeight="620.0" prefWidth="592" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.HidrosController">
     <children>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
             <children>
                 <TextField fx:id="siparisNumarasi" layoutX="116.0" layoutY="33.0" onKeyTyped="#siparisNumarasiEntered" promptText="Sipariş Numarası" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
                 <ComboBox fx:id="motorComboBox" disable="true" layoutX="25.0" layoutY="86.0" onAction="#motorTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Motor" />
                 <Button fx:id="hesaplaButton" layoutX="19.0" layoutY="328.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
-                <Button fx:id="temizleButton" layoutX="87.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Temizle" />
+                <Button fx:id="temizleButton" layoutX="87.0" layoutY="328.0" mnemonicParsing="false" onAction="#temizleFunc" style="-fx-background-color: #1761ab;" text="Temizle" />
                 <TableView fx:id="sonucTablo" layoutY="363.0" prefHeight="214.0" prefWidth="414.0">
                     <columns>
                         <TableColumn fx:id="sonucTabloSatir1" editable="false" prefWidth="207.0" sortable="false" />
@@ -39,7 +39,7 @@
                         <Font size="18.0" />
                     </font>
                 </Text>
-                <Button fx:id="exportButton" disable="true" layoutX="152.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
+                <Button fx:id="exportButton" disable="true" layoutX="152.0" layoutY="328.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
                 <Button fx:id="parcaListesiButton" disable="true" layoutX="239.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
 
                 <Button fx:id="kaydetButton" layoutX="327.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Kaydet" />
