@@ -135,6 +135,14 @@ public class KlasikController {
 
 
     @FXML
+    private Text kucukHalkaCap2Text;
+    @FXML
+    private Text buyukHalkaCap2Text;
+    @FXML
+    private Text kucukHalkaCapText;
+    @FXML
+    private Text buyukHalkaCapText;
+    @FXML
     private Text dolum2OlcuText;
     @FXML
     private Text dolum2OlcuText2;
@@ -357,18 +365,45 @@ public class KlasikController {
         secilenKampana = kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
         String[] secPmp = secilenPompa.split(" cc");
         if(Objects.equals(secilenSogutmaDurumu, "Var")) {
-            System.out.println("Motor + Kampana için:");
-            x += Util.dataManipulator.kampanaBoslukX + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukX + Util.dataManipulator.kilitPlatformMotorBosluk;
-            System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + Util.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)" + Util.dataManipulator.kilitPlatformMotorBosluk + " (Kilit Platform Motor Boşluk)");
+            //TODO
+            /*
+            Standart üniteyi göster. Ölçüler:
+            X: 1000
+            Y: 600
+            H: 350
+            Soğutmanın standardı için bir kabin eklenecek :)
+             */
+            int[] enKucukLitreOlculer = new int[4];
+            x = 1000;
+            y = 600;
+            h = 350;
+            hesaplananHacim = ((x*h*y) / 1000000) - Util.dataManipulator.kayipLitre;
 
-            x += 250;
-            System.out.println("X += " + 250 + " (Kilit Motor)");
+            enKucukLitreOlculer[0] = x;
+            enKucukLitreOlculer[1] = y;
+            enKucukLitreOlculer[2] = h;
+            enKucukLitreOlculer[3] = atananHacim;
 
-            x+= Util.dataManipulator.valfXBoslukSogutma;
+            atananHT = "HT SOĞUTMA";
+            String atananKabin = "KD SOĞUTMA";
+            String gecisOlculeri = "1000x600x350";
+            kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
 
-            y += 240 + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + 30;
+            System.out.println("--------Hesaplama Bitti--------");
+            System.out.println("------------(Sonuç)------------");
+            System.out.println("Atanan X: " + x);
+            System.out.println("Atanan Y: " + y);
+            System.out.println("Atanan h: " + h);
+            System.out.println("Atanan Hacim: " + atananHacim);
+            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+            System.out.println("Geçiş Ölçüleri: " + gecisOlculeri);
+            System.out.println("-------------------------------");
 
-            h += 350;
+            finalValues.add(x);
+            finalValues.add(y);
+            finalValues.add(h);
+            finalValues.add(atananHacim);
+            return finalValues;
         } else {
             x += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukX;
             yK += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + Util.dataManipulator.kampanaBoslukY + Util.dataManipulator.kampanaBoslukY;
@@ -1108,6 +1143,8 @@ public class KlasikController {
                 kampanaVeri2Text.setVisible(false);
                 kilitMotorVeriText.setVisible(false);
                 kilitliBlokVeri2Text.setVisible(false);
+                kucukHalkaCap2Text.setVisible(false);
+                buyukHalkaCap2Text.setVisible(false);
             } else {
                 kampanaOlcuText.setVisible(false);
                 kampanaOlcuText2.setVisible(false);
@@ -1118,6 +1155,8 @@ public class KlasikController {
                 tahliyeOlcuText.setVisible(false);
                 kampanaVeriText.setVisible(false);
                 kilitliBlokVeriText.setVisible(false);
+                kucukHalkaCapText.setVisible(false);
+                buyukHalkaCapText.setVisible(false);
             }
         } else {
             sonucKapakImage.setImage(null);
@@ -1143,6 +1182,10 @@ public class KlasikController {
             kilitMotorVeriText.setVisible(false);
             kilitliBlokVeriText.setVisible(false);
             kilitliBlokVeri2Text.setVisible(false);
+            kucukHalkaCap2Text.setVisible(false);
+            buyukHalkaCap2Text.setVisible(false);
+            kucukHalkaCapText.setVisible(false);
+            buyukHalkaCapText.setVisible(false);
         }
     }
 
@@ -1152,6 +1195,7 @@ public class KlasikController {
         sonucUstText.setText("X: " + x + " mm");
         sonucSagText.setText("Y: " + y + " mm");
         if(secilenKilitMotor != null) {
+            imageTextDisable(1);
             kampana2OlcuText.setVisible(true);
             kampana2OlcuText2.setVisible(true);
             kilitMotorOlcuText.setVisible(true);
@@ -1162,6 +1206,8 @@ public class KlasikController {
             dolum2OlcuText2.setVisible(true);
             tahliye2OlcuText.setVisible(true);
             kampanaVeri2Text.setVisible(true);
+            kucukHalkaCap2Text.setVisible(true);
+            buyukHalkaCap2Text.setVisible(true);
             if(secilenKampana == 250) {
                 kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 173);
             } else if(secilenKampana == 300) {
@@ -1178,6 +1224,7 @@ public class KlasikController {
             kilitliBlokVeri2Text.setVisible(true);
             kilitliBlokVeri2Text.setText("Kilitli Blok: \n" + secilenValfTipi);
         } else {
+            imageTextDisable(1);
             kampanaOlcuText.setVisible(true);
             kampanaOlcuText2.setVisible(true);
             kilitliBlokOlcuText.setVisible(true);
@@ -1186,6 +1233,8 @@ public class KlasikController {
             dolumOlcuText2.setVisible(true);
             tahliyeOlcuText.setVisible(true);
             kampanaVeriText.setVisible(true);
+            kucukHalkaCapText.setVisible(true);
+            buyukHalkaCapText.setVisible(true);
             if(secilenKampana == 250) {
                 kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 173);
             } else if(secilenKampana == 300) {
@@ -1253,9 +1302,6 @@ public class KlasikController {
             genislikSonucText.setRotate(33.5);
             derinlikSonucText.setRotate(-30.0);
             derinlikSonucText.setLayoutX(638.0);
-
-
-
 
         } else if(secilenHidrolikKilitDurumu.contains("Var")) {
             if(secilenSogutmaDurumu.contains("Yok")) {

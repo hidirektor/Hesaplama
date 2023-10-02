@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 import static me.t3sl4.hydraulic.Launcher.*;
@@ -83,13 +84,13 @@ public class ProfileEditController {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/hidePass.png"))));
         } else {
             sifreText.setManaged(true);
             sifreText.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/showPass.png"))));
         }
     }
 
@@ -204,11 +205,11 @@ public class ProfileEditController {
 
     private void openMainScreen() throws IOException {
         Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(Launcher.class.getResource("fxml/Login.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Login.fxml")));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        Image icon = new Image(Launcher.class.getResourceAsStream("icons/logo.png"));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
         primaryStage.getIcons().add(icon);
 
         root.setOnMousePressed(event -> {
