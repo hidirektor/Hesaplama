@@ -6,9 +6,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Data.Table.TableData;
 import me.t3sl4.hydraulic.Util.Util;
+
+import java.util.Objects;
 
 public class HidrosController {
     @FXML
@@ -53,6 +58,9 @@ public class HidrosController {
     @FXML
     private Text sonucAnaLabelTxt;
 
+    @FXML
+    private ImageView sonucTankGorsel;
+
 
     public String girilenSiparisNumarasi;
     public String secilenMotorTipi = null;
@@ -69,6 +77,12 @@ public class HidrosController {
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
+    }
+
+    @FXML
+    public void hesaplaFunc() {
+        Image image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ornek.png")));
+        sonucTankGorsel.setImage(image);
     }
 
     public void comboBoxListener() {

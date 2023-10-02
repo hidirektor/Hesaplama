@@ -16,9 +16,9 @@
     <children>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
             <children>
-                <TextField fx:id="siparisNumarasi" layoutX="116.0" layoutY="33.0" promptText="Sipariş Numarası" onKeyTyped="#siparisNumarasiEntered" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
-                <ComboBox fx:id="motorComboBox" disable="true" onAction="#motorTipiPressed" layoutX="25.0" layoutY="86.0" prefHeight="18.0" prefWidth="137.0" promptText="Motor" />
-                <Button fx:id="hesaplaButton" layoutX="19.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Hesapla" />
+                <TextField fx:id="siparisNumarasi" layoutX="116.0" layoutY="33.0" onKeyTyped="#siparisNumarasiEntered" promptText="Sipariş Numarası" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
+                <ComboBox fx:id="motorComboBox" disable="true" layoutX="25.0" layoutY="86.0" onAction="#motorTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Motor" />
+                <Button fx:id="hesaplaButton" layoutX="19.0" layoutY="328.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
                 <Button fx:id="temizleButton" layoutX="87.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Temizle" />
                 <TableView fx:id="sonucTablo" layoutY="363.0" prefHeight="214.0" prefWidth="414.0">
                     <columns>
@@ -43,9 +43,9 @@
                 <Button fx:id="parcaListesiButton" disable="true" layoutX="239.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
 
                 <Button fx:id="kaydetButton" layoutX="327.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Kaydet" />
-                <StackPane layoutX="472.0" layoutY="25.0" prefHeight="150.0" prefWidth="200.0">
+                <StackPane layoutX="421.0" layoutY="107.0" prefHeight="369.0" prefWidth="365.0">
                     <children>
-                        <ImageView fx:id="sonucTankGorsel" fitHeight="252.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="sonucTankGorsel" fitHeight="399.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </StackPane>
             <ComboBox fx:id="pompaComboBox" disable="true" layoutX="113.0" layoutY="136.0" onAction="#pompaPressed" prefHeight="18.0" prefWidth="137.0" promptText="Pompa" />
