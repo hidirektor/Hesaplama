@@ -905,6 +905,144 @@ public class Util {
         }
     }
 
+    public static void readExcel4HidrosMotorDegerleri380(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-380";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.motorDegerleriHidros380.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4HidrosMotorDegerleri220(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-220";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.motorDegerleriHidros220.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4HidrosPompaKapasite(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-Pompa";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.pompaKapasiteDegerleriHidros.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4HidrosTankDikey(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-Tank-Dikey";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.tankKapasitesiDegerleriHidrosDikey.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4HidrosTankYatay(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-Tank-Yatay";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.tankKapasitesiDegerleriHidrosYatay.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4HidrosPlatform(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-Platform";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.platformDegerleriHidros.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void initMotorYukseklik() {
         Util.dataManipulator.motorYukseklikVerileri.add("345 mm");
         Util.dataManipulator.motorYukseklikVerileri.add("375 mm");
@@ -949,6 +1087,12 @@ public class Util {
         readExcel4ParcaListesiValfBlok(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaListesiBasincSalteri(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaListesiStandart(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosMotorDegerleri380(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosPompaKapasite(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosTankDikey(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosTankYatay(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosPlatform(Launcher.excelDBPath, dataManipulator);
         initMotorYukseklik();
     }
 

@@ -92,6 +92,14 @@ public class DataManipulator {
     public ArrayList<String> parcaListesiBasincSalteri = new ArrayList<>();
 
     public ArrayList<String> parcaListesiStandart = new ArrayList<>();
+
+    //Hidros kısmı için geçerli olanlar:
+    public ArrayList<String> motorDegerleriHidros380 = new ArrayList<>();
+    public ArrayList<String> motorDegerleriHidros220 = new ArrayList<>();
+    public ArrayList<String> pompaKapasiteDegerleriHidros = new ArrayList<>();
+    public ArrayList<String> tankKapasitesiDegerleriHidrosDikey = new ArrayList<>();
+    public ArrayList<String> tankKapasitesiDegerleriHidrosYatay = new ArrayList<>();
+    public ArrayList<String> platformDegerleriHidros = new ArrayList<>();
     public DataManipulator() {
         //TODO
         //data update
