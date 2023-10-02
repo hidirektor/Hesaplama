@@ -109,7 +109,7 @@ public class ProfileEditController {
     private void uploadProfilePhoto() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Resim Dosyaları", "*.png", "*.jpg", "*.jpeg")
+                new FileChooser.ExtensionFilter("Resim Dosyaları", "*.jpg")
         );
 
         Stage stage = (Stage) profilePhotoImageView.getScene().getWindow();
