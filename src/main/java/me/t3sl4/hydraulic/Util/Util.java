@@ -1682,4 +1682,11 @@ public class Util {
 
         return stockCode;
     }
+
+    public static String float2String(String inputStr) {
+        float floatAdet = Float.parseFloat(inputStr);
+        int tamSayi = (int) floatAdet;
+
+        return String.valueOf(tamSayi);
+    }
 }

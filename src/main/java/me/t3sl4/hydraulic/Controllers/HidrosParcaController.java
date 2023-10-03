@@ -141,6 +141,8 @@ public class HidrosParcaController {
     private void tabloGuncelle() {
         loadMotorParca();
         loadPompaParca();
+        loadPompaCivataParca();
+        loadTankTipi();
     }
 
     private void loadMotorParca() {
@@ -149,37 +151,64 @@ public class HidrosParcaController {
 
         if (Objects.equals(voltajDegeri, "380")) {
             String malzemeKodu = Util.getStockCodeFromDoubleHashMap(Util.dataManipulator.hidros380Parca, motorGucu);
-            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidros380Parca, motorGucu);
+            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidros380Parca, motorGucu) + " Motor";
 
-            String adet = Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidros380Parca, motorGucu);
-            float floatAdet = Float.parseFloat(adet);
-            int tamSayi = (int) floatAdet;
-            String adetFinal = String.valueOf(tamSayi);
+            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidros380Parca, motorGucu));
 
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adetFinal);
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         } else if (Objects.equals(voltajDegeri, "220")) {
             String malzemeKodu = Util.getStockCodeFromDoubleHashMap(Util.dataManipulator.hidros220Parca, motorGucu);
-            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidros220Parca, motorGucu);
-            String adet = Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidros220Parca, motorGucu);
-            float floatAdet = Float.parseFloat(adet);
-            int tamSayi = (int) floatAdet;
-            String adetFinal = String.valueOf(tamSayi);
+            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidros220Parca, motorGucu) + " Motor";
+            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidros220Parca, motorGucu));
 
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adetFinal);
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         }
     }
 
     private void loadPompaParca() {
-        String pompaDegeri = HidrosController.secilenPompa;
+        String pompaDegeri = HidrosController.secilenPompa.trim();
 
         String malzemeKodu = Util.getStockCodeFromDoubleHashMap(Util.dataManipulator.hidrosPompaParca, pompaDegeri);
-        String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidrosPompaParca, pompaDegeri);
-
-        String adet = Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidrosPompaParca, pompaDegeri);
+        String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidrosPompaParca, pompaDegeri) + " Pompa";
+        String adet = Util.float2String(Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidrosPompaParca, pompaDegeri));
 
         ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
         parcaListesiTablo.getItems().add(data);
+    }
+
+    private void loadPompaCivataParca() {
+        String pompaDegeri = HidrosController.secilenPompa.trim();
+
+        String malzemeKodu = Util.getStockCodeFromDoubleHashMap(Util.dataManipulator.hidrosPompaCivataParca, pompaDegeri);
+        String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidrosPompaCivataParca, pompaDegeri) + " Pompa Civata";
+        String adet = Util.float2String(Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidrosPompaCivataParca, pompaDegeri));
+
+        ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+        parcaListesiTablo.getItems().add(data);
+    }
+
+    private void loadTankTipi() {
+        String kontrolTankTipi = HidrosController.secilenTankTipi.trim();
+        String kontrolTankKapasitesi = HidrosController.secilenTankKapasitesi.trim();
+
+        if(Objects.equals(kontrolTankTipi, "Yatay")) {
+            //Util.dataManipulator.hidrosYatayTankParca
+            String malzemeKodu = Util.getStockCodeFromDoubleHashMap(Util.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi);
+            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi);
+            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi));
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        } else if(Objects.equals(kontrolTankTipi, "Dikey")) {
+            //Util.dataManipulator.hidrosDikeyTankParca
+            String malzemeKodu = Util.getStockCodeFromDoubleHashMap(Util.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi);
+            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(Util.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi);
+            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(Util.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi));
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
     }
 }
