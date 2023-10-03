@@ -90,7 +90,7 @@ public class HidrosController {
     private ImageView sonucTankGorsel;
 
 
-    public String girilenSiparisNumarasi;
+    public static String girilenSiparisNumarasi;
     public String secilenMotorTipi = null;
     public String secilenMotorGucu = null;
     public String secilenPompa = null;
@@ -472,6 +472,7 @@ public class HidrosController {
     private void initIkinciValf() {
         ikinciValfComboBox.getItems().clear();
         ikinciValfComboBox.getItems().addAll(Util.dataManipulator.valfDegerleriHidros);
+        ikinciValfComboBox.getItems().addAll("Yok");
     }
 
     @FXML
@@ -562,7 +563,6 @@ public class HidrosController {
     public void ikinciValfPressed() {
         if(ikinciValfComboBox.getValue() != null) {
             secilenIkinciValf = ikinciValfComboBox.getValue();
-            enableSonucSection();
         }
     }
 
@@ -590,7 +590,28 @@ public class HidrosController {
     }
 
     private void enableSonucSection() {
-        Image image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ornek.png")));
+        Image image = null;
+
+        if(secilenPlatformTipi != null) {
+            if(Objects.equals(secilenPlatformTipi, "ESP")) {
+                if(Objects.equals(secilenInisTipi, "İnişte Tek Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/tekhiz.png")));
+                } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/cifthiz.png")));
+                }
+            } else if(Objects.equals(secilenPlatformTipi, "Devirmeli")) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ozel.png")));
+            } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ozel.png")));
+            } else if(Objects.equals(secilenPlatformTipi, "Özel")) {
+                if(secilenBirinciValf != null && Objects.equals(secilenIkinciValf, "Yok")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/tekvalf.png")));
+                } else if(secilenIkinciValf != null) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ozel.png")));
+                }
+            }
+        }
+
         sonucTankGorsel.setImage(image);
 
         //Butonlar:

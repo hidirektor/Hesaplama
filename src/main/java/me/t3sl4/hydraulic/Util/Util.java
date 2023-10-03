@@ -16,6 +16,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
@@ -1066,6 +1067,41 @@ public class Util {
         }
     }
 
+    public static void readExcel4ParcaHidrosMotor(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Motor380";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidros380Parca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static void initMotorYukseklik() {
         Util.dataManipulator.motorYukseklikVerileri.add("345 mm");
         Util.dataManipulator.motorYukseklikVerileri.add("375 mm");
@@ -1117,7 +1153,15 @@ public class Util {
         readExcel4HidrosTankYatay(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPlatform(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosValf(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosMotor(Launcher.excelDBPath, dataManipulator);
         initMotorYukseklik();
+        HashMap<String, String> testDeger = getValuesFromDoubleHashMap(Util.dataManipulator.hidros380Parca, "0.37 kw");
+        for (Map.Entry<String, String> entry : testDeger.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println("Key: " + key + ", Value: " + value);
+        }
+
     }
 
     public static void showErrorMessage(String hataMesaji) {
@@ -1202,5 +1246,22 @@ public class Util {
         };
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         filteredField.setTextFormatter(textFormatter);
+    }
+
+    public static HashMap<String, String> getValuesFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
+        HashMap<String, String> innerMap = new HashMap<>();
+        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
+            String key = entry.getKey();
+            if(Objects.equals(searchKey, key)) {
+                System.out.println("Test");
+                innerMap = entry.getValue();
+
+                System.out.println("Key: " + key);
+                System.out.println("Value (B): " + innerMap.get("B"));
+                System.out.println("Value (C): " + innerMap.get("C"));
+                System.out.println("------------------------");
+            }
+        }
+        return innerMap;
     }
 }

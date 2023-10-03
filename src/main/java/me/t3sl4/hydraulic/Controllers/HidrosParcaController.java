@@ -23,7 +23,10 @@ import java.util.Objects;
 
 public class HidrosParcaController {
     @FXML
-    private ComboBox basincSalteriComboBox;
+    private ComboBox<String> basincSalteriComboBox;
+
+    @FXML
+    private ComboBox<String> manometreComboBox;
 
     @FXML
     private TableView<ParcaTableData> parcaListesiTablo;
@@ -38,10 +41,11 @@ public class HidrosParcaController {
     private TableColumn<ParcaTableData, String> adet;
 
     private String basincSalteriDurumu = null;
+    private String manometreDurumu = null;
 
     public void initialize() {
-        basincSalteriComboBox.getItems().clear();
-        basincSalteriComboBox.getItems().addAll("Var", "Yok");
+        manometreComboBox.getItems().clear();
+        manometreComboBox.getItems().addAll("Var", "Yok");
 
         malzemeKodu.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         secilenMalzeme.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
@@ -107,6 +111,16 @@ public class HidrosParcaController {
         Stage stage = (Stage) basincSalteriComboBox.getScene().getWindow();
 
         stage.close();
+    }
+
+    @FXML
+    public void manometrePressed() {
+        basincSalteriComboBox.getItems().clear();
+        basincSalteriComboBox.getItems().addAll("Var", "Yok");
+
+        if(manometreComboBox.getValue() != null) {
+            manometreDurumu = manometreComboBox.getValue();
+        }
     }
 
     @FXML

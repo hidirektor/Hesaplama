@@ -101,6 +101,22 @@ public class DataManipulator {
     public ArrayList<String> tankKapasitesiDegerleriHidrosYatay = new ArrayList<>();
     public ArrayList<String> platformDegerleriHidros = new ArrayList<>();
     public ArrayList<String> valfDegerleriHidros = new ArrayList<>();
+
+
+    //Hidros Parça Listesi:
+    //hidrosDataMap.put("hidros380Parca", new HashMap<>());
+    public HashMap<String, HashMap<String, String>> hidros380Parca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidros220Parca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosPompaParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosPompaCivataParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosDikeyTankParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosYatayTankParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosDikeyCiftHizParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosDikeyTekHizParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosYatayCiftHizParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosYatayTekHizParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosDevirmeliParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosYuruyusParca = new HashMap<>();
     public DataManipulator() {
         //TODO
         //data update

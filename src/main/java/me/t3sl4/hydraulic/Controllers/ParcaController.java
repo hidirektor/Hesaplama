@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class ParcaController {
     @FXML
-    private ComboBox basincSalteriComboBox;
+    private ComboBox<String> basincSalteriComboBox;
 
     @FXML
     private TableView<ParcaTableData> parcaListesiTablo;
@@ -71,7 +71,7 @@ public class ParcaController {
     @FXML
     public void exportExcelProcess() {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
-        String excelFileName = KlasikController.girilenSiparisNumarasi + ".xlsx";
+        String excelFileName = HidrosController.girilenSiparisNumarasi + ".xlsx";
 
         String desktopPath = Paths.get(System.getProperty("user.home"), "Desktop").toString();
         excelFileName = Paths.get(desktopPath, excelFileName).toString();
