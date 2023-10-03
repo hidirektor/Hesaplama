@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="498.0" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.HidrosParcaController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="498.0" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.HidrosParcaController">
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0">
         <children>
             <ComboBox fx:id="basincSalteriComboBox" layoutX="346.0" layoutY="77.0" onAction="#basincSalteriPressed" prefHeight="25.0" prefWidth="134.0" />

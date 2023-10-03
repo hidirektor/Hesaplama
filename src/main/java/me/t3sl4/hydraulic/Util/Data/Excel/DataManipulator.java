@@ -116,7 +116,7 @@ public class DataManipulator {
     public HashMap<String, HashMap<String, String>> hidrosYatayCiftHizParca = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosYatayTekHizParca = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosDevirmeliParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosYuruyusParca = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosGenelParca = new HashMap<>();
     public DataManipulator() {
         //TODO
         //data update

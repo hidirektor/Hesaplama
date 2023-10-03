@@ -91,15 +91,15 @@ public class HidrosController {
 
 
     public static String girilenSiparisNumarasi;
-    public String secilenMotorTipi = null;
-    public String secilenMotorGucu = null;
-    public String secilenPompa = null;
-    public String secilenTankTipi = null;
-    public String secilenTankKapasitesi = null;
-    public String secilenBirinciValf = null;
-    public String secilenInisTipi = null;
-    public String secilenPlatformTipi = null;
-    public String secilenIkinciValf = null;
+    public static String secilenMotorTipi = null;
+    public static String secilenMotorGucu = null;
+    public static String secilenPompa = null;
+    public static String secilenTankTipi = null;
+    public static String secilenTankKapasitesi = null;
+    public static String secilenBirinciValf = null;
+    public static String secilenInisTipi = null;
+    public static String secilenPlatformTipi = null;
+    public static String secilenIkinciValf = null;
 
     public boolean hesaplamaBitti = false;
 

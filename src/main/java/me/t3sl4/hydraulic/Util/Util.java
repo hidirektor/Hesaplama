@@ -15,10 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.UnaryOperator;
 
 import javafx.animation.KeyFrame;
@@ -1067,7 +1064,7 @@ public class Util {
         }
     }
 
-    public static void readExcel4ParcaHidrosMotor(String filePath, DataManipulator dataManipulator) {
+    public static void readExcel4ParcaHidrosMotor380(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Hidros-Motor380";
 
         try(InputStream file = new FileInputStream(filePath)) {
@@ -1101,6 +1098,382 @@ public class Util {
         }
     }
 
+    public static void readExcel4ParcaHidrosMotor220(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Motor220";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidros220Parca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosPompa(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Pompa";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosPompaParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosPompaCivata(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Pompa-Civata";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosPompaCivataParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosTankDikey(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Tank-Dikey";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosDikeyTankParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosTankYatay(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Tank-Yatay";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosYatayTankParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosValfDikeyCift(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Dikey-Çift";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosDikeyCiftHizParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosValfDikeyTek(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Dikey-Tek";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosDikeyTekHizParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosValfYatayTek(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Yatay-Tek";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosYatayTekHizParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosValfYatayCift(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Yatay-Çift";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosYatayCiftHizParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosPlatformDevirmeli(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Platform-Devirmeli";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosDevirmeliParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExcel4ParcaHidrosGenel(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Genel";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = "";
+                if(valueCell2 != null) {
+                    value2 = String.valueOf(valueCell2.getNumericCellValue());
+                }
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosGenelParca.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void initMotorYukseklik() {
         Util.dataManipulator.motorYukseklikVerileri.add("345 mm");
@@ -1153,15 +1526,19 @@ public class Util {
         readExcel4HidrosTankYatay(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPlatform(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosValf(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosMotor(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosMotor380(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosMotor220(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosPompa(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosPompaCivata(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosTankDikey(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosTankYatay(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfDikeyCift(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfDikeyTek(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfYatayTek(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfYatayCift(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosPlatformDevirmeli(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosGenel(Launcher.excelDBPath, dataManipulator);
         initMotorYukseklik();
-        HashMap<String, String> testDeger = getValuesFromDoubleHashMap(Util.dataManipulator.hidros380Parca, "0.37 kw");
-        for (Map.Entry<String, String> entry : testDeger.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            System.out.println("Key: " + key + ", Value: " + value);
-        }
-
     }
 
     public static void showErrorMessage(String hataMesaji) {
@@ -1250,18 +1627,59 @@ public class Util {
 
     public static HashMap<String, String> getValuesFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
         HashMap<String, String> innerMap = new HashMap<>();
-        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
-            String key = entry.getKey();
-            if(Objects.equals(searchKey, key)) {
-                System.out.println("Test");
-                innerMap = entry.getValue();
 
-                System.out.println("Key: " + key);
-                System.out.println("Value (B): " + innerMap.get("B"));
-                System.out.println("Value (C): " + innerMap.get("C"));
-                System.out.println("------------------------");
+        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
+            String key = entry.getKey().trim();
+            if(searchKey.trim().equals(key)) {
+                innerMap = entry.getValue();
+                break;
             }
         }
+
         return innerMap;
+    }
+
+    public static String getStockCodeFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
+        String stockCode = null;
+        HashMap<String, String> innerMap = new HashMap<>();
+
+        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
+            String key = entry.getKey().trim();
+            if(searchKey.trim().equals(key)) {
+                innerMap = entry.getValue();
+
+                stockCode = innerMap.get("B");
+                break;
+            }
+        }
+
+        return stockCode;
+    }
+
+    public static String getMaterialFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
+        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
+            String key = entry.getKey().trim();
+            if(searchKey.trim().equals(key)) {
+                return key;
+            }
+        }
+        return null;
+    }
+
+    public static String getAmountFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
+        String stockCode = null;
+        HashMap<String, String> innerMap = new HashMap<>();
+
+        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
+            String key = entry.getKey().trim();
+            if(searchKey.trim().equals(key)) {
+                innerMap = entry.getValue();
+
+                stockCode = innerMap.get("C");
+                break;
+            }
+        }
+
+        return stockCode;
     }
 }
