@@ -40,9 +40,9 @@
                     </font>
                 </Text>
                 <Button fx:id="exportButton" disable="true" layoutX="152.0" layoutY="328.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
-                <Button fx:id="parcaListesiButton" disable="true" layoutX="239.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
+                <Button fx:id="parcaListesiButton" disable="true" layoutX="239.0" layoutY="328.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
 
-                <Button fx:id="kaydetButton" layoutX="327.0" layoutY="328.0" mnemonicParsing="false" style="-fx-background-color: #1761ab;" text="Kaydet" />
+                <Button fx:id="kaydetButton" layoutX="327.0" layoutY="328.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Kaydet" />
                 <StackPane layoutX="421.0" layoutY="107.0" prefHeight="369.0" prefWidth="365.0">
                     <children>
                         <ImageView fx:id="sonucTankGorsel" fitHeight="399.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />

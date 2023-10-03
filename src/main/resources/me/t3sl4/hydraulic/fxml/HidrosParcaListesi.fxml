@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="498.0" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.HidrosParcaController">
+    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0">
+        <children>
+            <ComboBox fx:id="basincSalteriComboBox" layoutX="211.0" layoutY="73.0" onAction="#basincSalteriPressed" prefWidth="150.0" />
+            <Text fill="#B7C3D7" layoutX="114.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Basınç Şalteri:" />
+            <ImageView fitHeight="24.0" fitWidth="24.0" onMouseClicked="#popupKapat" layoutX="473.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/closeIcon.png" />
+                </image>
+            </ImageView>
+            <TableView fx:id="parcaListesiTablo" layoutY="111.0" prefHeight="345.0">
+                <columns>
+                    <TableColumn fx:id="malzemeKodu" minWidth="0.0" prefWidth="120.0" text="Malzeme Kodu" />
+                    <TableColumn fx:id="secilenMalzeme" prefWidth="303.0" text="Seçilen Malzeme" />
+                    <TableColumn fx:id="adet" minWidth="0.0" prefWidth="75.0" text="Adet" />
+                </columns>
+            </TableView>
+            <Text fill="#B7C3D7" layoutX="22.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seçilen Malzeme Listesini Görmek İçin Basınç Şalterini Seçmeyi Unutmayın !!!" />
+            <Button fx:id="panoCopy" layoutX="134.0" layoutY="465.0" mnemonicParsing="false" onAction="#panoyaKopyala" style="-fx-background-color: #1761ab;" text="Panoya Kopyala" />
+            <Button fx:id="exportExcel" layoutX="286.0" layoutY="465.0" mnemonicParsing="false" onAction="#exportExcelProcess" style="-fx-background-color: #1761ab;" text="Excel'e Aktar" />
+        </children>
+    </AnchorPane>
+</VBox>
