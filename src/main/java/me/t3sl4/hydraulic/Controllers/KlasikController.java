@@ -1096,12 +1096,19 @@ public class KlasikController {
 
         tankKapasitesiTextField.clear();
         motorComboBox.getSelectionModel().clearSelection();
+        motorComboBox.setPromptText("Motor");
         pompaComboBox.getSelectionModel().clearSelection();
+        pompaComboBox.setPromptText("Pompa");
         hidrolikKilitComboBox.getSelectionModel().clearSelection();
+        hidrolikKilitComboBox.setPromptText("Hidrolik Kilit");
         valfTipiComboBox.getSelectionModel().clearSelection();
+        valfTipiComboBox.setPromptText("Valf Tipi");
         kilitMotorComboBox.getSelectionModel().clearSelection();
+        kilitMotorComboBox.setPromptText("Kilit Motor");
         kilitPompaComboBox.getSelectionModel().clearSelection();
+        kilitPompaComboBox.setPromptText("Kilit Pompa");
         sogutmaComboBox.getSelectionModel().clearSelection();
+        sogutmaComboBox.setPromptText("Soğutma");
 
         motorComboBox.setDisable(true);
         pompaComboBox.setDisable(true);

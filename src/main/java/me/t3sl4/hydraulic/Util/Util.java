@@ -1043,6 +1043,29 @@ public class Util {
         }
     }
 
+    public static void readExcel4HidrosValf(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-Valf-Deger";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            assert file != null;
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.valfDegerleriHidros.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void initMotorYukseklik() {
         Util.dataManipulator.motorYukseklikVerileri.add("345 mm");
         Util.dataManipulator.motorYukseklikVerileri.add("375 mm");
@@ -1093,6 +1116,7 @@ public class Util {
         readExcel4HidrosTankDikey(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosTankYatay(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPlatform(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosValf(Launcher.excelDBPath, dataManipulator);
         initMotorYukseklik();
     }
 

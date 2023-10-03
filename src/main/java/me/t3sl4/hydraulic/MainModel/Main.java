@@ -11,6 +11,7 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.Data.User.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -55,6 +56,19 @@ public class Main extends Application {
         Path targetPath = Paths.get(Launcher.excelDBPath);
 
         if (!Files.exists(targetPath)) {
+            try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
+                if (inputStream != null) {
+                    Files.copy(inputStream, targetPath);
+                    System.out.println("Hidrolik.xlsx kopyalandı: " + Launcher.excelDBPath);
+                } else {
+                    System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            File removedFile = new File(String.valueOf(targetPath));
+            removedFile.delete();
             try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
                 if (inputStream != null) {
                     Files.copy(inputStream, targetPath);

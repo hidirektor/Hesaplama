@@ -100,6 +100,7 @@ public class DataManipulator {
     public ArrayList<String> tankKapasitesiDegerleriHidrosDikey = new ArrayList<>();
     public ArrayList<String> tankKapasitesiDegerleriHidrosYatay = new ArrayList<>();
     public ArrayList<String> platformDegerleriHidros = new ArrayList<>();
+    public ArrayList<String> valfDegerleriHidros = new ArrayList<>();
     public DataManipulator() {
         //TODO
         //data update
