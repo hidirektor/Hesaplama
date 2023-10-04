@@ -348,6 +348,7 @@ public class HidrosController {
                 if(secilenPlatformTipi.equals("ESP")) {
                     initValfTipi();
                 } else if(secilenPlatformTipi.equals("Devirmeli") || secilenPlatformTipi.equals("Yürüyüş")) {
+                    hesaplamaBitti = true;
                     enableSonucSection();
                 } else {
                     initValfTipi();
