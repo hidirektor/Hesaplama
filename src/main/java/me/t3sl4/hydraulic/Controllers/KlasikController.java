@@ -784,15 +784,6 @@ public class KlasikController {
 
         File outputFile = new File("screenshot.png");
 
-        //Alan Testi:
-        /*PixelWriter pixelWriter = screenshot.getPixelWriter();
-
-        for (int y = startY; y < height; y++) {
-            for (int x = startX; x < width; x++) {
-                pixelWriter.setColor(x, y, javafx.scene.paint.Color.RED);
-            }
-        }*/
-
         BufferedImage bufferedImage = convertToBufferedImage(screenshot);
 
         try {
