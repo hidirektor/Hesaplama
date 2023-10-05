@@ -116,7 +116,17 @@ public class Util {
             PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
             PdfImportedPage page = writer.getImportedPage(reader, 1);
             document.newPage();
-            writer.getDirectContent().addTemplate(page, 0, 0);
+
+            float targetWidth = document.getPageSize().getWidth();
+            float targetHeight = document.getPageSize().getHeight();
+
+            float originalWidth = page.getWidth();
+            float originalHeight = page.getHeight();
+
+            float widthScale = targetWidth / originalWidth;
+            float heightScale = targetHeight / originalHeight;
+
+            writer.getDirectContent().addTemplate(page, widthScale, 0, 0, heightScale, 0, 0);
 
             document.close();
             writer.close();

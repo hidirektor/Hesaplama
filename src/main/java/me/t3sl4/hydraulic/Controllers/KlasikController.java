@@ -762,7 +762,15 @@ public class KlasikController {
             pdfShaper(1);
             cropImage(680, startY, 370, height);
 
-            Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", "/data/test.pdf", girilenSiparisNumarasi);
+            String pdfPath = "";
+            if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
+                pdfPath = "/data/inistetekhiz.pdf";
+            } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
+                pdfPath = "/data/inistecifthiz.pdf";
+            } else if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+                pdfPath = "/data/kilitliblokcifthiz.pdf";
+            }
+            Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
             Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
