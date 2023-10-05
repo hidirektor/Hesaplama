@@ -10,24 +10,32 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.IntBuffer;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
+import javafx.scene.image.WritablePixelFormat;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Data.Excel.DataManipulator;
 import org.apache.poi.ss.usermodel.*;
+
+import javax.imageio.ImageIO;
 
 public class Util {
 
@@ -1698,5 +1706,60 @@ public class Util {
         int tamSayi = (int) floatAdet;
 
         return String.valueOf(tamSayi);
+    }
+
+    public static void cropImage(int startX, int startY, int width, int height) {
+        try {
+            BufferedImage originalImage = ImageIO.read(new File("screenshot.png"));
+
+            BufferedImage croppedImage = originalImage.getSubimage(startX, startY, width, height);
+
+            String croppedFilePath = "cropped_screenshot.png";
+            ImageIO.write(croppedImage, "png", new File(croppedFilePath));
+            System.out.println("Kırpılmış fotoğraf başarıyla kaydedildi: " + croppedFilePath);
+
+            File originalFile = new File("screenshot.png");
+            if (originalFile.delete()) {
+                System.out.println("Eski fotoğraf başarıyla silindi: " + "screenshot.png");
+            } else {
+                System.out.println("Eski fotoğraf silinemedi: " + "screenshot.png");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void coords2Png(int startX, int startY, int width, int height, javafx.scene.control.Button exportButton) {
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setViewport(new javafx.geometry.Rectangle2D(startX, startY, width, height));
+
+        WritableImage screenshot = exportButton.getScene().snapshot(null);
+
+        File outputFile = new File("screenshot.png");
+
+        BufferedImage bufferedImage = convertToBufferedImage(screenshot);
+
+        try {
+            ImageIO.write(bufferedImage, "png", outputFile);
+            System.out.println("Ekran görüntüsü başarıyla kaydedildi: " + outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Ekran görüntüsü kaydedilirken bir hata oluştu: " + e.getMessage());
+        }
+    }
+
+    private static BufferedImage convertToBufferedImage(WritableImage writableImage) {
+        int width = (int) writableImage.getWidth();
+        int height = (int) writableImage.getHeight();
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+
+        PixelReader pixelReader = writableImage.getPixelReader();
+        WritablePixelFormat<IntBuffer> pixelFormat = WritablePixelFormat.getIntArgbInstance();
+
+        int[] pixelData = new int[width * height];
+        pixelReader.getPixels(0, 0, width, height, pixelFormat, pixelData, 0, width);
+
+        bufferedImage.setRGB(0, 0, width, height, pixelData, 0, width);
+
+        return bufferedImage;
     }
 }

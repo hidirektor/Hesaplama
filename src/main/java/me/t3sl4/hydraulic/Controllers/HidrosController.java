@@ -635,9 +635,9 @@ public class HidrosController {
 
         if(hesaplamaBitti) {
             pdfShaper(0);
-            coords2Png(startX, startY, width, height);
+            Util.coords2Png(startX, startY, width, height, exportButton);
             pdfShaper(1);
-            cropImage(680, startY, 370, height);
+            Util.cropImage(680, startY, 370, height);
 
             String pdfPath = "";
             if(Objects.equals(secilenPlatformTipi, "Özel")) {
@@ -656,61 +656,6 @@ public class HidrosController {
             Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
             Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
-        }
-    }
-
-    private void coords2Png(int startX, int startY, int width, int height) {
-        SnapshotParameters parameters = new SnapshotParameters();
-        parameters.setViewport(new javafx.geometry.Rectangle2D(startX, startY, width, height));
-
-        WritableImage screenshot = exportButton.getScene().snapshot(null);
-
-        File outputFile = new File("screenshot.png");
-
-        BufferedImage bufferedImage = convertToBufferedImage(screenshot);
-
-        try {
-            ImageIO.write(bufferedImage, "png", outputFile);
-            System.out.println("Ekran görüntüsü başarıyla kaydedildi: " + outputFile.getAbsolutePath());
-        } catch (IOException e) {
-            System.out.println("Ekran görüntüsü kaydedilirken bir hata oluştu: " + e.getMessage());
-        }
-    }
-
-    private BufferedImage convertToBufferedImage(WritableImage writableImage) {
-        int width = (int) writableImage.getWidth();
-        int height = (int) writableImage.getHeight();
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
-
-        PixelReader pixelReader = writableImage.getPixelReader();
-        WritablePixelFormat<IntBuffer> pixelFormat = WritablePixelFormat.getIntArgbInstance();
-
-        int[] pixelData = new int[width * height];
-        pixelReader.getPixels(0, 0, width, height, pixelFormat, pixelData, 0, width);
-
-        bufferedImage.setRGB(0, 0, width, height, pixelData, 0, width);
-
-        return bufferedImage;
-    }
-
-    private void cropImage(int startX, int startY, int width, int height) {
-        try {
-            BufferedImage originalImage = ImageIO.read(new File("screenshot.png"));
-
-            BufferedImage croppedImage = originalImage.getSubimage(startX, startY, width, height);
-
-            String croppedFilePath = "cropped_screenshot.png";
-            ImageIO.write(croppedImage, "png", new File(croppedFilePath));
-            System.out.println("Kırpılmış fotoğraf başarıyla kaydedildi: " + croppedFilePath);
-
-            File originalFile = new File("screenshot.png");
-            if (originalFile.delete()) {
-                System.out.println("Eski fotoğraf başarıyla silindi: " + "screenshot.png");
-            } else {
-                System.out.println("Eski fotoğraf silinemedi: " + "screenshot.png");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
