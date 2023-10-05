@@ -88,6 +88,7 @@ public class DataManipulator {
     public ArrayList<String> parcaListesiValfBloklariCiftHiz = new ArrayList<>();
     public ArrayList<String> parcaListesiValfBloklariKilitliBlok = new ArrayList<>();
     public ArrayList<String> parcaListesiValfBloklariKompanzasyon = new ArrayList<>();
+    public ArrayList<String> parcaListesiSogutucu = new ArrayList<>();
 
     public ArrayList<String> parcaListesiBasincSalteri = new ArrayList<>();
 

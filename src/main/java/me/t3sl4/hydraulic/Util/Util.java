@@ -910,6 +910,30 @@ public class Util {
         }
     }
 
+    public static void readExcel4ParcaListesiSogutucu(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Soğutucu";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                Cell cell2 = row.getCell(1);
+                Cell cell3 = row.getCell(2);
+                String data = cell.getStringCellValue() + ";" + cell2.getStringCellValue() + ";" + float2String(String.valueOf(cell3.getNumericCellValue()));
+                dataManipulator.parcaListesiSogutucu.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
     public static void readExcel4HidrosMotorDegerleri380(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Hidros-380";
 
@@ -1476,6 +1500,15 @@ public class Util {
         Util.dataManipulator.motorYukseklikVerileri.add("600 mm");
     }
 
+    private static String getStringValueFromCell(Cell cell) {
+        if (cell.getCellType() == CellType.NUMERIC) {
+            double numericValue = cell.getNumericCellValue();
+            return String.valueOf((int) numericValue);
+        } else {
+            return cell.getStringCellValue();
+        }
+    }
+
     private static boolean isNumeric(Cell cell) {
         return cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA;
     }
@@ -1507,6 +1540,7 @@ public class Util {
         readExcel4ParcaListesiValfBlok(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaListesiBasincSalteri(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaListesiStandart(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiSogutucu(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosMotorDegerleri380(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPompaKapasite(Launcher.excelDBPath, dataManipulator);

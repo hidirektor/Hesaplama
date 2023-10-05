@@ -131,6 +131,9 @@ public class ParcaController {
         loadValfBlokParca();
         loadBasincSalteriParca();
         loadBasincStandart();
+        if(KlasikController.secilenSogutmaDurumu.contains("Var")) {
+            loadSogutucuParca();
+        }
     }
 
     private void loadKampanaParca() {
@@ -638,6 +641,19 @@ public class ParcaController {
                     adet = String.valueOf(22);
                 }
             }
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadSogutucuParca() {
+        for (String veri : Util.dataManipulator.parcaListesiSogutucu) {
+            String[] veriParcalari = veri.split(";");
+
+            String malzemeKodu = veriParcalari[0];
+            String secilenMalzeme = veriParcalari[1];
+            String adet = veriParcalari[2];
+
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         }

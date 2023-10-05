@@ -19,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -287,8 +288,118 @@ public class HidrosParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(secilenPlatform, "Yürüyüş")) {
-
+            //TODO
+            //Yürüyüş için parça listesi eklenecek
         } else if(Objects.equals(secilenPlatform, "Özel")) {
+            ArrayList<String> eklenecekParcaListesi = new ArrayList<>();
+            if(!Objects.equals(HidrosController.secilenBirinciValf, "Yok") && !Objects.equals(HidrosController.secilenIkinciValf, "Yok")) {
+                String eklenecekBirinciValfKodu = "";
+                String eklenecekBirinciValfIsim = "";
+                String eklenecekBirinciValfAdet = "";
+                String eklenecekIkinciValfKodu = "";
+                String eklenecekIkinciValfIsim = "";
+                String eklenecekIkinciValfAdet = "";
+                if(Objects.equals(HidrosController.secilenBirinciValf, "Açık Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-025";
+                    eklenecekBirinciValfIsim = "VALF AÇIK MERKEZ NG6 24V RH06021-24V";
+                    eklenecekBirinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenBirinciValf, "Kapalı Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-024";
+                    eklenecekBirinciValfIsim = "VALF KAPALI MERKEZ NG6 24V";
+                    eklenecekBirinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenBirinciValf, "H Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-005";
+                    eklenecekBirinciValfIsim = "VALF H MERKEZ NG6 24V RH06001-24V";
+                    eklenecekBirinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenBirinciValf, "J Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-004";
+                    eklenecekBirinciValfIsim = "SELENOİD VALF J MERKEZ Z RH06041-24V";
+                    eklenecekBirinciValfAdet = "1";
+                }
+
+                ParcaTableData birinciValfData = new ParcaTableData(eklenecekBirinciValfKodu, eklenecekBirinciValfIsim, eklenecekBirinciValfAdet);
+                parcaListesiTablo.getItems().add(birinciValfData);
+
+                if(Objects.equals(HidrosController.secilenIkinciValf, "Açık Merkez")) {
+                    eklenecekIkinciValfKodu = "150-51-04-025";
+                    eklenecekIkinciValfIsim = "VALF AÇIK MERKEZ NG6 24V RH06021-24V";
+                    eklenecekIkinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenIkinciValf, "Kapalı Merkez")) {
+                    eklenecekIkinciValfKodu = "150-51-04-024";
+                    eklenecekIkinciValfIsim = "VALF KAPALI MERKEZ NG6 24V";
+                    eklenecekIkinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenIkinciValf, "H Merkez")) {
+                    eklenecekIkinciValfKodu = "150-51-04-005";
+                    eklenecekIkinciValfIsim = "VALF H MERKEZ NG6 24V RH06001-24V";
+                    eklenecekIkinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenIkinciValf, "J Merkez")) {
+                    eklenecekIkinciValfKodu = "150-51-04-004";
+                    eklenecekIkinciValfIsim = "SELENOİD VALF J MERKEZ Z RH06041-24V";
+                    eklenecekIkinciValfAdet = "1";
+                }
+
+                ParcaTableData ikinciValfData = new ParcaTableData(eklenecekIkinciValfKodu, eklenecekIkinciValfIsim, eklenecekIkinciValfAdet);
+                parcaListesiTablo.getItems().add(ikinciValfData);
+
+                String ilkValf = "150-51-05-059;A01 BLOK;1";
+                String ikinciValf = "150-51-05-060;A03 BLOK;1";
+
+                eklenecekParcaListesi.add(0, ilkValf);
+                eklenecekParcaListesi.add(1, ikinciValf);
+                eklenecekParcaListesi.add(2, ikinciValf);
+
+                for (String veri : eklenecekParcaListesi) {
+                    String[] veriParcalari = veri.split(";");
+
+                    String malzemeKodu = veriParcalari[0];
+                    String secilenMalzeme = veriParcalari[1];
+                    String adet = veriParcalari[2];
+
+                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+                    parcaListesiTablo.getItems().add(data);
+                }
+            } else if(!Objects.equals(HidrosController.secilenBirinciValf, "Yok") && Objects.equals(HidrosController.secilenIkinciValf, "Yok")) {
+                String eklenecekBirinciValfKodu = "";
+                String eklenecekBirinciValfIsim = "";
+                String eklenecekBirinciValfAdet = "";
+                if(Objects.equals(HidrosController.secilenBirinciValf, "Açık Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-025";
+                    eklenecekBirinciValfIsim = "VALF AÇIK MERKEZ NG6 24V RH06021-24V";
+                    eklenecekBirinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenBirinciValf, "Kapalı Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-024";
+                    eklenecekBirinciValfIsim = "VALF KAPALI MERKEZ NG6 24V";
+                    eklenecekBirinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenBirinciValf, "H Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-005";
+                    eklenecekBirinciValfIsim = "VALF H MERKEZ NG6 24V RH06001-24V";
+                    eklenecekBirinciValfAdet = "1";
+                } else if(Objects.equals(HidrosController.secilenBirinciValf, "J Merkez")) {
+                    eklenecekBirinciValfKodu = "150-51-04-004";
+                    eklenecekBirinciValfIsim = "SELENOİD VALF J MERKEZ Z RH06041-24V";
+                    eklenecekBirinciValfAdet = "1";
+                }
+
+                ParcaTableData birinciValfData = new ParcaTableData(eklenecekBirinciValfKodu, eklenecekBirinciValfIsim, eklenecekBirinciValfAdet);
+                parcaListesiTablo.getItems().add(birinciValfData);
+
+                String ilkValf = "150-51-05-059;A01 BLOK;1";
+                String ikinciValf = "150-51-05-060;A03 BLOK;1";
+
+                eklenecekParcaListesi.add(0, ilkValf);
+                eklenecekParcaListesi.add(1, ikinciValf);
+
+                for (String veri : eklenecekParcaListesi) {
+                    String[] veriParcalari = veri.split(";");
+
+                    String malzemeKodu = veriParcalari[0];
+                    String secilenMalzeme = veriParcalari[1];
+                    String adet = veriParcalari[2];
+
+                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+                    parcaListesiTablo.getItems().add(data);
+                }
+            }
 
         }
     }

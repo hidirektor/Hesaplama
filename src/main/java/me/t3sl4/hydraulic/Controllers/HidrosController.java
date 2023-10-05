@@ -644,14 +644,14 @@ public class HidrosController {
                 pdfPath = "/data/hidrosozel.pdf";
             } else if(Objects.equals(secilenPlatformTipi, "ESP")) {
                 if(Objects.equals(secilenInisTipi, "İnişte Tek Hız")) {
-                    pdfPath = "/data/hidrosinistetekhiz.pdf";
+                    pdfPath = "/data/hidrosinistetek.pdf";
                 } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
-                    pdfPath = "/data/hidrosinistecifthiz.pdf";
+                    pdfPath = "/data/hidrosinistecift.pdf";
                 }
             } else if(Objects.equals(secilenPlatformTipi, "Devirmeli")) {
                 pdfPath = "/data/hidrosdevirmeli.pdf";
-            } else if(Objects.equals(secilenPlatformTipi, "")) {
-                pdfPath = "";
+            } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
+                pdfPath = "/data/hidrosdevirmeli.pdf";
             }
             Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {

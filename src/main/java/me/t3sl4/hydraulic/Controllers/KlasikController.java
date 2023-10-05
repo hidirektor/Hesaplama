@@ -197,7 +197,7 @@ public class KlasikController {
     public static String secilenValfTipi = null;
     public String secilenKilitMotor = null;
     public String secilenKilitPompa = null;
-    public String secilenSogutmaDurumu = null;
+    public static String secilenSogutmaDurumu = null;
 
     public boolean hidrolikKilitStat = false;
     public boolean sogutmaStat = false;
@@ -764,11 +764,13 @@ public class KlasikController {
 
             String pdfPath = "";
             if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                pdfPath = "/data/inistetekhiz.pdf";
+                pdfPath = "/data/klasikinistetek.pdf";
             } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                pdfPath = "/data/inistecifthiz.pdf";
+                pdfPath = "/data/klasikinistecift.pdf";
             } else if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                pdfPath = "/data/kilitliblokcifthiz.pdf";
+                //TODO
+                //Kilitli blok çift hız hidrolik şeması eksik.
+                pdfPath = "/data/klasikkilitliblokcift.pdf";
             }
             Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
