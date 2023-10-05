@@ -89,6 +89,9 @@ public class HidrosController {
     @FXML
     private ImageView sonucTankGorsel;
 
+    @FXML
+    private Text kullanilacakKabinText;
+
 
     public static String girilenSiparisNumarasi;
     public static String secilenMotorTipi = null;
@@ -151,6 +154,7 @@ public class HidrosController {
         hesaplamaBitti = false;
         disableAllCombos();
         sonucButtonDisable();
+        kullanilacakKabinText.setVisible(false);
     }
 
     @FXML
@@ -591,6 +595,7 @@ public class HidrosController {
     }
 
     private void enableSonucSection() {
+        kullanilacakKabinText.setVisible(true);
         Image image = null;
 
         if(secilenPlatformTipi != null) {
@@ -614,6 +619,8 @@ public class HidrosController {
         }
 
         sonucTankGorsel.setImage(image);
+
+        calculateKabin();
 
         //Butonlar:
         sonucButtonEnable();
@@ -727,5 +734,32 @@ public class HidrosController {
         kaydetButton.setDisable(true);
         exportButton.setDisable(true);
         parcaListesiButton.setDisable(true);
+    }
+
+    private void calculateKabin() {
+        String motorKW = secilenMotorGucu.trim();
+        String tankKapasite = secilenTankKapasitesi.trim();
+
+        if(Objects.equals(motorKW, "0.55 kW") && Objects.equals(tankKapasite, "4 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
+        } else if(Objects.equals(motorKW, "0.75 kW") && Objects.equals(tankKapasite, "4 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
+        } else if(Objects.equals(motorKW, "0.75 kW") && Objects.equals(tankKapasite, "6 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
+        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "6 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
+        } else if(Objects.equals(motorKW, "0.55 kW") && Objects.equals(tankKapasite, "10 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
+        } else if(Objects.equals(motorKW, "1.1 kW") && Objects.equals(tankKapasite, "8 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
+        } else if(Objects.equals(motorKW, "1.1 kW") && Objects.equals(tankKapasite, "10 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
+        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "12 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
+        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "8 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
+        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "10 Lt")) {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
+        }
     }
 }
