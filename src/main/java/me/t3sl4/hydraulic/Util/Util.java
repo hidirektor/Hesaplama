@@ -19,6 +19,8 @@ import java.nio.IntBuffer;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,8 +40,13 @@ import org.apache.poi.ss.usermodel.*;
 import javax.imageio.ImageIO;
 
 public class Util {
+    public static DataManipulator dataManipulator;
 
-    public static DataManipulator dataManipulator = new DataManipulator();
+    static {
+        dataManipulator = new DataManipulator();
+    }
+
+    private static final Logger logger = Logger.getLogger(Util.class.getName());
     
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -157,11 +164,11 @@ public class Util {
                     File pdfFile = new File(ExPDFFilePath);
                     Desktop.getDesktop().open(pdfFile);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, e.getMessage(), e);
                 }
             }
         } catch (DocumentException | IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -169,7 +176,6 @@ public class Util {
         String sheetName = "Boşluk Değerleri";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -198,7 +204,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -206,7 +212,6 @@ public class Util {
         String sheetName = "Kampana";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -223,7 +228,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -231,7 +236,6 @@ public class Util {
         String sheetName = "Motor";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -246,7 +250,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -254,7 +258,6 @@ public class Util {
         String sheetName = "Ünite Tipi";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -269,7 +272,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -277,7 +280,6 @@ public class Util {
         String sheetName = "Pompa-1";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -292,7 +294,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -300,7 +302,6 @@ public class Util {
         String sheetName = "Pompa-2";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -315,7 +316,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -323,7 +324,6 @@ public class Util {
         String sheetName = "Pompa-3";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -338,7 +338,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -346,7 +346,6 @@ public class Util {
         String sheetName = "Kilit Motor";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -361,7 +360,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -369,7 +368,6 @@ public class Util {
         String sheetName = "Kilit Pompa";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -384,7 +382,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -392,7 +390,6 @@ public class Util {
         String sheetName = "Valf Tipi-1";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -407,7 +404,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -415,7 +412,6 @@ public class Util {
         String sheetName = "Valf Tipi-2";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -430,7 +426,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -438,7 +434,6 @@ public class Util {
         String sheetName = "Parça-Kampana";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -494,7 +489,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -502,7 +497,6 @@ public class Util {
         String sheetName = "Parça-Pompa";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -591,7 +585,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -599,7 +593,6 @@ public class Util {
         String sheetName = "Parça-Motor";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -673,7 +666,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -681,7 +674,6 @@ public class Util {
         String sheetName = "Parça-Kaplin";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -743,7 +735,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -751,7 +743,6 @@ public class Util {
         String sheetName = "Parça-Valf Blokları";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -807,7 +798,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -815,7 +806,6 @@ public class Util {
         String sheetName = "Parça-Basınç Şalteri";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -862,7 +852,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -870,7 +860,6 @@ public class Util {
         String sheetName = "Parça-Standart";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -917,7 +906,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -925,7 +914,6 @@ public class Util {
         String sheetName = "Hidros-380";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -940,7 +928,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -948,7 +936,6 @@ public class Util {
         String sheetName = "Hidros-220";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -963,7 +950,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -971,7 +958,6 @@ public class Util {
         String sheetName = "Hidros-Pompa";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -986,7 +972,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -994,7 +980,6 @@ public class Util {
         String sheetName = "Hidros-Tank-Dikey";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1009,7 +994,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1017,7 +1002,6 @@ public class Util {
         String sheetName = "Hidros-Tank-Yatay";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1032,7 +1016,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1040,7 +1024,6 @@ public class Util {
         String sheetName = "Hidros-Platform";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1055,7 +1038,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1063,7 +1046,6 @@ public class Util {
         String sheetName = "Hidros-Valf-Deger";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1078,7 +1060,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1086,7 +1068,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Motor380";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1112,7 +1093,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1120,7 +1101,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Motor220";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1146,7 +1126,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1154,7 +1134,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Pompa";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1180,7 +1159,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1188,7 +1167,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Pompa-Civata";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1214,7 +1192,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1222,7 +1200,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Tank-Dikey";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1248,7 +1225,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1256,7 +1233,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Tank-Yatay";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1282,7 +1258,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1290,7 +1266,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Valf-Dikey-Çift";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1316,7 +1291,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1324,7 +1299,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Valf-Dikey-Tek";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1350,7 +1324,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1358,7 +1332,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Valf-Yatay-Tek";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1384,7 +1357,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1392,7 +1365,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Valf-Yatay-Çift";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1418,7 +1390,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1426,7 +1398,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Platform-Devirmeli";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1452,7 +1423,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1460,7 +1431,6 @@ public class Util {
         String sheetName = "Parça-Hidros-Genel";
 
         try(InputStream file = new FileInputStream(filePath)) {
-            assert file != null;
             Workbook workbook = WorkbookFactory.create(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -1489,7 +1459,7 @@ public class Util {
 
             workbook.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -1643,20 +1613,6 @@ public class Util {
         filteredField.setTextFormatter(textFormatter);
     }
 
-    public static HashMap<String, String> getValuesFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
-        HashMap<String, String> innerMap = new HashMap<>();
-
-        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
-            String key = entry.getKey().trim();
-            if(searchKey.trim().equals(key)) {
-                innerMap = entry.getValue();
-                break;
-            }
-        }
-
-        return innerMap;
-    }
-
     public static String getStockCodeFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
         String stockCode = null;
         HashMap<String, String> innerMap = new HashMap<>();
@@ -1725,7 +1681,7 @@ public class Util {
                 System.out.println("Eski fotoğraf silinemedi: " + "screenshot.png");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

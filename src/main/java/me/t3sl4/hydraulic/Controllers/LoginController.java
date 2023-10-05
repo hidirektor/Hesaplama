@@ -20,7 +20,10 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.Launcher.*;
 
@@ -51,6 +54,8 @@ public class LoginController implements Initializable {
     private ToggleButton beniHatirla;
 
     private String girilenSifre = "";
+
+    private static final Logger logger = Logger.getLogger(MainController.class.getName());
 
     @FXML
     public void girisYap(MouseEvent event) {
@@ -112,7 +117,7 @@ public class LoginController implements Initializable {
             try {
                 openRegisterScreen();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage(), e);
             }
         } else {
             Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
@@ -163,7 +168,7 @@ public class LoginController implements Initializable {
                                 writer.write(password);
                                 writer.close();
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                logger.log(Level.SEVERE, e.getMessage(), e);
                             }
                         } else {
                             Util.showErrorMessage("Kullanıcı adı veya şifre alanları boş olamaz!");
@@ -219,7 +224,7 @@ public class LoginController implements Initializable {
                 kullaniciAdi = reader.readLine();
                 sifre = reader.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage(), e);
             }
 
             directLogin(kullaniciAdi, sifre);
@@ -247,7 +252,7 @@ public class LoginController implements Initializable {
                                 try {
                                     openMainScreen();
                                 } catch (IOException e) {
-                                    e.printStackTrace();
+                                    logger.log(Level.SEVERE, e.getMessage(), e);
                                 }
                                 Stage loginStage = (Stage) btnSignin.getScene().getWindow();
                                 loginStage.close();
@@ -278,13 +283,13 @@ public class LoginController implements Initializable {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/hidePass.png"))));
         } else {
             txtPassword.setManaged(true);
             txtPassword.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/showPass.png"))));
         }
     }
 
@@ -322,7 +327,7 @@ public class LoginController implements Initializable {
             try {
                 openMainScreen();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage(), e);
             }
             stage.close();
         });

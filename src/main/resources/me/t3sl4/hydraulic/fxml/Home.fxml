@@ -76,6 +76,18 @@
                         <Insets left="50.0" />
                     </padding>
                 </Button>
+                <Button fx:id="btnInisMetodu" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../styling/style.css" text="İniş Metodu Hesaplama">
+                    <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/hydraulic.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                </Button>
                 <Button fx:id="btnParametreler" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../styling/style.css" text="Parametreler">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
@@ -146,13 +158,13 @@
                                 <Font size="15.0" />
                             </font>
                         </Label>
-                        <VBox fx:id="klasikSwitchVBox" layoutX="620.0" layoutY="47.0" prefWidth="50.0" prefHeight="15.0" />
+                        <VBox fx:id="klasikSwitchVBox" layoutX="620.0" layoutY="47.0" prefHeight="15.0" prefWidth="50.0" />
                         <Label fx:id="justHidros" layoutX="718.0" layoutY="38.0" text="Hidros" textFill="#e7e5e5">
                             <font>
                                 <Font size="15.0" />
                             </font>
                         </Label>
-                        <VBox fx:id="hidrosSwitchVBox" layoutX="710.0" layoutY="47.0" prefWidth="50.0" prefHeight="15.0" />
+                        <VBox fx:id="hidrosSwitchVBox" layoutX="710.0" layoutY="47.0" prefHeight="15.0" prefWidth="50.0" />
                         <Label layoutX="57.0" layoutY="25.0" text="Hydraulic Calculation" textFill="#e7e5e5">
                             <font>
                                 <Font size="24.0" />

@@ -7,8 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,11 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import org.controlsfx.control.ToggleSwitch;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.Component.FilterSwitch;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPUtil;
 import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Data.HydraulicUnit.HydraulicInfo;
@@ -42,6 +37,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -64,19 +60,10 @@ public class MainController implements Initializable {
     private Button btnHidros;
 
     @FXML
+    private Button btnInisMetodu;
+
+    @FXML
     private Button btnParametreler;
-
-    @FXML
-    private Button btnProfil;
-
-    @FXML
-    private Button btnSignout;
-
-    @FXML
-    private Button btnCloseProgram;
-
-    @FXML
-    private Pane pnlCustomer;
 
     @FXML
     private Pane pnlOverview;
@@ -99,8 +86,6 @@ public class MainController implements Initializable {
     private Label hidrosUntiteCount;
     @FXML
     private Label parametreCount;
-    @FXML
-    private ImageView closeIcon;
 
     private List<HydraulicInfo> cachedHydraulicInfos = new ArrayList<>();
     int siparisSayisi;
@@ -115,6 +100,8 @@ public class MainController implements Initializable {
     private VBox klasikSwitchVBox;
     @FXML
     private VBox hidrosSwitchVBox;
+
+    private static final Logger logger = Logger.getLogger(MainController.class.getName());
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -205,7 +192,29 @@ public class MainController implements Initializable {
                 parametrePane.setLayoutX(centerX-100);
                 parametrePane.setLayoutY(centerY+20);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            }
+        }
+        if (actionEvent.getSource() == btnInisMetodu) {
+            pnlMenus.setStyle("-fx-background-color : #353a46");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
+                Pane parametrePane = loader.load();
+                pnlMenus.getChildren().setAll(parametrePane);
+
+                double paneWidth = pnlMenus.getWidth();
+                double paneHeight = pnlMenus.getHeight();
+
+                double parametreWidth = parametrePane.getPrefWidth();
+                double parametreHeight = parametrePane.getPrefHeight();
+
+                double centerX = (paneWidth - parametreWidth) / 2;
+                double centerY = (paneHeight - parametreHeight) / 2;
+                parametrePane.setLayoutX(centerX-100);
+                parametrePane.setLayoutY(centerY+20);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
             }
         }
         if (actionEvent.getSource() == btnParametreler) {
@@ -236,7 +245,7 @@ public class MainController implements Initializable {
                         Util.dataManipulator.kilitMotorBoslukYOn, Util.dataManipulator.kilitMotorBoslukYArka, Util.dataManipulator.kayipLitre, Util.dataManipulator.kilitPlatformMotorBosluk, Util.dataManipulator.valfXBoslukSogutma);
                 popupController.showValues();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage(), e);
             }
         }
         if (actionEvent.getSource() == btnHome) {
@@ -264,7 +273,7 @@ public class MainController implements Initializable {
                 parametrePane.setLayoutX(centerX-100);
                 parametrePane.setLayoutY(centerY+20);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage(), e);
             }
         }
     }
@@ -289,7 +298,7 @@ public class MainController implements Initializable {
             profilPane.setLayoutX(centerX);
             profilPane.setLayoutY(centerY+20);
         } catch(IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -299,7 +308,7 @@ public class MainController implements Initializable {
     }
 
     public void userInfo() {
-        kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName());
+        kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName() + "\n ");
         Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
     }
 
@@ -340,8 +349,7 @@ public class MainController implements Initializable {
             HTTPRequest.sendRequestNormal(BASE_URL + hydraulicGetInfoURLPrefix, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
-                    cachedHydraulicInfos = hydraulicInfos;
+                    cachedHydraulicInfos = parseJsonResponse(response);
                     populateUIWithCachedData();
                 }
 
@@ -357,8 +365,7 @@ public class MainController implements Initializable {
             HTTPRequest.sendRequest(reqURL, jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
-                    cachedHydraulicInfos = hydraulicInfos;
+                    cachedHydraulicInfos = parseJsonResponse(response);
                     populateUIWithCachedData();
                 }
 
@@ -374,8 +381,7 @@ public class MainController implements Initializable {
             HTTPRequest.sendRequest(reqURL, jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    List<HydraulicInfo> hydraulicInfos = parseJsonResponse(response);
-                    cachedHydraulicInfos = hydraulicInfos;
+                    cachedHydraulicInfos = parseJsonResponse(response);
                     populateUIWithCachedData();
                 }
 
@@ -408,25 +414,16 @@ public class MainController implements Initializable {
                 typeLabel.setText(info.getUniteTipi());
                 InChargeLabel.setText(info.getUserName());
 
-                pdfViewButton.setOnAction(event -> {
-                    openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".pdf");
-                });
+                pdfViewButton.setOnAction(event -> openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".pdf"));
 
-                excelViewButton.setOnMouseClicked(event -> {
-                    openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".xlsx");
-                });
+                excelViewButton.setOnMouseClicked(event -> openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".xlsx"));
 
-                final int j = pnItems.getChildren().size();
-                node.setOnMouseEntered(event -> {
-                    itemC.setStyle("-fx-background-color : #0A0E3F");
-                });
-                node.setOnMouseExited(event -> {
-                    itemC.setStyle("-fx-background-color : #02030A");
-                });
+                node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #0A0E3F"));
+                node.setOnMouseExited(event -> itemC.setStyle("-fx-background-color : #02030A"));
 
                 pnItems.getChildren().add(node);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage(), e);
             }
         }
     }
@@ -437,7 +434,7 @@ public class MainController implements Initializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
             return dateTime.format(formatter);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
             return "";
         }
     }
@@ -451,7 +448,7 @@ public class MainController implements Initializable {
             HydraulicInfo[] infoArray = objectMapper.readValue(response, HydraulicInfo[].class);
             hydraulicInfos.addAll(Arrays.asList(infoArray));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return hydraulicInfos;
@@ -462,6 +459,7 @@ public class MainController implements Initializable {
         String sheetName = "Boşluk Değerleri";
 
         try (InputStream file = Launcher.class.getResourceAsStream(excelPath)) {
+            assert file != null;
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheet(sheetName);
 
@@ -473,9 +471,7 @@ public class MainController implements Initializable {
                     Row row = sheet.getRow(i);
                     if (row != null) {
                         int columnCount = row.getPhysicalNumberOfCells();
-                        if (columnCount > maxColumnCount) {
-                            maxColumnCount = columnCount;
-                        }
+                        if (columnCount > maxColumnCount) maxColumnCount = columnCount;
                     }
                 }
 
@@ -486,7 +482,7 @@ public class MainController implements Initializable {
 
             workbook.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 }
