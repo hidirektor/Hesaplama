@@ -768,8 +768,6 @@ public class KlasikController {
             } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
                 pdfPath = "/data/klasikinistecift.pdf";
             } else if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                //TODO
-                //Kilitli blok çift hız hidrolik şeması eksik.
                 pdfPath = "/data/klasikkilitliblokcift.pdf";
             }
             Util.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
