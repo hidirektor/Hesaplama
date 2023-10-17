@@ -1752,4 +1752,16 @@ public class Util {
 
         return bufferedImage;
     }
+
+    public static boolean checkUpperCase(String controlText) {
+        //TODO
+        //Büyük harf kontrolü
+        for(int i=0; i<controlText.length(); i++) {
+            char controlChar = controlText.charAt(i);
+            if(Character.isUpperCase(controlChar)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -141,22 +141,34 @@ public class RegisterController implements Initializable {
         String profilePhotoPath = userName + ".jpg";
 
         if (checkFields()) {
-            String created_at = Util.getCurrentDateTime();
+            if(kullaniciAdiText.getText().contains(" ") || Util.checkUpperCase(kullaniciAdiText.getText())) {
+                if(kullaniciAdiText.getText().contains(" ")) {
+                    Util.showErrorMessage("Kullanıcı adında boşluk karakteri olamaz !");
+                    kullaniciAdiText.clear();
+                }
 
-            String registerJsonBody =
-                    "{" +
-                            "\"Role\":\"" + userRole + "\"," +
-                            "\"UserName\":\"" + userName + "\"," +
-                            "\"Email\":\"" + eMail + "\"," +
-                            "\"Password\":\"" + password + "\"," +
-                            "\"NameSurname\":\"" + nameSurname + "\"," +
-                            "\"Phone\":\"" + phone + "\"," +
-                            "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
-                            "\"CompanyName\":\"" + companyName + "\"," +
-                            "\"Created_At\":\"" + created_at + "\"" +
-                            "}";
+                if(Util.checkUpperCase(kullaniciAdiText.getText())) {
+                    Util.showErrorMessage("Kullanıcı adında büyük harf kullanılamaz !");
+                    kullaniciAdiText.clear();
+                }
+            } else {
+                String created_at = Util.getCurrentDateTime();
 
-            sendRegisterRequest(registerJsonBody, stage);
+                String registerJsonBody =
+                        "{" +
+                                "\"Role\":\"" + userRole + "\"," +
+                                "\"UserName\":\"" + userName + "\"," +
+                                "\"Email\":\"" + eMail + "\"," +
+                                "\"Password\":\"" + password + "\"," +
+                                "\"NameSurname\":\"" + nameSurname + "\"," +
+                                "\"Phone\":\"" + phone + "\"," +
+                                "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
+                                "\"CompanyName\":\"" + companyName + "\"," +
+                                "\"Created_At\":\"" + created_at + "\"" +
+                                "}";
+
+                sendRegisterRequest(registerJsonBody, stage);
+            }
         } else {
             Util.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
         }
