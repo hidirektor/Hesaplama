@@ -151,8 +151,11 @@ public class HidrosParcaController {
         loadManometre();
         loadBasincSalteri();
         loadGenelParcalar();
-        loadGenelParcalarYatay();
-        loadGenelParcalarDikey();
+        if(Objects.equals(HidrosController.secilenTankTipi, "Yatay")) {
+            loadGenelParcalarYatay();
+        } else {
+            loadGenelParcalarDikey();
+        }
         loadESPHaricTam();
         if(Objects.equals(secilenPlatform, "Özel")) {
             loadOzelTekValf();
