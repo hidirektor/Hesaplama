@@ -14,7 +14,7 @@
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="498.0" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.ParcaController">
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0">
         <children>
-            <ComboBox fx:id="basincSalteriComboBox" layoutX="337.0" layoutY="72.0" onAction="#basincSalteriPressed" prefHeight="25.0" prefWidth="127.0" />
+            <ComboBox fx:id="basincSalteriComboBox" disable="true" layoutX="337.0" layoutY="72.0" onAction="#basincSalteriPressed" prefHeight="25.0" prefWidth="127.0" />
             <Text fill="#B7C3D7" layoutX="250.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Basınç Şalteri:" />
          <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="473.0" layoutY="1.0" onMouseClicked="#popupKapat" pickOnBounds="true" preserveRatio="true">
              <image>

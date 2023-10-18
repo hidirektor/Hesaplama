@@ -26,6 +26,9 @@ public class ParcaController {
     private ComboBox<String> basincSalteriComboBox;
 
     @FXML
+    private ComboBox<String> manometreComboBox;
+
+    @FXML
     private TableView<ParcaTableData> parcaListesiTablo;
 
     @FXML
@@ -38,10 +41,19 @@ public class ParcaController {
     private TableColumn<ParcaTableData, String> adet;
 
     private String basincSalteriDurumu = null;
+    private String manometreDurumu = null;
 
     public void initialize() {
-        basincSalteriComboBox.getItems().clear();
-        basincSalteriComboBox.getItems().addAll("Var", "Yok");
+        if(KlasikController.secilenSogutmaDurumu.equals("Var")) {
+            manometreComboBox.setDisable(true);
+            basincSalteriComboBox.setDisable(false);
+            basincSalteriComboBox.getItems().clear();
+            basincSalteriComboBox.getItems().addAll("Var", "Yok");
+        } else {
+            manometreComboBox.setDisable(false);
+            manometreComboBox.getItems().clear();
+            manometreComboBox.getItems().addAll("Var", "Yok");
+        }
 
         malzemeKodu.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         secilenMalzeme.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
@@ -110,6 +122,17 @@ public class ParcaController {
     }
 
     @FXML
+    public void manometrePressed() {
+        basincSalteriComboBox.getItems().clear();
+        basincSalteriComboBox.getItems().addAll("Var", "Yok");
+
+        if(manometreComboBox.getValue() != null) {
+            manometreDurumu = manometreComboBox.getValue();
+        }
+        basincSalteriComboBox.setDisable(false);
+    }
+
+    @FXML
     public void basincSalteriPressed() {
         basincSalteriDurumu = String.valueOf(basincSalteriComboBox.getValue());
         tabloGuncelle();
@@ -129,7 +152,12 @@ public class ParcaController {
         loadPompaParca();
         loadKaplinParca();
         loadValfBlokParca();
-        loadBasincSalteriParca();
+        if(basincSalteriDurumu.equals("Var")) {
+            loadBasincSalteriParca();
+        }
+        if(KlasikController.secilenSogutmaDurumu.contains("Yok") && manometreDurumu.equals("Var")) {
+            loadManometre();
+        }
         loadBasincStandart();
         if(KlasikController.secilenSogutmaDurumu.contains("Var")) {
             loadSogutucuParca();
@@ -653,6 +681,17 @@ public class ParcaController {
             String malzemeKodu = veriParcalari[0];
             String secilenMalzeme = veriParcalari[1];
             String adet = veriParcalari[2];
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadManometre() {
+        if(Objects.equals(manometreDurumu, "Var")) {
+            String malzemeKodu = "150-51-10-802";
+            String secilenMalzeme = "Manometre";
+            String adet = "1";
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
