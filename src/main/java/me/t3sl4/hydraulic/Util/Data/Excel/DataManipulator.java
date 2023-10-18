@@ -122,6 +122,7 @@ public class DataManipulator {
     public HashMap<String, HashMap<String, String>> hidrosTamParcaYatay = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosTamParcaDikey = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosTamParcaESPHaric = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosTamParcaOzelTekValf = new HashMap<>();
 
     public DataManipulator() {
         //TODO

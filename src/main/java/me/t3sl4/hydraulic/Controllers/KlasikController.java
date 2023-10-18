@@ -1173,7 +1173,7 @@ public class KlasikController {
             kilitMotorVeriText.setVisible(true);
             kilitMotorVeriText.setText("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa);
             kilitliBlokVeri2Text.setVisible(true);
-            kilitliBlokVeri2Text.setText("Kilitli Blok: \n" + secilenValfTipi);
+            kilitliBlokVeri2Text.setText(secilenValfTipi);
         } else {
             imageTextDisable(1);
             kampanaOlcuText.setVisible(true);
@@ -1196,7 +1196,7 @@ public class KlasikController {
                 kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN");
             }
             kilitliBlokVeriText.setVisible(true);
-            kilitliBlokVeriText.setText("Kilitli Blok: \n" + secilenValfTipi);
+            kilitliBlokVeriText.setText(secilenValfTipi);
         }
     }
 

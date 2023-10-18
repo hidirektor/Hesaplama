@@ -1595,8 +1595,8 @@ public class Util {
         }
     }
 
-    public static void readExcel4ParcaHidrosTamESPHaric(String filePath, DataManipulator dataManipulator) {
-        String sheetName = "Parça-Hidros-Tam-ESP-Hariç";
+    public static void readExcel4ParcaHidrosTamESPYok(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-ESP-Yok";
 
         try(InputStream file = new FileInputStream(filePath)) {
             Workbook workbook = WorkbookFactory.create(file);
@@ -1622,6 +1622,42 @@ public class Util {
                     innerMap.put("B", value1);
                     innerMap.put("C", value2);
                     dataManipulator.hidrosTamParcaESPHaric.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4ParcaHidrosOzelTekValf(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Özel-Tek-Valf";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = "";
+                if(valueCell2 != null) {
+                    value2 = String.valueOf(valueCell2.getNumericCellValue());
+                }
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosTamParcaOzelTekValf.put(key, innerMap);
                 }
             }
 
@@ -1707,7 +1743,8 @@ public class Util {
         readExcel4ParcaHidrosTam(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosTamYatay(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosTamDikey(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosTamESPHaric(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosTamESPYok(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosOzelTekValf(Launcher.excelDBPath, dataManipulator);
         initMotorYukseklik();
     }
 
@@ -1902,8 +1939,6 @@ public class Util {
     }
 
     public static boolean checkUpperCase(String controlText) {
-        //TODO
-        //Büyük harf kontrolü
         for(int i=0; i<controlText.length(); i++) {
             char controlChar = controlText.charAt(i);
             if(Character.isUpperCase(controlChar)) {

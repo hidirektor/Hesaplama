@@ -141,17 +141,22 @@ public class HidrosParcaController {
     }
 
     private void tabloGuncelle() {
+        String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
         loadMotorParca();
         loadPompaParca();
         loadPompaCivataParca();
         loadTankTipi();
         loadPlatformTipi();
+        loadYagMiktari();
         loadManometre();
         loadBasincSalteri();
         loadGenelParcalar();
         loadGenelParcalarYatay();
         loadGenelParcalarDikey();
         loadESPHaricTam();
+        if(Objects.equals(secilenPlatform, "Özel")) {
+            loadOzelTekValf();
+        }
     }
 
     private void loadMotorParca() {
@@ -296,7 +301,7 @@ public class HidrosParcaController {
             //Yürüyüş için parça listesi eklenecek
         } else if(Objects.equals(secilenPlatform, "Özel")) {
             ArrayList<String> eklenecekParcaListesi = new ArrayList<>();
-            if(!Objects.equals(HidrosController.secilenBirinciValf, "Yok") && !Objects.equals(HidrosController.secilenIkinciValf, "Yok")) {
+            if(!Objects.equals(HidrosController.secilenIkinciValf, "Yok")) {
                 String eklenecekBirinciValfKodu = "";
                 String eklenecekBirinciValfIsim = "";
                 String eklenecekBirinciValfAdet = "";
@@ -362,7 +367,7 @@ public class HidrosParcaController {
                     ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                     parcaListesiTablo.getItems().add(data);
                 }
-            } else if(!Objects.equals(HidrosController.secilenBirinciValf, "Yok") && Objects.equals(HidrosController.secilenIkinciValf, "Yok")) {
+            } else {
                 String eklenecekBirinciValfKodu = "";
                 String eklenecekBirinciValfIsim = "";
                 String eklenecekBirinciValfAdet = "";
@@ -484,5 +489,45 @@ public class HidrosParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         }
+    }
+
+    private void loadOzelTekValf() {
+        for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosTamParcaOzelTekValf.entrySet()) {
+            HashMap<String, String> innerMap = entry.getValue();
+
+            String malzemeKodu = innerMap.get("B");
+            String secilenMalzeme = entry.getKey();
+            String adet = Util.float2String(innerMap.get("C"));
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadYagMiktari() {
+        String tankKapasite = HidrosController.secilenTankKapasitesi.trim();
+
+        String malzemeKodu = "150-53-04-002";
+        String malzemeAdi = "HİDROLİK YAĞ SHELL TELLUS S2 M46";
+        String adet = "";
+
+        if(tankKapasite.equals("2 Lt")) {
+            adet = "2 Lt";
+        } else if(tankKapasite.equals("4 Lt")) {
+            adet = "4 Lt";
+        } else if(tankKapasite.equals("6 Lt")) {
+            adet = "6 Lt";
+        } else if(tankKapasite.equals("8 Lt")) {
+            adet = "8 Lt";
+        } else if(tankKapasite.equals("10 Lt")) {
+            adet = "10 Lt";
+        } else if(tankKapasite.equals("12 Lt")) {
+            adet = "12 Lt";
+        } else if(tankKapasite.equals("20 Lt")) {
+            adet = "20 Lt";
+        }
+
+        ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
+        parcaListesiTablo.getItems().add(data);
     }
 }
