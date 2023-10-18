@@ -148,6 +148,10 @@ public class HidrosParcaController {
         loadPlatformTipi();
         loadManometre();
         loadBasincSalteri();
+        loadGenelParcalar();
+        loadGenelParcalarYatay();
+        loadGenelParcalarDikey();
+        loadESPHaricTam();
     }
 
     private void loadMotorParca() {
@@ -423,6 +427,62 @@ public class HidrosParcaController {
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadGenelParcalar() {
+        for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosTamParca.entrySet()) {
+            HashMap<String, String> innerMap = entry.getValue();
+
+            String malzemeKodu = innerMap.get("B");
+            String secilenMalzeme = entry.getKey();
+            String adet = Util.float2String(innerMap.get("C"));
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadGenelParcalarYatay() {
+        for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosTamParcaYatay.entrySet()) {
+            HashMap<String, String> innerMap = entry.getValue();
+
+            String malzemeKodu = innerMap.get("B");
+            String secilenMalzeme = entry.getKey();
+            String adet = Util.float2String(innerMap.get("C"));
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadGenelParcalarDikey() {
+        for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosTamParcaDikey.entrySet()) {
+            HashMap<String, String> innerMap = entry.getValue();
+
+            String malzemeKodu = innerMap.get("B");
+            String secilenMalzeme = entry.getKey();
+            String adet = Util.float2String(innerMap.get("C"));
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadESPHaricTam() {
+        String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
+
+        if(!Objects.equals(secilenPlatform, "ESP")) {
+            for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosTamParcaESPHaric.entrySet()) {
+                HashMap<String, String> innerMap = entry.getValue();
+
+                String malzemeKodu = innerMap.get("B");
+                String secilenMalzeme = entry.getKey();
+                String adet = Util.float2String(innerMap.get("C"));
+
+                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+                parcaListesiTablo.getItems().add(data);
+            }
         }
     }
 }
