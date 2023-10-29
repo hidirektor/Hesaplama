@@ -134,10 +134,11 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        beniHatirlaKontrol();
-        girisKontrol();
-        beniHatirla();
-        if(!Util.netIsAvailable()) {
+        if(Util.netIsAvailable()) {
+            beniHatirlaKontrol();
+            girisKontrol();
+            beniHatirla();
+        } else {
             Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
         }
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
@@ -148,8 +149,6 @@ public class LoginController implements Initializable {
 
     public void beniHatirla() {
         beniHatirla.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
-
             if (newValue) {
                 String getCipheredPassUrl = BASE_URL + getPassURLPrefix;
                 String jsonGetCipheredPassBody = "{\"Password\": \"" + txtPassword.getText() + "\"}";
@@ -163,7 +162,7 @@ public class LoginController implements Initializable {
                         String password = passObject.getString("pass");
                         if (!username.isEmpty() && password != null && !password.isEmpty()) {
                             try {
-                                FileWriter writer = new FileWriter(loginFilePath + "loginInfo.txt");
+                                FileWriter writer = new FileWriter(Launcher.loginFilePath + "loginInfo.txt");
                                 writer.write(username + "\n");
                                 writer.write(password);
                                 writer.close();
@@ -183,7 +182,7 @@ public class LoginController implements Initializable {
                     }
                 });
             } else {
-                File loginFile = new File(loginFilePath + "loginInfo.txt");
+                File loginFile = new File(Launcher.loginFilePath + "loginInfo.txt");
                 if (loginFile.exists()) {
                     if (loginFile.delete()) {
                         System.out.println("loginInfo.txt dosyası silindi.");
@@ -196,8 +195,7 @@ public class LoginController implements Initializable {
     }
 
     private void removeBeniHatirla() {
-        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
-        File loginFile = new File(loginFilePath + "loginInfo.txt");
+        File loginFile = new File(Launcher.loginFilePath + "loginInfo.txt");
         if(loginFile.exists()) {
             loginFile.delete();
         }
@@ -205,8 +203,7 @@ public class LoginController implements Initializable {
     }
 
     private void beniHatirlaKontrol() {
-        String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
-        File loginFile = new File(loginFilePath + "loginInfo.txt");
+        File loginFile = new File(Launcher.loginFilePath + "loginInfo.txt");
 
         if (loginFile.exists()) {
             beniHatirla.setSelected(true);
@@ -219,15 +216,21 @@ public class LoginController implements Initializable {
         String kullaniciAdi = null;
         String sifre = null;
         if (beniHatirla.isSelected()) {
-            String loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
-            try (BufferedReader reader = new BufferedReader(new FileReader(loginFilePath))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(Launcher.loginFilePath))) {
                 kullaniciAdi = reader.readLine();
                 sifre = reader.readLine();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);
             }
 
-            directLogin(kullaniciAdi, sifre);
+            if(Util.netIsAvailable()) {
+                directLogin(kullaniciAdi, sifre);
+            } else {
+                File forceDelete = new File(Launcher.loginFilePath);
+                forceDelete.delete();
+                beniHatirla.setSelected(false);
+                Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin !");
+            }
         }
     }
 

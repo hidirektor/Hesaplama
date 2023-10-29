@@ -1808,14 +1808,14 @@ public class Util {
             Launcher.pdfFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
             Launcher.excelFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/partList/";
             Launcher.dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
-            Launcher.loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/";
+            Launcher.loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
             Launcher.excelDBPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
         } else {
             Launcher.profilePhotoLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
             Launcher.pdfFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
             Launcher.excelFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/partList/";
             Launcher.dataFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/data/";
-            Launcher.loginFilePath = "/home/" + System.getProperty("user.name") + "/OnderGrup/login/";
+            Launcher.loginFilePath = "/home/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
             Launcher.excelDBPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
         }
     }
