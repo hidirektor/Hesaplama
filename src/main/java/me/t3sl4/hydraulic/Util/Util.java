@@ -600,7 +600,7 @@ public class Util {
 
             int okunacakSatir = 1;
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 12; i++) {
                 for (int j = 0; j < 1; j++) {
                     String temp = "";
                     String temp1 = "", temp2 = "", temp3 = "";
@@ -627,35 +627,52 @@ public class Util {
                             temp += temp1 + ";" + temp2 + ";" + temp3;
 
                             if (i == 0) {
+                                dataManipulator.parcaListesiMotor202.add(temp);
+                                okunacakSatir++;
+                                break;
+                            } else if (i == 1) {
+                                dataManipulator.parcaListesiMotor3.add(temp);
+                                okunacakSatir++;
+                                break;
+                            } else if (i == 2) {
                                 dataManipulator.parcaListesiMotor4.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 1) {
+                                break;
+                            } else if (i == 3) {
                                 dataManipulator.parcaListesiMotor55.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 2) {
+                                break;
+                            } else if (i == 4) {
                                 dataManipulator.parcaListesiMotor55Kompakt.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 3) {
+                            } else if (i == 5) {
                                 dataManipulator.parcaListesiMotor75Kompakt.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 4) {
+                                break;
+                            } else if (i == 6) {
                                 dataManipulator.parcaListesiMotor11.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 5) {
+                                break;
+                            } else if (i == 7) {
                                 dataManipulator.parcaListesiMotor11Kompakt.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 6) {
+                                break;
+                            } else if (i == 8) {
                                 dataManipulator.parcaListesiMotor15.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 7) {
+                                break;
+                            } else if (i == 9) {
                                 dataManipulator.parcaListesiMotor185.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 8) {
+                                break;
+                            } else if (i == 10) {
                                 dataManipulator.parcaListesiMotor22.add(temp);
                                 okunacakSatir++;
-                            } else if (i == 9) {
+                                break;
+                            } else if (i == 11) {
                                 dataManipulator.parcaListesiMotor37.add(temp);
                                 okunacakSatir++;
+                                break;
                             }
                         }
                     } else {
@@ -1668,6 +1685,8 @@ public class Util {
     }
 
     public static void initMotorYukseklik() {
+        Util.dataManipulator.motorYukseklikVerileri.add("345 mm"); //2.2 kW
+        Util.dataManipulator.motorYukseklikVerileri.add("345 mm"); //3 kW
         Util.dataManipulator.motorYukseklikVerileri.add("345 mm");
         Util.dataManipulator.motorYukseklikVerileri.add("375 mm");
         Util.dataManipulator.motorYukseklikVerileri.add("365 mm");

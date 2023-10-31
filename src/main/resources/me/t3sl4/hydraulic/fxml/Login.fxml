@@ -73,7 +73,7 @@
                 </Label>
             </children>
         </Pane>
-        <Label alignment="CENTER" layoutX="394.0" layoutY="466.0" onMouseClicked="#openGithub" prefHeight="23.0" prefWidth="110.0" text="Designed and Coded by H.İ.D." textFill="#5b5a5a" AnchorPane.bottomAnchor="14.0">
+        <Label fx:id="codedBy" alignment="CENTER" layoutX="394.0" layoutY="466.0" onMouseClicked="#openGithub" prefHeight="30.0" prefWidth="130.0" textAlignment="CENTER" textFill="#5b5a5a" AnchorPane.bottomAnchor="14.0">
             <font>
                 <Font name="Segoe UI" size="12.0" />
             </font>

@@ -66,6 +66,8 @@ public class DataManipulator {
     public ArrayList<String> parcaListesiPompa494 = new ArrayList<>();
     public ArrayList<String> parcaListesiPompa561 = new ArrayList<>();
 
+    public ArrayList<String> parcaListesiMotor202 = new ArrayList<>();
+    public ArrayList<String> parcaListesiMotor3 = new ArrayList<>();
     public ArrayList<String> parcaListesiMotor4 = new ArrayList<>();
     public ArrayList<String> parcaListesiMotor55 = new ArrayList<>();
     public ArrayList<String> parcaListesiMotor55Kompakt = new ArrayList<>();

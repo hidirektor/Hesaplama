@@ -33,6 +33,9 @@ public class LoginController implements Initializable {
     private Label lblErrors;
 
     @FXML
+    private Label codedBy;
+
+    @FXML
     private TextField txtUsername;
 
     @FXML
@@ -134,6 +137,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        codedBy.setText("Designed and Coded by\nHalil İbrahim Direktör");
         if(Util.netIsAvailable()) {
             beniHatirlaKontrol();
             girisKontrol();
