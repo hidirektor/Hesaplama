@@ -32,6 +32,9 @@ public class HidrosParcaController {
     private ComboBox<String> manometreComboBox;
 
     @FXML
+    private ComboBox<String> elPompasiComboBox;
+
+    @FXML
     private TableView<ParcaTableData> parcaListesiTablo;
 
     @FXML
@@ -45,6 +48,7 @@ public class HidrosParcaController {
 
     private String basincSalteriDurumu = null;
     private String manometreDurumu = null;
+    private String elPompasiDurumu = null;
 
     public void initialize() {
         manometreComboBox.getItems().clear();
@@ -124,11 +128,25 @@ public class HidrosParcaController {
         if(manometreComboBox.getValue() != null) {
             manometreDurumu = manometreComboBox.getValue();
         }
+
+        basincSalteriComboBox.setDisable(false);
     }
 
     @FXML
     public void basincSalteriPressed() {
-        basincSalteriDurumu = String.valueOf(basincSalteriComboBox.getValue());
+        elPompasiComboBox.getItems().clear();
+        elPompasiComboBox.getItems().addAll("Var", "Yok");
+
+        if(basincSalteriComboBox.getValue() != null) {
+            basincSalteriDurumu = basincSalteriComboBox.getValue();
+        }
+
+        elPompasiComboBox.setDisable(false);
+    }
+
+    @FXML
+    public void elPompasiPressed() {
+        elPompasiDurumu = String.valueOf(elPompasiComboBox.getValue());
         tabloGuncelle();
     }
 
@@ -150,6 +168,7 @@ public class HidrosParcaController {
         loadYagMiktari();
         loadManometre();
         loadBasincSalteri();
+        loadElPompasiParca();
         loadGenelParcalar();
         if(Objects.equals(HidrosController.secilenTankTipi, "Yatay")) {
             loadGenelParcalarYatay();
@@ -435,6 +454,23 @@ public class HidrosParcaController {
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
+        }
+    }
+
+    private void loadElPompasiParca() {
+        if(Objects.equals(elPompasiDurumu, "Var")) {
+            String malzemeKodu = "150-51-05-007";
+            String secilenMalzeme = "A11 EL POMPALI BLOK V BLOK";
+            String adet = "1";
+
+            String malzemeKodu2 = "150-51-05-059";
+            String secilenMalzeme2 = "A01 BLOK";
+            String adet2 = "1";
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            ParcaTableData data2 = new ParcaTableData(malzemeKodu2, secilenMalzeme2, adet2);
+            parcaListesiTablo.getItems().add(data);
+            parcaListesiTablo.getItems().add(data2);
         }
     }
 

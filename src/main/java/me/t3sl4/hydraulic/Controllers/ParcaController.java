@@ -29,6 +29,9 @@ public class ParcaController {
     private ComboBox<String> manometreComboBox;
 
     @FXML
+    private ComboBox<String> elPompasiComboBox;
+
+    @FXML
     private TableView<ParcaTableData> parcaListesiTablo;
 
     @FXML
@@ -42,6 +45,7 @@ public class ParcaController {
 
     private String basincSalteriDurumu = null;
     private String manometreDurumu = null;
+    private String elPompasiDurumu = null;
 
     public void initialize() {
         if(KlasikController.secilenSogutmaDurumu.equals("Var")) {
@@ -134,15 +138,26 @@ public class ParcaController {
 
     @FXML
     public void basincSalteriPressed() {
-        basincSalteriDurumu = String.valueOf(basincSalteriComboBox.getValue());
+        elPompasiComboBox.getItems().clear();
+        elPompasiComboBox.getItems().addAll("Var", "Yok");
+
+        if(basincSalteriComboBox.getValue() != null) {
+            basincSalteriDurumu = basincSalteriComboBox.getValue();
+        }
+        elPompasiComboBox.setDisable(false);
+    }
+
+    @FXML
+    public void elPompasiPressed() {
+        elPompasiDurumu = String.valueOf(elPompasiComboBox.getValue());
         tabloGuncelle();
     }
 
     private void comboBoxListener() {
-        basincSalteriComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+        elPompasiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             parcaListesiTablo.getItems().clear();
             tabloGuncelle();
-            basincSalteriDurumu = String.valueOf(newValue);
+            elPompasiDurumu = String.valueOf(newValue);
         });
     }
 
@@ -158,6 +173,11 @@ public class ParcaController {
         if(KlasikController.secilenSogutmaDurumu.contains("Yok") && manometreDurumu.equals("Var")) {
             loadManometre();
         }
+
+        if(elPompasiDurumu.equals("Var")) {
+            loadElPompasiParca();
+        }
+
         loadBasincStandart();
         if(KlasikController.secilenSogutmaDurumu.contains("Var")) {
             loadSogutucuParca();
@@ -654,6 +674,17 @@ public class ParcaController {
                 ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                 parcaListesiTablo.getItems().add(data);
             }
+        }
+    }
+
+    private void loadElPompasiParca() {
+        if(Objects.equals(elPompasiDurumu, "Var")) {
+            String malzemeKodu = "150-51-10-086";
+            String secilenMalzeme = "Oleocon Hidrolik El Pompası OHP Serisi 501-t";
+            String adet = "1";
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
         }
     }
 
