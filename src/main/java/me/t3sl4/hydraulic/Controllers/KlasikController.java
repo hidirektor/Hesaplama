@@ -192,6 +192,7 @@ public class KlasikController {
     public static String secilenMotor = null;
     public static int secilenKampana = 0;
     public static String secilenPompa = null;
+    public static double secilenPompaVal = 0;
     public int girilenTankKapasitesiMiktari = 0;
     public String secilenHidrolikKilitDurumu = null;
     public static String secilenValfTipi = null;
@@ -411,7 +412,7 @@ public class KlasikController {
             System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + Util.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)");
             System.out.println("yK += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk)");
 
-            float secilenPompaVal = Float.parseFloat(secPmp[0]);
+            secilenPompaVal = Double.parseDouble(secPmp[0]);
             //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
             //kilitli blok ölçüsü olarak: X'e +100 olacak
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
@@ -670,8 +671,6 @@ public class KlasikController {
         if(valfTipiComboBox.getValue() != null) {
             secilenValfTipi = valfTipiComboBox.getValue();
             System.out.println("Seçilen Valf Tipi: " + secilenValfTipi);
-            String[] secPmp = secilenPompa.split(" cc");
-            float secilenPompaVal = Float.parseFloat(secPmp[0]);
             System.out.println("Seçilen Pompa Değeri: " + secilenPompaVal);
 
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && secilenPompaVal > 28.1) {
@@ -931,7 +930,7 @@ public class KlasikController {
                 String[] oldSecPmp = oldValue.split(" cc");
                 float oldSecilenPompaVal = Float.parseFloat(oldSecPmp[0]);
                 String[] secPmp = secilenPompa.split(" cc");
-                float secilenPompaVal = Float.parseFloat(secPmp[0]);
+                secilenPompaVal = Float.parseFloat(secPmp[0]);
                 if(oldSecilenPompaVal >= 28.1 && secilenPompaVal < 28.1) {
                     disableMotorPompa(1);
                     imageTextDisable(0);
@@ -958,8 +957,6 @@ public class KlasikController {
         hidrolikKilitComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenHidrolikKilitDurumu = newValue;
             if(secilenPompa != null) {
-                String[] secPmp = secilenPompa.split(" cc");
-                float secilenPompaVal = Float.parseFloat(secPmp[0]);
                 if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                     System.out.println("Secilen Pompa: " + secilenPompaVal);
                     if(secilenPompaVal > 28.1) {
@@ -981,8 +978,6 @@ public class KlasikController {
         valfTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenValfTipi = newValue;
             if(secilenPompa != null) {
-                String[] secPmp = secilenPompa.split(" cc");
-                float secilenPompaVal = Float.parseFloat(secPmp[0]);
                 if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                     if(secilenPompaVal > 28.1) {
                         initKilitMotor();
@@ -1159,15 +1154,9 @@ public class KlasikController {
             kampanaVeri2Text.setVisible(true);
             kucukHalkaCap2Text.setVisible(true);
             buyukHalkaCap2Text.setVisible(true);
-            if(secilenKampana == 250) {
-                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 173);
-            } else if(secilenKampana == 300) {
-                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 236);
-            } else if(secilenKampana == 350) {
-                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 263);
-            } else if(secilenKampana == 400) {
-                kampanaVeri2Text.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN");
-            }
+
+           showKampanaText(2);
+
             kilitMotorIcOlcuText.setVisible(true);
             kilitMotorIcOlcuText.setText("Boğaz: Ø200\nKesim: Ø115");
             kilitMotorVeriText.setVisible(true);
@@ -1186,17 +1175,41 @@ public class KlasikController {
             kampanaVeriText.setVisible(true);
             kucukHalkaCapText.setVisible(true);
             buyukHalkaCapText.setVisible(true);
-            if(secilenKampana == 250) {
-                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 173);
-            } else if(secilenKampana == 300) {
-                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 236);
-            } else if(secilenKampana == 350) {
-                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 263);
-            } else if(secilenKampana == 400) {
-                kampanaVeriText.setText("Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN");
-            }
+            showKampanaText(1);
             kilitliBlokVeriText.setVisible(true);
             kilitliBlokVeriText.setText(secilenValfTipi);
+        }
+    }
+
+    private void showKampanaText(int type) {
+        String kampanaText = "";
+
+        if(secilenPompaVal >= 33.3) {
+            if(secilenKampana == 250) {
+                kampanaText = "Kampana: 2K-" + secilenKampana + "\nKesim Çapı: Ø" + 173;
+            } else if(secilenKampana == 300) {
+                kampanaText = "Kampana: 2K-" + secilenKampana + "\nKesim Çapı: Ø" + 236;
+            } else if(secilenKampana == 350) {
+                kampanaText = "Kampana: 2K-" + secilenKampana + "\nKesim Çapı: Ø" + 263;
+            } else if(secilenKampana == 400) {
+                kampanaText = "Kampana: 2K-" + secilenKampana + "\nKesim Çapı: Ø" + " NaN";
+            }
+        } else {
+            if(secilenKampana == 250) {
+                kampanaText = "Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 173;
+            } else if(secilenKampana == 300) {
+                kampanaText = "Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 236;
+            } else if(secilenKampana == 350) {
+                kampanaText = "Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + 263;
+            } else if(secilenKampana == 400) {
+                kampanaText = "Kampana: " + secilenKampana + "\nKesim Çapı: Ø" + " NaN";
+            }
+        }
+
+        if(type == 1) {
+            kampanaVeriText.setText(kampanaText);
+        } else {
+            kampanaVeri2Text.setText(kampanaText);
         }
     }
 

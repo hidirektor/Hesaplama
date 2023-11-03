@@ -541,8 +541,8 @@ public class ParcaController {
         String[] secPmp = KlasikController.secilenPompa.split(" cc");
         float secilenPompaVal = Float.parseFloat(secPmp[0]);
 
-        if(secilenPompaVal <= 28.1) {
-            if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
+        if(secilenPompaVal < 33.3) {
+            if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin1PN28) {
                     String[] veriParcalari = veri.split(";");
 
@@ -553,7 +553,7 @@ public class ParcaController {
                     ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                     parcaListesiTablo.getItems().add(data);
                 }
-            } else if(Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "7.5 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
+            } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin1PN38) {
                     String[] veriParcalari = veri.split(";");
 
@@ -564,7 +564,7 @@ public class ParcaController {
                     ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                     parcaListesiTablo.getItems().add(data);
                 }
-            } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37")) {
+            } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37 kW")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin1PN42) {
                     String[] veriParcalari = veri.split(";");
 
@@ -577,7 +577,7 @@ public class ParcaController {
                 }
             }
         } else {
-            if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
+            if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin2PN28) {
                     String[] veriParcalari = veri.split(";");
 
@@ -588,7 +588,7 @@ public class ParcaController {
                     ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                     parcaListesiTablo.getItems().add(data);
                 }
-            } else if(Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "7.5 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
+            } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin2PN38) {
                     String[] veriParcalari = veri.split(";");
 
@@ -599,7 +599,7 @@ public class ParcaController {
                     ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                     parcaListesiTablo.getItems().add(data);
                 }
-            } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37")) {
+            } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37 kW")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin2PN42) {
                     String[] veriParcalari = veri.split(";");
 
