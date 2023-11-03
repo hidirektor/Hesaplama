@@ -87,7 +87,7 @@ public class ParcaController {
     @FXML
     public void exportExcelProcess() {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
-        String excelFileName = HidrosController.girilenSiparisNumarasi + ".xlsx";
+        String excelFileName = KlasikController.girilenSiparisNumarasi + ".xlsx";
 
         String desktopPath = Paths.get(System.getProperty("user.home"), "Desktop").toString();
         excelFileName = Paths.get(desktopPath, excelFileName).toString();
