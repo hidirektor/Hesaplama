@@ -45,10 +45,14 @@ public class DataManipulator {
 
 
     //Parça Listesi için değişkenler:
-    public ArrayList<String> parcaListesiKampana250 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana300 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana350 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana400 = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana2501k = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana3001k = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana3501k = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana4001k = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana2502k = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana3002k = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana3502k = new ArrayList<>();
+    public ArrayList<String> parcaListesiKampana4002k = new ArrayList<>();
 
     public ArrayList<String> parcaListesiPompa95 = new ArrayList<>();
     public ArrayList<String> parcaListesiPompa119 = new ArrayList<>();

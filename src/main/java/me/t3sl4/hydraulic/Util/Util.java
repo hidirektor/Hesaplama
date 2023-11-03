@@ -430,8 +430,8 @@ public class Util {
         }
     }
 
-    public static void readExcel4ParcaListesiKampana(String filePath, DataManipulator dataManipulator) {
-        String sheetName = "Parça-Kampana";
+    public static void readExcel4ParcaListesiKampana1k(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Kampana-1K";
 
         try(InputStream file = new FileInputStream(filePath)) {
             Workbook workbook = WorkbookFactory.create(file);
@@ -468,16 +468,79 @@ public class Util {
                             temp += temp1 + ";" + temp2 + ";" + temp3;
 
                             if (i == 0) {
-                                dataManipulator.parcaListesiKampana250.add(temp);
+                                dataManipulator.parcaListesiKampana2501k.add(temp);
                                 okunacakSatir++;
                             } else if (i == 1) {
-                                dataManipulator.parcaListesiKampana300.add(temp);
+                                dataManipulator.parcaListesiKampana3001k.add(temp);
                                 okunacakSatir++;
                             } else if (i == 2) {
-                                dataManipulator.parcaListesiKampana350.add(temp);
+                                dataManipulator.parcaListesiKampana3501k.add(temp);
                                 okunacakSatir++;
                             } else if (i == 3) {
-                                dataManipulator.parcaListesiKampana400.add(temp);
+                                dataManipulator.parcaListesiKampana4001k.add(temp);
+                                okunacakSatir++;
+                            }
+                        }
+                    } else {
+                        okunacakSatir++;
+                    }
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4ParcaListesiKampana2k(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Kampana-2K";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row variableValuesRow;
+
+            int okunacakSatir = 1;
+
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 5; j++) {
+                    String temp = "";
+                    String temp1 = "", temp2 = "", temp3 = "";
+                    variableValuesRow = sheet.getRow(okunacakSatir);
+
+                    if (variableValuesRow != null) {
+                        if (variableValuesRow.getCell(1) != null) {
+                            if (isNumeric(variableValuesRow.getCell(1))) {
+                                double temp1Value = variableValuesRow.getCell(1).getNumericCellValue();
+                                temp1 = String.valueOf((int) temp1Value);
+                            } else {
+                                temp1 = String.valueOf(variableValuesRow.getCell(1));
+                            }
+                        }
+                        if (variableValuesRow.getCell(2) != null) {
+                            temp2 = String.valueOf(variableValuesRow.getCell(2));
+                        }
+                        if (variableValuesRow.getCell(3) != null) {
+                            double temp3Value = variableValuesRow.getCell(3).getNumericCellValue();
+                            temp3 = String.valueOf((int) temp3Value);
+                        }
+
+                        if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
+                            temp += temp1 + ";" + temp2 + ";" + temp3;
+
+                            if (i == 0) {
+                                dataManipulator.parcaListesiKampana2502k.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 1) {
+                                dataManipulator.parcaListesiKampana3002k.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 2) {
+                                dataManipulator.parcaListesiKampana3502k.add(temp);
+                                okunacakSatir++;
+                            } else if (i == 3) {
+                                dataManipulator.parcaListesiKampana4002k.add(temp);
                                 okunacakSatir++;
                             }
                         }
@@ -1732,7 +1795,8 @@ public class Util {
         readExcel4KilitPompa(Launcher.excelDBPath, dataManipulator);
         readExcel4ValfTipi1(Launcher.excelDBPath, dataManipulator);
         readExcel4ValfTipi2(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiKampana(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiKampana1k(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaListesiKampana2k(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaListesiPompa(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaListesiMotor(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaListesiKaplin(Launcher.excelDBPath, dataManipulator);

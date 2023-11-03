@@ -19,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ParcaController {
@@ -185,50 +186,39 @@ public class ParcaController {
     }
 
     private void loadKampanaParca() {
-        if(KlasikController.secilenKampana == 250) {
-            for (String veri : Util.dataManipulator.parcaListesiKampana250) {
-                String[] veriParcalari = veri.split(";");
+        ArrayList<String> loadingList = new ArrayList<>();
 
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
+        if(KlasikController.secilenPompaVal >= 33.3) {
+            if(KlasikController.secilenKampana == 250) {
+                loadingList = Util.dataManipulator.parcaListesiKampana2502k;
+            } else if(KlasikController.secilenKampana == 300) {
+                loadingList = Util.dataManipulator.parcaListesiKampana3002k;
+            } else if(KlasikController.secilenKampana == 350) {
+                loadingList = Util.dataManipulator.parcaListesiKampana3502k;
+            } else if(KlasikController.secilenKampana == 400) {
+                loadingList = Util.dataManipulator.parcaListesiKampana4002k;
             }
-        } else if(KlasikController.secilenKampana == 300) {
-            for (String veri : Util.dataManipulator.parcaListesiKampana300) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
+        } else {
+            if(KlasikController.secilenKampana == 250) {
+                loadingList = Util.dataManipulator.parcaListesiKampana2501k;
+            } else if(KlasikController.secilenKampana == 300) {
+                loadingList = Util.dataManipulator.parcaListesiKampana3001k;
+            } else if(KlasikController.secilenKampana == 350) {
+                loadingList = Util.dataManipulator.parcaListesiKampana3501k;
+            } else if(KlasikController.secilenKampana == 400) {
+                loadingList = Util.dataManipulator.parcaListesiKampana4001k;
             }
-        } else if(KlasikController.secilenKampana == 350) {
-            for (String veri : Util.dataManipulator.parcaListesiKampana350) {
-                String[] veriParcalari = veri.split(";");
+        }
 
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
+        for (String veri : loadingList) {
+            String[] veriParcalari = veri.split(";");
 
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
-        } else if(KlasikController.secilenKampana == 400) {
-            for (String veri : Util.dataManipulator.parcaListesiKampana400) {
-                String[] veriParcalari = veri.split(";");
+            String malzemeKodu = veriParcalari[0];
+            String secilenMalzeme = veriParcalari[1];
+            String adet = veriParcalari[2];
 
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
         }
     }
 
