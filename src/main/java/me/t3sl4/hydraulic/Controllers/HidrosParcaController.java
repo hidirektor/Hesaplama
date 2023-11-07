@@ -160,6 +160,7 @@ public class HidrosParcaController {
 
     private void tabloGuncelle() {
         String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
+        loadKabinKodu();
         loadMotorParca();
         loadPompaParca();
         loadPompaCivataParca();
@@ -566,6 +567,27 @@ public class HidrosParcaController {
             adet = "20 Lt";
         }
 
+        ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
+        parcaListesiTablo.getItems().add(data);
+    }
+
+    private void loadKabinKodu() {
+        String malzemeKodu = null;
+        String malzemeAdi = null;
+        String adet = null;
+        if(Objects.equals(HidrosController.kabinKodu, "KD-8 Engelli")) {
+            malzemeKodu = "151-06-05-061";
+            malzemeAdi = "KD-8 Engelli Kabin";
+            adet = "1";
+        } else if(Objects.equals(HidrosController.kabinKodu, "KD-10 (CARREFOUR)")) {
+            malzemeKodu = "151-06-05-103";
+            malzemeAdi = "KD-10 (CARREFOUR) Kabin";
+            adet = "1";
+        } else if(Objects.equals(HidrosController.kabinKodu, "KDB-20 (BALİNA)")) {
+            malzemeKodu = "150-52-19-011";
+            malzemeAdi = "KDB-20 (BALİNA) Kabin";
+            adet = "1";
+        }
         ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
         parcaListesiTablo.getItems().add(data);
     }

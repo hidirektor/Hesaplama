@@ -103,6 +103,7 @@ public class HidrosController {
     public static String secilenInisTipi = null;
     public static String secilenPlatformTipi = null;
     public static String secilenIkinciValf = null;
+    public static String kabinKodu = null;
 
     public boolean hesaplamaBitti = false;
 
@@ -699,49 +700,61 @@ public class HidrosController {
         String motorKW = secilenMotorGucu.trim();
         String tankKapasite = secilenTankKapasitesi.trim();
 
-
-
         if(Objects.equals(motorKW, "0.55 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
             } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                kabinKodu = "KD-10 (CARREFOUR)";
             }
         } else if(Objects.equals(motorKW, "0.75 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
             } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                kabinKodu = "KD-10 (CARREFOUR)";
             }
         } else if(Objects.equals(motorKW, "1.1 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
             } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                kabinKodu = "KD-10 (CARREFOUR)";
             }
         } else if(Objects.equals(motorKW, "1.5 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
             } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                kabinKodu = "KD-10 (CARREFOUR)";
             }
         } else if(Objects.equals(motorKW, "2.2 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
             } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                kabinKodu = "KD-10 (CARREFOUR)";
             }
         } else if(Objects.equals(motorKW, "3 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
             } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                kabinKodu = "KD-10 (CARREFOUR)";
             }
         } else if(Objects.equals(motorKW, "4 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
             } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KDB-20 (BALİNA)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103\nKabin Kodu: 150-52-19-011");
+                kabinKodu = "KDB-20 (BALİNA)";
             }
         }
     }
