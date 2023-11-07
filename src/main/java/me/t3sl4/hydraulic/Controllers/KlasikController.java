@@ -193,7 +193,7 @@ public class KlasikController {
     public static int secilenKampana = 0;
     public static String secilenPompa = null;
     public static double secilenPompaVal = 0;
-    public int girilenTankKapasitesiMiktari = 0;
+    public static int girilenTankKapasitesiMiktari = 0;
     public String secilenHidrolikKilitDurumu = null;
     public static String secilenValfTipi = null;
     public String secilenKilitMotor = null;

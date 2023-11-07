@@ -699,26 +699,50 @@ public class HidrosController {
         String motorKW = secilenMotorGucu.trim();
         String tankKapasite = secilenTankKapasitesi.trim();
 
-        if(Objects.equals(motorKW, "0.55 kW") && Objects.equals(tankKapasite, "4 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
-        } else if(Objects.equals(motorKW, "0.75 kW") && Objects.equals(tankKapasite, "4 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
-        } else if(Objects.equals(motorKW, "0.75 kW") && Objects.equals(tankKapasite, "6 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
-        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "6 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli");
-        } else if(Objects.equals(motorKW, "0.55 kW") && Objects.equals(tankKapasite, "10 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
-        } else if(Objects.equals(motorKW, "1.1 kW") && Objects.equals(tankKapasite, "8 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
-        } else if(Objects.equals(motorKW, "1.1 kW") && Objects.equals(tankKapasite, "10 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
-        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "12 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
-        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "8 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
-        } else if(Objects.equals(motorKW, "1.5 kW") && Objects.equals(tankKapasite, "10 Lt")) {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (Carrefour)");
+
+
+        if(Objects.equals(motorKW, "0.55 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+            }
+        } else if(Objects.equals(motorKW, "0.75 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+            }
+        } else if(Objects.equals(motorKW, "1.1 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+            }
+        } else if(Objects.equals(motorKW, "1.5 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+            }
+        } else if(Objects.equals(motorKW, "2.2 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+            }
+        } else if(Objects.equals(motorKW, "3 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+            }
+        } else if(Objects.equals(motorKW, "4 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640");
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR) Engelli\nÖlçü: 390x400x840");
+            }
         }
     }
 }

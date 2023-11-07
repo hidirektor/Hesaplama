@@ -151,10 +151,10 @@ public class HidrosParcaController {
     }
 
     private void comboBoxListener() {
-        basincSalteriComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+        elPompasiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             parcaListesiTablo.getItems().clear();
             tabloGuncelle();
-            basincSalteriDurumu = String.valueOf(newValue);
+            elPompasiDurumu = String.valueOf(newValue);
         });
     }
 

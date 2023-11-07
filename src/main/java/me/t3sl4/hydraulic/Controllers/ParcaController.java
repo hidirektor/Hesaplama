@@ -183,6 +183,7 @@ public class ParcaController {
         if(KlasikController.secilenSogutmaDurumu.contains("Var")) {
             loadSogutucuParca();
         }
+        loadYagMiktari();
     }
 
     private void loadKampanaParca() {
@@ -543,7 +544,7 @@ public class ParcaController {
                     ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                     parcaListesiTablo.getItems().add(data);
                 }
-            } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
+            } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin1PN38) {
                     String[] veriParcalari = veri.split(";");
 
@@ -578,7 +579,7 @@ public class ParcaController {
                     ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                     parcaListesiTablo.getItems().add(data);
                 }
-            } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
+            } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
                 for (String veri : Util.dataManipulator.parcaListesiKaplin2PN38) {
                     String[] veriParcalari = veri.split(";");
 
@@ -739,5 +740,14 @@ public class ParcaController {
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         }
+    }
+
+    private void loadYagMiktari() {
+        String malzemeKodu = "150-53-04-002";
+        String malzemeAdi = "HİDROLİK YAĞ SHELL TELLUS S2 M46";
+        String adet = KlasikController.girilenTankKapasitesiMiktari + " Lt";
+
+        ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
+        parcaListesiTablo.getItems().add(data);
     }
 }
