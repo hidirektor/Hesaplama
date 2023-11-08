@@ -982,7 +982,7 @@ public class KlasikController {
             secilenValfTipi = newValue;
             if(secilenPompa != null) {
                 if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
-                    if(secilenPompaVal > 28.1) {
+                    if(secilenPompaVal >= 28.1) {
                         initKilitMotor();
                     } else {
                         sogutmaComboBox.setDisable(false);
@@ -1272,7 +1272,13 @@ public class KlasikController {
 
         } else {
             if(secilenHidrolikKilitDurumu.contains("Var")) {
-                if(secilenSogutmaDurumu.contains("Yok")) {
+                if(secilenPompaVal >= 33.3) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/sogutuculuotuzuc.png")));
+                    sonucTankGorsel.setImage(image);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-27.5);
+                    derinlikSonucText.setLayoutX(635.0);
+                } else {
                     if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
                         sonucTankGorsel.setImage(image);
@@ -1280,20 +1286,10 @@ public class KlasikController {
                         derinlikSonucText.setRotate(-27.5);
                         derinlikSonucText.setLayoutX(635.0);
                     }
-                    /*image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/sogutuculuotuzuc.png")));
-                    sonucTankGorsel.setImage(image);
-                    genislikSonucText.setLayoutY(230.0);
-                    genislikSonucText.setRotate(30.5);
-                    derinlikSonucText.setRotate(-30.5);
-                    derinlikSonucText.setLayoutX(635.0);*/
                 }
             } else {
                 if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
-                    sonucTankGorsel.setImage(image);
-                    genislikSonucText.setRotate(27.5);
-                    derinlikSonucText.setRotate(-27.5);
-                    derinlikSonucText.setLayoutX(635.0);
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/cifthiz.png")));
                 } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/tekhiz.png")));
                     sonucTankGorsel.setImage(image);
