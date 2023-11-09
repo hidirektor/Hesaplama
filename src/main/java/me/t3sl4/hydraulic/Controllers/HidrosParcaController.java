@@ -270,7 +270,7 @@ public class HidrosParcaController {
                         parcaListesiTablo.getItems().add(data);
                     }
                 } else if(Objects.equals(secilenInis, "İnişte Çift Hız")) {
-                    for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosDikeyCiftHizParca.entrySet()) {
+                    for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosDikeyCiftHizParcaESP.entrySet()) {
                         HashMap<String, String> innerMap = entry.getValue();
 
                         String malzemeKodu = innerMap.get("B");
@@ -296,7 +296,7 @@ public class HidrosParcaController {
                         parcaListesiTablo.getItems().add(data);
                     }
                 } else if(Objects.equals(secilenInis, "İnişte Çift Hız")) {
-                    for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosYatayCiftHizParca.entrySet()) {
+                    for (Map.Entry<String, HashMap<String, String>> entry : Util.dataManipulator.hidrosYatayCiftHizParcaESP.entrySet()) {
                         HashMap<String, String> innerMap = entry.getValue();
 
                         String malzemeKodu = innerMap.get("B");

@@ -1498,6 +1498,138 @@ public class Util {
         }
     }
 
+    public static void readExcel4ParcaHidrosValfDikeyCiftESP(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Dikey-ÇiftESP";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosDikeyCiftHizParcaESP.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4ParcaHidrosValfDikeyTekESP(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Dikey-Tek";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosDikeyTekHizParcaESP.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4ParcaHidrosValfYatayTekESP(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Yatay-Tek";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosYatayTekHizParcaESP.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4ParcaHidrosValfYatayCiftESP(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Parça-Hidros-Valf-Yatay-ÇiftESP";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell keyCell = row.getCell(0);
+                Cell valueCell1 = row.getCell(1);
+                Cell valueCell2 = row.getCell(2);
+
+                String key = keyCell.getStringCellValue();
+                String value1 = valueCell1.getStringCellValue();
+                String value2 = String.valueOf(valueCell2.getNumericCellValue());
+
+                if(!key.isEmpty()) {
+                    HashMap<String, String> innerMap = new HashMap<>();
+                    innerMap.put("B", value1);
+                    innerMap.put("C", value2);
+                    dataManipulator.hidrosYatayCiftHizParcaESP.put(key, innerMap);
+                }
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
     public static void readExcel4ParcaHidrosPlatformDevirmeli(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Parça-Hidros-Platform-Devirmeli";
 
@@ -1821,6 +1953,10 @@ public class Util {
         readExcel4ParcaHidrosValfDikeyTek(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosValfYatayTek(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosValfYatayCift(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfDikeyCiftESP(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfDikeyTekESP(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfYatayTekESP(Launcher.excelDBPath, dataManipulator);
+        readExcel4ParcaHidrosValfYatayCiftESP(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosPlatformDevirmeli(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosGenel(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosTam(Launcher.excelDBPath, dataManipulator);
