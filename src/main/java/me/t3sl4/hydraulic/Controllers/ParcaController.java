@@ -166,6 +166,7 @@ public class ParcaController {
         loadMotorParca();
         loadKampanaParca();
         loadPompaParca();
+        loadKabinKodu();
         loadKaplinParca();
         loadValfBlokParca();
         if(basincSalteriDurumu.equals("Var")) {
@@ -184,6 +185,35 @@ public class ParcaController {
             loadSogutucuParca();
         }
         loadYagMiktari();
+    }
+
+    private void loadKabinKodu() {
+        String malzemeKodu = null;
+        String malzemeAdi = null;
+        String adet = "1";
+
+        if(Objects.equals(KlasikController.atananKabinFinal, "KD 40")) {
+            malzemeKodu = "---";
+            malzemeAdi = "KD40 Kabin";
+        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 70")) {
+            malzemeKodu = "---";
+            malzemeAdi = "KD70 Kabin";
+        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 125")) {
+            malzemeKodu = "---";
+            malzemeAdi = "KD125 Kabin";
+        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 1620")) {
+            malzemeKodu = "---";
+            malzemeAdi = "KD1620 Kabin";
+        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 2530")) {
+            malzemeKodu = "---";
+            malzemeAdi = "KD2530 Kabin";
+        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 3540")) {
+            malzemeKodu = "---";
+            malzemeAdi = "KD3540 Kabin";
+        }
+
+        ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
+        parcaListesiTablo.getItems().add(data);
     }
 
     private void loadKampanaParca() {

@@ -214,6 +214,9 @@ public class KlasikController {
     boolean pdfSucc = false;
     boolean excelSucc = false;
 
+    public static String atananKabinFinal = "";
+    public static String gecisOlculeriFinal = "";
+
     public void initialize() {
         Util.textFilter(tankKapasitesiTextField);
         defineKabinOlcu();
@@ -389,6 +392,8 @@ public class KlasikController {
             String atananKabin = "KD SOĞUTMA";
             String gecisOlculeri = "1000x600x350";
             kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+            atananKabinFinal = atananKabin;
+            gecisOlculeriFinal = gecisOlculeri;
 
             System.out.println("--------Hesaplama Bitti--------");
             System.out.println("------------(Sonuç)------------");
@@ -583,6 +588,8 @@ public class KlasikController {
         }
 
         kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        atananKabinFinal = atananKabin;
+        gecisOlculeriFinal = gecisOlculeri;
         //int secilenMotorIndeks = motorComboBox.getSelectionModel().getSelectedIndex();
         //int motorYukseklikDegeri = Integer.parseInt(motorYukseklikVerileri.get(secilenMotorIndeks));
 
@@ -962,7 +969,7 @@ public class KlasikController {
             if(secilenPompa != null) {
                 if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                     System.out.println("Secilen Pompa: " + secilenPompaVal);
-                    if(secilenPompaVal > 28.1) {
+                    if(secilenPompaVal >= 33.3) {
                         initValf(0);
                     } else {
                         initValf(1);
