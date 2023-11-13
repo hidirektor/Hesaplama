@@ -193,10 +193,10 @@ public class ParcaController {
         String adet = "1";
 
         if(Objects.equals(KlasikController.atananKabinFinal, "KD 40")) {
-            malzemeKodu = "---";
+            malzemeKodu = "151-06-05-059";
             malzemeAdi = "KD40 Kabin";
         } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 70")) {
-            malzemeKodu = "---";
+            malzemeKodu = "151-06-05-068";
             malzemeAdi = "KD70 Kabin";
         } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 125")) {
             malzemeKodu = "---";

@@ -2166,4 +2166,10 @@ public class Util {
         }
         return false;
     }
+
+    public static double string2Double(String inputVal) {
+        String[] secPmp = inputVal.split(" cc");
+
+        return Double.parseDouble(secPmp[0]);
+    }
 }

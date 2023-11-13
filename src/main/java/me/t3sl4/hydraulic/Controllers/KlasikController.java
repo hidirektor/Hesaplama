@@ -192,7 +192,7 @@ public class KlasikController {
     public static String secilenMotor = null;
     public static int secilenKampana = 0;
     public static String secilenPompa = null;
-    public static double secilenPompaVal = 0;
+    public static double secilenPompaVal;
     public static int girilenTankKapasitesiMiktari = 0;
     public String secilenHidrolikKilitDurumu = null;
     public static String secilenValfTipi = null;
@@ -367,7 +367,6 @@ public class KlasikController {
         int yK = 0;
         System.out.println("--------Hesaplama Başladı--------Ø");
         secilenKampana = kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
-        String[] secPmp = secilenPompa.split(" cc");
         if(Objects.equals(secilenSogutmaDurumu, "Var")) {
             //TODO
             /*
@@ -417,7 +416,7 @@ public class KlasikController {
             System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + Util.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)");
             System.out.println("yK += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk) + " + Util.dataManipulator.kampanaBoslukY + " (Kampana Boşluk)");
 
-            secilenPompaVal = Double.parseDouble(secPmp[0]);
+            secilenPompaVal = Util.string2Double(secilenPompa);
             //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
             //kilitli blok ölçüsü olarak: X'e +100 olacak
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
@@ -680,7 +679,7 @@ public class KlasikController {
     public void valfTipiPressed() {
         if(valfTipiComboBox.getValue() != null) {
             secilenValfTipi = valfTipiComboBox.getValue();
-            System.out.println("Seçilen Valf Tipi: " + secilenValfTipi);
+            secilenPompaVal = Util.string2Double(secilenPompa);
             System.out.println("Seçilen Pompa Değeri: " + secilenPompaVal);
 
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && secilenPompaVal > 28.1) {
@@ -937,10 +936,8 @@ public class KlasikController {
         pompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenPompa = newValue;
             if(oldValue != null && secilenPompa != null) {
-                String[] oldSecPmp = oldValue.split(" cc");
-                float oldSecilenPompaVal = Float.parseFloat(oldSecPmp[0]);
-                String[] secPmp = secilenPompa.split(" cc");
-                secilenPompaVal = Float.parseFloat(secPmp[0]);
+                double oldSecilenPompaVal = Util.string2Double(oldValue);
+                secilenPompaVal = Util.string2Double(secilenPompa);
                 if(oldSecilenPompaVal >= 28.1 && secilenPompaVal < 28.1) {
                     disableMotorPompa(1);
                     imageTextDisable(0);
@@ -972,7 +969,7 @@ public class KlasikController {
                     if(secilenPompaVal >= 33.3) {
                         initValf(0);
                     } else {
-                        initValf(1);
+                        initValf(0);
                     }
                 } else {
                     initValf(0);
