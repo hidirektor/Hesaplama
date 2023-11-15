@@ -248,17 +248,28 @@ public class KlasikController {
 
             tabloGuncelle();
             Image image;
-            if(secilenKilitMotor != null) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/normal.png")));
+            boolean newTextStat = false;
+            if(secilenSogutmaDurumu != null && Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/sogutmaKilit.png")));
+                newTextStat = true;
             } else {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/kilitMotor.png")));
+                if(secilenKilitMotor != null) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/normal.png")));
+                } else {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/kilitMotor.png")));
+                }
+                newTextStat = false;
             }
             tankGorselLoad();
 
             sonucKapakImage.setImage(image);
             parcaListesiButton.setDisable(false);
             exportButton.setDisable(false);
-            imageTextEnable(x, y);
+            if(!newTextStat) {
+                imageTextEnable(x, y);
+            } else {
+                //Yeni görsel yazıları
+            }
             hesaplamaBitti = true;
         }
     }
