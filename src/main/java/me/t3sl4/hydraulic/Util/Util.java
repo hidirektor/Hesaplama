@@ -64,30 +64,17 @@ public class Util {
     }
 
     public static void filePath() {
-        File profilePhotoTestFile = new File(Launcher.profilePhotoLocalPath);
-        File pdfFileTestFile = new File(Launcher.pdfFileLocalPath);
-        File excelFileTestFile = new File(Launcher.excelFileLocalPath);
-        File dataFileTestFile = new File(Launcher.dataFileLocalPath);
-        File loginFileTestFile = new File(Launcher.loginFilePath);
+        createDirectory(Launcher.profilePhotoLocalPath);
+        createDirectory(Launcher.pdfFileLocalPath);
+        createDirectory(Launcher.excelFileLocalPath);
+        createDirectory(Launcher.dataFileLocalPath);
+        createDirectory(Launcher.loginFilePath);
+    }
 
-        if(!profilePhotoTestFile.exists()) {
-            profilePhotoTestFile.mkdirs();
-        }
-
-        if(!pdfFileTestFile.exists()) {
-            pdfFileTestFile.mkdirs();
-        }
-
-        if(!excelFileTestFile.exists()) {
-            excelFileTestFile.mkdirs();
-        }
-
-        if (!dataFileTestFile.exists()) {
-            dataFileTestFile.mkdirs();
-        }
-
-        if (!loginFileTestFile.exists()) {
-            loginFileTestFile.mkdirs();
+    private static void createDirectory(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
         }
     }
 
@@ -2021,22 +2008,34 @@ public class Util {
         return System.getProperty("os.name");
     }
 
-    public static void changeDataStoragePath() {
-        if(getOperatingSystem().contains("Windows")) {
-            Launcher.profilePhotoLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
-            Launcher.pdfFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
-            Launcher.excelFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/partList/";
-            Launcher.dataFileLocalPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/";
-            Launcher.loginFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
-            Launcher.excelDBPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
-        } else {
-            Launcher.profilePhotoLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
-            Launcher.pdfFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/hydraulicUnits/";
-            Launcher.excelFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/partList/";
-            Launcher.dataFileLocalPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/data/";
-            Launcher.loginFilePath = "/home/" + System.getProperty("user.name") + "/OnderGrup/login/loginInfo.txt";
-            Launcher.excelDBPath = "/home/" + System.getProperty("user.name") + "/OnderGrup/data/Hidrolik.xlsx";
+    public static void createMainDirectory() {
+        File mainDir = new File(Launcher.mainPath);
+        if (!mainDir.exists()) {
+            if (mainDir.mkdirs()) {
+                System.out.println("Main directory created: " + Launcher.mainPath);
+            } else {
+                System.err.println("Failed to create main directory: " + Launcher.mainPath);
+                System.err.println("Absolute path: " + mainDir.getAbsolutePath());
+                System.err.println("Writable: " + mainDir.canWrite());
+                System.err.println("Readable: " + mainDir.canRead());
+                System.err.println("Executable: " + mainDir.canExecute());
+            }
         }
+    }
+
+    public static void changeDataStoragePath() {
+        if (getOperatingSystem().contains("Windows")) {
+            Launcher.mainPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/";
+        } else {
+            Launcher.mainPath = "/Users/" + System.getProperty("user.name") + "/OnderGrup/";
+        }
+
+        Launcher.profilePhotoLocalPath = Launcher.mainPath + "profilePhoto/";
+        Launcher.pdfFileLocalPath = Launcher.mainPath + "hydraulicUnits/";
+        Launcher.excelFileLocalPath = Launcher.mainPath + "partList/";
+        Launcher.dataFileLocalPath = Launcher.mainPath + "data/";
+        Launcher.loginFilePath = Launcher.mainPath + "login/loginInfo.txt";
+        Launcher.excelDBPath = Launcher.mainPath + "data/Hidrolik.xlsx";
     }
 
     public static void textFilter(javafx.scene.control.TextField filteredField) {

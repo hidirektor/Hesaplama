@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -27,8 +28,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        fileCopy();
         Util.filePath();
+        fileCopy();
 
         Util.excelDataRead();
 
@@ -54,31 +55,17 @@ public class Main extends Application {
 
     public void fileCopy() {
         Path targetPath = Paths.get(Launcher.excelDBPath);
+        System.out.println("Target path: " + targetPath.toString());
 
-        if (!Files.exists(targetPath)) {
-            try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
-                if (inputStream != null) {
-                    Files.copy(inputStream, targetPath);
-                    System.out.println("Hidrolik.xlsx kopyalandı: " + Launcher.excelDBPath);
-                } else {
-                    System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
+            if (inputStream != null) {
+                Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Hidrolik.xlsx kopyalandı: " + targetPath);
+            } else {
+                System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
             }
-        } else {
-            File removedFile = new File(String.valueOf(targetPath));
-            removedFile.delete();
-            try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
-                if (inputStream != null) {
-                    Files.copy(inputStream, targetPath);
-                    System.out.println("Hidrolik.xlsx kopyalandı: " + Launcher.excelDBPath);
-                } else {
-                    System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

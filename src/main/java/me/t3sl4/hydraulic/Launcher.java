@@ -3,6 +3,8 @@ package me.t3sl4.hydraulic;
 import me.t3sl4.hydraulic.MainModel.Main;
 import me.t3sl4.hydraulic.Util.Util;
 
+import java.io.File;
+
 public class Launcher {
     public static String BASE_URL = "http://85.95.231.92:3000";
 
@@ -32,6 +34,7 @@ public class Launcher {
     public static String uploadExcelURLPrefix = "/api/fileSystem/uploadExcel";
     public static String downloadPhotoURLPrefix = "/api/fileSystem/downloadPhoto";
 
+    public static String mainPath;
     public static String profilePhotoLocalPath;
     public static String pdfFileLocalPath;
     public static String excelFileLocalPath;
@@ -41,6 +44,7 @@ public class Launcher {
 
     public static void main(String[] args) {
         Util.changeDataStoragePath();
+        Util.createMainDirectory();
         Main.main(args);
     }
 }
