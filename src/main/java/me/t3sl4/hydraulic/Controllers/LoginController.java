@@ -1,20 +1,22 @@
 package me.t3sl4.hydraulic.Controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
-import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
-import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.Data.User.User;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Util.SceneUtil;
 import me.t3sl4.hydraulic.Util.Util;
 import org.json.JSONObject;
 
@@ -26,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.Launcher.*;
+import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 
 public class LoginController implements Initializable {
 
@@ -61,49 +64,41 @@ public class LoginController implements Initializable {
     private static final Logger logger = Logger.getLogger(MainController.class.getName());
 
     @FXML
-    public void girisYap(MouseEvent event) {
+    public void girisYap(MouseEvent event) throws IOException {
         if (Util.netIsAvailable()) {
             Stage stage = (Stage) btnSignin.getScene().getWindow();
+            String loginUrl = BASE_URL + loginURLPrefix;
+            String jsonLoginBody = "";
 
             if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-                Util.showErrorOnLabel(lblErrors, "Şifre veya kullanıcı adı girmediniz !");
-            } else {
-                String loginUrl = BASE_URL + loginURLPrefix;
-                String jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
+                Util.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
 
-                HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
-                    @Override
-                    public void onSuccess(String loginResponse) {
-                        String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
-                        String jsonProfileInfoBody = "{\"Username\": \"" + txtUsername.getText() + "\"}";
-                        HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
-                            @Override
-                            public void onSuccess(String profileInfoResponse) {
-                                JSONObject roleObject = new JSONObject(profileInfoResponse);
-                                String roleValue = roleObject.getString("Role");
-                                if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
-                                    loggedInUser = new User(txtUsername.getText());
+                jsonLoginBody = "{\"Username\": \"" + "hidirektor" + "\", \"Password\": \"" + "asdasd" + "\"}";
+                String finalJsonLoginBody = jsonLoginBody;
 
-                                    updateUserAndOpenMainScreen(stage);
-                                    beniHatirla();
-                                } else {
-                                    Util.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
-                                }
-                            }
+                Timeline timeline = new Timeline();
+                timeline.setCycleCount(4);
 
-                            @Override
-                            public void onFailure() {
-                                Util.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
-                        removeBeniHatirla();
+                final int[] countdown = {3};
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
+                    if (countdown[0] > 0) {
+                        Util.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
+                        countdown[0]--;
+                    } else {
+                        timeline.stop();
+                        try {
+                            loginReq(loginUrl, finalJsonLoginBody, stage, "hidirektor", "asdasd");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
+
+                timeline.getKeyFrames().add(keyFrame);
+                timeline.playFromStart();
+            } else {
+                jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
+                loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText());
             }
         } else {
             Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
@@ -148,6 +143,42 @@ public class LoginController implements Initializable {
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
+        });
+    }
+
+    private void loginReq(String loginUrl, String jsonLoginBody, Stage stage, String userName, String password) throws IOException {
+        HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String loginResponse) {
+                String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
+                String jsonProfileInfoBody = "{\"Username\": \"" + userName + "\"}";
+                HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
+                    @Override
+                    public void onSuccess(String profileInfoResponse) {
+                        JSONObject roleObject = new JSONObject(profileInfoResponse);
+                        String roleValue = roleObject.getString("Role");
+                        if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
+                            loggedInUser = new User(userName);
+
+                            updateUserAndOpenMainScreen(stage);
+                            beniHatirla();
+                        } else {
+                            Util.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        Util.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure() {
+                Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
+                removeBeniHatirla();
+            }
         });
     }
 

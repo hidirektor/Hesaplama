@@ -43,6 +43,10 @@ public class Launcher {
     public static void main(String[] args) {
         Util.changeDataStoragePath();
         Util.createMainDirectory();
+        if(System.getProperty("os.name").contains("Windows")) {
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.verbose", "true");
+        }
         Main.main(args);
     }
 }
