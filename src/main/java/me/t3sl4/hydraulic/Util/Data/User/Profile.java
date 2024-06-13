@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 
 import java.io.File;
@@ -14,8 +15,7 @@ import static me.t3sl4.hydraulic.Launcher.*;
 
 public class Profile {
     public static void downloadAndSetProfilePhoto(String username, Circle secilenFoto, ImageView profilePhotoImageView) {
-        String localFilePath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/profilePhoto/";
-        String localFileFinalPath = localFilePath + username + ".jpg";
+        String localFileFinalPath = Launcher.profilePhotoLocalPath + username + ".jpg";
 
         File localFile = new File(localFileFinalPath);
         if (localFile.exists()) {
@@ -40,7 +40,7 @@ public class Profile {
     }
 
     private static void setProfilePhoto(String username, Circle secilenFoto, ImageView profilePhotoImageView) {
-        String photoPath = "C:\\Users\\" + System.getProperty("user.name") + "\\OnderGrup\\profilePhoto\\" + username + ".jpg";
+        String photoPath = profilePhotoLocalPath + username + ".jpg";
         File photoFile = new File(photoPath);
 
         if (photoFile.exists()) {

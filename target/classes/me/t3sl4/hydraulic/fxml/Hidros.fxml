@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="klasikVBox" prefHeight="620.0" prefWidth="592" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.HidrosController">
+    <children>
+        <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+            <children>
+                <TextField fx:id="siparisNumarasi" layoutX="116.0" layoutY="33.0" onKeyTyped="#siparisNumarasiEntered" promptText="Sipariş Numarası" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
+                <ComboBox fx:id="motorComboBox" disable="true" layoutX="25.0" layoutY="86.0" onAction="#motorTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Motor Voltajı" />
+                <Button fx:id="hesaplaButton" layoutX="19.0" layoutY="328.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
+                <Button fx:id="temizleButton" layoutX="87.0" layoutY="328.0" mnemonicParsing="false" onAction="#temizleFunc" style="-fx-background-color: #1761ab;" text="Temizle" />
+                <TableView fx:id="sonucTablo" layoutY="363.0" prefHeight="214.0" prefWidth="414.0">
+                    <columns>
+                        <TableColumn fx:id="sonucTabloSatir1" editable="false" prefWidth="207.0" sortable="false" />
+                        <TableColumn fx:id="sonucTabloSatir2" editable="false" prefWidth="207.0" sortable="false" />
+                    </columns>
+                </TableView>
+                <Text fill="#B7C3D7" layoutX="71.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Tipi" />
+                <Text fill="#B7C3D7" layoutX="60.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor Voltaj" />
+                <Text fill="#B7C3D7" layoutX="163.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
+                <Text fill="#B7C3D7" layoutX="137.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası" />
+                <Text fill="#B7C3D7" layoutX="241.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Valf Tipi" />
+                <Text fill="#B7C3D7" layoutX="241.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Valf Tipi" />
+                <Text fill="#B7C3D7" layoutX="60.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Platform Tipi" />
+                <Text fx:id="kullanilacakKabin" fill="#B7C3D7" layoutX="430.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
+                <Text fx:id="sonucAnaLabelTxt" fill="#B7C3D7" layoutX="450.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası: ">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Text>
+                <Button fx:id="exportButton" disable="true" layoutX="152.0" layoutY="328.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
+                <Button fx:id="parcaListesiButton" disable="true" layoutX="239.0" layoutY="328.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
+
+                <Button fx:id="kaydetButton" layoutX="327.0" layoutY="328.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Kaydet" />
+                <StackPane layoutX="421.0" layoutY="85.0" prefHeight="369.0" prefWidth="365.0">
+                    <children>
+                        <ImageView fx:id="sonucTankGorsel" fitHeight="399.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />
+                    </children>
+                </StackPane>
+            <ComboBox fx:id="pompaComboBox" disable="true" layoutX="113.0" layoutY="136.0" onAction="#pompaPressed" prefHeight="18.0" prefWidth="137.0" promptText="Pompa" />
+            <ComboBox fx:id="tankTipiComboBox" disable="true" layoutX="26.0" layoutY="185.0" onAction="#tankTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Tank Tipi" />
+            <ComboBox fx:id="birinciValfComboBox" disable="true" layoutX="200.0" layoutY="238.0" onAction="#birinciValfPressed" prefHeight="18.0" prefWidth="137.0" promptText="1. Valf Tipi" />
+            <ComboBox fx:id="ikinciValfComboBox" disable="true" layoutX="200.0" layoutY="291.0" onAction="#ikinciValfPressed" prefHeight="18.0" prefWidth="137.0" promptText="2. Valf Tipi" />
+            <ComboBox fx:id="platformTipiComboBox" disable="true" layoutX="26.0" layoutY="237.0" onAction="#platformTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Platform Tipi" />
+            <ComboBox fx:id="motorGucuComboBox" disable="true" layoutX="191.0" layoutY="86.0" onAction="#motorGucuPressed" prefHeight="18.0" prefWidth="137.0" promptText="Motor Gücü" />
+            <Text fill="#B7C3D7" layoutX="228.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor Gücü" />
+            <Text fill="#B7C3D7" layoutX="228.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Kapasitesi" />
+            <ComboBox fx:id="tankKapasitesiComboBox" disable="true" layoutX="200.0" layoutY="185.0" onAction="#tankKapasitesiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Tank Kapasitesi" />
+            <Text fill="#B7C3D7" layoutX="61.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="İniş Metodu" />
+            <ComboBox fx:id="inisTipiComboBox" disable="true" layoutX="26.0" layoutY="290.0" onAction="#inisTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="İniş Metodu" />
+            <Text fx:id="kullanilacakKabinText" fill="WHITE" layoutX="484.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanılacak Kabin: " textAlignment="CENTER" visible="false">
+               <font>
+                  <Font size="12.0" />
+               </font></Text>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
