@@ -46,6 +46,8 @@ public class Launcher {
         if(System.getProperty("os.name").contains("Windows")) {
             System.setProperty("prism.order", "sw");
             System.setProperty("prism.verbose", "true");
+        } else {
+            System.setProperty("CG_PDF_VERBOSE", "1");
         }
         Main.main(args);
     }
