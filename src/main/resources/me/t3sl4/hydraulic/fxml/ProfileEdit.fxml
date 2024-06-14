@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="620.0" prefWidth="790.0" style="-fx-background-color: #ffffff;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Controllers.ProfileEditController">
+<AnchorPane prefHeight="620.0" prefWidth="790.0" style="-fx-background-color: #ffffff;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Screens.Controllers.ProfileEditController">
 
     <children>
         <JFXTextField fx:id="isimSoyisimText" focusColor="#48a5ea" layoutX="93.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="İsim Soyisim" />
