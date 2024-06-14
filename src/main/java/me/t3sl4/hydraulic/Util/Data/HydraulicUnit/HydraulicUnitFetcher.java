@@ -8,7 +8,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.t3sl4.hydraulic.Launcher.*;
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.orderNumbersURLPrefix;
 
 public class HydraulicUnitFetcher {
     private static final String API_URL = BASE_URL + orderNumbersURLPrefix;

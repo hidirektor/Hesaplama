@@ -1,6 +1,7 @@
 package me.t3sl4.hydraulic.Controllers;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -18,30 +19,27 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Util.Component.FilterSwitch;
-import me.t3sl4.hydraulic.Util.Util;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Data.HydraulicUnit.HydraulicInfo;
+import me.t3sl4.hydraulic.Util.Data.User.Profile;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.SceneUtil;
+import me.t3sl4.hydraulic.Util.Util;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.logging.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import me.t3sl4.hydraulic.Util.Data.User.Profile;
 import static me.t3sl4.hydraulic.Launcher.*;
 import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 import static me.t3sl4.hydraulic.Util.Util.openURL;

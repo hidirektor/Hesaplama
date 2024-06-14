@@ -3,22 +3,23 @@ package me.t3sl4.hydraulic.Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.SceneUtil;
+import me.t3sl4.hydraulic.Util.Util;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static me.t3sl4.hydraulic.Launcher.*;
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.updatePassURLPrefix;
 
 public class ResetPasswordEnterNewPasswordController implements Initializable {
 

@@ -17,17 +17,17 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.MainModel.Main;
-import me.t3sl4.hydraulic.Util.Util;
-import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.Data.User.Profile;
+import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Util.Util;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 import static me.t3sl4.hydraulic.Launcher.*;
+import static me.t3sl4.hydraulic.MainModel.Main.loggedInUser;
 
 public class ProfileEditController {
     @FXML

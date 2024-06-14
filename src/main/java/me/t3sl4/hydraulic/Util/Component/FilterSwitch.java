@@ -1,7 +1,8 @@
 package me.t3sl4.hydraulic.Util.Component;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;

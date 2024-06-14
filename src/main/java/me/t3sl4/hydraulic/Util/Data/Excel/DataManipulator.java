@@ -3,7 +3,6 @@ package me.t3sl4.hydraulic.Util.Data.Excel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class DataManipulator {
     public int kampanaBoslukX;

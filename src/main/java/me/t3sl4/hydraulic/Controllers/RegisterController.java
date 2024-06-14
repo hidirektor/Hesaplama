@@ -1,9 +1,5 @@
 package me.t3sl4.hydraulic.Controllers;
 
-import java.io.*;
-import java.net.*;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,9 +18,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Util.SceneUtil;
+import me.t3sl4.hydraulic.Util.Util;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Launcher.*;
 

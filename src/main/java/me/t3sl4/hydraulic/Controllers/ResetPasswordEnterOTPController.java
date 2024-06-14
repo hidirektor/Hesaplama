@@ -11,8 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.Util.Util;
 import me.t3sl4.hydraulic.Util.SceneUtil;
+import me.t3sl4.hydraulic.Util.Util;
 
 import java.io.IOException;
 import java.net.URL;
