@@ -11,6 +11,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 public class FilterSwitch extends Region {
     private static final double ARTBOARD_WIDTH  = 90;
     private static final double ARTBOARD_HEIGHT = 27;
@@ -47,10 +49,10 @@ public class FilterSwitch extends Region {
     }
 
     private void initializeSelf() {
-        String fonts = getClass().getResource("/fonts/fonts.css").toExternalForm();
+        String fonts = Objects.requireNonNull(getClass().getResource("/assets/fonts/fonts.css")).toExternalForm();
         getStylesheets().add(fonts);
 
-        String stylesheet = getClass().getResource("/me/t3sl4/hydraulic/styling/filterswitch.css").toExternalForm();
+        String stylesheet = Objects.requireNonNull(getClass().getResource("/me/t3sl4/hydraulic/styling/filterswitch.css")).toExternalForm();
         getStylesheets().add(stylesheet);
 
         getStyleClass().add("day-night-toggle-button");

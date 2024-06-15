@@ -16,7 +16,7 @@
                       <Circle fx:id="profilePhotoCircle" fill="#F9F871" radius="63.0" />
                       <ImageView fx:id="kullaniciProfilFoto" fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="@../icons/logo.png" />
+                              <Image url="@../../../../assets/icons/logo.png" />
                           </image>
                   </ImageView>
                </children>
@@ -30,7 +30,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/home.png" />
+                                <Image url="@../../../../assets/images/home.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -48,7 +48,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/scissor-lift.png" />
+                                <Image url="@../../../../assets/images/scissor-lift.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -60,7 +60,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/hidros.png" />
+                                <Image url="@../../../../assets/images/hidros.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -72,7 +72,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/hydraulic.png" />
+                                <Image url="@../../../../assets/images/hydraulic.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -84,7 +84,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/parameters.png" />
+                                <Image url="@../../../../assets/images/parameters.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -96,7 +96,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/profil.png" />
+                                <Image url="@../../../../assets/images/profil.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -108,7 +108,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/cikisyap.png" />
+                                <Image url="@../../../../assets/images/cikisyap.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -120,7 +120,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/programikapat.png" />
+                                <Image url="@../../../../assets/images/programikapat.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -130,7 +130,7 @@
                 </Button>
             <ImageView fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/onderGrupMain.png" />
+                  <Image url="@../../../../assets/icons/onderGrupMain.png" />
                </image>
                <VBox.margin>
                   <Insets bottom="10.0" top="40.0" />

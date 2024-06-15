@@ -10,7 +10,7 @@
     <children>
         <ImageView fx:id="excelPart" fitHeight="31.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../images/part.png" />
+                <Image url="@../../../../assets/images/part.png" />
             </image>
             <HBox.margin>
                 <Insets left="10.0" />

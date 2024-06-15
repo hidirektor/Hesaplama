@@ -11,7 +11,7 @@
             <children>
                 <ImageView fitHeight="52.0" fitWidth="52.0" layoutX="166.0" layoutY="179.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/scissor-lift2.png" />
+                        <Image url="@../../../../assets/images/scissor-lift2.png" />
                     </image>
                 </ImageView>
                 <Label alignment="CENTER" layoutX="105.0" layoutY="262.0" prefHeight="23.0" prefWidth="173.0" text="Önder Grup Hidrolik" textFill="BLACK">
@@ -42,7 +42,7 @@
                     <graphic>
                         <ImageView fx:id="passwordVisibilityIcon" fitHeight="15.0" fitWidth="15.0">
                             <image>
-                                <Image url="@../icons/showPass.png" />
+                                <Image url="@../../../../assets/icons/showPass.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -71,12 +71,12 @@
         </Label>
         <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="394.0" layoutY="14.0" onMouseClicked="#openOnder" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../icons/logo.png" />
+                <Image url="@../../../../assets/icons/logo.png" />
             </image>
         </ImageView>
       <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="828.0" layoutY="2.0" onMouseClicked="#ekraniKapat" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/closeIcon.png" />
+            <Image url="@../../../../assets/images/closeIcon.png" />
          </image>
       </ImageView>
     </children>

@@ -144,9 +144,9 @@ public class Util {
         Launcher.profilePhotoLocalPath = Launcher.mainPath + "profilePhoto/";
         Launcher.pdfFileLocalPath = Launcher.mainPath + "hydraulicUnits/";
         Launcher.excelFileLocalPath = Launcher.mainPath + "partList/";
-        Launcher.dataFileLocalPath = Launcher.mainPath + "data/";
+        Launcher.dataFileLocalPath = Launcher.mainPath + "assets/data/";
         Launcher.loginFilePath = Launcher.mainPath + "login/loginInfo.txt";
-        Launcher.excelDBPath = Launcher.mainPath + "data/Hidrolik.xlsx";
+        Launcher.excelDBPath = Launcher.mainPath + "assets/data/Hidrolik.xlsx";
     }
 
     public static void textFilter(javafx.scene.control.TextField filteredField) {

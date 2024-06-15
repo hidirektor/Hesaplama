@@ -25,7 +25,7 @@
             <graphic>
                 <ImageView fx:id="passwordVisibilityIcon" fitHeight="15.0" fitWidth="15.0">
                     <image>
-                        <Image url="@../icons/showPass.png" />
+                        <Image url="@../../../../assets/icons/showPass.png" />
                     </image>
                 </ImageView>
             </graphic>

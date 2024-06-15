@@ -158,7 +158,7 @@ public class HidrosController {
 
     @FXML
     public void parcaListesiGoster() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
         if(hesaplamaBitti) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("fxml/HidrosParcaListesi.fxml"));
@@ -600,19 +600,19 @@ public class HidrosController {
         if(secilenPlatformTipi != null) {
             if(Objects.equals(secilenPlatformTipi, "ESP")) {
                 if(Objects.equals(secilenInisTipi, "İnişte Tek Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/tekhiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/tekhiz.png")));
                 } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/cifthiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/cifthiz.png")));
                 }
             } else if(Objects.equals(secilenPlatformTipi, "Devirmeli")) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ozel.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/ozel.png")));
             } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ozel.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/ozel.png")));
             } else if(Objects.equals(secilenPlatformTipi, "Özel")) {
                 if(secilenBirinciValf != null && Objects.equals(secilenIkinciValf, "Yok")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/tekvalf.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/tekvalf.png")));
                 } else if(secilenIkinciValf != null) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/hidros/ozel.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/ozel.png")));
                 }
             }
         }
@@ -640,19 +640,19 @@ public class HidrosController {
 
             String pdfPath = "";
             if(Objects.equals(secilenPlatformTipi, "Özel")) {
-                pdfPath = "/data/hidrosozel.pdf";
+                pdfPath = "/assets/data/pdf/hidrosozel.pdf";
             } else if(Objects.equals(secilenPlatformTipi, "ESP")) {
                 if(Objects.equals(secilenInisTipi, "İnişte Tek Hız")) {
-                    pdfPath = "/data/hidrosinistetek.pdf";
+                    pdfPath = "/assets/data/pdf/hidrosinistetek.pdf";
                 } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
-                    pdfPath = "/data/hidrosinistecift.pdf";
+                    pdfPath = "/assets/data/hidrosinistecift.pdf";
                 }
             } else if(Objects.equals(secilenPlatformTipi, "Devirmeli")) {
-                pdfPath = "/data/hidrosdevirmeli.pdf";
+                pdfPath = "/assets/data/pdf/hidrosdevirmeli.pdf";
             } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
-                pdfPath = "/data/hidrosdevirmeli.pdf";
+                pdfPath = "/assets/data/pdf/hidrosdevirmeli.pdf";
             }
-            PDFFileUtil.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
+            PDFFileUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
             Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }

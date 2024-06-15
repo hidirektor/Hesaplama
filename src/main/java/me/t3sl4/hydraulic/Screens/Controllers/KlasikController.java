@@ -249,13 +249,13 @@ public class KlasikController {
             Image image;
             boolean newTextStat = false;
             if(secilenSogutmaDurumu != null && Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/sogutmaKilit.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilit.png")));
                 newTextStat = true;
             } else {
                 if(secilenKilitMotor != null) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/normal.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
                 } else {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/kilitMotor.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kilitMotor.png")));
                 }
                 newTextStat = false;
             }
@@ -730,7 +730,7 @@ public class KlasikController {
 
     @FXML
     public void parcaListesiGoster() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
         if(hesaplamaBitti) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("fxml/ParcaListesi.fxml"));
@@ -782,13 +782,13 @@ public class KlasikController {
 
             String pdfPath = "";
             if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                pdfPath = "/data/klasikinistetek.pdf";
+                pdfPath = "/assets/data/pdf/klasikinistetek.pdf";
             } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                pdfPath = "/data/klasikinistecift.pdf";
+                pdfPath = "/assets/data/pdf/klasikinistecift.pdf";
             } else if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                pdfPath = "/data/klasikkilitliblokcift.pdf";
+                pdfPath = "/assets/data/pdf/klasikkilitliblokcift.pdf";
             }
-            PDFFileUtil.pdfGenerator("icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
+            PDFFileUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
             Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
@@ -1277,7 +1277,7 @@ public class KlasikController {
         Image image;
 
         if(secilenSogutmaDurumu.contains("Var")) {
-            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/ingilteresogutuculu.png")));
+            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/ingilteresogutuculu.png")));
             sonucTankGorsel.setImage(image);
             genislikSonucText.setLayoutY(216.0);
             genislikSonucText.setRotate(33.5);
@@ -1287,14 +1287,14 @@ public class KlasikController {
         } else {
             if(secilenHidrolikKilitDurumu.contains("Var")) {
                 if(secilenPompaVal >= 33.3) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/sogutuculuotuzuc.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/sogutuculuotuzuc.png")));
                     sonucTankGorsel.setImage(image);
                     genislikSonucText.setRotate(27.5);
                     derinlikSonucText.setRotate(-27.5);
                     derinlikSonucText.setLayoutX(635.0);
                 } else {
                     if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/kilitliblok.png")));
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/kilitliblok.png")));
                         sonucTankGorsel.setImage(image);
                         genislikSonucText.setRotate(27.5);
                         derinlikSonucText.setRotate(-27.5);
@@ -1303,12 +1303,12 @@ public class KlasikController {
                 }
             } else {
                 if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/cifthiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/cifthiz.png")));
                 } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/tekhiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
                     sonucTankGorsel.setImage(image);
                 } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/tanklar/cifthiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/cifthiz.png")));
                     sonucTankGorsel.setImage(image);
                 }
             }

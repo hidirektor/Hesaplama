@@ -32,7 +32,7 @@ public class Main extends Application {
         Path targetPath = Paths.get(Launcher.excelDBPath);
         System.out.println("Target path: " + targetPath.toString());
 
-        try (InputStream inputStream = getClass().getResourceAsStream("/data/Hidrolik.xlsx")) {
+        try (InputStream inputStream = getClass().getResourceAsStream("/assets/data/Hidrolik.xlsx")) {
             if (inputStream != null) {
                 Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
                 System.out.println("Hidrolik.xlsx kopyalandı: " + targetPath);

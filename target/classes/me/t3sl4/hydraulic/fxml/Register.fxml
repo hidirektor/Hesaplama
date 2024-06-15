@@ -18,12 +18,12 @@
             <children>
                 <ImageView fx:id="goBack" onMouseClicked="#goBackAction" fitHeight="32.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../icons/goBack.png" />
+                        <Image url="@../../../../assets/icons/goBack.png" />
                     </image>
                 </ImageView>
                 <ImageView fx:id="onderLogo" onMouseClicked="#onderWeb" fitHeight="45.0" fitWidth="45.0" layoutX="32.5" layoutY="186.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../icons/logo.png" />
+                        <Image url="@../../../../assets/icons/logo.png" />
                     </image>
                 </ImageView>
             </children>
@@ -39,7 +39,7 @@
             <graphic>
                 <ImageView fx:id="passwordVisibilityIcon" fitHeight="15.0" fitWidth="15.0">
                     <image>
-                        <Image url="@../icons/showPass.png" />
+                        <Image url="@../../../../assets/icons/showPass.png" />
                     </image>
                 </ImageView>
             </graphic>
