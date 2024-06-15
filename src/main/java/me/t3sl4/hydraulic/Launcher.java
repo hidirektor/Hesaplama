@@ -1,7 +1,6 @@
 package me.t3sl4.hydraulic;
 
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utility.Util;
 
 public class Launcher {
     public static String BASE_URL = "http://85.95.231.92:3000";
@@ -41,8 +40,6 @@ public class Launcher {
     public static String excelDBPath;
 
     public static void main(String[] args) {
-        Util.changeDataStoragePath();
-        Util.createMainDirectory();
         if(System.getProperty("os.name").contains("Windows")) {
             System.setProperty("prism.order", "sw");
             System.setProperty("prism.verbose", "true");

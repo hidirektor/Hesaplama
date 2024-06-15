@@ -20,6 +20,7 @@ import me.t3sl4.hydraulic.Screens.Main;
 import me.t3sl4.hydraulic.Utility.DataUtil.Table.TableData;
 import me.t3sl4.hydraulic.Utility.FileUtil.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.FileUtil.PDFFileUtil;
+import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
 import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Util;
 
@@ -281,7 +282,7 @@ public class KlasikController {
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
-        if (Util.fileExists(pdfPath) && Util.fileExists(excelPath)) {
+        if (SystemUtil.fileExists(pdfPath) && SystemUtil.fileExists(excelPath)) {
             String pdfURL = girilenSiparisNumarasi + ".pdf";
             String excelURL = girilenSiparisNumarasi + ".xlsx";
             String url = BASE_URL + insertHydraulicURLPrefix;
