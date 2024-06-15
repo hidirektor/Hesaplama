@@ -94,7 +94,11 @@ public class SystemUtil {
     public static void deleteRememberedFile() {
         File file = new File(Launcher.loginFilePath);
         if (file.exists()) {
-            file.delete();
+            if(file.delete()) {
+                System.out.println(file.getName() + " deleted :))");
+            } else {
+                System.out.println(file.getName() + " not deleted :((");
+            }
         }
     }
 }

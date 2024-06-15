@@ -23,6 +23,7 @@ import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.DataUtil.HydraulicUnit.HydraulicInfo;
 import me.t3sl4.hydraulic.Utility.DataUtil.User.Profile;
 import me.t3sl4.hydraulic.Utility.FileUtil.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
 import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Util;
 import org.apache.poi.ss.usermodel.Row;
@@ -31,7 +32,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -149,18 +149,10 @@ public class MainController implements Initializable {
 
     @FXML
     public void anaEkranaDon() throws IOException {
-        String loginFilePath = Launcher.loginFilePath + "loginInfo.txt";
-        File loginFile = new File(loginFilePath);
         Stage stage = (Stage) parametreCount.getScene().getWindow();
 
         loggedInUser = null;
-        if (loginFile.exists()) {
-            if (loginFile.delete()) {
-                System.out.println("loginInfo.txt dosyası silindi.");
-            } else {
-                System.err.println("loginInfo.txt dosyası silinemedi.");
-            }
-        }
+        SystemUtil.deleteRememberedFile();
 
         stage.close();
         SceneUtil.changeScreen("fxml/Login.fxml");

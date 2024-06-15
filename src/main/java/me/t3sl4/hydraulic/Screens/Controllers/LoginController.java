@@ -199,7 +199,7 @@ public class LoginController implements Initializable {
                         String password = passObject.getString("pass");
                         if (!username.isEmpty() && password != null && !password.isEmpty()) {
                             try {
-                                FileWriter writer = new FileWriter(Launcher.loginFilePath + "loginInfo.txt");
+                                FileWriter writer = new FileWriter(Launcher.loginFilePath);
                                 writer.write(username + "\n");
                                 writer.write(password);
                                 writer.close();
@@ -219,28 +219,18 @@ public class LoginController implements Initializable {
                     }
                 });
             } else {
-                File loginFile = new File(Launcher.loginFilePath + "loginInfo.txt");
-                if (loginFile.exists()) {
-                    if (loginFile.delete()) {
-                        System.out.println("loginInfo.txt dosyası silindi.");
-                    } else {
-                        System.err.println("loginInfo.txt dosyası silinemedi.");
-                    }
-                }
+                SystemUtil.deleteRememberedFile();
             }
         });
     }
 
     private void removeBeniHatirla() {
-        File loginFile = new File(Launcher.loginFilePath + "loginInfo.txt");
-        if(loginFile.exists()) {
-            loginFile.delete();
-        }
+        SystemUtil.deleteRememberedFile();
         beniHatirla.setSelected(false);
     }
 
     private void beniHatirlaKontrol() {
-        File loginFile = new File(Launcher.loginFilePath + "loginInfo.txt");
+        File loginFile = new File(Launcher.loginFilePath);
 
         if (loginFile.exists()) {
             beniHatirla.setSelected(true);
