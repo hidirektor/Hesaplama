@@ -14,8 +14,7 @@ public class SystemUtil {
 
     public static void systemSetup() {
         changeDataStoragePath();
-        createMainDirectory();
-        filePath();
+        createDirectories();
         fileCopy();
 
         ExcelUtil.excelDataRead();
@@ -30,7 +29,7 @@ public class SystemUtil {
         return file.exists();
     }
 
-    public static void filePath() {
+    public static void createDirectories() {
         createMainDirectory();
         createDirectory(Launcher.profilePhotoLocalPath);
         createDirectory(Launcher.pdfFileLocalPath);
@@ -89,6 +88,13 @@ public class SystemUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void deleteRememberedFile() {
+        File file = new File(Launcher.loginFilePath);
+        if (file.exists()) {
+            file.delete();
         }
     }
 }

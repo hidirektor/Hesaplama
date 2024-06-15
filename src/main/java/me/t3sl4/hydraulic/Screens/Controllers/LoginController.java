@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.DataUtil.User.User;
+import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
 import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Util;
 import org.json.JSONObject;
@@ -152,6 +153,7 @@ public class LoginController implements Initializable {
             public void onSuccess(String loginResponse) {
                 String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
                 String jsonProfileInfoBody = "{\"Username\": \"" + userName + "\"}";
+                SystemUtil.deleteRememberedFile();
                 HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String profileInfoResponse) {
