@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.DataUtil.Excel;
+package me.t3sl4.hydraulic.Utility.Data.Excel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

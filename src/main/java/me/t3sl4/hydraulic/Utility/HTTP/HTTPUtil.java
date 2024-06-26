@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.HTTPUtil;
+package me.t3sl4.hydraulic.Utility.HTTP;
 
 import org.json.JSONObject;
 

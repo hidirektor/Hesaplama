@@ -20,10 +20,10 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.logging.Logger;
 
-public class Util {
+public class Utils {
 
 
-    private static final Logger logger = Logger.getLogger(Util.class.getName());
+    private static final Logger logger = Logger.getLogger(Utils.class.getName());
     
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {

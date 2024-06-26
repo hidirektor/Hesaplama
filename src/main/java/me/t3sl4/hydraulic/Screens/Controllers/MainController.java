@@ -20,12 +20,12 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Component.FilterSwitch;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.DataUtil.HydraulicUnit.HydraulicInfo;
-import me.t3sl4.hydraulic.Utility.DataUtil.User.Profile;
-import me.t3sl4.hydraulic.Utility.FileUtil.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Data.HydraulicUnit.HydraulicInfo;
+import me.t3sl4.hydraulic.Utility.Data.User.Profile;
+import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.File.SystemUtil;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.Launcher.*;
 import static me.t3sl4.hydraulic.Screens.Main.loggedInUser;
-import static me.t3sl4.hydraulic.Utility.Util.openURL;
+import static me.t3sl4.hydraulic.Utility.Utils.openURL;
 
 public class MainController implements Initializable {
 
@@ -162,7 +162,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void onderGrupSiteOpen() {
-        Util.openURL("https://ondergrup.com");
+        Utils.openURL("https://ondergrup.com");
     }
 
     public void handleClicks(ActionEvent actionEvent) {

@@ -17,12 +17,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utility.DataUtil.Table.TableData;
-import me.t3sl4.hydraulic.Utility.FileUtil.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.FileUtil.PDFFileUtil;
-import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Data.Table.TableData;
+import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
+import me.t3sl4.hydraulic.Utility.File.SystemUtil;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -218,7 +218,7 @@ public class KlasikController {
     public static String gecisOlculeriFinal = "";
 
     public void initialize() {
-        Util.textFilter(tankKapasitesiTextField);
+        Utils.textFilter(tankKapasitesiTextField);
         defineKabinOlcu();
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
@@ -233,7 +233,7 @@ public class KlasikController {
         int hacim = 0; //Hacim
         ArrayList<Integer> results;
         if (checkComboBox()) {
-            Util.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
+            Utils.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
         } else {
             enableSonucSection();
             results = calcDimensions(x, y, h, ExcelUtil.dataManipulator.kampanaDegerleri);
@@ -302,7 +302,7 @@ public class KlasikController {
                     uploadPDFFile2Server(pdfPath);
                     uploadExcelFile2Server(excelPath);
                     if(excelSucc && pdfSucc) {
-                        Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
+                        Utils.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
                         excelSucc = false;
                         pdfSucc = false;
                     }
@@ -310,11 +310,11 @@ public class KlasikController {
 
                 @Override
                 public void onFailure() {
-                    Util.showErrorMessage("Oluşturulan hidrolik ünitesi kaydedilemedi !");
+                    Utils.showErrorMessage("Oluşturulan hidrolik ünitesi kaydedilemedi !");
                 }
             });
         } else {
-            Util.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
+            Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
     }
 
@@ -323,7 +323,7 @@ public class KlasikController {
 
         File pdfFile = new File(filePath);
         if (!pdfFile.exists()) {
-            Util.showErrorMessage("PDF dosyası bulunamadı !");
+            Utils.showErrorMessage("PDF dosyası bulunamadı !");
             return;
         }
 
@@ -338,7 +338,7 @@ public class KlasikController {
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
             }
         });
     }
@@ -348,7 +348,7 @@ public class KlasikController {
 
         File excelFile = new File(filePath);
         if (!excelFile.exists()) {
-            Util.showErrorMessage("Excel dosyası bulunamadı !");
+            Utils.showErrorMessage("Excel dosyası bulunamadı !");
             return;
         }
 
@@ -363,7 +363,7 @@ public class KlasikController {
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
             }
         });
     }
@@ -427,7 +427,7 @@ public class KlasikController {
             System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + ExcelUtil.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)");
             System.out.println("yK += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) + " + ExcelUtil.dataManipulator.kampanaBoslukY + " (Kampana Boşluk) + " + ExcelUtil.dataManipulator.kampanaBoslukY + " (Kampana Boşluk)");
 
-            secilenPompaVal = Util.string2Double(secilenPompa);
+            secilenPompaVal = Utils.string2Double(secilenPompa);
             //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
             //kilitli blok ölçüsü olarak: X'e +100 olacak
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
@@ -562,7 +562,7 @@ public class KlasikController {
             atananHacim = enKucukLitreOlculer[3];
         }
 
-        atananHT = Objects.requireNonNull(Util.getKeyByValue(ExcelUtil.dataManipulator.kabinOlculeri, enKucukLitreOlculer)).toString();
+        atananHT = Objects.requireNonNull(Utils.getKeyByValue(ExcelUtil.dataManipulator.kabinOlculeri, enKucukLitreOlculer)).toString();
         String atananKabin = "";
         String gecisOlculeri = "";
         if(Objects.equals(atananHT, "HT 40")) {
@@ -690,7 +690,7 @@ public class KlasikController {
     public void valfTipiPressed() {
         if(valfTipiComboBox.getValue() != null) {
             secilenValfTipi = valfTipiComboBox.getValue();
-            secilenPompaVal = Util.string2Double(secilenPompa);
+            secilenPompaVal = Utils.string2Double(secilenPompa);
             System.out.println("Seçilen Pompa Değeri: " + secilenPompaVal);
 
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && secilenPompaVal > 28.1) {
@@ -758,7 +758,7 @@ public class KlasikController {
                 e.printStackTrace();
             }
         } else {
-            Util.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
+            Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
         }
     }
 
@@ -791,7 +791,7 @@ public class KlasikController {
             }
             PDFFileUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
-            Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
+            Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
     }
 
@@ -947,8 +947,8 @@ public class KlasikController {
         pompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenPompa = newValue;
             if(oldValue != null && secilenPompa != null) {
-                double oldSecilenPompaVal = Util.string2Double(oldValue);
-                secilenPompaVal = Util.string2Double(secilenPompa);
+                double oldSecilenPompaVal = Utils.string2Double(oldValue);
+                secilenPompaVal = Utils.string2Double(secilenPompa);
                 if(oldSecilenPompaVal >= 28.1 && secilenPompaVal < 28.1) {
                     disableMotorPompa(1);
                     imageTextDisable(0);

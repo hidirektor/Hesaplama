@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utility.DataUtil.Table.TableData;
-import me.t3sl4.hydraulic.Utility.FileUtil.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.FileUtil.PDFFileUtil;
-import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Data.Table.TableData;
+import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
+import me.t3sl4.hydraulic.Utility.File.SystemUtil;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -121,7 +121,7 @@ public class HidrosController {
     @FXML
     public void hesaplaFunc() {
         if(checkComboBox()) {
-            Util.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
+            Utils.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
         } else {
             enableSonucSection();
             hesaplamaBitti = true;
@@ -186,7 +186,7 @@ public class HidrosController {
                 e.printStackTrace();
             }
         } else {
-            Util.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
+            Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
         }
     }
 
@@ -218,7 +218,7 @@ public class HidrosController {
                     uploadPDFFile2Server(pdfPath);
                     uploadExcelFile2Server(excelPath);
                     if(excelSucc && pdfSucc) {
-                        Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
+                        Utils.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
                         excelSucc = false;
                         pdfSucc = false;
                     }
@@ -226,11 +226,11 @@ public class HidrosController {
 
                 @Override
                 public void onFailure() {
-                    Util.showErrorMessage("Oluşturulan hidrolik ünitesi kaydedilemedi !");
+                    Utils.showErrorMessage("Oluşturulan hidrolik ünitesi kaydedilemedi !");
                 }
             });
         } else {
-            Util.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
+            Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
     }
 
@@ -239,7 +239,7 @@ public class HidrosController {
 
         File pdfFile = new File(filePath);
         if (!pdfFile.exists()) {
-            Util.showErrorMessage("PDF dosyası bulunamadı !");
+            Utils.showErrorMessage("PDF dosyası bulunamadı !");
             return;
         }
 
@@ -254,7 +254,7 @@ public class HidrosController {
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
             }
         });
     }
@@ -264,7 +264,7 @@ public class HidrosController {
 
         File excelFile = new File(filePath);
         if (!excelFile.exists()) {
-            Util.showErrorMessage("Excel dosyası bulunamadı !");
+            Utils.showErrorMessage("Excel dosyası bulunamadı !");
             return;
         }
 
@@ -279,7 +279,7 @@ public class HidrosController {
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
             }
         });
     }
@@ -655,7 +655,7 @@ public class HidrosController {
             }
             PDFFileUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
-            Util.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
+            Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
     }
 

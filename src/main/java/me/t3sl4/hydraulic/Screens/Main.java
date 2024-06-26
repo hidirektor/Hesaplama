@@ -2,8 +2,8 @@ package me.t3sl4.hydraulic.Screens;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.Utility.DataUtil.User.User;
-import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
+import me.t3sl4.hydraulic.Utility.Data.User.User;
+import me.t3sl4.hydraulic.Utility.File.SystemUtil;
 
 public class Main extends Application {
     private double x, y;

@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.DataUtil.User.User;
-import me.t3sl4.hydraulic.Utility.FileUtil.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Data.User.User;
+import me.t3sl4.hydraulic.Utility.File.SystemUtil;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -80,7 +80,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void girisYap(MouseEvent event) throws IOException {
-        if (Util.netIsAvailable()) {
+        if (Utils.netIsAvailable()) {
             Stage stage = (Stage) btnSignin.getScene().getWindow();
             String loginUrl = BASE_URL + loginURLPrefix;
             String jsonLoginBody = "";
@@ -90,13 +90,13 @@ public class LoginController implements Initializable {
                 loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText());
             }
         } else {
-            Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
+            Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
         }
     }
 
     @FXML
     public void kayitOl() {
-        if (Util.netIsAvailable()) {
+        if (Utils.netIsAvailable()) {
             Stage stage = (Stage) btnSignup.getScene().getWindow();
 
             stage.close();
@@ -107,7 +107,7 @@ public class LoginController implements Initializable {
                 logger.log(Level.SEVERE, e.getMessage(), e);
             }
         } else {
-            Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
+            Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
         }
     }
 
@@ -124,7 +124,7 @@ public class LoginController implements Initializable {
         offlineMod.setVisible(false);
         onlineMod.setVisible(false);
 
-        Util.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
+        Utils.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
 
         Timeline timeline = new Timeline();
         timeline.setCycleCount(4);
@@ -132,7 +132,7 @@ public class LoginController implements Initializable {
         final int[] countdown = {3};
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
             if (countdown[0] > 0) {
-                Util.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
+                Utils.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
                 countdown[0]--;
             } else {
                 timeline.stop();
@@ -187,20 +187,20 @@ public class LoginController implements Initializable {
                             updateUserAndOpenMainScreen(stage);
                             beniHatirla();
                         } else {
-                            Util.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
+                            Utils.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        Util.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
+                        Utils.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
                     }
                 });
             }
 
             @Override
             public void onFailure() {
-                Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
+                Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
                 removeBeniHatirla();
             }
         });
@@ -229,14 +229,14 @@ public class LoginController implements Initializable {
                                 logger.log(Level.SEVERE, e.getMessage(), e);
                             }
                         } else {
-                            Util.showErrorMessage("Kullanıcı adı veya şifre alanları boş olamaz!");
+                            Utils.showErrorMessage("Kullanıcı adı veya şifre alanları boş olamaz!");
                             beniHatirla.setSelected(false);
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        Util.showErrorOnLabel(lblErrors, "Hashlenmiş şifre alınamadı!");
+                        Utils.showErrorOnLabel(lblErrors, "Hashlenmiş şifre alınamadı!");
                         beniHatirla.setSelected(false);
                     }
                 });
@@ -288,20 +288,20 @@ public class LoginController implements Initializable {
                                 loginStage.close();
                             });
                         } else {
-                            Util.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
+                            Utils.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        Util.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
+                        Utils.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
                     }
                 });
             }
 
             @Override
             public void onFailure() {
-                Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
+                Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
             }
         });
     }
@@ -325,12 +325,12 @@ public class LoginController implements Initializable {
 
     @FXML
     public void openGithub() {
-        Util.openURL("https://github.com/hidirektor");
+        Utils.openURL("https://github.com/hidirektor");
     }
 
     @FXML
     public void openOnder() {
-        Util.openURL("https://ondergrup.com");
+        Utils.openURL("https://ondergrup.com");
     }
 
     @FXML

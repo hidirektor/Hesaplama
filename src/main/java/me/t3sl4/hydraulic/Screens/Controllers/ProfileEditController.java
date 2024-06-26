@@ -14,9 +14,9 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.DataUtil.User.Profile;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Data.User.Profile;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -159,13 +159,13 @@ public class ProfileEditController {
                     deleteOldPhoto(username);
                     uploadProfilePhoto2Server(stage);
                 }
-                Util.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
+                Utils.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
                 refreshScreen();
             }
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Profil güncellenirken hata meydana geldi !");
+                Utils.showErrorMessage("Profil güncellenirken hata meydana geldi !");
             }
         });
     }
@@ -176,7 +176,7 @@ public class ProfileEditController {
 
         File profilePhotoFile = new File(secilenPhotoPath);
         if (!profilePhotoFile.exists()) {
-            Util.showErrorMessage("Profil fotoğrafı bulunamadı !");
+            Utils.showErrorMessage("Profil fotoğrafı bulunamadı !");
             return;
         }
 
@@ -195,7 +195,7 @@ public class ProfileEditController {
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
+                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
             }
         });
     }

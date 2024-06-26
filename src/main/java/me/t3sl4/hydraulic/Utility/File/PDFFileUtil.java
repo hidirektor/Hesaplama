@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.FileUtil;
+package me.t3sl4.hydraulic.Utility.File;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -13,7 +13,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 public class PDFFileUtil {
 
-    private static final Logger logger = Logger.getLogger(Util.class.getName());
+    private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
     public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pdfFilePath, String girilenSiparisNumarasi) {
         try {

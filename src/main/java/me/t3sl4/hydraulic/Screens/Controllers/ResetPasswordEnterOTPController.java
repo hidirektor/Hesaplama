@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Utils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,7 +81,7 @@ public class ResetPasswordEnterOTPController implements Initializable {
 
     @FXML
     public void onderWeb() {
-        Util.openURL("https://ondergrup.com");
+        Utils.openURL("https://ondergrup.com");
     }
 
     @FXML
@@ -91,10 +91,10 @@ public class ResetPasswordEnterOTPController implements Initializable {
             if(ResetPasswordController.otpCode.equals(girilenOTP)) {
                 changeOTPScreen();
             } else {
-                Util.showErrorOnLabel(lblErrors, "Girdiğin OTP kodu hatalı !");
+                Utils.showErrorOnLabel(lblErrors, "Girdiğin OTP kodu hatalı !");
             }
         } else {
-            Util.showErrorOnLabel(lblErrors, "OTP kodunu girmedin !");
+            Utils.showErrorOnLabel(lblErrors, "OTP kodunu girmedin !");
         }
     }
 

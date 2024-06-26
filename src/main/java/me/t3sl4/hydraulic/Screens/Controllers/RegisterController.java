@@ -19,8 +19,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,18 +142,18 @@ public class RegisterController implements Initializable {
         String profilePhotoPath = userName + ".jpg";
 
         if (checkFields()) {
-            if(kullaniciAdiText.getText().contains(" ") || Util.checkUpperCase(kullaniciAdiText.getText())) {
+            if(kullaniciAdiText.getText().contains(" ") || Utils.checkUpperCase(kullaniciAdiText.getText())) {
                 if(kullaniciAdiText.getText().contains(" ")) {
-                    Util.showErrorMessage("Kullanıcı adında boşluk karakteri olamaz !");
+                    Utils.showErrorMessage("Kullanıcı adında boşluk karakteri olamaz !");
                     kullaniciAdiText.clear();
                 }
 
-                if(Util.checkUpperCase(kullaniciAdiText.getText())) {
-                    Util.showErrorMessage("Kullanıcı adında büyük harf kullanılamaz !");
+                if(Utils.checkUpperCase(kullaniciAdiText.getText())) {
+                    Utils.showErrorMessage("Kullanıcı adında büyük harf kullanılamaz !");
                     kullaniciAdiText.clear();
                 }
             } else {
-                String created_at = Util.getCurrentDateTime();
+                String created_at = Utils.getCurrentDateTime();
 
                 String registerJsonBody =
                         "{" +
@@ -171,7 +171,7 @@ public class RegisterController implements Initializable {
                 sendRegisterRequest(registerJsonBody, stage);
             }
         } else {
-            Util.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
+            Utils.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
         }
     }
 
@@ -185,7 +185,7 @@ public class RegisterController implements Initializable {
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Kayıt olurken hata meydana geldi !");
+                Utils.showErrorMessage("Kayıt olurken hata meydana geldi !");
             }
         });
     }
@@ -196,7 +196,7 @@ public class RegisterController implements Initializable {
 
         File profilePhotoFile = new File(secilenPhotoPath);
         if (!profilePhotoFile.exists()) {
-            Util.showErrorMessage("Profil fotoğrafı bulunamadı !");
+            Utils.showErrorMessage("Profil fotoğrafı bulunamadı !");
             return;
         }
 
@@ -215,14 +215,14 @@ public class RegisterController implements Initializable {
 
             @Override
             public void onFailure() {
-                Util.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
+                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
             }
         });
     }
 
     @FXML
     public void onderWeb() {
-        Util.openURL("https://ondergrup.com");
+        Utils.openURL("https://ondergrup.com");
     }
 
     @FXML

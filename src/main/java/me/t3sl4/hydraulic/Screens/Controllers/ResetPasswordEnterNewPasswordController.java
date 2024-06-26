@@ -11,8 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -63,7 +63,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
 
     @FXML
     public void onderWeb() {
-        Util.openURL("https://ondergrup.com");
+        Utils.openURL("https://ondergrup.com");
     }
 
     @FXML
@@ -71,7 +71,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
         String yeniSifre = sifreText.getText();
 
         if (yeniSifre.isEmpty()) {
-            Util.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
+            Utils.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
         } else {
             String otpUrl = BASE_URL + updatePassURLPrefix;
             String jsonUpdatePassBody = "{\"Email\": \"" + ResetPasswordController.enteredEmail + "\", \"Password\": \"" + yeniSifre + "\"}";
@@ -84,7 +84,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
 
                 @Override
                 public void onFailure() {
-                    Util.showErrorOnLabel(lblErrors, "Eski şifre ile yeni şifre aynı olamaz !");
+                    Utils.showErrorOnLabel(lblErrors, "Eski şifre ile yeni şifre aynı olamaz !");
                 }
             });
         }

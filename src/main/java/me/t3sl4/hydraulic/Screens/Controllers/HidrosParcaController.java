@@ -9,9 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.Utility.DataUtil.Table.ParcaTableData;
-import me.t3sl4.hydraulic.Utility.FileUtil.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Data.Table.ParcaTableData;
+import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -188,17 +188,17 @@ public class HidrosParcaController {
         String motorGucu = HidrosController.secilenMotorGucu.trim();
 
         if (Objects.equals(voltajDegeri, "380")) {
-            String malzemeKodu = Util.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidros380Parca, motorGucu);
-            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidros380Parca, motorGucu) + " Motor";
+            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidros380Parca, motorGucu);
+            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidros380Parca, motorGucu) + " Motor";
 
-            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidros380Parca, motorGucu));
+            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidros380Parca, motorGucu));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         } else if (Objects.equals(voltajDegeri, "220")) {
-            String malzemeKodu = Util.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu);
-            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu) + " Motor";
-            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu));
+            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu);
+            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu) + " Motor";
+            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
@@ -208,9 +208,9 @@ public class HidrosParcaController {
     private void loadPompaParca() {
         String pompaDegeri = HidrosController.secilenPompa.trim();
 
-        String malzemeKodu = Util.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaParca, pompaDegeri);
-        String secilenMalzeme = Util.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaParca, pompaDegeri) + " Pompa";
-        String adet = Util.float2String(Util.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaParca, pompaDegeri));
+        String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaParca, pompaDegeri);
+        String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaParca, pompaDegeri) + " Pompa";
+        String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaParca, pompaDegeri));
 
         ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
         parcaListesiTablo.getItems().add(data);
@@ -219,9 +219,9 @@ public class HidrosParcaController {
     private void loadPompaCivataParca() {
         String pompaDegeri = HidrosController.secilenPompa.trim();
 
-        String malzemeKodu = Util.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaCivataParca, pompaDegeri);
-        String secilenMalzeme = Util.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaCivataParca, pompaDegeri) + " Pompa Civata";
-        String adet = Util.float2String(Util.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaCivataParca, pompaDegeri));
+        String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaCivataParca, pompaDegeri);
+        String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaCivataParca, pompaDegeri) + " Pompa Civata";
+        String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosPompaCivataParca, pompaDegeri));
 
         ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
         parcaListesiTablo.getItems().add(data);
@@ -233,17 +233,17 @@ public class HidrosParcaController {
 
         if(Objects.equals(kontrolTankTipi, "Yatay")) {
             //ExcelUtil.dataManipulator.hidrosYatayTankParca
-            String malzemeKodu = Util.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi);
-            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi) + " Tank";
-            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi));
+            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi);
+            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi) + " Tank";
+            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosYatayTankParca, kontrolTankKapasitesi));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         } else if(Objects.equals(kontrolTankTipi, "Dikey")) {
             //ExcelUtil.dataManipulator.hidrosDikeyTankParca
-            String malzemeKodu = Util.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi);
-            String secilenMalzeme = Util.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi) + " Tank";
-            String adet = Util.float2String(Util.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi));
+            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi);
+            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi) + " Tank";
+            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidrosDikeyTankParca, kontrolTankKapasitesi));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
@@ -265,7 +265,7 @@ public class HidrosParcaController {
 
                         String malzemeKodu = innerMap.get("B");
                         String secilenMalzeme = entry.getKey();
-                        String adet = Util.float2String(innerMap.get("C"));
+                        String adet = Utils.float2String(innerMap.get("C"));
 
                         ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                         parcaListesiTablo.getItems().add(data);
@@ -276,7 +276,7 @@ public class HidrosParcaController {
 
                         String malzemeKodu = innerMap.get("B");
                         String secilenMalzeme = entry.getKey();
-                        String adet = Util.float2String(innerMap.get("C"));
+                        String adet = Utils.float2String(innerMap.get("C"));
 
                         ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                         parcaListesiTablo.getItems().add(data);
@@ -291,7 +291,7 @@ public class HidrosParcaController {
 
                         String malzemeKodu = innerMap.get("B");
                         String secilenMalzeme = entry.getKey();
-                        String adet = Util.float2String(innerMap.get("C"));
+                        String adet = Utils.float2String(innerMap.get("C"));
 
                         ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                         parcaListesiTablo.getItems().add(data);
@@ -302,7 +302,7 @@ public class HidrosParcaController {
 
                         String malzemeKodu = innerMap.get("B");
                         String secilenMalzeme = entry.getKey();
-                        String adet = Util.float2String(innerMap.get("C"));
+                        String adet = Utils.float2String(innerMap.get("C"));
 
                         ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                         parcaListesiTablo.getItems().add(data);
@@ -315,7 +315,7 @@ public class HidrosParcaController {
 
                 String malzemeKodu = innerMap.get("B");
                 String secilenMalzeme = entry.getKey();
-                String adet = Util.float2String(innerMap.get("C"));
+                String adet = Utils.float2String(innerMap.get("C"));
 
                 ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                 parcaListesiTablo.getItems().add(data);
@@ -482,7 +482,7 @@ public class HidrosParcaController {
 
             String malzemeKodu = innerMap.get("B");
             String secilenMalzeme = entry.getKey();
-            String adet = Util.float2String(innerMap.get("C"));
+            String adet = Utils.float2String(innerMap.get("C"));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
@@ -495,7 +495,7 @@ public class HidrosParcaController {
 
             String malzemeKodu = innerMap.get("B");
             String secilenMalzeme = entry.getKey();
-            String adet = Util.float2String(innerMap.get("C"));
+            String adet = Utils.float2String(innerMap.get("C"));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
@@ -508,7 +508,7 @@ public class HidrosParcaController {
 
             String malzemeKodu = innerMap.get("B");
             String secilenMalzeme = entry.getKey();
-            String adet = Util.float2String(innerMap.get("C"));
+            String adet = Utils.float2String(innerMap.get("C"));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
@@ -524,7 +524,7 @@ public class HidrosParcaController {
 
                 String malzemeKodu = innerMap.get("B");
                 String secilenMalzeme = entry.getKey();
-                String adet = Util.float2String(innerMap.get("C"));
+                String adet = Utils.float2String(innerMap.get("C"));
 
                 ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                 parcaListesiTablo.getItems().add(data);
@@ -538,7 +538,7 @@ public class HidrosParcaController {
 
             String malzemeKodu = innerMap.get("B");
             String secilenMalzeme = entry.getKey();
-            String adet = Util.float2String(innerMap.get("C"));
+            String adet = Utils.float2String(innerMap.get("C"));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);

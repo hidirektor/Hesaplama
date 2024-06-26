@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.FileUtil;
+package me.t3sl4.hydraulic.Utility.File;
 
 import me.t3sl4.hydraulic.Launcher;
 

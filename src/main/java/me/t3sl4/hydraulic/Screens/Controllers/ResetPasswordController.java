@@ -8,8 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,7 +55,7 @@ public class ResetPasswordController implements Initializable {
 
     @FXML
     public void onderWeb() {
-        Util.openURL("https://ondergrup.com");
+        Utils.openURL("https://ondergrup.com");
     }
 
     @FXML
@@ -63,7 +63,7 @@ public class ResetPasswordController implements Initializable {
         String email = txtEmail.getText();
 
         if (email.isEmpty()) {
-            Util.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
+            Utils.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
         } else {
             if (isValidEmail(email)) {
 
@@ -79,18 +79,18 @@ public class ResetPasswordController implements Initializable {
                             enteredEmail = email;
                             changeOTPScreen();
                         } else {
-                            Util.showErrorOnLabel(lblErrors, "OTP kodu alınamadı.");
+                            Utils.showErrorOnLabel(lblErrors, "OTP kodu alınamadı.");
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        Util.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
+                        Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
                     }
                 });
 
             } else {
-                Util.showErrorOnLabel(lblErrors, "Geçerli bir e-posta adresi girin.");
+                Utils.showErrorOnLabel(lblErrors, "Geçerli bir e-posta adresi girin.");
             }
         }
     }

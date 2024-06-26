@@ -1,8 +1,8 @@
-package me.t3sl4.hydraulic.Utility.FileUtil;
+package me.t3sl4.hydraulic.Utility.File;
 
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utility.DataUtil.Excel.DataManipulator;
-import me.t3sl4.hydraulic.Utility.Util;
+import me.t3sl4.hydraulic.Utility.Data.Excel.DataManipulator;
+import me.t3sl4.hydraulic.Utility.Utils;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
@@ -301,7 +301,7 @@ public class ExcelUtil {
 
     public static void readExcel4ParcaListesiSogutucu(String filePath, DataManipulator dataManipulator) {
         readExcelData(filePath, "Parça-Soğutucu", dataManipulator, (row, dm) -> {
-            String data = row.getCell(0).getStringCellValue() + ";" + row.getCell(1).getStringCellValue() + ";" + Util.float2String(String.valueOf(row.getCell(2).getNumericCellValue()));
+            String data = row.getCell(0).getStringCellValue() + ";" + row.getCell(1).getStringCellValue() + ";" + Utils.float2String(String.valueOf(row.getCell(2).getNumericCellValue()));
             dm.parcaListesiSogutucu.add(data);
         });
     }

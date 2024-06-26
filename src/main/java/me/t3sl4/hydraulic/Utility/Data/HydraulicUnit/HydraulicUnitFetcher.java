@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.DataUtil.HydraulicUnit;
+package me.t3sl4.hydraulic.Utility.Data.HydraulicUnit;
 
 import java.io.BufferedReader;
 import java.io.IOException;
