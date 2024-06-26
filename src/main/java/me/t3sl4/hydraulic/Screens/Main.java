@@ -11,9 +11,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        SystemUtil.systemSetup();
-
         SceneUtil.openMainScreen();
+
+        Thread systemThread = new Thread(SystemUtil::systemSetup);
+
+        systemThread.start();
     }
 
     public static void main(String[] args) {
