@@ -699,7 +699,15 @@ public class HidrosController {
         String motorKW = secilenMotorGucu.trim();
         String tankKapasite = secilenTankKapasitesi.trim();
 
-        if(Objects.equals(motorKW, "0.55 kW")) {
+        if(Objects.equals(motorKW, "0.37 kW")) {
+            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                kabinKodu = "KD-8 Engelli";
+            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                kabinKodu = "KD-10 (CARREFOUR)";
+            }
+        } else if(Objects.equals(motorKW, "0.55 kW")) {
             if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
                 kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
                 kabinKodu = "KD-8 Engelli";
