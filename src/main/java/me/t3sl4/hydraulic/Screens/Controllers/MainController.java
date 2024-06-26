@@ -167,107 +167,26 @@ public class MainController implements Initializable {
 
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnHidros) {
-            pnlMenus.setStyle("-fx-background-color : #353a46");
-            pnlMenus.toFront();
-            try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
-                Pane parametrePane = loader.load();
-                pnlMenus.getChildren().setAll(parametrePane);
-
-                double paneWidth = pnlMenus.getWidth();
-                double paneHeight = pnlMenus.getHeight();
-
-                double parametreWidth = parametrePane.getPrefWidth();
-                double parametreHeight = parametrePane.getPrefHeight();
-
-                double centerX = (paneWidth - parametreWidth) / 2;
-                double centerY = (paneHeight - parametreHeight) / 2;
-                parametrePane.setLayoutX(centerX-100);
-                parametrePane.setLayoutY(centerY+20);
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-            }
+            paneSwitch(2);
         }
         if (actionEvent.getSource() == btnInisMetodu) {
-            pnlMenus.setStyle("-fx-background-color : #353a46");
-            pnlMenus.toFront();
-            try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
-                Pane parametrePane = loader.load();
-                pnlMenus.getChildren().setAll(parametrePane);
-
-                double paneWidth = pnlMenus.getWidth();
-                double paneHeight = pnlMenus.getHeight();
-
-                double parametreWidth = parametrePane.getPrefWidth();
-                double parametreHeight = parametrePane.getPrefHeight();
-
-                double centerX = (paneWidth - parametreWidth) / 2;
-                double centerY = (paneHeight - parametreHeight) / 2;
-                parametrePane.setLayoutX(centerX-100);
-                parametrePane.setLayoutY(centerY+20);
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-            }
+            paneSwitch(3);
         }
         if (actionEvent.getSource() == btnParametreler) {
-            pnlMenus.setStyle("-fx-background-color : #02030A");
-            pnlMenus.toFront();
-            try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Parametre.fxml"));
-                Pane parametrePane = loader.load();
-                pnlMenus.getChildren().setAll(parametrePane);
-
-                double paneWidth = pnlMenus.getWidth();
-                double paneHeight = pnlMenus.getHeight();
-
-                double parametreWidth = parametrePane.getPrefWidth();
-                double parametreHeight = parametrePane.getPrefHeight();
-
-                double centerX = (paneWidth - parametreWidth) / 2;
-                double centerY = (paneHeight - parametreHeight) / 2;
-                parametrePane.setLayoutX(centerX);
-                parametrePane.setLayoutY(centerY);
-
-                PopupController popupController = loader.getController();
-                popupController.setValues(ExcelUtil.dataManipulator.kampanaBoslukX, ExcelUtil.dataManipulator.kampanaBoslukY,
-                        ExcelUtil.dataManipulator.valfBoslukX, ExcelUtil.dataManipulator.valfBoslukYArka, ExcelUtil.dataManipulator.valfBoslukYOn,
-                        ExcelUtil.dataManipulator.kilitliBlokAraBoslukX, ExcelUtil.dataManipulator.tekHizAraBoslukX, ExcelUtil.dataManipulator.ciftHizAraBoslukX,
-                        ExcelUtil.dataManipulator.kompanzasyonTekHizAraBoslukX, ExcelUtil.dataManipulator.sogutmaAraBoslukX, ExcelUtil.dataManipulator.sogutmaAraBoslukYkOn,
-                        ExcelUtil.dataManipulator.sogutmaAraBoslukYkArka, ExcelUtil.dataManipulator.kilitMotorKampanaBosluk, ExcelUtil.dataManipulator.kilitMotorMotorBoslukX,
-                        ExcelUtil.dataManipulator.kilitMotorBoslukYOn, ExcelUtil.dataManipulator.kilitMotorBoslukYArka, ExcelUtil.dataManipulator.kayipLitre, ExcelUtil.dataManipulator.kilitPlatformMotorBosluk, ExcelUtil.dataManipulator.valfXBoslukSogutma);
-                popupController.showValues();
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-            }
+            paneSwitch(4);
         }
         if (actionEvent.getSource() == btnHome) {
-            pnlOverview.setStyle("-fx-background-color : #02030A");
-            pnlOverview.toFront();
-            updateHydraulicText();
-            hydraulicUnitInit(1);
+           if(!SystemDefaults.offlineMode) {
+               pnlOverview.setStyle("-fx-background-color : #02030A");
+               pnlOverview.toFront();
+               updateHydraulicText();
+               hydraulicUnitInit(1);
+           } else {
+               btnKlasik.fire();
+           }
         }
         if(actionEvent.getSource()==btnKlasik) {
-            pnlMenus.setStyle("-fx-background-color : #353a46");
-            pnlMenus.toFront();
-            try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Klasik.fxml"));
-                Pane parametrePane = loader.load();
-                pnlMenus.getChildren().setAll(parametrePane);
-
-                double paneWidth = pnlMenus.getWidth();
-                double paneHeight = pnlMenus.getHeight();
-
-                double parametreWidth = parametrePane.getPrefWidth();
-                double parametreHeight = parametrePane.getPrefHeight();
-
-                double centerX = (paneWidth - parametreWidth) / 2;
-                double centerY = (paneHeight - parametreHeight) / 2;
-                parametrePane.setLayoutX(centerX-100);
-                parametrePane.setLayoutY(centerY+20);
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-            }
+            paneSwitch(1);
         }
     }
 
@@ -480,6 +399,103 @@ public class MainController implements Initializable {
             workbook.close();
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    private void paneSwitch(int state) {
+        if(state == 1) {
+            pnlMenus.setStyle("-fx-background-color : #353a46");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Klasik.fxml"));
+                Pane parametrePane = loader.load();
+                pnlMenus.getChildren().setAll(parametrePane);
+
+                double paneWidth = pnlMenus.getWidth();
+                double paneHeight = pnlMenus.getHeight();
+
+                double parametreWidth = parametrePane.getPrefWidth();
+                double parametreHeight = parametrePane.getPrefHeight();
+
+                double centerX = (paneWidth - parametreWidth) / 2;
+                double centerY = (paneHeight - parametreHeight) / 2;
+                parametrePane.setLayoutX(centerX-100);
+                parametrePane.setLayoutY(centerY+20);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            }
+        } else if(state == 2) {
+            pnlMenus.setStyle("-fx-background-color : #353a46");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
+                Pane parametrePane = loader.load();
+                pnlMenus.getChildren().setAll(parametrePane);
+
+                double paneWidth = pnlMenus.getWidth();
+                double paneHeight = pnlMenus.getHeight();
+
+                double parametreWidth = parametrePane.getPrefWidth();
+                double parametreHeight = parametrePane.getPrefHeight();
+
+                double centerX = (paneWidth - parametreWidth) / 2;
+                double centerY = (paneHeight - parametreHeight) / 2;
+                parametrePane.setLayoutX(centerX-100);
+                parametrePane.setLayoutY(centerY+20);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            }
+        } else if(state == 3) {
+            pnlMenus.setStyle("-fx-background-color : #353a46");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
+                Pane parametrePane = loader.load();
+                pnlMenus.getChildren().setAll(parametrePane);
+
+                double paneWidth = pnlMenus.getWidth();
+                double paneHeight = pnlMenus.getHeight();
+
+                double parametreWidth = parametrePane.getPrefWidth();
+                double parametreHeight = parametrePane.getPrefHeight();
+
+                double centerX = (paneWidth - parametreWidth) / 2;
+                double centerY = (paneHeight - parametreHeight) / 2;
+                parametrePane.setLayoutX(centerX-100);
+                parametrePane.setLayoutY(centerY+20);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            }
+        } else if(state == 4) {
+            pnlMenus.setStyle("-fx-background-color : #02030A");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Parametre.fxml"));
+                Pane parametrePane = loader.load();
+                pnlMenus.getChildren().setAll(parametrePane);
+
+                double paneWidth = pnlMenus.getWidth();
+                double paneHeight = pnlMenus.getHeight();
+
+                double parametreWidth = parametrePane.getPrefWidth();
+                double parametreHeight = parametrePane.getPrefHeight();
+
+                double centerX = (paneWidth - parametreWidth) / 2;
+                double centerY = (paneHeight - parametreHeight) / 2;
+                parametrePane.setLayoutX(centerX);
+                parametrePane.setLayoutY(centerY);
+
+                PopupController popupController = loader.getController();
+                popupController.setValues(ExcelUtil.dataManipulator.kampanaBoslukX, ExcelUtil.dataManipulator.kampanaBoslukY,
+                        ExcelUtil.dataManipulator.valfBoslukX, ExcelUtil.dataManipulator.valfBoslukYArka, ExcelUtil.dataManipulator.valfBoslukYOn,
+                        ExcelUtil.dataManipulator.kilitliBlokAraBoslukX, ExcelUtil.dataManipulator.tekHizAraBoslukX, ExcelUtil.dataManipulator.ciftHizAraBoslukX,
+                        ExcelUtil.dataManipulator.kompanzasyonTekHizAraBoslukX, ExcelUtil.dataManipulator.sogutmaAraBoslukX, ExcelUtil.dataManipulator.sogutmaAraBoslukYkOn,
+                        ExcelUtil.dataManipulator.sogutmaAraBoslukYkArka, ExcelUtil.dataManipulator.kilitMotorKampanaBosluk, ExcelUtil.dataManipulator.kilitMotorMotorBoslukX,
+                        ExcelUtil.dataManipulator.kilitMotorBoslukYOn, ExcelUtil.dataManipulator.kilitMotorBoslukYArka, ExcelUtil.dataManipulator.kayipLitre, ExcelUtil.dataManipulator.kilitPlatformMotorBosluk, ExcelUtil.dataManipulator.valfXBoslukSogutma);
+                popupController.showValues();
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            }
         }
     }
 }
