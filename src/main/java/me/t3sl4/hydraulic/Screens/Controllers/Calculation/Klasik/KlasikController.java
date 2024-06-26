@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Screens.Controllers;
+package me.t3sl4.hydraulic.Screens.Controllers.Calculation.Klasik;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

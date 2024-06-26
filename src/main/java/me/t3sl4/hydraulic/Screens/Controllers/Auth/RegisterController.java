@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Screens.Controllers;
+package me.t3sl4.hydraulic.Screens.Controllers.Auth;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;

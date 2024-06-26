@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.*?>
-<VBox fx:id="klasikVBox" prefHeight="620.0" prefWidth="592" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Screens.Controllers.HidrosController">
+<VBox fx:id="klasikVBox" prefHeight="620.0" prefWidth="592" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Screens.Controllers.Calculation.Hidros.HidrosController">
     <children>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
             <children>

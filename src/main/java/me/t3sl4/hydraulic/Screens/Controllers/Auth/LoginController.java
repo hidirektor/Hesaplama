@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Screens.Controllers;
+package me.t3sl4.hydraulic.Screens.Controllers.Auth;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.Screens.Controllers.MainController;
 import me.t3sl4.hydraulic.Utility.ReqUtil;
 import me.t3sl4.hydraulic.Utility.SystemDefaults;
 import me.t3sl4.hydraulic.Utility.Utils;

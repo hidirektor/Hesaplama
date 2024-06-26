@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Screens.Controllers;
+package me.t3sl4.hydraulic.Screens.Controllers.Calculation.Hidros;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

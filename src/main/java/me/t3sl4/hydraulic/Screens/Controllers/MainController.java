@@ -19,6 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Component.FilterSwitch;
+import me.t3sl4.hydraulic.Screens.Controllers.Calculation.PopupController;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.Data.HydraulicUnit.HydraulicInfo;
 import me.t3sl4.hydraulic.Utility.Data.User.Profile;
