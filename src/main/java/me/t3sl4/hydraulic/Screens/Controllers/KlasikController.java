@@ -567,7 +567,7 @@ public class KlasikController {
         String gecisOlculeri = "";
         if(Objects.equals(atananHT, "HT 40")) {
             atananKabin = "KD 40";
-            gecisOlculeri = "540x460x780";
+            gecisOlculeri = "580x460x780";
         } else if(Objects.equals(atananHT, "HT 70")) {
             atananKabin = "KD 70";
             gecisOlculeri = "640x520x950";
