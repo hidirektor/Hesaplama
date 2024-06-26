@@ -151,8 +151,10 @@ public class MainController implements Initializable {
     public void anaEkranaDon() throws IOException {
         Stage stage = (Stage) parametreCount.getScene().getWindow();
 
-        loggedInUser = null;
-        SystemUtil.deleteRememberedFile();
+        if(loggedInUser != null) {
+            loggedInUser = null;
+            SystemUtil.deleteRememberedFile();
+        }
 
         stage.close();
         SceneUtil.changeScreen("fxml/Login.fxml");
@@ -271,25 +273,27 @@ public class MainController implements Initializable {
 
     @FXML
     public void profileEditScreen() {
-        pnlMenus.setStyle("-fx-background-color : #353a46");
-        pnlMenus.toFront();
-        try {
-            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/ProfileEdit.fxml"));
-            Pane profilPane = loader.load();
-            pnlMenus.getChildren().setAll(profilPane);
+        if(loggedInUser != null) {
+            pnlMenus.setStyle("-fx-background-color : #353a46");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/ProfileEdit.fxml"));
+                Pane profilPane = loader.load();
+                pnlMenus.getChildren().setAll(profilPane);
 
-            double paneWidth = pnlMenus.getWidth();
-            double paneHeight = pnlMenus.getHeight();
+                double paneWidth = pnlMenus.getWidth();
+                double paneHeight = pnlMenus.getHeight();
 
-            double parametreWidth = profilPane.getPrefWidth();
-            double parametreHeight = profilPane.getPrefHeight();
+                double parametreWidth = profilPane.getPrefWidth();
+                double parametreHeight = profilPane.getPrefHeight();
 
-            double centerX = (paneWidth - parametreWidth) / 2;
-            double centerY = (paneHeight - parametreHeight) / 2;
-            profilPane.setLayoutX(centerX);
-            profilPane.setLayoutY(centerY+20);
-        } catch(IOException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+                double centerX = (paneWidth - parametreWidth) / 2;
+                double centerY = (paneHeight - parametreHeight) / 2;
+                profilPane.setLayoutX(centerX);
+                profilPane.setLayoutY(centerY+20);
+            } catch(IOException e) {
+                logger.log(Level.SEVERE, e.getMessage(), e);
+            }
         }
     }
 
@@ -299,8 +303,10 @@ public class MainController implements Initializable {
     }
 
     public void userInfo() {
-        kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName() + "\n ");
-        Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
+        if(loggedInUser != null) {
+            kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName() + "\n ");
+            Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
+        }
     }
 
     public void updateHydraulicText() {

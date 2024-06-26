@@ -26,7 +26,7 @@
                 </Label>
             </children>
         </AnchorPane>
-        <Pane layoutX="487.0" layoutY="136.0" AnchorPane.bottomAnchor="37.0" AnchorPane.topAnchor="136.0">
+        <Pane fx:id="loginPane" visible="false" layoutX="487.0" layoutY="136.0" AnchorPane.bottomAnchor="37.0" AnchorPane.topAnchor="136.0">
             <children>
                 <JFXTextField fx:id="txtUsername" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="Kullanıcı Adı" />
                 <JFXPasswordField fx:id="txtPassword" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="Şifre" stylesheets="@../styling/fullpackstyling.css" />
@@ -51,15 +51,11 @@
                 <JFXTextField fx:id="sifrePassword" focusColor="#48a5ea" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="Şifre" visible="false" />
 
                 <Button fx:id="btnSignup" layoutX="6.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#kayitOl" prefHeight="34.0" prefWidth="275.0" stylesheets="@../styling/fullpackstyling.css" text="Kayıt Ol" />
+                <Button fx:id="offlineMod2" layoutX="6.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#offlineMod" prefHeight="34.0" prefWidth="275.0" stylesheets="@../styling/fullpackstyling.css" text="Offline Mod" />
                 <Separator layoutX="2.0" layoutY="203.0" prefHeight="7.0" prefWidth="275.0" />
                 <Label alignment="CENTER" layoutX="124.0" layoutY="195.0" prefHeight="23.0" prefWidth="31.0" style="-fx-background-color: #fff;" text="Ya da" textFill="#5b5a5a">
                     <font>
                         <Font name="Segoe UI" size="12.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lblErrors" alignment="CENTER" layoutX="8.0" layoutY="95.0" prefHeight="23.0" prefWidth="275.0" textFill="#ff6354">
-                    <font>
-                        <Font name="Segoe UI" size="10.0" />
                     </font>
                 </Label>
             </children>
@@ -74,10 +70,17 @@
                 <Image url="@../../../../assets/icons/logo.png" />
             </image>
         </ImageView>
-      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="828.0" layoutY="2.0" onMouseClicked="#ekraniKapat" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../assets/images/closeIcon.png" />
-         </image>
-      </ImageView>
+        <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="828.0" layoutY="2.0" onMouseClicked="#ekraniKapat" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../assets/images/closeIcon.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="onlineMod" layoutX="491.0" layoutY="284.0" mnemonicParsing="false" onMouseClicked="#onlineMod" prefHeight="34.0" prefWidth="275.0" stylesheets="@../styling/fullpackstyling.css" text="Online Erişim" />
+        <Button fx:id="offlineMod" layoutX="491.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#offlineMod" prefHeight="34.0" prefWidth="275.0" stylesheets="@../styling/fullpackstyling.css" text="Offline Erişim" />
+        <Label fx:id="lblErrors" alignment="CENTER" layoutX="553.0" layoutY="448.0" prefHeight="23.0" prefWidth="275.0" textFill="#ff6354">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

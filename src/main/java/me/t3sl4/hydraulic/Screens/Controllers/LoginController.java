@@ -11,6 +11,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
@@ -21,7 +22,9 @@ import me.t3sl4.hydraulic.Utility.HTTPUtil.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Util;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -60,6 +63,17 @@ public class LoginController implements Initializable {
     @FXML
     private ToggleButton beniHatirla;
 
+    @FXML
+    private Pane loginPane;
+
+    @FXML
+    private Button onlineMod;
+
+    @FXML
+    private Button offlineMod;
+    @FXML
+    private Button offlineMod2;
+
     private String girilenSifre = "";
 
     private static final Logger logger = Logger.getLogger(MainController.class.getName());
@@ -71,33 +85,7 @@ public class LoginController implements Initializable {
             String loginUrl = BASE_URL + loginURLPrefix;
             String jsonLoginBody = "";
 
-            if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-                Util.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
-
-                jsonLoginBody = "{\"Username\": \"" + "hidirektor" + "\", \"Password\": \"" + "asdasd" + "\"}";
-                String finalJsonLoginBody = jsonLoginBody;
-
-                Timeline timeline = new Timeline();
-                timeline.setCycleCount(4);
-
-                final int[] countdown = {3};
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
-                    if (countdown[0] > 0) {
-                        Util.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
-                        countdown[0]--;
-                    } else {
-                        timeline.stop();
-                        try {
-                            loginReq(loginUrl, finalJsonLoginBody, stage, "hidirektor", "asdasd");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                });
-
-                timeline.getKeyFrames().add(keyFrame);
-                timeline.playFromStart();
-            } else {
+            if (!txtUsername.getText().isEmpty() || !txtPassword.getText().isEmpty()) {
                 jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
                 loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText());
             }
@@ -124,6 +112,43 @@ public class LoginController implements Initializable {
     }
 
     @FXML
+    public void onlineMod() {
+        loginPane.setVisible(true);
+        offlineMod.setVisible(false);
+        onlineMod.setVisible(false);
+    }
+
+    @FXML
+    public void offlineMod() {
+        loginPane.setVisible(false);
+        offlineMod.setVisible(false);
+        onlineMod.setVisible(false);
+
+        Util.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(4);
+
+        final int[] countdown = {3};
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
+            if (countdown[0] > 0) {
+                Util.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
+                countdown[0]--;
+            } else {
+                timeline.stop();
+                try {
+                    openMainScreen();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.playFromStart();
+    }
+
+    @FXML
     public void sifremiUnuttum() throws IOException {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
 
@@ -134,13 +159,10 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         codedBy.setText("Designed and Coded by\nHalil İbrahim Direktör");
-        if(Util.netIsAvailable()) {
-            beniHatirlaKontrol();
-            girisKontrol();
-            beniHatirla();
-        } else {
-            Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
-        }
+
+        beniHatirlaKontrol();
+        beniHatirla();
+
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
@@ -239,28 +261,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    private void girisKontrol() {
-        String kullaniciAdi = null;
-        String sifre = null;
-        if (beniHatirla.isSelected()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(Launcher.loginFilePath))) {
-                kullaniciAdi = reader.readLine();
-                sifre = reader.readLine();
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-            }
-
-            if(Util.netIsAvailable()) {
-                directLogin(kullaniciAdi, sifre);
-            } else {
-                File forceDelete = new File(Launcher.loginFilePath);
-                forceDelete.delete();
-                beniHatirla.setSelected(false);
-                Util.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin !");
-            }
-        }
-    }
-
     private void directLogin(String kullaniciAdi, String sifre) {
         String loginUrl = BASE_URL + directLoginURLPrefix;
         String jsonLoginBody = "{\"Username\": \"" + kullaniciAdi + "\", \"Password\": \"" + sifre + "\"}";
@@ -341,6 +341,8 @@ public class LoginController implements Initializable {
     }
 
     private void openMainScreen() throws IOException {
+        Stage stage = (Stage) btnSignin.getScene().getWindow();
+        stage.close();
         SceneUtil.changeScreen("fxml/Home.fxml");
     }
 
