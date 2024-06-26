@@ -23,8 +23,8 @@ import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.Data.HydraulicUnit.HydraulicInfo;
 import me.t3sl4.hydraulic.Utility.Data.User.Profile;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.File.SystemUtil;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.SystemDefaults;
 import me.t3sl4.hydraulic.Utility.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -153,7 +153,6 @@ public class MainController implements Initializable {
 
         if(loggedInUser != null) {
             loggedInUser = null;
-            SystemUtil.deleteRememberedFile();
         }
 
         stage.close();
@@ -162,7 +161,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void onderGrupSiteOpen() {
-        Utils.openURL("https://ondergrup.com");
+        Utils.openURL(SystemDefaults.WEB_URL);
     }
 
     public void handleClicks(ActionEvent actionEvent) {

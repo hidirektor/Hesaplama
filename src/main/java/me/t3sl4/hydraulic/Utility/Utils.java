@@ -5,8 +5,10 @@ import javafx.animation.Timeline;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import me.t3sl4.hydraulic.Screens.SceneUtil;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -170,5 +172,44 @@ public class Utils {
         };
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         filteredField.setTextFormatter(textFormatter);
+    }
+
+    public static void openMainScreen(Label sceneLabel) throws IOException {
+        Stage stage = (Stage) sceneLabel.getScene().getWindow();
+        stage.close();
+        SceneUtil.changeScreen("fxml/Home.fxml");
+    }
+
+    public static void openRegisterScreen() throws IOException {
+        SceneUtil.changeScreen("fxml/Register.fxml");
+    }
+
+    public static void openResetPasswordScreen() throws IOException {
+        SceneUtil.changeScreen("fxml/ResetPassword.fxml");
+    }
+
+    public static void offlineMod(Label lblErrors) {
+        Utils.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(4);
+
+        final int[] countdown = {3};
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
+            if (countdown[0] > 0) {
+                Utils.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
+                countdown[0]--;
+            } else {
+                timeline.stop();
+                try {
+                    Utils.openMainScreen(lblErrors);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.playFromStart();
     }
 }

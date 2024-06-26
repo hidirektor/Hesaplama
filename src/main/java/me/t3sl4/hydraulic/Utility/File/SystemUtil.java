@@ -35,7 +35,6 @@ public class SystemUtil {
         createDirectory(Launcher.pdfFileLocalPath);
         createDirectory(Launcher.excelFileLocalPath);
         createDirectory(Launcher.dataFileLocalPath);
-        createDirectory(Launcher.loginFilePath);
     }
 
     private static void createDirectory(String path) {
@@ -71,7 +70,6 @@ public class SystemUtil {
         Launcher.pdfFileLocalPath = Launcher.mainPath + "hydraulicUnits/";
         Launcher.excelFileLocalPath = Launcher.mainPath + "partList/";
         Launcher.dataFileLocalPath = Launcher.mainPath + "assets/data/";
-        Launcher.loginFilePath = Launcher.mainPath + "login/loginInfo.txt";
         Launcher.excelDBPath = Launcher.mainPath + "assets/data/Hidrolik.xlsx";
     }
 
@@ -88,17 +86,6 @@ public class SystemUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void deleteRememberedFile() {
-        File file = new File(Launcher.loginFilePath);
-        if (file.exists()) {
-            if(file.delete()) {
-                System.out.println(file.getName() + " deleted :))");
-            } else {
-                System.out.println(file.getName() + " not deleted :((");
-            }
         }
     }
 }

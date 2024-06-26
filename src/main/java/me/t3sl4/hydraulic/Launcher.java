@@ -6,8 +6,6 @@ public class Launcher {
     public static String BASE_URL = "http://85.95.231.92:3000";
 
     public static String loginURLPrefix = "/api/login";
-    public static String getPassURLPrefix = "/api/getCipheredPass";
-    public static String directLoginURLPrefix = "/api/directLogin";
     public static String registerURLPrefix = "/api/register";
     public static String otpURLPrefix = "/api/sendOTP";
 
@@ -36,13 +34,13 @@ public class Launcher {
     public static String pdfFileLocalPath;
     public static String excelFileLocalPath;
     public static String dataFileLocalPath;
-    public static String loginFilePath;
     public static String excelDBPath;
 
     public static void main(String[] args) {
         if(System.getProperty("os.name").contains("Windows")) {
             System.setProperty("prism.order", "sw");
             System.setProperty("prism.verbose", "true");
+            System.setProperty("javafx.animation.fullspeed", "true");
         } else {
             System.setProperty("CG_PDF_VERBOSE", "1");
         }

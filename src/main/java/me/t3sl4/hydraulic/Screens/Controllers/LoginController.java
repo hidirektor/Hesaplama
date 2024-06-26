@@ -1,29 +1,20 @@
 package me.t3sl4.hydraulic.Screens.Controllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.Data.User.User;
-import me.t3sl4.hydraulic.Utility.File.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.ReqUtil;
+import me.t3sl4.hydraulic.Utility.SystemDefaults;
 import me.t3sl4.hydraulic.Utility.Utils;
-import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -31,8 +22,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static me.t3sl4.hydraulic.Launcher.*;
-import static me.t3sl4.hydraulic.Screens.Main.loggedInUser;
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.loginURLPrefix;
 
 public class LoginController implements Initializable {
 
@@ -60,8 +51,6 @@ public class LoginController implements Initializable {
     private TextField sifrePassword;
     @FXML
     private ImageView passwordVisibilityIcon;
-    @FXML
-    private ToggleButton beniHatirla;
 
     @FXML
     private Pane loginPane;
@@ -71,8 +60,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button offlineMod;
-    @FXML
-    private Button offlineMod2;
 
     private String girilenSifre = "";
 
@@ -80,72 +67,49 @@ public class LoginController implements Initializable {
 
     @FXML
     public void girisYap(MouseEvent event) throws IOException {
-        if (Utils.netIsAvailable()) {
-            Stage stage = (Stage) btnSignin.getScene().getWindow();
-            String loginUrl = BASE_URL + loginURLPrefix;
-            String jsonLoginBody = "";
+        Stage stage = (Stage) btnSignin.getScene().getWindow();
+        String loginUrl = BASE_URL + loginURLPrefix;
+        String jsonLoginBody = "";
 
-            if (!txtUsername.getText().isEmpty() || !txtPassword.getText().isEmpty()) {
-                jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
-                loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText());
-            }
-        } else {
-            Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
+        if (!txtUsername.getText().isEmpty() || !txtPassword.getText().isEmpty()) {
+            jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
+            ReqUtil.loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText(), lblErrors);
         }
     }
 
     @FXML
     public void kayitOl() {
-        if (Utils.netIsAvailable()) {
-            Stage stage = (Stage) btnSignup.getScene().getWindow();
+        Stage stage = (Stage) btnSignup.getScene().getWindow();
 
-            stage.close();
+        stage.close();
 
-            try {
-                openRegisterScreen();
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-            }
-        } else {
-            Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
+        try {
+            Utils.openRegisterScreen();
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
     @FXML
     public void onlineMod() {
-        loginPane.setVisible(true);
-        offlineMod.setVisible(false);
-        onlineMod.setVisible(false);
+        if (Utils.netIsAvailable()) {
+            loginPane.setVisible(true);
+            offlineMod.setVisible(false);
+            onlineMod.setVisible(false);
+        } else {
+            SystemDefaults.offlineMode = false;
+            Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
+        }
     }
 
     @FXML
     public void offlineMod() {
+        SystemDefaults.offlineMode = true;
         loginPane.setVisible(false);
-        offlineMod.setVisible(false);
-        onlineMod.setVisible(false);
+        offlineMod.setVisible(true);
+        onlineMod.setVisible(true);
 
-        Utils.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
-
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(4);
-
-        final int[] countdown = {3};
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
-            if (countdown[0] > 0) {
-                Utils.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
-                countdown[0]--;
-            } else {
-                timeline.stop();
-                try {
-                    openMainScreen();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.playFromStart();
+        Utils.offlineMod(lblErrors);
     }
 
     @FXML
@@ -153,156 +117,16 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
 
         stage.close();
-        openResetPasswordScreen();
+        Utils.openResetPasswordScreen();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        codedBy.setText("Designed and Coded by\nHalil İbrahim Direktör");
-
-        beniHatirlaKontrol();
-        beniHatirla();
+        codedBy.setText(SystemDefaults.developedBy);
 
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
-        });
-    }
-
-    private void loginReq(String loginUrl, String jsonLoginBody, Stage stage, String userName, String password) throws IOException {
-        HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String loginResponse) {
-                String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
-                String jsonProfileInfoBody = "{\"Username\": \"" + userName + "\"}";
-                SystemUtil.deleteRememberedFile();
-                HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
-                    @Override
-                    public void onSuccess(String profileInfoResponse) {
-                        JSONObject roleObject = new JSONObject(profileInfoResponse);
-                        String roleValue = roleObject.getString("Role");
-                        if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
-                            loggedInUser = new User(userName);
-
-                            updateUserAndOpenMainScreen(stage);
-                            beniHatirla();
-                        } else {
-                            Utils.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        Utils.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure() {
-                Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
-                removeBeniHatirla();
-            }
-        });
-    }
-
-    public void beniHatirla() {
-        beniHatirla.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                String getCipheredPassUrl = BASE_URL + getPassURLPrefix;
-                String jsonGetCipheredPassBody = "{\"Password\": \"" + txtPassword.getText() + "\"}";
-
-                String username = txtUsername.getText().trim();
-
-                HTTPRequest.sendRequest(getCipheredPassUrl, jsonGetCipheredPassBody, new HTTPRequest.RequestCallback() {
-                    @Override
-                    public void onSuccess(String getPassResponse) {
-                        JSONObject passObject = new JSONObject(getPassResponse);
-                        String password = passObject.getString("pass");
-                        if (!username.isEmpty() && password != null && !password.isEmpty()) {
-                            try {
-                                FileWriter writer = new FileWriter(Launcher.loginFilePath);
-                                writer.write(username + "\n");
-                                writer.write(password);
-                                writer.close();
-                            } catch (IOException e) {
-                                logger.log(Level.SEVERE, e.getMessage(), e);
-                            }
-                        } else {
-                            Utils.showErrorMessage("Kullanıcı adı veya şifre alanları boş olamaz!");
-                            beniHatirla.setSelected(false);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        Utils.showErrorOnLabel(lblErrors, "Hashlenmiş şifre alınamadı!");
-                        beniHatirla.setSelected(false);
-                    }
-                });
-            } else {
-                SystemUtil.deleteRememberedFile();
-            }
-        });
-    }
-
-    private void removeBeniHatirla() {
-        SystemUtil.deleteRememberedFile();
-        beniHatirla.setSelected(false);
-    }
-
-    private void beniHatirlaKontrol() {
-        File loginFile = new File(Launcher.loginFilePath);
-
-        if (loginFile.exists()) {
-            beniHatirla.setSelected(true);
-        } else {
-            beniHatirla.setSelected(false);
-        }
-    }
-
-    private void directLogin(String kullaniciAdi, String sifre) {
-        String loginUrl = BASE_URL + directLoginURLPrefix;
-        String jsonLoginBody = "{\"Username\": \"" + kullaniciAdi + "\", \"Password\": \"" + sifre + "\"}";
-
-        HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String loginResponse) {
-                String profileInfoUrl = BASE_URL + profileInfoURLPrefix +":Role";
-                String jsonProfileInfoBody = "{\"Username\": \"" + kullaniciAdi + "\"}";
-                HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
-                    @Override
-                    public void onSuccess(String profileInfoResponse) {
-                        JSONObject roleObject = new JSONObject(profileInfoResponse);
-                        String roleValue = roleObject.getString("Role");
-                        if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
-                            loggedInUser = new User(kullaniciAdi);
-
-                            updateUser(() -> {
-                                try {
-                                    openMainScreen();
-                                } catch (IOException e) {
-                                    logger.log(Level.SEVERE, e.getMessage(), e);
-                                }
-                                Stage loginStage = (Stage) btnSignin.getScene().getWindow();
-                                loginStage.close();
-                            });
-                        } else {
-                            Utils.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        Utils.showErrorOnLabel(lblErrors, "Profil bilgileri alınamadı!");
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure() {
-                Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
-            }
         });
     }
 
@@ -330,7 +154,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void openOnder() {
-        Utils.openURL("https://ondergrup.com");
+        Utils.openURL(SystemDefaults.WEB_URL);
     }
 
     @FXML
@@ -338,59 +162,5 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
 
         stage.close();
-    }
-
-    private void openMainScreen() throws IOException {
-        Stage stage = (Stage) btnSignin.getScene().getWindow();
-        stage.close();
-        SceneUtil.changeScreen("fxml/Home.fxml");
-    }
-
-    private void openRegisterScreen() throws IOException {
-        SceneUtil.changeScreen("fxml/Register.fxml");
-    }
-
-    private void openResetPasswordScreen() throws IOException {
-        SceneUtil.changeScreen("fxml/ResetPassword.fxml");
-    }
-
-    public void updateUserAndOpenMainScreen(Stage stage) {
-        updateUser(() -> {
-            try {
-                openMainScreen();
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-            }
-            stage.close();
-        });
-    }
-
-    public void updateUser(Runnable onUserUpdateComplete) {
-        String profileInfoUrl = BASE_URL + wholeProfileURLPrefix;
-        String profileInfoBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
-
-        HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String profileInfoResponse) {
-                JSONObject responseJson = new JSONObject(profileInfoResponse);
-                String parsedRole = responseJson.getString("Role");
-                String parsedFullName = responseJson.getString("NameSurname");
-                String parsedEmail = responseJson.getString("Email");
-                String parsedPhone = responseJson.getString("Phone");
-                String parsedCompanyName = responseJson.getString("CompanyName");
-
-                loggedInUser.setRole(parsedRole);
-                loggedInUser.setFullName(parsedFullName);
-                loggedInUser.setEmail(parsedEmail);
-                loggedInUser.setPhone(parsedPhone);
-                loggedInUser.setCompanyName(parsedCompanyName);
-                onUserUpdateComplete.run();
-            }
-
-            @Override
-            public void onFailure() {
-                System.out.println("Kullanıcı bilgileri alınamadı!");
-            }
-        });
     }
 }
