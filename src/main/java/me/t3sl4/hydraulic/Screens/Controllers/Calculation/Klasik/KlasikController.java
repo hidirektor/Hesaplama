@@ -22,16 +22,17 @@ import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
 import me.t3sl4.hydraulic.Utility.File.SystemUtil;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.ReqUtil;
 import me.t3sl4.hydraulic.Utility.Utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static me.t3sl4.hydraulic.Launcher.*;
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.insertHydraulicURLPrefix;
 
 public class KlasikController {
     @FXML
@@ -211,9 +212,6 @@ public class KlasikController {
 
     private double x, y;
 
-    boolean pdfSucc = false;
-    boolean excelSucc = false;
-
     public static String atananKabinFinal = "";
     public static String gecisOlculeriFinal = "";
 
@@ -269,6 +267,7 @@ public class KlasikController {
                 imageTextEnable(x, y);
             } else {
                 //Yeni görsel yazıları
+                imageTextEnable(x, y);
             }
             hesaplamaBitti = true;
         }
@@ -299,12 +298,8 @@ public class KlasikController {
             HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) throws IOException {
-                    uploadPDFFile2Server(pdfPath);
-                    uploadExcelFile2Server(excelPath);
-                    if(excelSucc && pdfSucc) {
+                    if(ReqUtil.uploadPDFFile2Server(pdfPath, girilenSiparisNumarasi) && ReqUtil.uploadExcelFile2Server(excelPath, girilenSiparisNumarasi)) {
                         Utils.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
-                        excelSucc = false;
-                        pdfSucc = false;
                     }
                 }
 
@@ -317,57 +312,6 @@ public class KlasikController {
             Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
     }
-
-    private void uploadPDFFile2Server(String filePath) {
-        String uploadUrl = BASE_URL + uploadPDFURLPrefix;
-
-        File pdfFile = new File(filePath);
-        if (!pdfFile.exists()) {
-            Utils.showErrorMessage("PDF dosyası bulunamadı !");
-            return;
-        }
-
-        HTTPRequest.sendMultipartRequest(uploadUrl,girilenSiparisNumarasi, pdfFile, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String response) {
-                pdfSucc = true;
-                /*Platform.runLater(() -> {
-                    Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
-                });*/
-            }
-
-            @Override
-            public void onFailure() {
-                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
-            }
-        });
-    }
-
-    private void uploadExcelFile2Server(String filePath) {
-        String uploadUrl = BASE_URL + uploadExcelURLPrefix;
-
-        File excelFile = new File(filePath);
-        if (!excelFile.exists()) {
-            Utils.showErrorMessage("Excel dosyası bulunamadı !");
-            return;
-        }
-
-        HTTPRequest.sendMultipartRequest(uploadUrl, girilenSiparisNumarasi, excelFile, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String response) {
-                excelSucc = true;
-                /*Platform.runLater(() -> {
-                    Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
-                });*/
-            }
-
-            @Override
-            public void onFailure() {
-                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
-            }
-        });
-    }
-
 
     ArrayList<Integer> calcDimensions(int x, int y, int h, ArrayList<Integer> kampanaDegerleri) {
         int eskiX=0, eskiY=0, eskiH=0;

@@ -6,6 +6,7 @@ import me.t3sl4.hydraulic.Utility.Data.User.User;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 import static me.t3sl4.hydraulic.Launcher.*;
@@ -85,5 +86,55 @@ public class ReqUtil {
             }
             stage.close();
         });
+    }
+
+    public static boolean uploadPDFFile2Server(String filePath, String girilenSiparisNumarasi) {
+        String uploadUrl = BASE_URL + uploadPDFURLPrefix;
+        final boolean[] pdfSucc = {false};
+
+        File pdfFile = new File(filePath);
+        if (!pdfFile.exists()) {
+            Utils.showErrorMessage("PDF dosyası bulunamadı !");
+            return pdfSucc[0];
+        }
+
+        HTTPRequest.sendMultipartRequest(uploadUrl,girilenSiparisNumarasi, pdfFile, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String response) {
+                pdfSucc[0] = true;
+            }
+
+            @Override
+            public void onFailure() {
+                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+            }
+        });
+
+        return pdfSucc[0];
+    }
+
+    public static boolean uploadExcelFile2Server(String filePath, String girilenSiparisNumarasi) {
+        String uploadUrl = BASE_URL + uploadExcelURLPrefix;
+        final boolean[] excelSucc = {false};
+
+        File excelFile = new File(filePath);
+        if (!excelFile.exists()) {
+            Utils.showErrorMessage("Excel dosyası bulunamadı !");
+            return excelSucc[0];
+        }
+
+        HTTPRequest.sendMultipartRequest(uploadUrl, girilenSiparisNumarasi, excelFile, new HTTPRequest.RequestCallback() {
+            @Override
+            public void onSuccess(String response) {
+                excelSucc[0] = true;
+            }
+
+            @Override
+            public void onFailure() {
+                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
+            }
+        });
+
+        return excelSucc[0];
     }
 }
