@@ -31,7 +31,7 @@
                 <JFXTextField fx:id="txtUsername" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="Kullanıcı Adı" />
                 <JFXPasswordField fx:id="txtPassword" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="Şifre" stylesheets="@../styling/fullpackstyling.css" />
                 <Button fx:id="btnSignin" layoutX="145.0" layoutY="155.0" mnemonicParsing="false" onMouseClicked="#girisYap" prefHeight="34.0" prefWidth="137.0" stylesheets="@../styling/fullpackstyling.css" text="Giriş Yap" />
-                <JFXToggleButton fx:id="beniHatirla" layoutX="75.0" layoutY="100.0" prefHeight="10.0" prefWidth="140.0" text="Beni Hatırla" textFill="#5383ff"/>
+                <JFXToggleButton fx:id="beniHatirla" layoutX="75.0" layoutY="100.0" visible="false" prefHeight="10.0" prefWidth="140.0" text="Beni Hatırla" textFill="#5383ff"/>
                 <Label fx:id="btnForgot" alignment="CENTER" layoutX="8.0" layoutY="161.0" onMouseClicked="#sifremiUnuttum" prefHeight="23.0" prefWidth="93.0" text="Şifremi Unuttum" textFill="#5383ff">
                     <font>
                         <Font name="Segoe UI" size="12.0" />

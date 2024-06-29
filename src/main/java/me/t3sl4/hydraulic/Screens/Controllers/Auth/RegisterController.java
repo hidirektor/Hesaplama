@@ -2,10 +2,7 @@ package me.t3sl4.hydraulic.Screens.Controllers.Auth;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,7 +13,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
@@ -25,6 +21,7 @@ import me.t3sl4.hydraulic.Utility.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.Launcher.*;
@@ -99,13 +96,13 @@ public class RegisterController implements Initializable {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/hidePass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/hidePass.png"))));
         } else {
             sifreText.setManaged(true);
             sifreText.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/showPass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/showPass.png"))));
         }
     }
 
@@ -206,7 +203,7 @@ public class RegisterController implements Initializable {
                 Platform.runLater(() -> {
                     try {
                         stage.close();
-                        openMainScreen();
+                        SceneUtil.openMainScreen();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -234,28 +231,6 @@ public class RegisterController implements Initializable {
         kullaniciAdiText.clear();
         sifreText.clear();
         sirketText.clear();
-    }
-
-    private void openMainScreen() throws IOException {
-        Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(Launcher.class.getResource("fxml/Login.fxml"));
-        primaryStage.setScene(new Scene(root));
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-
-        Image icon = new Image(Launcher.class.getResourceAsStream("icons/logo.png"));
-        primaryStage.getIcons().add(icon);
-
-        root.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-        root.setOnMouseDragged(event -> {
-
-            primaryStage.setX(event.getScreenX() - x);
-            primaryStage.setY(event.getScreenY() - y);
-
-        });
-        primaryStage.show();
     }
 
     private boolean checkFields() {
