@@ -9,18 +9,18 @@
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #F9F871;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Screens.Controllers.MainController">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #F9F871;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox fx:id="buttonsVBox" alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #F9F871;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                      <Circle fx:id="profilePhotoCircle" fill="#F9F871" radius="63.0" />
-                      <ImageView fx:id="kullaniciProfilFoto" fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                              <Image url="@../../../../assets/icons/logo.png" />
-                          </image>
-                  </ImageView>
-               </children>
-            </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0">
+                    <children>
+                        <Circle fx:id="profilePhotoCircle" fill="#F9F871" radius="63.0" />
+                        <ImageView fx:id="kullaniciProfilFoto" fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../assets/icons/logo.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </StackPane>
                 <Label fx:id="kullaniciAdiIsimText" alignment="CENTER" text="/@KullanıcıAdı" textAlignment="CENTER" textFill="#000000">
                     <VBox.margin>
                         <Insets bottom="20.0" />
@@ -128,14 +128,14 @@
                         <Insets left="50.0" />
                     </padding>
                 </Button>
-            <ImageView fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../assets/icons/onderGrupMain.png" />
-               </image>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="40.0" />
-               </VBox.margin>
-            </ImageView>
+                <ImageView fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../assets/icons/onderGrupMain.png" />
+                    </image>
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="40.0" />
+                    </VBox.margin>
+                </ImageView>
             </children>
         </VBox>
         <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #02030A;">
@@ -211,20 +211,20 @@
                                 </VBox>
                             </children>
                         </HBox>
-                          <Label layoutX="97.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Numarası" textFill="#e7e5e5" />
-                          <Label layoutX="246.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Tarihi" textFill="#e7e5e5" />
-                          <Label layoutX="395.0" layoutY="205.0" text="Ünite Tipi" textFill="#e7e5e5" />
-                          <Label layoutX="537.0" layoutY="205.0" text="PDF" textFill="#e7e5e5" />
-                          <Label layoutX="657.0" layoutY="205.0" text="Oluşturan" textFill="#e7e5e5" />
-                            <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="320.0" prefWidth="746.0" stylesheets="@../styling/style.css">
-                                <content>
-                                    <VBox fx:id="pnItems" prefHeight="318.0" prefWidth="744.0" spacing="5.0" style="-fx-background-color: #02030A;">
-                                        <padding>
-                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                        </padding>
-                                    </VBox>
-                                </content>
-                            </ScrollPane>
+                        <Label layoutX="97.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Numarası" textFill="#e7e5e5" />
+                        <Label layoutX="246.0" layoutY="204.0" prefHeight="18.0" text="Sipariş Tarihi" textFill="#e7e5e5" />
+                        <Label layoutX="395.0" layoutY="205.0" text="Ünite Tipi" textFill="#e7e5e5" />
+                        <Label layoutX="537.0" layoutY="205.0" text="PDF" textFill="#e7e5e5" />
+                        <Label layoutX="657.0" layoutY="205.0" text="Oluşturan" textFill="#e7e5e5" />
+                        <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="320.0" prefWidth="746.0" stylesheets="@../styling/style.css">
+                            <content>
+                                <VBox fx:id="pnItems" prefHeight="318.0" prefWidth="744.0" spacing="5.0" style="-fx-background-color: #02030A;">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                </VBox>
+                            </content>
+                        </ScrollPane>
                     </children>
                 </Pane>
             </children>

@@ -2,6 +2,7 @@ package me.t3sl4.hydraulic.Screens.Controllers;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Component.FilterSwitch;
 import me.t3sl4.hydraulic.Screens.Controllers.Calculation.PopupController;
@@ -49,6 +51,9 @@ import static me.t3sl4.hydraulic.Utility.Utils.openURL;
 public class MainController implements Initializable {
 
     @FXML
+    public VBox buttonsVBox;
+
+    @FXML
     private VBox pnItems = null;
     @FXML
     private Button btnHome;
@@ -64,6 +69,9 @@ public class MainController implements Initializable {
 
     @FXML
     public Button btnSignout;
+
+    @FXML
+    public Button btnCloseProgram;
 
     @FXML
     private Button btnInisMetodu;
@@ -233,8 +241,16 @@ public class MainController implements Initializable {
             Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
         } else {
             kullaniciAdiIsimText.setText("Standart Kullanıcı");
-            btnProfil.setVisible(false);
-            btnSignout.setVisible(false);
+
+            buttonsVBox.getChildren().remove(btnHome);
+            buttonsVBox.getChildren().remove(btnProfil);
+            buttonsVBox.getChildren().remove(btnSignout);
+
+            buttonsVBox.toFront();
+
+            PauseTransition delay = new PauseTransition(Duration.millis(50));
+            delay.setOnFinished(event -> btnKlasik.fire());
+            delay.play();
         }
     }
 
