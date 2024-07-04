@@ -541,7 +541,7 @@ public class KlasikController {
             valfTipiComboBox.setDisable(false);
             if(valfTipiStat == 1) {
                 valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri1);
-                //valfTipiComboBox.getItems().addAll("Kilitli Blok || Çift Hız");
+                //valfTipiComboBox.getItems().addAll("Kilitli Blok || Çift Hız", "Kilitli Blok || Kompanzasyon");
             } else {
                 valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri2);
                 //valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız");
@@ -630,14 +630,13 @@ public class KlasikController {
                 secilenPompaVal = Utils.string2Double(secilenPompa);
                 if(oldSecilenPompaVal >= 28.1 && secilenPompaVal < 28.1) {
                     disableMotorPompa(1);
-                    imageTextDisable(0);
                 } else if(oldSecilenPompaVal < 28.1 && secilenPompaVal >= 28.1) {
                     disableMotorPompa(2);
-                    imageTextDisable(0);
                 }
             }
             if(secilenPompa != null) {
                 tabloGuncelle();
+                imageTextDisable(0);
             }
         });
 
@@ -656,10 +655,10 @@ public class KlasikController {
             if(secilenPompa != null) {
                 if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                     System.out.println("Secilen Pompa: " + secilenPompaVal);
-                    if(secilenPompaVal >= 33.3) {
+                    if(secilenPompaVal > 28.1) {
                         dataInit("valfTipi", 0);
                     } else {
-                        dataInit("valfTipi", 0);
+                        dataInit("valfTipi", 1);
                     }
                 } else {
                     dataInit("valfTipi", 0);
