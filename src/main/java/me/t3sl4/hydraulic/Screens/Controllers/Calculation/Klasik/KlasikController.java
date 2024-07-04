@@ -25,6 +25,7 @@ import me.t3sl4.hydraulic.Utility.File.SystemUtil;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.ReqUtil;
 import me.t3sl4.hydraulic.Utility.Utils;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -367,9 +368,9 @@ public class KlasikController {
             secilenHidrolikKilitDurumu = hidrolikKilitComboBox.getValue();
             hidrolikKilitStat = true;
             if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
-                initValf(0);
+                dataInit("valfTipi", 0);
             } else {
-                initValf(1);
+                dataInit("valfTipi", 1);
             }
         }
     }
@@ -382,10 +383,10 @@ public class KlasikController {
             System.out.println("Seçilen Pompa Değeri: " + secilenPompaVal);
 
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && secilenPompaVal > 28.1) {
-                initKilitMotor();
+                dataInit("kilitMotor", null);
             } else {
                 sogutmaComboBox.setDisable(false);
-                initSogutma();
+                dataInit("sogutma", null);
                 sogutmaStat = true;
             }
         }
@@ -405,7 +406,7 @@ public class KlasikController {
     public void kilitPompaPressed() {
         if(kilitPompaComboBox.getValue() != null) {
             sogutmaComboBox.setDisable(false);
-            initSogutma();
+            dataInit("sogutma", null);
             secilenKilitPompa = kilitPompaComboBox.getValue();
         }
     }
@@ -495,13 +496,6 @@ public class KlasikController {
         } else return girilenTankKapasitesi < 1 || girilenTankKapasitesi > 500;
     }
 
-    private void initMotor() {
-        motorComboBox.setDisable(false);
-        motorComboBox.getItems().clear();
-        motorComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleri);
-        //motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
-    }
-
     private void initKabinOlculeri(int x, int y, int h, int litre, String key) {
         int[] kabinOlcu = new int[4];
         kabinOlcu[0] = x;
@@ -524,58 +518,55 @@ public class KlasikController {
         initKabinOlculeri(1000, 800, 500, 400, "HT 400");
     }
 
-    private void initPompa() {
-        pompaComboBox.getItems().clear();
-        if(Objects.equals(secilenUniteTipi, "Hidros")) {
-            pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaDegerleriHidros);
-            //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
-        } else if(Objects.equals(secilenUniteTipi, "Klasik")) {
-            pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaDegerleriKlasik);
-            //pompaComboBox.getItems().addAll("9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
-        } else {
-            pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaDegerleriTumu);
-            //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc", "9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
+    private void dataInit(String componentName, @Nullable Integer valfTipiStat) {
+        if(componentName.equals("motor")) {
+            motorComboBox.setDisable(false);
+            motorComboBox.getItems().clear();
+            motorComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleri);
+            //motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
+        } else if(componentName.equals("pompa")) {
+            pompaComboBox.getItems().clear();
+            if(Objects.equals(secilenUniteTipi, "Hidros")) {
+                pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaDegerleriHidros);
+                //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
+            } else if(Objects.equals(secilenUniteTipi, "Klasik")) {
+                pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaDegerleriKlasik);
+                //pompaComboBox.getItems().addAll("9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
+            } else {
+                pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaDegerleriTumu);
+                //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc", "9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
+            }
+        } else if(componentName.equals("valfTipi")) {
+            valfTipiComboBox.getItems().clear();
+            valfTipiComboBox.setDisable(false);
+            if(valfTipiStat == 1) {
+                valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri1);
+                //valfTipiComboBox.getItems().addAll("Kilitli Blok || Çift Hız");
+            } else {
+                valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri2);
+                //valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız");
+            }
+        } else if(componentName.equals("hidrolikKilit")) {
+            hidrolikKilitComboBox.getItems().clear();
+            hidrolikKilitComboBox.getItems().addAll("Var", "Yok");
+        } else if(componentName.equals("sogutma")) {
+            sogutmaComboBox.getItems().clear();
+            sogutmaComboBox.getItems().addAll("Var", "Yok");
+        } else if(componentName.equals("kilitMotor")) {
+            kilitMotorComboBox.setDisable(false);
+            kilitMotorComboBox.getItems().clear();
+            kilitMotorText.setVisible(true);
+            kilitMotorComboBox.setVisible(true);
+            kilitMotorComboBox.getItems().addAll(ExcelUtil.dataManipulator.kilitMotorDegerleri);
+            //kilitMotorComboBox.getItems().addAll("1.5 kW", "2.2 kW");
+        } else if(componentName.equals("kilitPompa")) {
+            kilitPompaComboBox.setDisable(false);
+            kilitPompaComboBox.getItems().clear();
+            kilitPompaText.setVisible(true);
+            kilitPompaComboBox.setVisible(true);
+            kilitPompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.kilitPompaDegerleri);
+            //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
         }
-    }
-
-    private void initValf(int stat) {
-        valfTipiComboBox.getItems().clear();
-        valfTipiComboBox.setDisable(false);
-        if(stat == 1) {
-            valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri1);
-            //valfTipiComboBox.getItems().addAll("Kilitli Blok || Çift Hız");
-        } else {
-            valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri2);
-            //valfTipiComboBox.getItems().addAll("İnişte Tek Hız", "İnişte Çift Hız", "Kompanzasyon + İnişte Tek Hız");
-        }
-    }
-
-    private void initHidrolikKilit() {
-        hidrolikKilitComboBox.getItems().clear();
-        hidrolikKilitComboBox.getItems().addAll("Var", "Yok");
-    }
-
-    private void initSogutma() {
-        sogutmaComboBox.getItems().clear();
-        sogutmaComboBox.getItems().addAll("Var", "Yok");
-    }
-
-    private void initKilitMotor() {
-        kilitMotorComboBox.setDisable(false);
-        kilitMotorComboBox.getItems().clear();
-        kilitMotorText.setVisible(true);
-        kilitMotorComboBox.setVisible(true);
-        kilitMotorComboBox.getItems().addAll(ExcelUtil.dataManipulator.kilitMotorDegerleri);
-        //kilitMotorComboBox.getItems().addAll("1.5 kW", "2.2 kW");
-    }
-
-    private void initKilitPompa() {
-        kilitPompaComboBox.setDisable(false);
-        kilitPompaComboBox.getItems().clear();
-        kilitPompaText.setVisible(true);
-        kilitPompaComboBox.setVisible(true);
-        kilitPompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.kilitPompaDegerleri);
-        //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
     }
 
     private void disableMotorPompa(int stat) {
@@ -615,7 +606,7 @@ public class KlasikController {
                 girilenSiparisNumarasi = newValue;
             }
             sonucAnaLabelTxt.setText("Sipariş Numarası: " + girilenSiparisNumarasi);
-            initMotor();
+            dataInit("motor", null);
             if(girilenSiparisNumarasi != null) {
                 tabloGuncelle();
             }
@@ -625,7 +616,7 @@ public class KlasikController {
             if(!motorComboBox.getItems().isEmpty() && newValue != null) {
                 secilenMotor = newValue;
                 secilenKampana = ExcelUtil.dataManipulator.kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
-                initPompa();
+                dataInit("pompa", null);
                 if(secilenMotor != null) {
                     tabloGuncelle();
                 }
@@ -654,7 +645,7 @@ public class KlasikController {
             if(!tankKapasitesiTextField.getText().isEmpty()) {
                 girilenTankKapasitesiMiktari = Integer.parseInt(newValue);
             }
-            initHidrolikKilit();
+            dataInit("hidrolikKilit", null);
             if(girilenTankKapasitesiMiktari != 0) {
                 tabloGuncelle();
             }
@@ -666,12 +657,12 @@ public class KlasikController {
                 if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                     System.out.println("Secilen Pompa: " + secilenPompaVal);
                     if(secilenPompaVal >= 33.3) {
-                        initValf(0);
+                        dataInit("valfTipi", 0);
                     } else {
-                        initValf(0);
+                        dataInit("valfTipi", 0);
                     }
                 } else {
-                    initValf(0);
+                    dataInit("valfTipi", 0);
                     kilitPompaComboBox.setVisible(true);
                     kilitMotorComboBox.setVisible(true);
                     kilitMotorComboBox.setDisable(true);
@@ -686,13 +677,13 @@ public class KlasikController {
             if(secilenPompa != null) {
                 if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                     if(secilenPompaVal >= 28.1) {
-                        initKilitMotor();
+                        dataInit("kilitMotor", null);
                     } else {
                         sogutmaComboBox.setDisable(false);
-                        initSogutma();
+                        dataInit("sogutma", null);
                     }
                 } else {
-                    initSogutma();
+                    dataInit("sogutma", null);
                 }
             }
             if(secilenValfTipi != null) {
@@ -702,7 +693,7 @@ public class KlasikController {
 
         kilitMotorComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenKilitMotor = kilitMotorComboBox.getValue();
-            initKilitPompa();
+            dataInit("kilitPompa", null);
             if(secilenKilitMotor != null) {
                 tabloGuncelle();
             }
@@ -710,7 +701,7 @@ public class KlasikController {
 
         kilitPompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenKilitPompa = kilitPompaComboBox.getValue();
-            initSogutma();
+            dataInit("sogutma", null);
             if(secilenKilitPompa != null) {
                 tabloGuncelle();
             }

@@ -60,6 +60,12 @@ public class MainController implements Initializable {
     private Button btnHidros;
 
     @FXML
+    public Button btnProfil;
+
+    @FXML
+    public Button btnSignout;
+
+    @FXML
     private Button btnInisMetodu;
 
     @FXML
@@ -225,6 +231,10 @@ public class MainController implements Initializable {
         if(loggedInUser != null) {
             kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName() + "\n ");
             Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
+        } else {
+            kullaniciAdiIsimText.setText("Standart Kullanıcı");
+            btnProfil.setVisible(false);
+            btnSignout.setVisible(false);
         }
     }
 

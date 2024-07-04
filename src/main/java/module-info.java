@@ -16,6 +16,7 @@ module me.t3sl.hydraulic {
     requires org.apache.commons.codec;
     requires javafx.web;
     requires log4j;
+    requires annotations;
 
     opens me.t3sl4.hydraulic to javafx.fxml;
     exports me.t3sl4.hydraulic;
