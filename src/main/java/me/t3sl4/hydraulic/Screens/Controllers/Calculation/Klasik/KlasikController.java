@@ -208,9 +208,6 @@ public class KlasikController {
 
     public static String atananHT;
 
-    int atananHacim = 0;
-    int hesaplananHacim = 0;
-
     private double x, y;
 
     public static String atananKabinFinal = "";
