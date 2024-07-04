@@ -14,7 +14,7 @@ public class Calculator {
     private static final int STANDARD_H = 350;
     private static final int MIN_Y = 350;
     private static final int MIN_X = 550;
-    private static final int DEFAULT_H = 300;
+    private static final int DEFAULT_H = 350;
     private static final String COOLING_PRESENT = "Var";
     private static final String COOLING_ABSENT = "Yok";
     private static final String SINGLE_SPEED = "İnişte Tek Hız";
@@ -63,7 +63,7 @@ public class Calculator {
             finalValues.add(x);
             finalValues.add(y);
             finalValues.add(h);
-            finalValues.add(hesaplananHacim);
+            finalValues.add(bestDimensions[3]);
 
             String atananHT = Objects.requireNonNull(Utils.getKeyByValue(ExcelUtil.dataManipulator.kabinOlculeri, bestDimensions)).toString();
             if(Objects.equals(atananHT, "HT 40")) {

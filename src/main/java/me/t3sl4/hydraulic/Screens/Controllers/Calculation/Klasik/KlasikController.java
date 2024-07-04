@@ -238,7 +238,7 @@ public class KlasikController {
                     motorComboBox.getSelectionModel().getSelectedIndex(), secilenSogutmaDurumu, secilenHidrolikKilitDurumu,
                     secilenValfTipi, secilenPompaVal, secilenKilitMotor, girilenTankKapasitesiMiktari, kullanilacakKabin);
 
-            if (results.size() >= 4) {
+            if (results.size() == 4) {
                 x = results.get(0);
                 y = results.get(1);
                 h = results.get(2);
