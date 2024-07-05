@@ -185,7 +185,7 @@ public class KlasikController {
                 hacimText.setText("Tank : " + hacim + "L");
 
                 tabloGuncelle();
-                Image image;
+                Image image = null;
                 if (Objects.equals(secilenSogutmaDurumu, "Var")) {
                     if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilit.png")));
@@ -195,12 +195,16 @@ public class KlasikController {
                         imageTextEnable(x, y, "sogutmaKilitsiz");
                     }
                 } else {
-                    if (secilenKilitMotor != null) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
-                        imageTextEnable(x, y, "standartUnite");
+                    if (Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
+                        if(secilenPompaVal <= 28.1) {
+                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kilitMotor.png")));
+                            imageTextEnable(x, y, "kilitMotor");
+                        } else {
+                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
+                            imageTextEnable(x, y, "standartUnite");
+                        }
                     } else {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kilitMotor.png")));
-                        imageTextEnable(x, y, "kilitMotor");
+                        //Soğutmasız ve kilitsiz durum image
                     }
                 }
                 tankGorselLoad();
@@ -1083,6 +1087,8 @@ public class KlasikController {
             sonucTexts.add(text13);
             sonucTexts.add(text14);
             sonucTexts.add(text15);
+        } else if(calculatedImage.equals("kilitMotor") {
+
         }
 
         for (Text text : sonucTexts) {
