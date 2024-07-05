@@ -1087,7 +1087,7 @@ public class KlasikController {
             sonucTexts.add(text13);
             sonucTexts.add(text14);
             sonucTexts.add(text15);
-        } else if(calculatedImage.equals("kilitMotor") {
+        } else if(calculatedImage.equals("kilitMotor")) {
 
         }
 
