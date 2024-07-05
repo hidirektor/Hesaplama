@@ -164,6 +164,9 @@ public class KlasikController {
         if (checkComboBox()) {
             Utils.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
         } else {
+            sonucEkraniTemizle();
+            imageTextDisable();
+
             enableSonucSection();
             results = Calculator.calcDimensions(x, y, secilenKampana,
                     motorComboBox.getSelectionModel().getSelectedIndex(), secilenSogutmaDurumu, secilenHidrolikKilitDurumu,
@@ -182,16 +185,22 @@ public class KlasikController {
 
                 tabloGuncelle();
                 Image image;
-                if (Objects.equals(secilenSogutmaDurumu, "Var") && Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilit.png")));
-                    imageTextEnable(x, y);
+                if (Objects.equals(secilenSogutmaDurumu, "Var")) {
+                    if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilit.png")));
+                        imageTextEnable(x, y, "sogutmaKilit");
+                    } else {
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilitsiz.png")));
+                        imageTextEnable(x, y, "sogutmaKilitsiz");
+                    }
                 } else {
                     if (secilenKilitMotor != null) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
+                        imageTextEnable(x, y, "normal");
                     } else {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kilitMotor.png")));
+                        imageTextEnable(x, y, "kilitMotor");
                     }
-                    imageTextEnable(x, y);
                 }
                 tankGorselLoad();
 
@@ -704,7 +713,7 @@ public class KlasikController {
         sonucTexts.clear();
     }
 
-    private void imageTextEnable(int x, int y) {
+    private void imageTextEnable(int x, int y, String calculatedImage) {
         Text generalXParameter, generalYParameter;
         generalXParameter = new Text("X: " + x + " mm");
         generalXParameter.setX(580);
@@ -723,12 +732,18 @@ public class KlasikController {
         //TODO
         //her görsele ayrı text oluşturman gerek
 
+        if(calculatedImage.equals("standartUnite")) {
+            Text text1, text2, text3, text4, text5, text6, text7, text8, text9;
+
+
+        }
+
         for (Text text : sonucTexts) {
             hydraulicUnitBox.getChildren().add(text);
         }
     }
 
-    private void showKampanaText(int type) {
+    private String getKampanaText() {
         String kampanaText = "";
 
         if(secilenPompaVal >= 33.3) {
@@ -753,11 +768,7 @@ public class KlasikController {
             }
         }
 
-        if(type == 1) {
-            //kampanaVeriText.setText(kampanaText);
-        } else {
-            //kampanaVeri2Text.setText(kampanaText);
-        }
+        return kampanaText;
     }
 
     private void sonucEkraniTemizle() {
