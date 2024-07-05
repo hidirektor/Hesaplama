@@ -161,11 +161,16 @@ public class Calculator {
     private static int[] findBestDimensions(double hesaplananHacim, int girilenTankKapasitesiMiktari, int x, int y) {
         int enKucukLitreFarki = Integer.MAX_VALUE;
         int[] enKucukLitreOlculer = null;
+        int kayipLitre = ExcelUtil.dataManipulator.kayipLitre;
 
         for (int[] olculer : ExcelUtil.dataManipulator.kabinOlculeri.values()) {
             int litre = olculer[3];
             int tempX = olculer[0];
             int tempY = olculer[1];
+
+            // Kayıp litreyi hesaba katıyoruz
+            int litreMin = litre - kayipLitre;
+            int litreMax = litre + kayipLitre;
 
             if (hesaplananHacim > girilenTankKapasitesiMiktari) {
                 if (x <= tempX && y <= tempY) {
@@ -173,10 +178,10 @@ public class Calculator {
                     break;
                 }
             } else {
-                if (litre >= girilenTankKapasitesiMiktari && litre - girilenTankKapasitesiMiktari <= enKucukLitreFarki) {
+                if (litreMax >= girilenTankKapasitesiMiktari && litreMin - girilenTankKapasitesiMiktari <= enKucukLitreFarki) {
                     if (hesaplananHacim != litre && hesaplananHacim < litre) {
                         if (x < tempX && y < tempY) {
-                            enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
+                            enKucukLitreFarki = litreMin - girilenTankKapasitesiMiktari;
                             enKucukLitreOlculer = olculer;
                         }
                     }
