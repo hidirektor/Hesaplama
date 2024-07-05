@@ -155,7 +155,7 @@ public class Calculator {
     }
 
     private static int calculateVolume(int x, int y, int h) {
-        return ((x * h * y) / 1000000) - ExcelUtil.dataManipulator.kayipLitre;
+        return ((x * h * y) / 1000000);
     }
 
     private static int[] findBestDimensions(double hesaplananHacim, int girilenTankKapasitesiMiktari, int x, int y) {
@@ -172,18 +172,17 @@ public class Calculator {
             int litreMin = litre - kayipLitre;
             int litreMax = litre + kayipLitre;
 
-            if (hesaplananHacim > girilenTankKapasitesiMiktari) {
+            // Tank kapasitesi, hesaplanan hacim ve kabin boyutlarıyla karşılaştırma yapıyoruz
+            if (hesaplananHacim <= girilenTankKapasitesiMiktari) {
                 if (x <= tempX && y <= tempY) {
                     enKucukLitreOlculer = olculer;
                     break;
                 }
             } else {
                 if (litreMax >= girilenTankKapasitesiMiktari && litreMin - girilenTankKapasitesiMiktari <= enKucukLitreFarki) {
-                    if (hesaplananHacim != litre && hesaplananHacim < litre) {
-                        if (x < tempX && y < tempY) {
-                            enKucukLitreFarki = litreMin - girilenTankKapasitesiMiktari;
-                            enKucukLitreOlculer = olculer;
-                        }
+                    if (x <= tempX && y <= tempY) {
+                        enKucukLitreFarki = litreMin - girilenTankKapasitesiMiktari;
+                        enKucukLitreOlculer = olculer;
                     }
                 }
             }

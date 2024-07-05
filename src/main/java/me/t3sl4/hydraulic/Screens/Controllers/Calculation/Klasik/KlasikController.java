@@ -780,6 +780,8 @@ public class KlasikController {
             addTextToList("50 mm", 740, 457, 90, 8, Color.WHITE);
         } else if(calculatedImage.equals("kilitMotor")) {
             //TODO: Yazılar eklenecek
+            addTextToList("X: " + x + " mm", 590, 510, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 400, 400, 90, 14, Color.WHITE);
         }
 
         for (Text text : sonucTexts) {
