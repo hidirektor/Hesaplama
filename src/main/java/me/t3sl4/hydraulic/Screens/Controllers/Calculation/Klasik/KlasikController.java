@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -37,6 +38,10 @@ import static me.t3sl4.hydraulic.Launcher.BASE_URL;
 import static me.t3sl4.hydraulic.Launcher.insertHydraulicURLPrefix;
 
 public class KlasikController {
+
+    @FXML
+    public AnchorPane hydraulicUnitBox;
+
     @FXML
     private ComboBox<String> motorComboBox;
 
@@ -101,88 +106,13 @@ public class KlasikController {
     private ImageView sonucKapakImage;
 
     @FXML
-    private Text kampanaOlcuText;
-
-    @FXML
-    private Text kampanaOlcuText2;
-
-    @FXML
-    private Text kilitliBlokOlcuText;
-
-    @FXML
-    private Text kilitliBlokOlcuText2;
-
-    @FXML
-    private Text tahliyeOlcuText;
-
-    @FXML
-    private Text dolumOlcuText;
-
-    @FXML
-    private Text dolumOlcuText2;
-
-    @FXML
-    private Text kampana2OlcuText;
-    @FXML
-    private Text kampana2OlcuText2;
-
-    @FXML
-    private Text kilitMotorOlcuText;
-    @FXML
-    private Text kilitMotorOlcuText2;
-
-    @FXML
-    private Text kilitliBlok2OlcuText;
-    @FXML
-    private Text kilitliBlok2OlcuText2;
-
-
-    @FXML
-    private Text kucukHalkaCap2Text;
-    @FXML
-    private Text buyukHalkaCap2Text;
-    @FXML
-    private Text kucukHalkaCapText;
-    @FXML
-    private Text buyukHalkaCapText;
-    @FXML
-    private Text dolum2OlcuText;
-    @FXML
-    private Text dolum2OlcuText2;
-
-    @FXML
-    private Text tahliye2OlcuText;
-
-    @FXML
-    private Text kampanaVeriText;
-    @FXML
-    private Text kampanaVeri2Text;
-
-    @FXML
-    private Text kilitliBlokVeriText;
-
-    @FXML
-    private Text kilitliBlokVeri2Text;
-
-    @FXML
-    private Text kilitMotorVeriText;
-
-    @FXML
     private Button exportButton;
 
     @FXML
     private Button parcaListesiButton;
 
     @FXML
-    private Text kilitMotorIcOlcuText;
-
-    @FXML
     private ImageView sonucTankGorsel;
-
-    @FXML
-    private Text sonucUstText;
-    @FXML
-    private Text sonucSagText;
 
     @FXML
     private VBox klasikVBox;
@@ -212,7 +142,8 @@ public class KlasikController {
     private double x, y;
 
     public static String atananKabinFinal = "";
-    public static String gecisOlculeriFinal = "";
+
+    private ArrayList<Text> sonucTexts = new ArrayList<>();
 
     public void initialize() {
         Utils.textFilter(tankKapasitesiTextField);
@@ -274,7 +205,6 @@ public class KlasikController {
             }
         }
     }
-
 
     @FXML
     public void transferCalculation() {
@@ -636,7 +566,7 @@ public class KlasikController {
             }
             if(secilenPompa != null) {
                 tabloGuncelle();
-                imageTextDisable(0);
+                imageTextDisable();
             }
         });
 
@@ -764,116 +694,37 @@ public class KlasikController {
         sonucAnaLabelTxt.setText("Sipariş Numarası: ");
         sonucTankGorsel.setImage(null);
 
-        imageTextDisable(0);
+        imageTextDisable();
     }
 
-    private void imageTextDisable(int stat) {
-        sonucSagText.setVisible(false);
-        sonucUstText.setVisible(false);
-        if(stat == 1) {
-            if(secilenKilitMotor != null) {
-                kampana2OlcuText.setVisible(false);
-                kampana2OlcuText2.setVisible(false);
-                kilitMotorOlcuText.setVisible(false);
-                kilitMotorOlcuText2.setVisible(false);
-                kilitMotorIcOlcuText.setVisible(false);
-                kilitliBlok2OlcuText.setVisible(false);
-                kilitliBlok2OlcuText2.setVisible(false);
-                dolum2OlcuText.setVisible(false);
-                dolum2OlcuText2.setVisible(false);
-                tahliye2OlcuText.setVisible(false);
-                kampanaVeri2Text.setVisible(false);
-                kilitMotorVeriText.setVisible(false);
-                kilitliBlokVeri2Text.setVisible(false);
-                kucukHalkaCap2Text.setVisible(false);
-                buyukHalkaCap2Text.setVisible(false);
-            } else {
-                kampanaOlcuText.setVisible(false);
-                kampanaOlcuText2.setVisible(false);
-                kilitliBlokOlcuText.setVisible(false);
-                kilitliBlokOlcuText2.setVisible(false);
-                dolumOlcuText.setVisible(false);
-                dolumOlcuText2.setVisible(false);
-                tahliyeOlcuText.setVisible(false);
-                kampanaVeriText.setVisible(false);
-                kilitliBlokVeriText.setVisible(false);
-                kucukHalkaCapText.setVisible(false);
-                buyukHalkaCapText.setVisible(false);
-            }
-        } else {
-            sonucKapakImage.setImage(null);
-            kampana2OlcuText.setVisible(false);
-            kampana2OlcuText2.setVisible(false);
-            kilitMotorIcOlcuText.setVisible(false);
-            kilitMotorOlcuText.setVisible(false);
-            kilitMotorOlcuText2.setVisible(false);
-            kilitliBlok2OlcuText.setVisible(false);
-            kilitliBlok2OlcuText2.setVisible(false);
-            dolum2OlcuText.setVisible(false);
-            dolum2OlcuText2.setVisible(false);
-            tahliye2OlcuText.setVisible(false);
-            kampanaVeri2Text.setVisible(false);
-            kampanaOlcuText.setVisible(false);
-            kampanaOlcuText2.setVisible(false);
-            kilitliBlokOlcuText.setVisible(false);
-            kilitliBlokOlcuText2.setVisible(false);
-            dolumOlcuText.setVisible(false);
-            dolumOlcuText2.setVisible(false);
-            tahliyeOlcuText.setVisible(false);
-            kampanaVeriText.setVisible(false);
-            kilitMotorVeriText.setVisible(false);
-            kilitliBlokVeriText.setVisible(false);
-            kilitliBlokVeri2Text.setVisible(false);
-            kucukHalkaCap2Text.setVisible(false);
-            buyukHalkaCap2Text.setVisible(false);
-            kucukHalkaCapText.setVisible(false);
-            buyukHalkaCapText.setVisible(false);
+    private void imageTextDisable() {
+        for(Text text : sonucTexts) {
+            hydraulicUnitBox.getChildren().remove(text);
         }
+        sonucTexts.clear();
     }
 
     private void imageTextEnable(int x, int y) {
-        sonucUstText.setVisible(true);
-        sonucSagText.setVisible(true);
-        sonucUstText.setText("X: " + x + " mm");
-        sonucSagText.setText("Y: " + y + " mm");
-        if(secilenKilitMotor != null) {
-            imageTextDisable(1);
-            kampana2OlcuText.setVisible(true);
-            kampana2OlcuText2.setVisible(true);
-            kilitMotorOlcuText.setVisible(true);
-            kilitMotorOlcuText2.setVisible(true);
-            kilitliBlok2OlcuText.setVisible(true);
-            kilitliBlok2OlcuText2.setVisible(true);
-            dolum2OlcuText.setVisible(true);
-            dolum2OlcuText2.setVisible(true);
-            tahliye2OlcuText.setVisible(true);
-            kampanaVeri2Text.setVisible(true);
-            kucukHalkaCap2Text.setVisible(true);
-            buyukHalkaCap2Text.setVisible(true);
+        Text generalXParameter, generalYParameter;
+        generalXParameter = new Text("X: " + x + " mm");
+        generalXParameter.setX(580);
+        generalXParameter.setY(515);
+        generalXParameter.setFill(Color.WHITE);
 
-           showKampanaText(2);
+        generalYParameter = new Text("Y: " + y + " mm");
+        generalYParameter.setX(400);
+        generalYParameter.setY(400);
+        generalYParameter.setRotate(90);
+        generalYParameter.setFill(Color.WHITE);
 
-            kilitMotorIcOlcuText.setVisible(true);
-            kilitMotorIcOlcuText.setText("Boğaz: Ø200\nKesim: Ø115");
-            kilitMotorVeriText.setVisible(true);
-            kilitMotorVeriText.setText("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa);
-            kilitliBlokVeri2Text.setVisible(true);
-            kilitliBlokVeri2Text.setText(secilenValfTipi);
-        } else {
-            imageTextDisable(1);
-            kampanaOlcuText.setVisible(true);
-            kampanaOlcuText2.setVisible(true);
-            kilitliBlokOlcuText.setVisible(true);
-            kilitliBlokOlcuText2.setVisible(true);
-            dolumOlcuText.setVisible(true);
-            dolumOlcuText2.setVisible(true);
-            tahliyeOlcuText.setVisible(true);
-            kampanaVeriText.setVisible(true);
-            kucukHalkaCapText.setVisible(true);
-            buyukHalkaCapText.setVisible(true);
-            showKampanaText(1);
-            kilitliBlokVeriText.setVisible(true);
-            kilitliBlokVeriText.setText(secilenValfTipi);
+        sonucTexts.add(generalXParameter);
+        sonucTexts.add(generalYParameter);
+
+        //TODO
+        //her görsele ayrı text oluşturman gerek
+
+        for (Text text : sonucTexts) {
+            hydraulicUnitBox.getChildren().add(text);
         }
     }
 
@@ -903,9 +754,9 @@ public class KlasikController {
         }
 
         if(type == 1) {
-            kampanaVeriText.setText(kampanaText);
+            //kampanaVeriText.setText(kampanaText);
         } else {
-            kampanaVeri2Text.setText(kampanaText);
+            //kampanaVeri2Text.setText(kampanaText);
         }
     }
 
@@ -995,60 +846,9 @@ public class KlasikController {
     }
 
     private void textColorChange(int type) {
-        if(type == 1) {
-            kampana2OlcuText.setFill(Color.WHITE);
-            kampana2OlcuText2.setFill(Color.WHITE);
-            kilitMotorOlcuText.setFill(Color.WHITE);
-            kilitMotorOlcuText2.setFill(Color.WHITE);
-            kilitliBlok2OlcuText.setFill(Color.WHITE);
-            kilitliBlok2OlcuText2.setFill(Color.WHITE);
-            dolum2OlcuText.setFill(Color.WHITE);
-            dolum2OlcuText2.setFill(Color.WHITE);
-            tahliye2OlcuText.setFill(Color.WHITE);
-            kampanaVeri2Text.setFill(Color.WHITE);
-            kilitMotorIcOlcuText.setFill(Color.WHITE);
-            kilitMotorVeriText.setFill(Color.WHITE);
-            kilitliBlokVeri2Text.setFill(Color.WHITE);
-
-            kampanaOlcuText.setFill(Color.WHITE);
-            kampanaOlcuText2.setFill(Color.WHITE);
-            kilitliBlokOlcuText.setFill(Color.WHITE);
-            kilitliBlokOlcuText2.setFill(Color.WHITE);
-            dolumOlcuText.setFill(Color.WHITE);
-            dolumOlcuText2.setFill(Color.WHITE);
-            tahliyeOlcuText.setFill(Color.WHITE);
-            kampanaVeriText.setFill(Color.WHITE);
-            kilitliBlokVeriText.setFill(Color.WHITE);
-
-            sonucUstText.setFill(Color.WHITE);
-            sonucSagText.setFill(Color.WHITE);
-        }  else {
-            kampana2OlcuText.setFill(Color.BLACK);
-            kampana2OlcuText2.setFill(Color.BLACK);
-            kilitMotorOlcuText.setFill(Color.BLACK);
-            kilitMotorOlcuText2.setFill(Color.BLACK);
-            kilitliBlok2OlcuText.setFill(Color.BLACK);
-            kilitliBlok2OlcuText2.setFill(Color.BLACK);
-            dolum2OlcuText.setFill(Color.BLACK);
-            dolum2OlcuText2.setFill(Color.BLACK);
-            tahliye2OlcuText.setFill(Color.BLACK);
-            kampanaVeri2Text.setFill(Color.BLACK);
-            kilitMotorIcOlcuText.setFill(Color.BLACK);
-            kilitMotorVeriText.setFill(Color.BLACK);
-            kilitliBlokVeri2Text.setFill(Color.BLACK);
-
-            kampanaOlcuText.setFill(Color.BLACK);
-            kampanaOlcuText2.setFill(Color.BLACK);
-            kilitliBlokOlcuText.setFill(Color.BLACK);
-            kilitliBlokOlcuText2.setFill(Color.BLACK);
-            dolumOlcuText.setFill(Color.BLACK);
-            dolumOlcuText2.setFill(Color.BLACK);
-            tahliyeOlcuText.setFill(Color.BLACK);
-            kampanaVeriText.setFill(Color.BLACK);
-            kilitliBlokVeriText.setFill(Color.BLACK);
-
-            sonucUstText.setFill(Color.BLACK);
-            sonucSagText.setFill(Color.BLACK);
+        Color color = (type == 1) ? Color.WHITE : Color.BLACK;
+        for (Text text : sonucTexts) {
+            text.setFill(color);
         }
     }
 
