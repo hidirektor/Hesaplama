@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -196,7 +197,7 @@ public class KlasikController {
                 } else {
                     if (secilenKilitMotor != null) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
-                        imageTextEnable(x, y, "normal");
+                        imageTextEnable(x, y, "standartUnite");
                     } else {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kilitMotor.png")));
                         imageTextEnable(x, y, "kilitMotor");
@@ -717,11 +718,11 @@ public class KlasikController {
         Text generalXParameter, generalYParameter;
         generalXParameter = new Text("X: " + x + " mm");
         generalXParameter.setX(580);
-        generalXParameter.setY(515);
+        generalXParameter.setY(525);
         generalXParameter.setFill(Color.WHITE);
 
         generalYParameter = new Text("Y: " + y + " mm");
-        generalYParameter.setX(400);
+        generalYParameter.setX(390);
         generalYParameter.setY(400);
         generalYParameter.setRotate(90);
         generalYParameter.setFill(Color.WHITE);
@@ -732,10 +733,356 @@ public class KlasikController {
         //TODO
         //her görsele ayrı text oluşturman gerek
 
-        if(calculatedImage.equals("standartUnite")) {
-            Text text1, text2, text3, text4, text5, text6, text7, text8, text9;
+        if(calculatedImage.equals("sogutmaKilit")) {
+            Text text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, text14, text15, text16, text17;
 
+            text1 = new Text("40 mm");
+            text1.setX(420);
+            text1.setY(320);
+            text1.setFill(Color.WHITE);
+            text1.setRotate(90);
+            text1.setFont(new Font(10));
 
+            text2 = new Text("100 mm");
+            text2.setX(460);
+            text2.setY(310);
+            text2.setFill(Color.WHITE);
+            text2.setFont(new Font(10));
+
+            text3 = new Text("230 mm");
+            text3.setX(450);
+            text3.setY(380);
+            text3.setFill(Color.WHITE);
+            text3.setFont(new Font(10));
+
+            text4 = new Text("100 mm");
+            text4.setX(525);
+            text4.setY(310);
+            text4.setFill(Color.WHITE);
+            text4.setFont(new Font(9));
+
+            text5 = new Text("100 mm");
+            text5.setX(525);
+            text5.setY(360);
+            text5.setFill(Color.WHITE);
+            text5.setFont(new Font(9));
+
+            text6 = new Text("40 mm");
+            text6.setX(525);
+            text6.setY(402);
+            text6.setFill(Color.WHITE);
+            text6.setFont(new Font(9));
+
+            text7 = new Text("50 mm");
+            text7.setX(435);
+            text7.setY(465);
+            text7.setFill(Color.WHITE);
+            text7.setFont(new Font(10));
+
+            text8 = new Text("50 mm");
+            text8.setX(447);
+            text8.setY(505);
+            text8.setFill(Color.WHITE);
+            text8.setFont(new Font(10));
+
+            text9 = new Text("100 mm");
+            text9.setX(740);
+            text9.setY(313);
+            text9.setFill(Color.WHITE);
+            text9.setFont(new Font(9));
+            text9.setRotate(90);
+
+            text10 = new Text("60 mm");
+            text10.setX(765);
+            text10.setY(355);
+            text10.setFill(Color.WHITE);
+            text10.setFont(new Font(10));
+            text10.setRotate(90);
+
+            text11 = new Text("70 mm");
+            text11.setX(573);
+            text11.setY(495);
+            text11.setFill(Color.WHITE);
+            text11.setFont(new Font(5));
+            text11.setRotate(90);
+
+            text12 = new Text("50 mm");
+            text12.setX(650);
+            text12.setY(500);
+            text12.setFill(Color.WHITE);
+            text12.setFont(new Font(9));
+
+            text13 = new Text("230 mm");
+            text13.setX(635);
+            text13.setY(445);
+            text13.setFill(Color.WHITE);
+            text13.setFont(new Font(10));
+
+            text14 = new Text("70 mm");
+            text14.setX(728);
+            text14.setY(500);
+            text14.setFill(Color.WHITE);
+            text14.setFont(new Font(9));
+
+            text15 = new Text("70 mm");
+            text15.setX(763);
+            text15.setY(425);
+            text15.setFill(Color.WHITE);
+            text15.setFont(new Font(10));
+            text15.setRotate(90);
+
+            text16 = new Text(getKampanaText());
+            text16.setX(688);
+            text16.setY(435);
+            text16.setFill(Color.WHITE);
+            text16.setFont(new Font(10));
+
+            text17 = new Text("Kampana: " + 250 + "\nKesim: Ø" + 173);
+            text17.setX(555);
+            text17.setY(450);
+            text17.setFill(Color.WHITE);
+            text17.setFont(new Font(8));
+
+            sonucTexts.add(text1);
+            sonucTexts.add(text2);
+            sonucTexts.add(text3);
+            sonucTexts.add(text4);
+            sonucTexts.add(text5);
+            sonucTexts.add(text6);
+            sonucTexts.add(text7);
+            sonucTexts.add(text8);
+            sonucTexts.add(text9);
+            sonucTexts.add(text10);
+            sonucTexts.add(text11);
+            sonucTexts.add(text12);
+            sonucTexts.add(text13);
+            sonucTexts.add(text14);
+            sonucTexts.add(text15);
+            sonucTexts.add(text16);
+            sonucTexts.add(text17);
+        } else if(calculatedImage.equals("sogutmaKilitsiz")) {
+            Text text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, text14, text15;
+
+            text1 = new Text("230 mm");
+            text1.setX(465);
+            text1.setY(380);
+            text1.setFill(Color.WHITE);
+            text1.setFont(new Font(10));
+
+            text2 = new Text("100 mm");
+            text2.setX(533);
+            text2.setY(325);
+            text2.setFill(Color.WHITE);
+            text2.setFont(new Font(9));
+
+            text3 = new Text("100 mm");
+            text3.setX(533);
+            text3.setY(363);
+            text3.setFill(Color.WHITE);
+            text3.setFont(new Font(9));
+
+            text4 = new Text("40 mm");
+            text4.setX(533);
+            text4.setY(402);
+            text4.setFill(Color.WHITE);
+            text4.setFont(new Font(9));
+
+            text5 = new Text("50 mm");
+            text5.setX(455);
+            text5.setY(460);
+            text5.setFill(Color.WHITE);
+            text5.setFont(new Font(9));
+
+            text6 = new Text("50 mm");
+            text6.setX(460);
+            text6.setY(495);
+            text6.setFill(Color.WHITE);
+            text6.setFont(new Font(10));
+
+            text7 = new Text("100 mm");
+            text7.setX(722);
+            text7.setY(322);
+            text7.setFill(Color.WHITE);
+            text7.setFont(new Font(9));
+            text7.setRotate(90);
+
+            text8 = new Text("60 mm");
+            text8.setX(748);
+            text8.setY(363);
+            text8.setFill(Color.WHITE);
+            text8.setFont(new Font(10));
+            text8.setRotate(90);
+
+            text9 = new Text("70 mm");
+            text9.setX(575);
+            text9.setY(487);
+            text9.setFill(Color.WHITE);
+            text9.setFont(new Font(6));
+            text9.setRotate(90);
+
+            text10 = new Text("50 mm");
+            text10.setX(648);
+            text10.setY(490);
+            text10.setFill(Color.WHITE);
+            text10.setFont(new Font(9));
+
+            text11 = new Text("230 mm");
+            text11.setX(630);
+            text11.setY(443);
+            text11.setFill(Color.WHITE);
+            text11.setFont(new Font(10));
+
+            text12 = new Text("70 mm");
+            text12.setX(720);
+            text12.setY(490);
+            text12.setFill(Color.WHITE);
+            text12.setFont(new Font(9));
+
+            text13 = new Text("70 mm");
+            text13.setX(748);
+            text13.setY(423);
+            text13.setFill(Color.WHITE);
+            text13.setFont(new Font(10));
+            text13.setRotate(90);
+
+            text14 = new Text(getKampanaText());
+            text14.setX(680);
+            text14.setY(435);
+            text14.setFill(Color.WHITE);
+            text14.setFont(new Font(9));
+
+            text15 = new Text("Kampana: " + 250 + "\nKesim: Ø" + 173);
+            text15.setX(557);
+            text15.setY(445);
+            text15.setFill(Color.WHITE);
+            text15.setFont(new Font(8));
+
+            sonucTexts.add(text1);
+            sonucTexts.add(text2);
+            sonucTexts.add(text3);
+            sonucTexts.add(text4);
+            sonucTexts.add(text5);
+            sonucTexts.add(text6);
+            sonucTexts.add(text7);
+            sonucTexts.add(text8);
+            sonucTexts.add(text9);
+            sonucTexts.add(text10);
+            sonucTexts.add(text11);
+            sonucTexts.add(text12);
+            sonucTexts.add(text13);
+            sonucTexts.add(text14);
+            sonucTexts.add(text15);
+        } else if(calculatedImage.equals("standartUnite")) {
+            Text text1, text2, text3, text4, text5, text6, text7, text8, text9, text10, text11, text12, text13, text14, text15;
+
+            text1 = new Text("50 mm");
+            text1.setX(488);
+            text1.setY(297);
+            text1.setFill(Color.WHITE);
+            text1.setFont(new Font(10));
+
+            text2 = new Text("100 mm");
+            text2.setX(465);
+            text2.setY(320);
+            text2.setFill(Color.WHITE);
+            text2.setFont(new Font(9));
+
+            text3 = new Text("Boğaz: Ø200\nKesim: Ø115");
+            text3.setX(505);
+            text3.setY(323);
+            text3.setFill(Color.WHITE);
+            text3.setFont(new Font(7.5));
+
+            text4 = new Text("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa);
+            text4.setX(495);
+            text4.setY(355);
+            text4.setFill(Color.WHITE);
+            text4.setFont(new Font(10));
+
+            text5 = new Text(secilenValfTipi);
+            text5.setX(535);
+            text5.setY(455);
+            text5.setFill(Color.WHITE);
+            text5.setFont(new Font(10));
+
+            text6 = new Text("50 mm");
+            text6.setX(455);
+            text6.setY(475);
+            text6.setFill(Color.WHITE);
+            text6.setFont(new Font(8));
+            text6.setRotate(90);
+
+            text7 = new Text("50 mm");
+            text7.setX(477);
+            text7.setY(490);
+            text7.setFill(Color.WHITE);
+            text7.setFont(new Font(8));
+
+            text8 = new Text(getKampanaText());
+            text8.setX(630);
+            text8.setY(350);
+            text8.setFill(Color.WHITE);
+            text8.setFont(new Font(12));
+
+            text9 = new Text("70 mm");
+            text9.setX(685);
+            text9.setY(302);
+            text9.setFill(Color.WHITE);
+            text9.setFont(new Font(10));
+
+            text10 = new Text("70 mm");
+            text10.setX(735);
+            text10.setY(377);
+            text10.setFill(Color.WHITE);
+            text10.setFont(new Font(10));
+            text10.setRotate(90);
+
+            text11 = new Text("50 mm");
+            text11.setX(652);
+            text11.setY(484);
+            text11.setFill(Color.WHITE);
+            text11.setFont(new Font(10));
+
+            text12 = new Text("Ø20");
+            text12.setX(677);
+            text12.setY(463);
+            text12.setFill(Color.WHITE);
+            text12.setFont(new Font(10));
+
+            text13 = new Text("50 mm");
+            text13.setX(705);
+            text13.setY(484);
+            text13.setFill(Color.WHITE);
+            text13.setFont(new Font(8));
+
+            text14 = new Text("Ø50");
+            text14.setX(723);
+            text14.setY(455);
+            text14.setFill(Color.WHITE);
+            text14.setFont(new Font(10));
+
+            text15 = new Text("50 mm");
+            text15.setX(740);
+            text15.setY(457);
+            text15.setFill(Color.WHITE);
+            text15.setFont(new Font(8));
+            text15.setRotate(90);
+
+            sonucTexts.add(text1);
+            sonucTexts.add(text2);
+            sonucTexts.add(text3);
+            sonucTexts.add(text4);
+            sonucTexts.add(text5);
+            sonucTexts.add(text6);
+            sonucTexts.add(text7);
+            sonucTexts.add(text8);
+            sonucTexts.add(text9);
+            sonucTexts.add(text10);
+            sonucTexts.add(text11);
+            sonucTexts.add(text12);
+            sonucTexts.add(text13);
+            sonucTexts.add(text14);
+            sonucTexts.add(text15);
         }
 
         for (Text text : sonucTexts) {

@@ -104,7 +104,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void offlineMod() {
+    public void offlineMod() throws IOException {
         SystemDefaults.offlineMode = true;
         loginPane.setVisible(false);
         offlineMod.setVisible(true);
