@@ -188,12 +188,10 @@ public class Utils {
         SceneUtil.changeScreen("fxml/ResetPassword.fxml");
     }
 
-    public static void offlineMod(Label lblErrors) throws IOException {
+    public static void offlineMod(Label lblErrors) {
         Utils.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
 
-        Utils.openMainScreen(lblErrors);
-
-        /*Timeline timeline = new Timeline();
+        Timeline timeline = new Timeline();
         timeline.setCycleCount(4);
 
         final int[] countdown = {3};
@@ -212,6 +210,6 @@ public class Utils {
         });
 
         timeline.getKeyFrames().add(keyFrame);
-        timeline.playFromStart();*/
+        timeline.playFromStart();
     }
 }
