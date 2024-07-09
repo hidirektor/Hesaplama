@@ -204,7 +204,13 @@ public class KlasikController {
                             imageTextEnable(x, y, "standartUnite");
                         }
                     } else {
-                        //Soğutmasız ve kilitsiz durum image
+                        if(secilenValfTipi.equals("Kompanzasyon + İnişte Tek Hız")) {
+                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kompanzasyon.png")));
+                            imageTextEnable(x, y, "kompanzasyon");
+                        } else {
+                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tekhizcifthiz.png")));
+                            imageTextEnable(x, y, "tekhizcifthiz");
+                        }
                     }
                 }
                 tankGorselLoad();
@@ -326,8 +332,9 @@ public class KlasikController {
             secilenPompaVal = Utils.string2Double(secilenPompa);
             System.out.println("Seçilen Pompa Değeri: " + secilenPompaVal);
 
-            if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && secilenPompaVal > 28.1) {
+            if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                 dataInit("kilitMotor", null);
+                sogutmaComboBox.setDisable(true);
             } else {
                 sogutmaComboBox.setDisable(false);
                 dataInit("sogutma", null);
@@ -780,6 +787,14 @@ public class KlasikController {
             addTextToList("50 mm", 740, 457, 90, 8, Color.WHITE);
         } else if(calculatedImage.equals("kilitMotor")) {
             //TODO: Yazılar eklenecek
+            addTextToList("X: " + x + " mm", 590, 510, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 400, 400, 90, 14, Color.WHITE);
+
+            addTextToList("50 mm", 488, 297, 0, 10, Color.WHITE);
+        } else if(calculatedImage.equals("kompanzasyon")) {
+            addTextToList("X: " + x + " mm", 590, 510, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 400, 400, 90, 14, Color.WHITE);
+        } else if(calculatedImage.equals("tekhizcifthiz")) {
             addTextToList("X: " + x + " mm", 590, 510, 0, 14, Color.WHITE);
             addTextToList("Y: " + y + " mm", 400, 400, 90, 14, Color.WHITE);
         }
