@@ -938,7 +938,7 @@ public class KlasikController {
                     derinlikSonucText.setRotate(-27.5);
                     derinlikSonucText.setLayoutX(635.0);
                 } else {
-                    if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+                    if(secilenValfTipi.contains("Kilitli Blok")) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/kilitliblok.png")));
                         sonucTankGorsel.setImage(image);
                         genislikSonucText.setRotate(27.5);
@@ -949,6 +949,7 @@ public class KlasikController {
             } else {
                 if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/cifthiz.png")));
+                    sonucTankGorsel.setImage(image);
                 } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
                     sonucTankGorsel.setImage(image);
