@@ -63,6 +63,7 @@ public class Calculator {
             finalValues.add(x);
             finalValues.add(y);
             finalValues.add(h);
+            assert bestDimensions != null;
             finalValues.add(bestDimensions[3]);
 
             String atananHT = Objects.requireNonNull(Utils.getKeyByValue(ExcelUtil.dataManipulator.kabinOlculeri, bestDimensions)).toString();
@@ -159,36 +160,24 @@ public class Calculator {
     }
 
     private static int[] findBestDimensions(double hesaplananHacim, int girilenTankKapasitesiMiktari, int x, int y) {
-        int enKucukLitreFarki = Integer.MAX_VALUE;
-        int[] enKucukLitreOlculer = null;
-        int kayipLitre = ExcelUtil.dataManipulator.kayipLitre;
+        final int kayipLitre = ExcelUtil.dataManipulator.kayipLitre;
 
         for (int[] olculer : ExcelUtil.dataManipulator.kabinOlculeri.values()) {
-            int litre = olculer[3];
-            int tempX = olculer[0];
-            int tempY = olculer[1];
+            int kabinLitre = olculer[3];
+            int litre = girilenTankKapasitesiMiktari;
 
-            // Kayıp litreyi hesaba katıyoruz
-            int litreMin = litre - kayipLitre;
-            int litreMax = litre + kayipLitre;
+            System.out.println(litre);
 
-            // Tank kapasitesi, hesaplanan hacim ve kabin boyutlarıyla karşılaştırma yapıyoruz
-            if (hesaplananHacim <= girilenTankKapasitesiMiktari) {
-                if (x <= tempX && y <= tempY) {
-                    enKucukLitreOlculer = olculer;
-                    break;
-                }
-            } else {
-                if (litreMax >= girilenTankKapasitesiMiktari && litreMin - girilenTankKapasitesiMiktari <= enKucukLitreFarki) {
-                    if (x <= tempX && y <= tempY) {
-                        enKucukLitreFarki = litreMin - girilenTankKapasitesiMiktari;
-                        enKucukLitreOlculer = olculer;
-                    }
-                }
+            int litreMin = kabinLitre - kayipLitre;
+            int litreMax = kabinLitre + kayipLitre;
+
+            System.out.println(litreMin + " " + litreMax);
+
+            if(litre >= litreMin && litre <= litreMax) {
+                return olculer;
             }
         }
-
-        return enKucukLitreOlculer;
+        return null;
     }
 
     private static void printCalculationSummary(int x, int y, int h, int yV, int yK, int eskiX, int eskiY, int eskiH, int hesaplananHacim, String atananKabinFinal, String gecisOlculeriFinal) {

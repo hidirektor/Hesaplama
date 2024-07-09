@@ -332,7 +332,7 @@ public class KlasikController {
             secilenPompaVal = Utils.string2Double(secilenPompa);
             System.out.println("Seçilen Pompa Değeri: " + secilenPompaVal);
 
-            if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
+            if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && secilenPompaVal > 28.1) {
                 dataInit("kilitMotor", null);
                 sogutmaComboBox.setDisable(true);
             } else {
