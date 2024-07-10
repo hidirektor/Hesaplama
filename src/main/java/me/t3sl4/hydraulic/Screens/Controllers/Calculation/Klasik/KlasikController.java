@@ -148,7 +148,6 @@ public class KlasikController {
 
     public void initialize() {
         Utils.textFilter(tankKapasitesiTextField);
-        defineKabinOlcu();
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
@@ -445,28 +444,6 @@ public class KlasikController {
         if(tankKapasitesiTextField.getText() == null || girilenTankKapasitesi == 0) {
             return true;
         } else return girilenTankKapasitesi < 1 || girilenTankKapasitesi > 500;
-    }
-
-    private void initKabinOlculeri(int x, int y, int h, int litre, String key) {
-        int[] kabinOlcu = new int[4];
-        kabinOlcu[0] = x;
-        kabinOlcu[1] = y;
-        kabinOlcu[2] = h;
-        kabinOlcu[3] = litre;
-        ExcelUtil.dataManipulator.kabinOlculeri.put(key, kabinOlcu);
-    }
-
-    private void defineKabinOlcu() {
-        initKabinOlculeri(550, 350, 300, 40, "HT 40");
-        initKabinOlculeri(600, 370, 300, 70, "HT 70");
-        initKabinOlculeri(600, 470, 400, 100, "HT 100");
-        initKabinOlculeri(650, 500, 400, 125, "HT 125");
-        initKabinOlculeri(700, 600, 400, 160, "HT 160");
-        initKabinOlculeri(800, 650, 400, 200, "HT 200");
-        initKabinOlculeri(900, 700, 400, 250, "HT 250");
-        initKabinOlculeri(1000, 800, 400, 300, "HT 300");
-        initKabinOlculeri(1000, 800, 450, 350, "HT 350");
-        initKabinOlculeri(1000, 800, 500, 400, "HT 400");
     }
 
     private void dataInit(String componentName, @Nullable Integer valfTipiStat) {

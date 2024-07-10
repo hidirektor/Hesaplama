@@ -5,6 +5,8 @@ import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 public class Calculator {
@@ -162,22 +164,42 @@ public class Calculator {
     private static int[] findBestDimensions(double hesaplananHacim, int girilenTankKapasitesiMiktari, int x, int y) {
         final int kayipLitre = ExcelUtil.dataManipulator.kayipLitre;
 
-        for (int[] olculer : ExcelUtil.dataManipulator.kabinOlculeri.values()) {
-            int kabinLitre = olculer[3];
-            int litre = girilenTankKapasitesiMiktari;
+        for (Map.Entry<String, int[]> entry : ExcelUtil.dataManipulator.kabinOlculeri.entrySet()) {
+            System.out.println(Arrays.toString(entry.getValue()));
+        }
 
-            System.out.println(litre);
+        if(girilenTankKapasitesiMiktari < 40-kayipLitre) {
+            return ExcelUtil.dataManipulator.kabinOlculeri.get("HT 40");
+        } else {
+            int[] closestOlculer = null;
+            int minDifference = Integer.MAX_VALUE;
+            for (Map.Entry<String, int[]> entry : ExcelUtil.dataManipulator.kabinOlculeri.entrySet()) {
+                System.out.println(entry);
+                String key = entry.getKey();
+                int[] olculer = entry.getValue();
+                int kabinLitre = olculer[3];
 
-            int litreMin = kabinLitre - kayipLitre;
-            int litreMax = kabinLitre + kayipLitre;
+                int litreMin = kabinLitre - kayipLitre;
+                int litreMax = kabinLitre + kayipLitre;
 
-            System.out.println(litreMin + " " + litreMax);
+                System.out.println("Kabin Litre: " + kabinLitre + "; Girilen Litre: " + girilenTankKapasitesiMiktari + "; Hesaplanan: " + hesaplananHacim + "; litreMin: " + litreMin + "; litreMax: " + litreMax + "; Key: " + key);
 
-            if(litre >= litreMin && litre <= litreMax) {
-                return olculer;
+                int difference = Math.abs(kabinLitre - girilenTankKapasitesiMiktari);
+
+                if (difference < minDifference) {
+                    minDifference = difference;
+                    closestOlculer = olculer;
+                }
+            }
+
+            if (closestOlculer != null) {
+                System.out.println("Seçilen Tank: " + Arrays.toString(closestOlculer) + "; Seçilen Hacim: " + closestOlculer[3]);
+                return closestOlculer;
+            } else {
+                System.out.println("Optimum tankı bulurken hata meydana geldi!");
+                return null;
             }
         }
-        return null;
     }
 
     private static void printCalculationSummary(int x, int y, int h, int yV, int yK, int eskiX, int eskiY, int eskiH, int hesaplananHacim, String atananKabinFinal, String gecisOlculeriFinal) {
