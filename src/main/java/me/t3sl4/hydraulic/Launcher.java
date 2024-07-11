@@ -43,6 +43,7 @@ public class Launcher {
             System.setProperty("javafx.animation.fullspeed", "true");
         } else {
             System.setProperty("CG_PDF_VERBOSE", "1");
+            System.setProperty("apple.awt.UIElement", "true");
         }
         Main.main(args);
     }

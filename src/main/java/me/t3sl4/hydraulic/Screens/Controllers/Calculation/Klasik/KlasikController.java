@@ -144,8 +144,6 @@ public class KlasikController {
 
     double screenX, screenY;
 
-    //int atananHacim = 0;
-    //int hesaplananHacim = 0;
     public static String atananKabinFinal = "";
     public static String gecisOlculeriFinal = "";
 

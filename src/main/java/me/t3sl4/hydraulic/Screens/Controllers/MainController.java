@@ -54,6 +54,9 @@ public class MainController implements Initializable {
     public VBox buttonsVBox;
 
     @FXML
+    public ImageView leftSubLogo;
+
+    @FXML
     private VBox pnItems = null;
     @FXML
     private Button btnHome;
@@ -120,8 +123,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userInfo();
-        updateHydraulicText();
-        hydraulicUnitInit(1);
         initializeSwitchs();
     }
 
@@ -239,9 +240,12 @@ public class MainController implements Initializable {
         if(loggedInUser != null) {
             kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName() + "\n ");
             Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
+            updateHydraulicText();
+            hydraulicUnitInit(1);
         } else {
             kullaniciAdiIsimText.setText("Standart Kullanıcı");
 
+            buttonsVBox.getChildren().remove(leftSubLogo);
             buttonsVBox.getChildren().remove(btnHome);
             buttonsVBox.getChildren().remove(btnProfil);
             buttonsVBox.getChildren().remove(btnSignout);

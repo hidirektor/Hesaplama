@@ -128,7 +128,7 @@
                         <Insets left="50.0" />
                     </padding>
                 </Button>
-                <ImageView fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="leftSubLogo" fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../../../assets/icons/onderGrupMain.png" />
                     </image>
