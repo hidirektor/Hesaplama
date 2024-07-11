@@ -140,12 +140,12 @@ public class KlasikController {
 
     public static String atananHT;
 
-    private double x, y;
-
     private ArrayList<Text> sonucTexts = new ArrayList<>();
 
-    int atananHacim = 0;
-    int hesaplananHacim = 0;
+    double screenX, screenY;
+
+    //int atananHacim = 0;
+    //int hesaplananHacim = 0;
     public static String atananKabinFinal = "";
     public static String gecisOlculeriFinal = "";
 
@@ -158,11 +158,8 @@ public class KlasikController {
 
     @FXML
     public void hesaplaFunc() {
-        int h = 0; // Yükseklik
-        int y = 0; // Derinlik
-        int x = 0; // Genişlik
-        int hacim = 0; // Hacim
         ArrayList<Integer> results;
+        int calculatedX, calculatedY, calculatedH, calculatedHacim;
 
         if (checkComboBox()) {
             Utils.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
@@ -171,49 +168,45 @@ public class KlasikController {
             imageTextDisable();
 
             enableSonucSection();
-            /*results = Calculator.calcDimensions(x, y, secilenKampana,
-                    motorComboBox.getSelectionModel().getSelectedIndex(), secilenSogutmaDurumu, secilenHidrolikKilitDurumu,
-                    secilenValfTipi, secilenPompaVal, secilenKilitMotor, girilenTankKapasitesiMiktari, kullanilacakKabin);*/
-
-            results = calcDimensions(x, y, h, ExcelUtil.dataManipulator.kampanaDegerleri);
+            results = calcDimensions(ExcelUtil.dataManipulator.kampanaDegerleri);
 
             if (results.size() == 4) {
-                x = results.get(0);
-                y = results.get(1);
-                h = results.get(2);
-                hacim = results.get(3);
+                calculatedX = results.get(0);
+                calculatedY = results.get(1);
+                calculatedH = results.get(2);
+                calculatedHacim = results.get(3);
 
-                genislikSonucText.setText("X: " + x + " mm");
-                derinlikSonucText.setText("Y: " + y + " mm");
-                yukseklikSonucText.setText("h: " + h + " mm");
-                hacimText.setText("Tank : " + hacim + "L");
+                genislikSonucText.setText("X: " + calculatedX + " mm");
+                derinlikSonucText.setText("Y: " + calculatedY + " mm");
+                yukseklikSonucText.setText("h: " + calculatedH + " mm");
+                hacimText.setText("Tank : " + calculatedHacim + "L");
 
                 tabloGuncelle();
                 Image image = null;
                 if (Objects.equals(secilenSogutmaDurumu, "Var")) {
                     if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilit.png")));
-                        imageTextEnable(x, y, "sogutmaKilit");
+                        imageTextEnable(calculatedX, calculatedY, "sogutmaKilit");
                     } else {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilitsiz.png")));
-                        imageTextEnable(x, y, "sogutmaKilitsiz");
+                        imageTextEnable(calculatedX, calculatedY, "sogutmaKilitsiz");
                     }
                 } else {
                     if (Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
                         if(secilenPompaVal <= 28.1) {
                             image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kilitMotor.png")));
-                            imageTextEnable(x, y, "kilitMotor");
+                            imageTextEnable(calculatedX, calculatedY, "kilitMotor");
                         } else {
                             image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
-                            imageTextEnable(x, y, "standartUnite");
+                            imageTextEnable(calculatedX, calculatedY, "standartUnite");
                         }
                     } else {
                         if(secilenValfTipi.equals("Kompanzasyon + İnişte Tek Hız")) {
                             image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kompanzasyon.png")));
-                            imageTextEnable(x, y, "kompanzasyon");
+                            imageTextEnable(calculatedX, calculatedY, "kompanzasyon");
                         } else {
                             image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tekhizcifthiz.png")));
-                            imageTextEnable(x, y, "tekhizcifthiz");
+                            imageTextEnable(calculatedX, calculatedY, "tekhizcifthiz");
                         }
                     }
                 }
@@ -388,13 +381,13 @@ public class KlasikController {
                 popupStage.getIcons().add(icon);
 
                 root.setOnMousePressed(event -> {
-                    x = event.getSceneX();
-                    y = event.getSceneY();
+                    screenX = event.getSceneX();
+                    screenY = event.getSceneY();
                 });
                 root.setOnMouseDragged(event -> {
 
-                    popupStage.setX(event.getScreenX() - x);
-                    popupStage.setY(event.getScreenY() - y);
+                    popupStage.setX(event.getScreenX() - screenX);
+                    popupStage.setY(event.getScreenY() - screenY);
 
                 });
                 popupStage.showAndWait();
@@ -451,15 +444,13 @@ public class KlasikController {
         } else return girilenTankKapasitesi < 1 || girilenTankKapasitesi > 500;
     }
 
-    ArrayList<Integer> calcDimensions(int x, int y, int h, ArrayList<Integer> kampanaDegerleri) {
-        int eskiX=0, eskiY=0, eskiH=0;
-
+    ArrayList<Integer> calcDimensions(ArrayList<Integer> kampanaDegerleri) {
+        //Eklenecek Değerler
         int secilenMotorIndex = motorComboBox.getSelectionModel().getSelectedIndex();
+        int kampanaDegeri = kampanaDegerleri.get(secilenMotorIndex);
+
         secilenKampana = kampanaDegerleri.get(secilenMotorIndex);
         secilenPompaVal = Utils.string2Double(secilenPompa);
-
-        //Eklenecek Değerler
-        int kampanaDegeri = kampanaDegerleri.get(secilenMotorIndex);
 
         //Standart Boşluk Değerleri:
         int kampanaBoslukX = ExcelUtil.dataManipulator.kampanaBoslukX;
@@ -469,54 +460,27 @@ public class KlasikController {
         int valfBoslukYArka = ExcelUtil.dataManipulator.valfBoslukYArka;
         int valfBoslukYOn = ExcelUtil.dataManipulator.valfBoslukYOn;
 
-        //hesaplama kısmı:
+        //Hesaplama Standartları
         ArrayList<Integer> finalValues = new ArrayList<>();
         int yV = 0;
         int yK = 0;
+        int eskiX=0, eskiY=0, eskiH=0;
+        int x=0, y=0, h=0;
+
+        int hesaplananHacim=0, atananHacim=0;
 
         System.out.println("--------Hesaplama Başladı--------");
-
         if(Objects.equals(secilenSogutmaDurumu, "Var")) {
-            //TODO
-            /*
+            /* TODO
             Standart üniteyi göster. Ölçüler:
             X: 1000
             Y: 600
             H: 350
             Soğutmanın standardı için bir kabin eklenecek :)
              */
-            int[] enKucukLitreOlculer = new int[4];
-            x = 1000;
-            y = 600;
-            h = 350;
-            hesaplananHacim = ((x*h*y) / 1000000) - ExcelUtil.dataManipulator.kayipLitre;
 
-            enKucukLitreOlculer[0] = x;
-            enKucukLitreOlculer[1] = y;
-            enKucukLitreOlculer[2] = h;
-            enKucukLitreOlculer[3] = atananHacim;
+            calculationSogutma(x, y, h, finalValues, hesaplananHacim, atananKabinFinal, gecisOlculeriFinal, atananHacim);
 
-            atananHT = "HT SOĞUTMA";
-            String atananKabin = "KD SOĞUTMA";
-            String gecisOlculeri = "1000x600x350";
-            kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
-            atananKabinFinal = atananKabin;
-            gecisOlculeriFinal = gecisOlculeri;
-
-            System.out.println("--------Hesaplama Bitti--------");
-            System.out.println("------------(Sonuç)------------");
-            System.out.println("Atanan X: " + x);
-            System.out.println("Atanan Y: " + y);
-            System.out.println("Atanan h: " + h);
-            System.out.println("Atanan Hacim: " + atananHacim);
-            System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
-            System.out.println("Geçiş Ölçüleri: " + gecisOlculeri);
-            System.out.println("-------------------------------");
-
-            finalValues.add(x);
-            finalValues.add(y);
-            finalValues.add(h);
-            finalValues.add(atananHacim);
             return finalValues;
         } else {
             x +=  kampanaDegeri + kampanaBoslukX;
@@ -567,8 +531,6 @@ public class KlasikController {
                         String[] secKilitMotor = secilenKilitMotor.split(" kW");
                         secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
                     }
-                    //String[] secKilitPompa = secilenKilitPompa.split(" cc");
-                    //float secilenKilitPompaVal = Float.parseFloat(secKilitPompa[0]);
 
                     if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
                         yV += 180 + ExcelUtil.dataManipulator.valfBoslukYArka + ExcelUtil.dataManipulator.valfBoslukYOn;
@@ -626,7 +588,6 @@ public class KlasikController {
             eskiH = h;
         }
 
-        int enKucukLitreFarki = Integer.MAX_VALUE;
         Tank finalTank = null;
         for(Tank selectedTank : ExcelUtil.dataManipulator.inputTanks) {
             int litre = selectedTank.getKabinHacim();
@@ -639,10 +600,9 @@ public class KlasikController {
                     break;
                 }
             } else {
-                if (litre >= girilenTankKapasitesiMiktari && litre - girilenTankKapasitesiMiktari <= enKucukLitreFarki) {
-                    if(hesaplananHacim != litre && hesaplananHacim < litre) {
+                if (litre >= girilenTankKapasitesiMiktari) {
+                    if(hesaplananHacim != litre) {
                         if(x < tempX && y < tempY) {
-                            enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
                             finalTank = selectedTank;
                             break;
                         }
@@ -689,6 +649,35 @@ public class KlasikController {
         finalValues.add(h);
         finalValues.add(atananHacim);
         return finalValues;
+    }
+
+    private void calculationSogutma(int x, int y, int h, ArrayList<Integer> finalValues, int hesaplananHacim, String atananKabinFinal, String gecisOlculeriFinal, int atananHacim) {
+        x = 1000;
+        y = 600;
+        h = 350;
+        hesaplananHacim = ((x*h*y) / 1000000) - ExcelUtil.dataManipulator.kayipLitre;
+
+        atananHT = "HT SOĞUTMA";
+        String atananKabin = "KD SOĞUTMA";
+        String gecisOlculeri = "1000x600x350";
+        kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        atananKabinFinal = atananKabin;
+        gecisOlculeriFinal = gecisOlculeri;
+
+        System.out.println("--------Hesaplama Bitti--------");
+        System.out.println("------------(Sonuç)------------");
+        System.out.println("Atanan X: " + x);
+        System.out.println("Atanan Y: " + y);
+        System.out.println("Atanan h: " + h);
+        System.out.println("Atanan Hacim: " + atananHacim);
+        System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        System.out.println("Geçiş Ölçüleri: " + gecisOlculeri);
+        System.out.println("-------------------------------");
+
+        finalValues.add(x);
+        finalValues.add(y);
+        finalValues.add(h);
+        finalValues.add(atananHacim);
     }
 
     private void dataInit(String componentName, @Nullable Integer valfTipiStat) {

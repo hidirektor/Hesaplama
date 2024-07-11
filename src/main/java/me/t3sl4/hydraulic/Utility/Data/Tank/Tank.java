@@ -18,7 +18,10 @@ public class Tank {
     public int kabinY;
     public int kabinH;
 
-    public Tank(String tankName, String kabinName, int kabinHacim, int gecisX, int gecisY, int gecisH, int kabinX, int kabinY, int kabinH) {
+    public String malzemeKodu;
+    public String malzemeAdi;
+
+    public Tank(String tankName, String kabinName, int kabinHacim, int gecisX, int gecisY, int gecisH, int kabinX, int kabinY, int kabinH, String malzemeKodu, String malzemeAdi) {
         this.tankName = tankName;
         this.kabinName = kabinName;
         this.kabinHacim = kabinHacim;
@@ -28,6 +31,8 @@ public class Tank {
         this.kabinX = kabinX;
         this.kabinY = kabinY;
         this.kabinH = kabinH;
+        this.malzemeKodu = malzemeKodu;
+        this.malzemeAdi = malzemeAdi;
 
         this.gecisOlculeri = gecisX + "x" + gecisY + "x" + gecisH;
         this.kabinOlculeri = kabinX + "x" + kabinY + "x" + kabinH;
@@ -119,5 +124,21 @@ public class Tank {
 
     public void setKabinH(int kabinH) {
         this.kabinH = kabinH;
+    }
+
+    public String getMalzemeKodu() {
+        return malzemeKodu;
+    }
+
+    public void setMalzemeKodu(String malzemeKodu) {
+        this.malzemeKodu = malzemeKodu;
+    }
+
+    public String getMalzemeAdi() {
+        return malzemeAdi;
+    }
+
+    public void setMalzemeAdi(String malzemeAdi) {
+        this.malzemeAdi = malzemeAdi;
     }
 }

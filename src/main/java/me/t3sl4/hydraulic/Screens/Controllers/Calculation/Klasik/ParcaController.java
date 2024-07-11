@@ -10,7 +10,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Utility.Data.Table.ParcaTableData;
+import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -192,25 +194,9 @@ public class ParcaController {
         String malzemeAdi = null;
         String adet = "1";
 
-        if(Objects.equals(KlasikController.atananKabinFinal, "KD 40")) {
-            malzemeKodu = "151-06-05-059";
-            malzemeAdi = "KD40 Kabin";
-        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 70")) {
-            malzemeKodu = "151-06-05-068";
-            malzemeAdi = "KD70 Kabin";
-        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 125")) {
-            malzemeKodu = "---";
-            malzemeAdi = "KD125 Kabin";
-        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 1620")) {
-            malzemeKodu = "---";
-            malzemeAdi = "KD1620 Kabin";
-        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 2530")) {
-            malzemeKodu = "---";
-            malzemeAdi = "KD2530 Kabin";
-        } else if(Objects.equals(KlasikController.atananKabinFinal, "KD 3540")) {
-            malzemeKodu = "---";
-            malzemeAdi = "KD3540 Kabin";
-        }
+        Tank foundedTank = Utils.findTankByKabinName(KlasikController.atananKabinFinal);
+        malzemeKodu = foundedTank.getMalzemeKodu();
+        malzemeAdi = foundedTank.getMalzemeAdi();
 
         ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
         parcaListesiTablo.getItems().add(data);

@@ -122,8 +122,10 @@ public class ExcelUtil {
                 int kabinX = (int) row.getCell(5).getNumericCellValue();
                 int kabinY = (int) row.getCell(6).getNumericCellValue();
                 int kabinH = (int) row.getCell(7).getNumericCellValue();
+                String malzemeKodu = String.valueOf(row.getCell(9).getStringCellValue());
+                String malzemeAdi = String.valueOf(row.getCell(10).getStringCellValue());
 
-                Tank tank = new Tank(tankName, kabinName, kabinHacim, gecisX, gecisY, gecisH, kabinX, kabinY, kabinH);
+                Tank tank = new Tank(tankName, kabinName, kabinHacim, gecisX, gecisY, gecisH, kabinX, kabinY, kabinH, malzemeKodu, malzemeAdi);
                 dataManipulator.inputTanks.add(tank);
             }
 
