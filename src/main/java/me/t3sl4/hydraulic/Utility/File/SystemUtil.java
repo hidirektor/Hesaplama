@@ -1,7 +1,6 @@
 package me.t3sl4.hydraulic.Utility.File;
 
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utility.Data.Excel.DataManipulator;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +17,6 @@ public class SystemUtil {
         createDirectories();
         fileCopy();
         ExcelUtil.excelDataRead();
-        DataManipulator.defineKabinOlcu();
     }
 
     public static String getOperatingSystem() {

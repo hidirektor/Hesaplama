@@ -1,11 +1,8 @@
 package me.t3sl4.hydraulic.Utility.Data.Excel;
 
-import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DataManipulator {
     public int kampanaBoslukX;
@@ -29,9 +26,8 @@ public class DataManipulator {
     public int valfXBoslukSogutma;
     public ArrayList<Integer> kampanaDegerleri = new ArrayList<>();
 
-    //public LinkedHashMap<Object, int[]> kabinOlculeri = new LinkedHashMap<Object, int[]>();
-
-    public Map<String, int[]> kabinOlculeri = new LinkedHashMap<>();
+    public Map<String, int[]> kabinOlculeri2 = new LinkedHashMap<>();
+    public List<Tank> inputTanks = new ArrayList<>();
 
     public ArrayList<String> motorYukseklikVerileri = new ArrayList<>();
 
@@ -141,27 +137,5 @@ public class DataManipulator {
     public DataManipulator() {
         //TODO
         //data update
-    }
-
-    private static void initKabinOlculeri(int x, int y, int h, int litre, String key) {
-        int[] kabinOlcu = new int[4];
-        kabinOlcu[0] = x;
-        kabinOlcu[1] = y;
-        kabinOlcu[2] = h;
-        kabinOlcu[3] = litre;
-        ExcelUtil.dataManipulator.kabinOlculeri.put(key, kabinOlcu);
-    }
-
-    public static void defineKabinOlcu() {
-        initKabinOlculeri(550, 350, 300, 40, "HT 40");
-        initKabinOlculeri(600, 370, 300, 70, "HT 70");
-        initKabinOlculeri(600, 470, 400, 100, "HT 100");
-        initKabinOlculeri(650, 500, 400, 125, "HT 125");
-        initKabinOlculeri(700, 600, 400, 160, "HT 160");
-        initKabinOlculeri(800, 650, 400, 200, "HT 200");
-        initKabinOlculeri(900, 700, 400, 250, "HT 250");
-        initKabinOlculeri(1000, 800, 400, 300, "HT 300");
-        initKabinOlculeri(1000, 800, 450, 350, "HT 350");
-        initKabinOlculeri(1000, 800, 500, 400, "HT 400");
     }
 }

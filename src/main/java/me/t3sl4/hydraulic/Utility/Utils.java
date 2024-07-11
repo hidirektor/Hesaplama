@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
+import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
+import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -211,5 +213,23 @@ public class Utils {
 
         timeline.getKeyFrames().add(keyFrame);
         timeline.playFromStart();
+    }
+
+    public static Tank findTankByTankName(String tankName) {
+        for (Tank tank : ExcelUtil.dataManipulator.inputTanks) {
+            if (tank.getTankName().equals(tankName)) {
+                return tank;
+            }
+        }
+        return null;
+    }
+
+    public static Tank findTankByKabinName(String kabinName) {
+        for (Tank tank : ExcelUtil.dataManipulator.inputTanks) {
+            if (tank.getKabinName().equals(kabinName)) {
+                return tank;
+            }
+        }
+        return null;
     }
 }

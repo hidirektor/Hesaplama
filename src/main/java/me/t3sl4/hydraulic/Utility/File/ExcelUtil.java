@@ -2,6 +2,7 @@ package me.t3sl4.hydraulic.Utility.File;
 
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Utility.Data.Excel.DataManipulator;
+import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
@@ -48,6 +49,7 @@ public class ExcelUtil {
     }
 
     public static void excelDataRead() {
+        readExcel4DefinedTanks(Launcher.excelDBPath, dataManipulator);
         readExcel4Bosluk(Launcher.excelDBPath, dataManipulator);
         readExcel4Kampana(Launcher.excelDBPath, dataManipulator);
         readExcel4Motor(Launcher.excelDBPath, dataManipulator);
@@ -97,6 +99,38 @@ public class ExcelUtil {
         readExcel4ParcaHidrosTamESPYok(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosOzelTekValf(Launcher.excelDBPath, dataManipulator);
         initMotorYukseklik();
+    }
+
+    public static void readExcel4DefinedTanks(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Kabinler";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+
+                String tankName = row.getCell(0).getStringCellValue();
+                String kabinName = row.getCell(1).getStringCellValue();
+                int kabinHacim = (int) row.getCell(8).getNumericCellValue();
+                int gecisX = (int) row.getCell(2).getNumericCellValue();
+                int gecisY = (int) row.getCell(3).getNumericCellValue();
+                int gecisH = (int) row.getCell(4).getNumericCellValue();
+                int kabinX = (int) row.getCell(5).getNumericCellValue();
+                int kabinY = (int) row.getCell(6).getNumericCellValue();
+                int kabinH = (int) row.getCell(7).getNumericCellValue();
+
+                Tank tank = new Tank(tankName, kabinName, kabinHacim, gecisX, gecisY, gecisH, kabinX, kabinY, kabinH);
+                dataManipulator.inputTanks.add(tank);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     public static void readExcel4Bosluk(String filePath, DataManipulator dataManipulator) {

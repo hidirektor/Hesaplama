@@ -20,6 +20,7 @@ import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
 import me.t3sl4.hydraulic.Utility.Data.Table.TableData;
+import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
 import me.t3sl4.hydraulic.Utility.File.SystemUtil;
@@ -453,12 +454,28 @@ public class KlasikController {
     ArrayList<Integer> calcDimensions(int x, int y, int h, ArrayList<Integer> kampanaDegerleri) {
         int eskiX=0, eskiY=0, eskiH=0;
 
+        int secilenMotorIndex = motorComboBox.getSelectionModel().getSelectedIndex();
+        secilenKampana = kampanaDegerleri.get(secilenMotorIndex);
+        secilenPompaVal = Utils.string2Double(secilenPompa);
+
+        //Eklenecek Değerler
+        int kampanaDegeri = kampanaDegerleri.get(secilenMotorIndex);
+
+        //Standart Boşluk Değerleri:
+        int kampanaBoslukX = ExcelUtil.dataManipulator.kampanaBoslukX;
+        int kampanaBoslukY = ExcelUtil.dataManipulator.kampanaBoslukY;
+        int kilitAraBoslukX = ExcelUtil.dataManipulator.kilitliBlokAraBoslukX;
+        int valfBoslukX = ExcelUtil.dataManipulator.valfBoslukX;
+        int valfBoslukYArka = ExcelUtil.dataManipulator.valfBoslukYArka;
+        int valfBoslukYOn = ExcelUtil.dataManipulator.valfBoslukYOn;
+
         //hesaplama kısmı:
         ArrayList<Integer> finalValues = new ArrayList<>();
         int yV = 0;
         int yK = 0;
-        System.out.println("--------Hesaplama Başladı--------Ø");
-        secilenKampana = kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+
+        System.out.println("--------Hesaplama Başladı--------");
+
         if(Objects.equals(secilenSogutmaDurumu, "Var")) {
             //TODO
             /*
@@ -502,21 +519,19 @@ public class KlasikController {
             finalValues.add(atananHacim);
             return finalValues;
         } else {
-            x += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + ExcelUtil.dataManipulator.kampanaBoslukX;
-            yK += kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + ExcelUtil.dataManipulator.kampanaBoslukY + ExcelUtil.dataManipulator.kampanaBoslukY;
+            x +=  kampanaDegeri + kampanaBoslukX;
+            yK += kampanaDegeri + kampanaBoslukY + kampanaBoslukY;
             System.out.println("Motor + Kampana için:");
-            System.out.println("X += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) " + ExcelUtil.dataManipulator.kampanaBoslukX + " (Kampana Boşluk)");
-            System.out.println("yK += " + kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex()) + " (Kampana) + " + ExcelUtil.dataManipulator.kampanaBoslukY + " (Kampana Boşluk) + " + ExcelUtil.dataManipulator.kampanaBoslukY + " (Kampana Boşluk)");
+            System.out.println("X += " + kampanaDegeri + " (Kampana) " + kampanaBoslukX + " (Kampana Boşluk)");
 
-            secilenPompaVal = Utils.string2Double(secilenPompa);
             //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
             //kilitli blok ölçüsü olarak: X'e +100 olacak
             if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                x += 120 + ExcelUtil.dataManipulator.kilitliBlokAraBoslukX + ExcelUtil.dataManipulator.valfBoslukX;
-                yV += 190 + ExcelUtil.dataManipulator.valfBoslukYArka + ExcelUtil.dataManipulator.valfBoslukYOn;
+                x += 120 + kilitAraBoslukX + valfBoslukX;
+                yV += 190 + valfBoslukYArka + valfBoslukYOn;
                 System.out.println("Kilitli Blok için:");
-                System.out.println("X += " + ExcelUtil.dataManipulator.kilitliBlokAraBoslukX + " (Ara Boşluk) + " + ExcelUtil.dataManipulator.valfBoslukX + " (Valf Boşluk)");
-                System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka) + " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
+                System.out.println("X += " + kilitAraBoslukX + " (Ara Boşluk) + " + valfBoslukX + " (Valf Boşluk)");
+                System.out.println("yV += " + valfBoslukYArka + " (Valf Boşluk Arka) + " + valfBoslukYOn + " (Valf Boşluk Ön)");
             }
             //hidrolik kilit olmadığı durumlarda valf tipleri için
             if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
@@ -612,15 +627,15 @@ public class KlasikController {
         }
 
         int enKucukLitreFarki = Integer.MAX_VALUE;
-        int[] enKucukLitreOlculer = null;
-        for (int[] olculer : ExcelUtil.dataManipulator.kabinOlculeri.values()) {
-            int litre = olculer[3];
-            int tempX = olculer[0];
-            int tempY = olculer[1];
+        Tank finalTank = null;
+        for(Tank selectedTank : ExcelUtil.dataManipulator.inputTanks) {
+            int litre = selectedTank.getKabinHacim();
+            int tempX = selectedTank.getKabinX();
+            int tempY = selectedTank.getKabinY();
 
             if(hesaplananHacim > girilenTankKapasitesiMiktari) {
                 if(x <= tempX && y <= tempY) {
-                    enKucukLitreOlculer = olculer;
+                    finalTank = selectedTank;
                     break;
                 }
             } else {
@@ -628,7 +643,7 @@ public class KlasikController {
                     if(hesaplananHacim != litre && hesaplananHacim < litre) {
                         if(x < tempX && y < tempY) {
                             enKucukLitreFarki = litre - girilenTankKapasitesiMiktari;
-                            enKucukLitreOlculer = olculer;
+                            finalTank = selectedTank;
                             break;
                         }
                     }
@@ -636,47 +651,15 @@ public class KlasikController {
             }
         }
 
-        if (enKucukLitreOlculer != null) {
-            x = enKucukLitreOlculer[0];
-            y = enKucukLitreOlculer[1];
-            h = enKucukLitreOlculer[2];
-            atananHacim = enKucukLitreOlculer[3];
+        if (finalTank != null) {
+            x = finalTank.getKabinX();
+            y = finalTank.getKabinY();
+            h = finalTank.getKabinH();
+            atananHacim = finalTank.getKabinHacim();
         }
 
-        atananHT = Objects.requireNonNull(Utils.getKeyByValue(ExcelUtil.dataManipulator.kabinOlculeri, enKucukLitreOlculer)).toString();
-        String atananKabin = "";
-        String gecisOlculeri = "";
-        if(Objects.equals(atananHT, "HT 40")) {
-            atananKabin = "KD 40";
-            gecisOlculeri = "540x460x780";
-        } else if(Objects.equals(atananHT, "HT 70")) {
-            atananKabin = "KD 70";
-            gecisOlculeri = "640x520x950";
-        } else if(Objects.equals(atananHT, "HT 100")) {
-            atananKabin = "KD 70";
-            gecisOlculeri = "640x520x950";
-        } else if(Objects.equals(atananHT, "HT 125")) {
-            atananKabin = "KD 125";
-            gecisOlculeri = "720x550x1000";
-        } else if(Objects.equals(atananHT, "HT 160")) {
-            atananKabin = "KD 1620";
-            gecisOlculeri = "900x800x1100";
-        } else if(Objects.equals(atananHT, "HT 200")) {
-            atananKabin = "KD 1620";
-            gecisOlculeri = "900x800x1100";
-        } else if(Objects.equals(atananHT, "HT 250")) {
-            atananKabin = "KD 2530";
-            gecisOlculeri = "1100x900x1150";
-        } else if(Objects.equals(atananHT, "HT 300")) {
-            atananKabin = "KD 2530";
-            gecisOlculeri = "1100x900x1150";
-        } else if(Objects.equals(atananHT, "HT 350")) {
-            atananKabin = "KD 3540";
-            gecisOlculeri = "1100x900x1250";
-        } else if(Objects.equals(atananHT, "HT 400")) {
-            atananKabin = "KD 3540";
-            gecisOlculeri = "1100x900x1250";
-        }
+        String atananKabin = finalTank.getKabinName();
+        String gecisOlculeri = finalTank.getGecisOlculeri();
 
         kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
         atananKabinFinal = atananKabin;
