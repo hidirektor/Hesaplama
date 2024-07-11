@@ -663,6 +663,7 @@ public class KlasikController {
         kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
         atananKabinFinal = atananKabin;
         gecisOlculeriFinal = gecisOlculeri;
+        atananHacim = hesaplananHacim;
 
         System.out.println("--------Hesaplama Bitti--------");
         System.out.println("------------(Sonuç)------------");
