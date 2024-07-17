@@ -138,13 +138,13 @@ public class LoginController implements Initializable {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/hidePass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/hidePass.png"))));
         } else {
             txtPassword.setManaged(true);
             txtPassword.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/showPass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/showPass.png"))));
         }
     }
 

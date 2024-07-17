@@ -2,7 +2,9 @@ package me.t3sl4.hydraulic.Utility.Data.Excel;
 
 import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class DataManipulator {
     public int kampanaBoslukX;
@@ -26,7 +28,6 @@ public class DataManipulator {
     public int valfXBoslukSogutma;
     public ArrayList<Integer> kampanaDegerleri = new ArrayList<>();
 
-    public Map<String, int[]> kabinOlculeri2 = new LinkedHashMap<>();
     public List<Tank> inputTanks = new ArrayList<>();
 
     public ArrayList<String> motorYukseklikVerileri = new ArrayList<>();

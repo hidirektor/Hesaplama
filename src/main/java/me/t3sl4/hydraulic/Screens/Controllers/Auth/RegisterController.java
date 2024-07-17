@@ -96,13 +96,13 @@ public class RegisterController implements Initializable {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/hidePass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/hidePass.png"))));
         } else {
             sifreText.setManaged(true);
             sifreText.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/showPass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/showPass.png"))));
         }
     }
 
