@@ -74,7 +74,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
             Utils.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
         } else {
             String otpUrl = BASE_URL + updatePassURLPrefix;
-            String jsonUpdatePassBody = "{\"Email\": \"" + ResetPasswordController.enteredEmail + "\", \"Password\": \"" + yeniSifre + "\"}";
+            String jsonUpdatePassBody = "{\"userName\": \"" + ResetPasswordController.enteredEmail + "\", \"newPassword\": \"" + yeniSifre + "\"}";
 
             HTTPRequest.sendRequest(otpUrl, jsonUpdatePassBody, new HTTPRequest.RequestCallback() {
                 @Override

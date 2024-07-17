@@ -1,6 +1,7 @@
 package me.t3sl4.hydraulic.Utility.Data.User;
 
 public class User {
+    private String userID;
     private String role;
     private String username;
     private String email;
@@ -67,5 +68,13 @@ public class User {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

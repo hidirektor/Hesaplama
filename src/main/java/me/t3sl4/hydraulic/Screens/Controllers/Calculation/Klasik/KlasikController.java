@@ -24,19 +24,13 @@ import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
 import me.t3sl4.hydraulic.Utility.File.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.ReqUtil;
 import me.t3sl4.hydraulic.Utility.Utils;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static me.t3sl4.hydraulic.Launcher.BASE_URL;
-import static me.t3sl4.hydraulic.Launcher.insertHydraulicURLPrefix;
 
 public class KlasikController {
 
@@ -223,39 +217,11 @@ public class KlasikController {
 
     @FXML
     public void transferCalculation() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
         if (SystemUtil.fileExists(pdfPath) && SystemUtil.fileExists(excelPath)) {
-            String pdfURL = girilenSiparisNumarasi + ".pdf";
-            String excelURL = girilenSiparisNumarasi + ".xlsx";
-            String url = BASE_URL + insertHydraulicURLPrefix;
-            String jsonBody = "{\n" +
-                    "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
-                    "  \"OrderDate\": \"" + dtf.format(now) + "\",\n" +
-                    "  \"Type\": \"" + secilenUniteTipi + "\",\n" +
-                    "  \"InCharge\": \"" + Main.loggedInUser.getUsername() + "\",\n" +
-                    "  \"PDF\": \"" + pdfURL + "\",\n" +
-                    "  \"PartList\": \"" + excelURL + "\",\n" +
-                    "  \"InChargeName\": \"" + Main.loggedInUser.getFullName() + "\"\n" +
-                    "}";
-
-            HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
-                @Override
-                public void onSuccess(String response) throws IOException {
-                    if(ReqUtil.uploadPDFFile2Server(pdfPath, girilenSiparisNumarasi) && ReqUtil.uploadExcelFile2Server(excelPath, girilenSiparisNumarasi)) {
-                        Utils.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
-                    }
-                }
-
-                @Override
-                public void onFailure() {
-                    Utils.showErrorMessage("Oluşturulan hidrolik ünitesi kaydedilemedi !");
-                }
-            });
+            ReqUtil.createHydraulicUnit(Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, excelPath, pdfPath);
         } else {
             Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
@@ -457,6 +423,7 @@ public class KlasikController {
         int valfBoslukX = ExcelUtil.dataManipulator.valfBoslukX;
         int valfBoslukYArka = ExcelUtil.dataManipulator.valfBoslukYArka;
         int valfBoslukYOn = ExcelUtil.dataManipulator.valfBoslukYOn;
+        int defaultHeight = 350; //standart yükseklik ölçüsü
 
         //Hesaplama Standartları
         ArrayList<Integer> finalValues = new ArrayList<>();
@@ -488,15 +455,52 @@ public class KlasikController {
 
             //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
             //kilitli blok ölçüsü olarak: X'e +100 olacak
-            if(Objects.equals(secilenHidrolikKilitDurumu, "Var") && Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                x += 120 + kilitAraBoslukX + valfBoslukX;
-                yV += 190 + valfBoslukYArka + valfBoslukYOn;
-                System.out.println("Kilitli Blok için:");
-                System.out.println("X += " + kilitAraBoslukX + " (Ara Boşluk) + " + valfBoslukX + " (Valf Boşluk)");
-                System.out.println("yV += " + valfBoslukYArka + " (Valf Boşluk Arka) + " + valfBoslukYOn + " (Valf Boşluk Ön)");
-            }
-            //hidrolik kilit olmadığı durumlarda valf tipleri için
-            if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
+            if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
+                if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+                    x += 120 + kilitAraBoslukX + valfBoslukX;
+                    yV += 190 + valfBoslukYArka + valfBoslukYOn;
+                    System.out.println("Kilitli Blok için:");
+                    System.out.println("X += " + kilitAraBoslukX + " (Ara Boşluk) + " + valfBoslukX + " (Valf Boşluk)");
+                    System.out.println("yV += " + valfBoslukYArka + " (Valf Boşluk Arka) + " + valfBoslukYOn + " (Valf Boşluk Ön)");
+                } else {
+                    if(secilenPompaVal >= 28.1) {
+                        float secilenKilitMotorVal = 0;
+                        if(secilenKilitMotor != null) {
+                            String[] secKilitMotor = secilenKilitMotor.split(" kW");
+                            secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
+                        }
+
+                        if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
+                            yV += 180 + ExcelUtil.dataManipulator.valfBoslukYArka + ExcelUtil.dataManipulator.valfBoslukYOn;
+                            System.out.println("Kompanzasyon + İnişte Tek Hız (Kilitli Blok) (Pompa > 28.1) için:");
+                            System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                        } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
+                            System.out.println("İnişte Çift Hız (Kilitli Blok) için:");
+                            if(secilenPompaVal >= 28.1) {
+                                yV += 90 + ExcelUtil.dataManipulator.valfBoslukYOn;
+                                System.out.println("(Pompa > 28.1) için:");
+                                System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
+                            } else {
+                                yV += 90 + ExcelUtil.dataManipulator.valfBoslukYOn + ExcelUtil.dataManipulator.valfBoslukYArka;
+                                System.out.println("(Pompa <= 28.1) için:");
+                                System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                            }
+                        } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
+                            yV += 180 + ExcelUtil.dataManipulator.valfBoslukYOn + ExcelUtil.dataManipulator.valfBoslukYArka;
+                            System.out.println("İnişte Tek Hız (Kilitli Blok) için:");
+                            System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                        }
+
+                        if(secilenKilitMotorVal != 0) {
+                            x += 200 + ExcelUtil.dataManipulator.kilitMotorKampanaBosluk + ExcelUtil.dataManipulator.kilitMotorMotorBoslukX;
+                            yV += 200 + ExcelUtil.dataManipulator.kilitMotorBoslukYOn + ExcelUtil.dataManipulator.kilitMotorBoslukYArka;
+                            System.out.println("Kilit Motor için:");
+                            System.out.println("X += " + ExcelUtil.dataManipulator.kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + ExcelUtil.dataManipulator.kilitMotorMotorBoslukX + " (Kilit Motor Boşluk)");
+                            System.out.println("yV += " + ExcelUtil.dataManipulator.kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + ExcelUtil.dataManipulator.kilitMotorBoslukYArka + " (Kilit Motor Arka)");
+                        }
+                    }
+                }
+            } else { //hidrolik kilit olmadığı durumlarda valf tipleri için
                 if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
                     // X yönünde +120 olacak Y yönünde 180 mm eklenecek
                     x += 70 + ExcelUtil.dataManipulator.valfBoslukX + ExcelUtil.dataManipulator.tekHizAraBoslukX;
@@ -522,43 +526,6 @@ public class KlasikController {
                         System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
                     }
                 }
-            } else {
-                if(secilenPompaVal >= 28.1) {
-                    float secilenKilitMotorVal = 0;
-                    if(secilenKilitMotor != null) {
-                        String[] secKilitMotor = secilenKilitMotor.split(" kW");
-                        secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
-                    }
-
-                    if(Objects.equals(secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
-                        yV += 180 + ExcelUtil.dataManipulator.valfBoslukYArka + ExcelUtil.dataManipulator.valfBoslukYOn;
-                        System.out.println("Kompanzasyon + İnişte Tek Hız (Kilitli Blok) (Pompa > 28.1) için:");
-                        System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
-                    } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                        System.out.println("İnişte Çift Hız (Kilitli Blok) için:");
-                        if(secilenPompaVal >= 28.1) {
-                            yV += 90 + ExcelUtil.dataManipulator.valfBoslukYOn;
-                            System.out.println("(Pompa > 28.1) için:");
-                            System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
-                        } else {
-                            yV += 90 + ExcelUtil.dataManipulator.valfBoslukYOn + ExcelUtil.dataManipulator.valfBoslukYArka;
-                            System.out.println("(Pompa <= 28.1) için:");
-                            System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
-                        }
-                    } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                        yV += 180 + ExcelUtil.dataManipulator.valfBoslukYOn + ExcelUtil.dataManipulator.valfBoslukYArka;
-                        System.out.println("İnişte Tek Hız (Kilitli Blok) için:");
-                        System.out.println("yV += " + ExcelUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
-                    }
-
-                    if(secilenKilitMotorVal != 0) {
-                        x += 200 + ExcelUtil.dataManipulator.kilitMotorKampanaBosluk + ExcelUtil.dataManipulator.kilitMotorMotorBoslukX;
-                        yV += 200 + ExcelUtil.dataManipulator.kilitMotorBoslukYOn + ExcelUtil.dataManipulator.kilitMotorBoslukYArka;
-                        System.out.println("Kilit Motor için:");
-                        System.out.println("X += " + ExcelUtil.dataManipulator.kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + ExcelUtil.dataManipulator.kilitMotorMotorBoslukX + " (Kilit Motor Boşluk)");
-                        System.out.println("yV += " + ExcelUtil.dataManipulator.kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + ExcelUtil.dataManipulator.kilitMotorBoslukYArka + " (Kilit Motor Arka)");
-                    }
-                }
             }
 
             y = Math.max(yV, yK);
@@ -568,14 +535,14 @@ public class KlasikController {
             if(x <= 550) {
                 x = 550;
             }
-            h = 300;
+            h = defaultHeight;
 
             String veri = ExcelUtil.dataManipulator.motorYukseklikVerileri.get(motorComboBox.getSelectionModel().getSelectedIndex());
             String sayiKismi = veri.replaceAll("[^0-9]", "");
             int yukseklik = Integer.parseInt(sayiKismi);
 
             if(h >= yukseklik) {
-                h = 300;
+                h = defaultHeight;
             } else {
                 h = yukseklik;
             }
@@ -625,22 +592,7 @@ public class KlasikController {
         //int secilenMotorIndeks = motorComboBox.getSelectionModel().getSelectedIndex();
         //int motorYukseklikDegeri = Integer.parseInt(motorYukseklikVerileri.get(secilenMotorIndeks));
 
-
-        System.out.println("--------Hesaplama Bitti--------");
-        System.out.println("------------(Sonuç)------------");
-        System.out.println("yV: " + yV);
-        System.out.println("yK: " + yK);
-        System.out.println("Hesaplanan X: " + eskiX);
-        System.out.println("Hesaplanan Y: " + eskiY);
-        System.out.println("Hesaplanan h: " + eskiH);
-        System.out.println("Hesaplanan Hacim: " + hesaplananHacim);
-        System.out.println("Atanan X: " + x);
-        System.out.println("Atanan Y: " + y);
-        System.out.println("Atanan h: " + h);
-        System.out.println("Atanan Hacim: " + atananHacim);
-        System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
-        System.out.println("Geçiş Ölçüleri: " + gecisOlculeri);
-        System.out.println("-------------------------------");
+        logCalculation(yV, yK, eskiX, eskiY, eskiH, hesaplananHacim, x, y, h, atananHacim, atananKabin, gecisOlculeri);
 
         finalValues.add(x);
         finalValues.add(y);
@@ -677,6 +629,24 @@ public class KlasikController {
         finalValues.add(y);
         finalValues.add(h);
         finalValues.add(atananHacim);
+    }
+
+    private void logCalculation(int yV, int yK, int eskiX, int eskiY, int eskiH, int hesaplananHacim, int x, int y, int h, int atananHacim, String atananKabin, String gecisOlculeri) {
+        System.out.println("--------Hesaplama Bitti--------");
+        System.out.println("------------(Sonuç)------------");
+        System.out.println("yV: " + yV);
+        System.out.println("yK: " + yK);
+        System.out.println("Hesaplanan X: " + eskiX);
+        System.out.println("Hesaplanan Y: " + eskiY);
+        System.out.println("Hesaplanan h: " + eskiH);
+        System.out.println("Hesaplanan Hacim: " + hesaplananHacim);
+        System.out.println("Atanan X: " + x);
+        System.out.println("Atanan Y: " + y);
+        System.out.println("Atanan h: " + h);
+        System.out.println("Atanan Hacim: " + atananHacim);
+        System.out.println("Kullanmanız Gereken Kabin: " + atananKabin);
+        System.out.println("Geçiş Ölçüleri: " + gecisOlculeri);
+        System.out.println("-------------------------------");
     }
 
     private void dataInit(String componentName, @Nullable Integer valfTipiStat) {

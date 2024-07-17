@@ -126,7 +126,7 @@ public class Utils {
 
     public static String getAmountFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
         String stockCode = null;
-        HashMap<String, String> innerMap = new HashMap<>();
+        HashMap<String, String> innerMap;
 
         for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
             String key = entry.getKey().trim();

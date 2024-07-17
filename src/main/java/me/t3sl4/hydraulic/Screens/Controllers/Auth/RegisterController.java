@@ -150,19 +150,15 @@ public class RegisterController implements Initializable {
                     kullaniciAdiText.clear();
                 }
             } else {
-                String created_at = Utils.getCurrentDateTime();
-
                 String registerJsonBody =
                         "{" +
-                                "\"Role\":\"" + userRole + "\"," +
-                                "\"UserName\":\"" + userName + "\"," +
-                                "\"Email\":\"" + eMail + "\"," +
-                                "\"Password\":\"" + password + "\"," +
-                                "\"NameSurname\":\"" + nameSurname + "\"," +
-                                "\"Phone\":\"" + phone + "\"," +
-                                "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
-                                "\"CompanyName\":\"" + companyName + "\"," +
-                                "\"Created_At\":\"" + created_at + "\"" +
+                                "\"userName\":\"" + userName + "\"," +
+                                "\"userType\":\"" + userRole + "\"," +
+                                "\"nameSurname\":\"" + nameSurname + "\"," +
+                                "\"eMail\":\"" + eMail + "\"," +
+                                "\"phoneNumber\":\"" + phone + "\"," +
+                                "\"companyName\":\"" + companyName + "\"," +
+                                "\"password\":\"" + password + "\"" +
                                 "}";
 
                 sendRegisterRequest(registerJsonBody, stage);
@@ -188,7 +184,7 @@ public class RegisterController implements Initializable {
     }
 
     private void uploadProfilePhoto2Server(Stage stage) throws IOException {
-        String uploadUrl = BASE_URL + uploadURLPrefix;
+        String uploadUrl = BASE_URL + uploadProfilePhotoURLPrefix;
         String username = kullaniciAdiText.getText();
 
         File profilePhotoFile = new File(secilenPhotoPath);

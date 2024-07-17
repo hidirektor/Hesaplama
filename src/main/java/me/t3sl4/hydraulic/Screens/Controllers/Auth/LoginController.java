@@ -73,7 +73,7 @@ public class LoginController implements Initializable {
         String jsonLoginBody = "";
 
         if (!txtUsername.getText().isEmpty() || !txtPassword.getText().isEmpty()) {
-            jsonLoginBody = "{\"Username\": \"" + txtUsername.getText() + "\", \"Password\": \"" + txtPassword.getText() + "\"}";
+            jsonLoginBody = "{\"userName\": \"" + txtUsername.getText() + "\", \"password\": \"" + txtPassword.getText() + "\"}";
             ReqUtil.loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText(), lblErrors);
         }
     }

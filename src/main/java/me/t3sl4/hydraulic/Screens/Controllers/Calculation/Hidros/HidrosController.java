@@ -19,16 +19,13 @@ import me.t3sl4.hydraulic.Utility.Data.Table.TableData;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
 import me.t3sl4.hydraulic.Utility.File.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utility.ReqUtil;
 import me.t3sl4.hydraulic.Utility.Utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-
-import static me.t3sl4.hydraulic.Launcher.*;
 
 public class HidrosController {
     @FXML
@@ -199,89 +196,10 @@ public class HidrosController {
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
         if (SystemUtil.fileExists(pdfPath) && SystemUtil.fileExists(excelPath)) {
-            String pdfURL = girilenSiparisNumarasi + ".pdf";
-            String excelURL = girilenSiparisNumarasi + ".xlsx";
-            String url = BASE_URL + insertHydraulicURLPrefix;
-            String jsonBody = "{\n" +
-                    "  \"OrderNumber\": \"" + girilenSiparisNumarasi + "\",\n" +
-                    "  \"OrderDate\": \"" + dtf.format(now) + "\",\n" +
-                    "  \"Type\": \"" + secilenUniteTipi + "\",\n" +
-                    "  \"InCharge\": \"" + Main.loggedInUser.getUsername() + "\",\n" +
-                    "  \"PDF\": \"" + pdfURL + "\",\n" +
-                    "  \"PartList\": \"" + excelURL + "\",\n" +
-                    "  \"InChargeName\": \"" + Main.loggedInUser.getFullName() + "\"\n" +
-                    "}";
-
-            HTTPRequest.sendRequest(url, jsonBody, new HTTPRequest.RequestCallback() {
-                @Override
-                public void onSuccess(String response) throws IOException {
-                    uploadPDFFile2Server(pdfPath);
-                    uploadExcelFile2Server(excelPath);
-                    if(excelSucc && pdfSucc) {
-                        Utils.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
-                        excelSucc = false;
-                        pdfSucc = false;
-                    }
-                }
-
-                @Override
-                public void onFailure() {
-                    Utils.showErrorMessage("Oluşturulan hidrolik ünitesi kaydedilemedi !");
-                }
-            });
+            ReqUtil.createHydraulicUnit(Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, excelPath, pdfPath);
         } else {
             Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
-    }
-
-    private void uploadPDFFile2Server(String filePath) {
-        String uploadUrl = BASE_URL + uploadPDFURLPrefix;
-
-        File pdfFile = new File(filePath);
-        if (!pdfFile.exists()) {
-            Utils.showErrorMessage("PDF dosyası bulunamadı !");
-            return;
-        }
-
-        HTTPRequest.sendMultipartRequest(uploadUrl,girilenSiparisNumarasi, pdfFile, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String response) {
-                pdfSucc = true;
-                /*Platform.runLater(() -> {
-                    Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
-                });*/
-            }
-
-            @Override
-            public void onFailure() {
-                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
-            }
-        });
-    }
-
-    private void uploadExcelFile2Server(String filePath) {
-        String uploadUrl = BASE_URL + uploadExcelURLPrefix;
-
-        File excelFile = new File(filePath);
-        if (!excelFile.exists()) {
-            Utils.showErrorMessage("Excel dosyası bulunamadı !");
-            return;
-        }
-
-        HTTPRequest.sendMultipartRequest(uploadUrl, girilenSiparisNumarasi, excelFile, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String response) {
-                excelSucc = true;
-                /*Platform.runLater(() -> {
-                    Util.showSuccessMessage("Oluşturulan ünite başarıyla kaydedildi.");
-                });*/
-            }
-
-            @Override
-            public void onFailure() {
-                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
-            }
-        });
     }
 
     public void comboBoxListener() {

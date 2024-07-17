@@ -198,6 +198,7 @@ public class HidrosParcaController {
         } else if (Objects.equals(voltajDegeri, "220")) {
             String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu);
             String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu) + " Motor";
+
             String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(ExcelUtil.dataManipulator.hidros220Parca, motorGucu));
 
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);

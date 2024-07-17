@@ -3,12 +3,16 @@ package me.t3sl4.hydraulic.Utility.File;
 import me.t3sl4.hydraulic.Launcher;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class SystemUtil {
 
@@ -17,6 +21,7 @@ public class SystemUtil {
         createDirectories();
         fileCopy();
         ExcelUtil.excelDataRead();
+        initializeTokens();
     }
 
     public static String getOperatingSystem() {
@@ -65,6 +70,7 @@ public class SystemUtil {
             Launcher.mainPath = "/Users/" + System.getProperty("user.name") + "/OnderGrup/";
         }
 
+        Launcher.tokenPath = Launcher.mainPath + "auth.txt";
         Launcher.profilePhotoLocalPath = Launcher.mainPath + "profilePhoto/";
         Launcher.pdfFileLocalPath = Launcher.mainPath + "hydraulicUnits/";
         Launcher.excelFileLocalPath = Launcher.mainPath + "partList/";
@@ -84,6 +90,41 @@ public class SystemUtil {
                 System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void initializeTokens() {
+        try {
+            File authFile = new File(Launcher.tokenPath);
+            if(authFile.exists()) {
+                Scanner myReader = new Scanner(authFile);
+
+                List<String> lines = new ArrayList<String>();
+
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    lines.add(data);
+                    System.out.println(data);
+                }
+                myReader.close();
+
+                for(String line : lines) {
+                    if(line.contains("userID: ")) {
+                        line.replaceAll("userID: ", "");
+                        Launcher.userID = line;
+                    } else if(line.contains("AccessToken: ")) {
+                        line.replaceAll("AccessToken: ", "");
+                        Launcher.accessToken = line;
+                    } else if(line.contains("RefreshToken: ")) {
+                        line.replaceAll("RefreshToken: ", "");
+                        Launcher.refreshToken = line;
+                    }
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }

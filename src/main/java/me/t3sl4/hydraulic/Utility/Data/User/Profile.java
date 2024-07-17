@@ -22,7 +22,7 @@ public class Profile {
             setProfilePhoto(username, secilenFoto, profilePhotoImageView);
         } else {
             String photoUrl = BASE_URL + downloadPhotoURLPrefix;
-            String jsonBody = "{\"username\":\"" + username + "\"} ";
+            String jsonBody = "{\"userName\":\"" + username + "\"} ";
 
             HTTPRequest.sendRequest4File(photoUrl, jsonBody, localFileFinalPath, new HTTPRequest.RequestCallback() {
                 @Override

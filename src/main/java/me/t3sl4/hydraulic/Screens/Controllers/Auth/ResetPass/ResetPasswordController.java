@@ -7,10 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Utils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -31,9 +31,8 @@ public class ResetPasswordController implements Initializable {
     @FXML
     private Label lblErrors;
 
-    public static String otpCode;
-
     public static String enteredEmail;
+    public static String otpCode;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,14 +67,17 @@ public class ResetPasswordController implements Initializable {
             if (isValidEmail(email)) {
 
                 String otpUrl = BASE_URL + otpURLPrefix;
-                String jsonOTPBody = "{\"Email\": \"" + email + "\"}";
+                String jsonOTPBody = "{\"email\": \"" + email + "\"}";
 
                 HTTPRequest.sendRequest(otpUrl, jsonOTPBody, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String otpResponse) throws IOException {
-                        otpCode = parseOTPCodeFromResponse(otpResponse);
-                        if (otpCode != null) {
-                            System.out.println("OTP Code: " + otpCode);
+                        JSONObject otpResponseObject = new JSONObject(otpResponse);
+                        Launcher.otpSentTime = otpResponseObject.getString("otpSentTime");
+                        otpCode = otpResponseObject.getString("otpCode");
+
+                        if (Launcher.otpSentTime != null) {
+                            System.out.println("OTP Sent Time: " + Launcher.otpSentTime);
                             enteredEmail = email;
                             changeOTPScreen();
                         } else {
@@ -104,19 +106,5 @@ public class ResetPasswordController implements Initializable {
 
     private boolean isValidEmail(String email) {
         return email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
-    }
-
-    private String parseOTPCodeFromResponse(String response) {
-        try {
-            JSONObject jsonResponse = new JSONObject(response);
-            if (jsonResponse.has("message") && jsonResponse.has("otpCode")) {
-                String message = jsonResponse.getString("message");
-                String otpCode = jsonResponse.getString("otpCode");
-                return otpCode;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

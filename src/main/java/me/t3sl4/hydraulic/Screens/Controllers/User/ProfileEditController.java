@@ -139,14 +139,14 @@ public class ProfileEditController {
 
         String registerJsonBody =
                 "{" +
-                        "\"UserName\":\"" + userName + "\"," +
-                        "\"Email\":\"" + eMail + "\"," +
-                        "\"Password\":\"" + password + "\"," +
-                        "\"NameSurname\":\"" + nameSurname + "\"," +
-                        "\"Phone\":\"" + phone + "\"," +
-                        "\"Profile_Photo\":\"" + profilePhotoPath + "\"," +
-                        "\"CompanyName\":\"" + companyName + "\"," + "\"" +
+                        "\"userID\": \"" + userID + "\"," +
+                        "\"userData\": {" +
+                        "  \"name\": \"" + nameSurname + "\"," +
+                        "  \"email\": \"" + eMail + "\"," +
+                        "  \"phoneNumber\": \"" + phone + "\"" +
+                        "}" +
                         "}";
+
         sendUpdateRequest(registerJsonBody, userName, stage);
     }
 
@@ -171,7 +171,7 @@ public class ProfileEditController {
     }
 
     private void uploadProfilePhoto2Server(Stage stage) throws IOException {
-        String uploadUrl = BASE_URL + uploadURLPrefix;
+        String uploadUrl = BASE_URL + uploadProfilePhotoURLPrefix;
         String username = kullaniciAdiText.getText();
 
         File profilePhotoFile = new File(secilenPhotoPath);
@@ -223,24 +223,27 @@ public class ProfileEditController {
     }
 
     private void getUserInfo() {
-        String profileInfoUrl = BASE_URL + wholeProfileURLPrefix;
+        String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
         String jsonBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
 
         HTTPRequest.sendRequest(profileInfoUrl, jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String hydraulicResponse) {
                 JSONObject responseJson = new JSONObject(hydraulicResponse);
-                String isimSoyisim = responseJson.getString("NameSurname");
-                String kullaniciAdi = responseJson.getString("UserName");
-                String ePosta = responseJson.getString("Email");
-                String phone = responseJson.getString("Phone");
-                String companyName = responseJson.getString("CompanyName");
+                JSONObject userInfoObject = responseJson.getJSONObject("user");
 
-                isimSoyisimText.setText(isimSoyisim);
-                kullaniciAdiText.setText(kullaniciAdi);
-                ePostaText.setText(ePosta);
-                telefonText.setText(phone);
-                sirketText.setText(companyName);
+                String parsedRole = responseJson.getString("userType");
+                String parsedUserName = responseJson.getString("userName");
+                String parsedFullName = responseJson.getString("nameSurname");
+                String parsedEmail = responseJson.getString("eMail");
+                String parsedPhone = responseJson.getString("phoneNumber");
+                String parsedCompanyName = responseJson.getString("companyName");
+
+                isimSoyisimText.setText(parsedFullName);
+                kullaniciAdiText.setText(parsedUserName);
+                ePostaText.setText(parsedEmail);
+                telefonText.setText(parsedPhone);
+                sirketText.setText(parsedCompanyName);
             }
 
             @Override

@@ -151,7 +151,7 @@ public class HTTPRequest {
                     try (OutputStream os = conn.getOutputStream()) {
                         try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8), true)) {
                             writer.append("--" + boundary).append("\r\n");
-                            writer.append("Content-Disposition: form-data; name=\"username\"").append("\r\n");
+                            writer.append("Content-Disposition: form-data; name=\"userName\"").append("\r\n");
                             writer.append("\r\n").append(username).append("\r\n");
 
                             writer.append("--" + boundary).append("\r\n");
@@ -167,6 +167,94 @@ public class HTTPRequest {
                             writer.append("\r\n");
                             writer.append("--" + boundary + "--").append("\r\n");
                         }
+                    }
+
+                    int responseCode = conn.getResponseCode();
+
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        String response = HTTPUtil.readResponse(conn.getInputStream());
+                        Platform.runLater(() -> {
+                            try {
+                                callback.onSuccess(response);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    } else {
+                        Platform.runLater(callback::onFailure);
+                    }
+                } catch (IOException e) {
+                    Platform.runLater(callback::onFailure);
+                }
+
+                return null;
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.start();
+    }
+
+    public static void sendMultipartRequestMultiple(String url, String username, String orderID, String hydraulicType, File partListFile, File schematicFile, RequestCallback callback) {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    URL urlObj = new URL(url);
+                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+
+                    String boundary = "Boundary-" + System.currentTimeMillis();
+                    conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+                    try (OutputStream os = conn.getOutputStream();
+                         PrintWriter writer = new PrintWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8), true)) {
+
+                        // Add userName field
+                        writer.append("--" + boundary).append("\r\n");
+                        writer.append("Content-Disposition: form-data; name=\"userName\"").append("\r\n");
+                        writer.append("\r\n").append(username).append("\r\n");
+
+                        // Add orderID field
+                        writer.append("--" + boundary).append("\r\n");
+                        writer.append("Content-Disposition: form-data; name=\"orderID\"").append("\r\n");
+                        writer.append("\r\n").append(orderID).append("\r\n");
+
+                        // Add hydraulicType field
+                        writer.append("--" + boundary).append("\r\n");
+                        writer.append("Content-Disposition: form-data; name=\"hydraulicType\"").append("\r\n");
+                        writer.append("\r\n").append(hydraulicType).append("\r\n");
+
+                        // Add partListFile field
+                        writer.append("--" + boundary).append("\r\n");
+                        writer.append("Content-Disposition: form-data; name=\"partListFile\"; filename=\"" + partListFile.getName() + "\"").append("\r\n");
+                        writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(partListFile.getName())).append("\r\n");
+                        writer.append("Content-Transfer-Encoding: binary").append("\r\n");
+                        writer.append("\r\n");
+                        writer.flush();
+
+                        Files.copy(partListFile.toPath(), os);
+                        os.flush();
+
+                        // Add schematicFile field if provided
+                        if (schematicFile != null) {
+                            writer.append("\r\n");
+                            writer.append("--" + boundary).append("\r\n");
+                            writer.append("Content-Disposition: form-data; name=\"schematicFile\"; filename=\"" + schematicFile.getName() + "\"").append("\r\n");
+                            writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(schematicFile.getName())).append("\r\n");
+                            writer.append("Content-Transfer-Encoding: binary").append("\r\n");
+                            writer.append("\r\n");
+                            writer.flush();
+
+                            Files.copy(schematicFile.toPath(), os);
+                            os.flush();
+                        }
+
+                        // End of multipart
+                        writer.append("\r\n");
+                        writer.append("--" + boundary + "--").append("\r\n");
+                        writer.flush();
                     }
 
                     int responseCode = conn.getResponseCode();

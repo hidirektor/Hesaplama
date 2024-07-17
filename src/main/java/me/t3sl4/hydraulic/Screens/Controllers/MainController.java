@@ -360,9 +360,9 @@ public class MainController implements Initializable {
                 typeLabel.setText(info.getUniteTipi());
                 InChargeLabel.setText(info.getUserName());
 
-                pdfViewButton.setOnAction(event -> openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".pdf"));
+                pdfViewButton.setOnAction(event -> openURL(BASE_URL + getSchematicURLPrefix + info.getSiparisNumarasi()));
 
-                excelViewButton.setOnMouseClicked(event -> openURL(BASE_URL + fileViewURLPrefix + info.getSiparisNumarasi() + ".xlsx"));
+                excelViewButton.setOnMouseClicked(event -> openURL(BASE_URL + getPartListURLPrefix + info.getSiparisNumarasi()));
 
                 node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #0A0E3F"));
                 node.setOnMouseExited(event -> itemC.setStyle("-fx-background-color : #02030A"));
