@@ -1064,7 +1064,7 @@ public class KlasikController {
         hacimText.setVisible(false);
     }
 
-    private void tabloGuncelle() 1{
+    private void tabloGuncelle() {
         sonucTablo.getItems().clear();
         TableData data = new TableData("Sipariş Numarası:", girilenSiparisNumarasi);
         sonucTablo.getItems().add(data);
