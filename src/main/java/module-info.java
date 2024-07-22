@@ -2,7 +2,6 @@ module me.t3sl.hydraulic {
     requires javafx.controls;
     requires javafx.fxml;
 
-
     requires java.desktop;
     requires itext.xtra;
     requires itextpdf;
