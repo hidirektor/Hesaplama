@@ -50,6 +50,9 @@ public class KlasikController {
     private ComboBox<String> hidrolikKilitComboBox;
 
     @FXML
+    private ComboBox<String> kompanzasyonComboBox;
+
+    @FXML
     private ComboBox<String> sogutmaComboBox;
 
     @FXML
@@ -234,6 +237,11 @@ public class KlasikController {
             secilenKampana = ExcelUtil.dataManipulator.kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
             pompaComboBox.setDisable(false);
         }
+    }
+
+    @FXML
+    public void kompanzasyonPressed() {
+        //kompanzasyon işlemleri
     }
 
     @FXML

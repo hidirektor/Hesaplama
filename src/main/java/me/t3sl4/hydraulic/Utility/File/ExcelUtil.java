@@ -556,50 +556,55 @@ public class ExcelUtil {
                         if (!temp1.isEmpty() && !temp2.isEmpty() && !temp3.isEmpty()) {
                             temp += temp1 + ";" + temp2 + ";" + temp3;
 
-                            if (i == 0) {
-                                dataManipulator.parcaListesiPompa95.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 1) {
-                                dataManipulator.parcaListesiPompa119.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 2) {
-                                dataManipulator.parcaListesiPompa14.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 3) {
-                                dataManipulator.parcaListesiPompa146.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 4) {
-                                dataManipulator.parcaListesiPompa168.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 5) {
-                                dataManipulator.parcaListesiPompa192.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 6) {
-                                dataManipulator.parcaListesiPompa229.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 7) {
-                                dataManipulator.parcaListesiPompa281.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 8) {
-                                dataManipulator.parcaListesiPompa288.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 9) {
-                                dataManipulator.parcaListesiPompa333.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 10) {
-                                dataManipulator.parcaListesiPompa379.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 11) {
-                                dataManipulator.parcaListesiPompa426.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 12) {
-                                dataManipulator.parcaListesiPompa455.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 13) {
-                                dataManipulator.parcaListesiPompa494.add(temp);
-                                okunacakSatir++;
-                            } else if (i == 14) {
-                                dataManipulator.parcaListesiPompa561.add(temp);
+                            if(!temp.contains("hidirektor")) {
+                                if (i == 0) {
+                                    dataManipulator.parcaListesiPompa95.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 1) {
+                                    dataManipulator.parcaListesiPompa119.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 2) {
+                                    dataManipulator.parcaListesiPompa14.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 3) {
+                                    dataManipulator.parcaListesiPompa146.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 4) {
+                                    dataManipulator.parcaListesiPompa168.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 5) {
+                                    dataManipulator.parcaListesiPompa192.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 6) {
+                                    dataManipulator.parcaListesiPompa229.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 7) {
+                                    dataManipulator.parcaListesiPompa281.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 8) {
+                                    dataManipulator.parcaListesiPompa288.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 9) {
+                                    dataManipulator.parcaListesiPompa333.add(temp);
+                                    System.out.println(okunacakSatir);
+                                    okunacakSatir++;
+                                } else if (i == 10) {
+                                    dataManipulator.parcaListesiPompa379.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 11) {
+                                    dataManipulator.parcaListesiPompa426.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 12) {
+                                    dataManipulator.parcaListesiPompa455.add(temp);
+                                    okunacakSatir++;
+                                } else if (i == 13) {
+                                    dataManipulator.parcaListesiPompa494.add(temp);
+                                    okunacakSatir++;
+                                } else {
+                                    dataManipulator.parcaListesiPompa561.add(temp);
+                                    okunacakSatir++;
+                                }
+                            } else {
                                 okunacakSatir++;
                             }
                         }
