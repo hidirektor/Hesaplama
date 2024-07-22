@@ -301,10 +301,18 @@ public class KlasikController {
     public void kompanzasyonPressed() {
         if(kompanzasyonComboBox.getValue() != null) {
             kompanzasyonDurumu = kompanzasyonComboBox.getValue();
-            if(Objects.equals(secilenHidrolikKilitDurumu, "Yok")) {
-                dataInit("valfTipi", 0);
-            } else {
+            if(Objects.equals(kompanzasyonDurumu, "Var")) {
                 dataInit("valfTipi", 1);
+            } else {
+                if(secilenHidrolikKilitDurumu.equals("Yok")) {
+                    dataInit("valfTipi", 0);
+                } else {
+                    if(secilenPompaVal <= 28.1) {
+                        dataInit("valfTipi", 1);
+                    } else {
+                        dataInit("valfTipi", 0);
+                    }
+                }
             }
         }
     }
@@ -813,18 +821,6 @@ public class KlasikController {
 
         valfTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenValfTipi = newValue;
-            if(secilenPompa != null) {
-                if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
-                    if(secilenPompaVal >= 28.1) {
-                        dataInit("kilitMotor", null);
-                    } else {
-                        sogutmaComboBox.setDisable(false);
-                        dataInit("sogutma", null);
-                    }
-                } else {
-                    dataInit("sogutma", null);
-                }
-            }
             if(secilenValfTipi != null) {
                 tabloGuncelle();
             }
@@ -869,6 +865,7 @@ public class KlasikController {
         pompaComboBox.setPromptText("Pompa");
         hidrolikKilitComboBox.getSelectionModel().clearSelection();
         hidrolikKilitComboBox.setPromptText("Hidrolik Kilit");
+        kompanzasyonComboBox.getSelectionModel().clearSelection();
         valfTipiComboBox.getSelectionModel().clearSelection();
         valfTipiComboBox.setPromptText("Valf Tipi");
         kilitMotorComboBox.getSelectionModel().clearSelection();
@@ -882,6 +879,7 @@ public class KlasikController {
         pompaComboBox.setDisable(true);
         tankKapasitesiTextField.setDisable(true);
         hidrolikKilitComboBox.setDisable(true);
+        kompanzasyonComboBox.setDisable(true);
         valfTipiComboBox.setDisable(true);
         kilitMotorComboBox.setDisable(true);
         kilitPompaComboBox.setDisable(true);
@@ -1123,19 +1121,19 @@ public class KlasikController {
                     derinlikSonucText.setRotate(-27.5);
                     derinlikSonucText.setLayoutX(635.0);
                 } else {
-                    if(secilenValfTipi.contains("Kilitli Blok")) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/kilitliblok.png")));
+                    if(secilenValfTipi.contains("İnişte Tek Hız")) {
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
                         sonucTankGorsel.setImage(image);
-                        genislikSonucText.setRotate(27.5);
-                        derinlikSonucText.setRotate(-27.5);
-                        derinlikSonucText.setLayoutX(635.0);
                     }
                 }
             } else {
-                if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/cifthiz.png")));
+                if(Objects.equals(secilenValfTipi, "Kilitli Blok")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/kilitliblok.png")));
                     sonucTankGorsel.setImage(image);
-                } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-27.5);
+                    derinlikSonucText.setLayoutX(635.0);
+                } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
                     sonucTankGorsel.setImage(image);
                 } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
