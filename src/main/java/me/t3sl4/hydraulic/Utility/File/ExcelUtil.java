@@ -586,7 +586,6 @@ public class ExcelUtil {
                                     okunacakSatir++;
                                 } else if (i == 9) {
                                     dataManipulator.parcaListesiPompa333.add(temp);
-                                    System.out.println(okunacakSatir);
                                     okunacakSatir++;
                                 } else if (i == 10) {
                                     dataManipulator.parcaListesiPompa379.add(temp);
