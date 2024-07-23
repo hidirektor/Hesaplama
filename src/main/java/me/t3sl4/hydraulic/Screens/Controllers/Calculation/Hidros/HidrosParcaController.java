@@ -161,25 +161,29 @@ public class HidrosParcaController {
 
     private void tabloGuncelle() {
         String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
-        loadKabinKodu();
-        loadMotorParca();
-        loadPompaParca();
-        loadPompaCivataParca();
-        loadTankTipi();
-        loadPlatformTipi();
-        loadYagMiktari();
-        loadManometre();
-        loadBasincSalteri();
-        loadElPompasiParca();
-        loadGenelParcalar();
-        if(Objects.equals(HidrosController.secilenTankTipi, "Yatay")) {
-            loadGenelParcalarYatay();
+        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+            loadKabinKodu();
+            loadMotorParca();
+            loadPompaParca();
+            loadPompaCivataParca();
+            loadTankTipi();
+            loadPlatformTipi();
+            loadYagMiktari();
+            loadManometre();
+            loadBasincSalteri();
+            loadElPompasiParca();
+            loadGenelParcalar();
+            if(Objects.equals(HidrosController.secilenTankTipi, "Yatay")) {
+                loadGenelParcalarYatay();
+            } else {
+                loadGenelParcalarDikey();
+            }
+            loadESPHaricTam();
+            if(Objects.equals(secilenPlatform, "Özel")) {
+                loadOzelTekValf();
+            }
         } else {
-            loadGenelParcalarDikey();
-        }
-        loadESPHaricTam();
-        if(Objects.equals(secilenPlatform, "Özel")) {
-            loadOzelTekValf();
+            //İthal Parçalar buraya
         }
     }
 
