@@ -22,7 +22,7 @@
                 </TableView>
                 <Text fill="#B7C3D7" layoutX="71.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Tipi" />
                 <Text fill="#B7C3D7" layoutX="60.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor Voltaj" />
-                <Text fill="#B7C3D7" layoutX="163.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
+                <Text fill="#B7C3D7" layoutX="77.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
                 <Text fill="#B7C3D7" layoutX="137.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası" />
                 <Text fill="#B7C3D7" layoutX="241.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Valf Tipi" />
                 <Text fill="#B7C3D7" layoutX="241.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Valf Tipi" />
@@ -42,7 +42,7 @@
                         <ImageView fx:id="sonucTankGorsel" fitHeight="399.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </StackPane>
-            <ComboBox fx:id="pompaComboBox" disable="true" layoutX="113.0" layoutY="136.0" onAction="#pompaPressed" prefHeight="18.0" prefWidth="137.0" promptText="Pompa" />
+            <ComboBox fx:id="pompaComboBox" disable="true" layoutX="27.0" layoutY="135.0" onAction="#pompaPressed" prefHeight="18.0" prefWidth="137.0" promptText="Pompa" />
             <ComboBox fx:id="tankTipiComboBox" disable="true" layoutX="26.0" layoutY="185.0" onAction="#tankTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Tank Tipi" />
             <ComboBox fx:id="birinciValfComboBox" disable="true" layoutX="200.0" layoutY="238.0" onAction="#birinciValfPressed" prefHeight="18.0" prefWidth="137.0" promptText="1. Valf Tipi" />
             <ComboBox fx:id="ikinciValfComboBox" disable="true" layoutX="200.0" layoutY="291.0" onAction="#ikinciValfPressed" prefHeight="18.0" prefWidth="137.0" promptText="2. Valf Tipi" />
@@ -57,6 +57,8 @@
                <font>
                   <Font size="12.0" />
                </font></Text>
+            <Text fill="#B7C3D7" layoutX="234.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ünite Tipi" />
+            <ComboBox fx:id="uniteTipiComboBox" disable="true" layoutX="200.0" layoutY="135.0" onAction="#uniteTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Ünite Tipi" />
             </children>
         </AnchorPane>
     </children>

@@ -276,13 +276,6 @@ public class KlasikController {
                 girilenTankKapasitesiMiktari = Integer.parseInt(tankKapasitesiTextField.getText());
                 dataInit("kompanzasyon", null);
                 kompanzasyonComboBox.setDisable(false);
-//                if(girilenTankKapasitesiMiktari < 1 || girilenTankKapasitesiMiktari > 500) {
-//                    kompanzasyonComboBox.setDisable(true);
-//                    disableKilitAndSogutma();
-//                } else {
-//                    kompanzasyonComboBox.setDisable(false);
-//                    hidrolikKilitStat = true;
-//                }
             } else {
                 kompanzasyonComboBox.setDisable(true);
             }
@@ -301,20 +294,7 @@ public class KlasikController {
     public void kompanzasyonPressed() {
         if(kompanzasyonComboBox.getValue() != null) {
             kompanzasyonDurumu = kompanzasyonComboBox.getValue();
-            if(Objects.equals(kompanzasyonDurumu, "Var")) {
-                dataInit("valfTipi", 1);
-            } else {
-                if(secilenHidrolikKilitDurumu.equals("Yok")) {
-                    dataInit("valfTipi", 0);
-                } else {
-                    if(secilenPompaVal <= 28.1) {
-                        //dataInit("valfTipi", 1);
-                        hidrolikKilitComboBox.getItems().addAll("Kilitli Blok");
-                    } else {
-                        dataInit("valfTipi", 0);
-                    }
-                }
-            }
+            initValfValues();
         }
     }
 
@@ -344,8 +324,6 @@ public class KlasikController {
     @FXML
     public void kilitPompaPressed() {
         if(kilitPompaComboBox.getValue() != null) {
-            sogutmaComboBox.setDisable(false);
-            dataInit("sogutma", null);
             secilenKilitPompa = kilitPompaComboBox.getValue();
         }
     }
@@ -743,17 +721,6 @@ public class KlasikController {
         kullanilacakKabin.setVisible(true);
     }
 
-    private void disableKilitAndSogutma() {
-        if(hidrolikKilitStat) {
-            hidrolikKilitComboBox.setDisable(true);
-            hidrolikKilitStat = false;
-        }
-        if(sogutmaStat) {
-            sogutmaComboBox.setDisable(true);
-            sogutmaStat = false;
-        }
-    }
-
     private void comboBoxListener() {
         siparisNumarasi.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!siparisNumarasi.getText().isEmpty()) {
@@ -787,8 +754,22 @@ public class KlasikController {
 
         hidrolikKilitComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenHidrolikKilitDurumu = newValue;
+            dataInit("pompa", null);
+            if(secilenHidrolikKilitDurumu.equals("Yok")) {
+                kilitMotorComboBox.setDisable(true);
+                kilitPompaComboBox.setDisable(true);
+
+                kilitMotorComboBox.getItems().clear();
+                kilitPompaComboBox.getItems().clear();
+            } else {
+                if(kompanzasyonDurumu != null) {
+                    if(kompanzasyonDurumu.equals("Var")) {
+                        kilitMotorComboBox.setDisable(false);
+                        dataInit("kilitMotor", null);
+                    }
+                }
+            }
             if(secilenPompa != null) {
-                dataInit("pompa", null);
                 tabloGuncelle();
             }
         });
@@ -798,6 +779,7 @@ public class KlasikController {
             if(oldValue != null && secilenPompa != null) {
                 double oldSecilenPompaVal = Utils.string2Double(oldValue);
                 secilenPompaVal = Utils.string2Double(secilenPompa);
+                initValfValues();
                 if(oldSecilenPompaVal >= 28.1 && secilenPompaVal < 28.1) {
                     disableMotorPompa(1);
                 } else if(oldSecilenPompaVal < 28.1 && secilenPompaVal >= 28.1) {
@@ -816,6 +798,25 @@ public class KlasikController {
             }
             dataInit("kompanzasyon", null);
             if(girilenTankKapasitesiMiktari != 0) {
+                tabloGuncelle();
+            }
+        });
+
+        kompanzasyonComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            kompanzasyonDurumu = newValue;
+            initValfValues();
+            if(kompanzasyonDurumu.equals("Yok")) {
+                kilitMotorComboBox.setDisable(true);
+                kilitMotorComboBox.getItems().clear();
+                kilitPompaComboBox.setDisable(true);
+                kilitPompaComboBox.getItems().clear();
+            } else {
+               if(secilenHidrolikKilitDurumu.equals("Var") && secilenSogutmaDurumu.equals("Yok")) {
+                   kilitMotorComboBox.setDisable(false);
+                   dataInit("kilitMotor", null);
+               }
+            }
+            if(secilenValfTipi != null) {
                 tabloGuncelle();
             }
         });
@@ -840,7 +841,6 @@ public class KlasikController {
 
         kilitPompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenKilitPompa = kilitPompaComboBox.getValue();
-            dataInit("sogutma", null);
             if(secilenKilitPompa != null) {
                 tabloGuncelle();
             }
@@ -931,6 +931,12 @@ public class KlasikController {
             addTextToList("70 mm", 763, 425, 90, 10, Color.WHITE);
             addTextToList(getKampanaText(), 688, 435, 0, 10, Color.WHITE);
             addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 555, 450, 0, 8, Color.WHITE);
+            if(secilenValfTipi.contains("Kompanzasyon")) {
+                String text = "Kompanzasyon\nİnişte Tek Hız";
+                addTextToList(text, 465, 425, 0, 10, Color.WHITE);
+            } else {
+                addTextToList(secilenValfTipi, 455, 440, 0, 10, Color.WHITE);
+            }
         } else if(calculatedImage.equals("sogutmaKilitsiz")) {
             addTextToList("X: " + x + " mm", 590, 515, 0, 14, Color.WHITE);
             addTextToList("Y: " + y + " mm", 400, 400, 90, 14, Color.WHITE);
@@ -950,6 +956,12 @@ public class KlasikController {
             addTextToList("70 mm", 748, 423, 90, 10, Color.WHITE);
             addTextToList(getKampanaText(), 680, 435, 0, 9, Color.WHITE);
             addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 557, 445, 0, 8, Color.WHITE);
+            if(secilenValfTipi.contains("Kompanzasyon")) {
+                String text = "Kompanzasyon\nİnişte Tek Hız";
+                addTextToList(text, 465, 425, 0, 10, Color.WHITE);
+            } else {
+                addTextToList(secilenValfTipi, 455, 440, 0, 10, Color.WHITE);
+            }
         } else if(calculatedImage.equals("standartUnite")) {
             addTextToList("X: " + x + " mm", 590, 510, 0, 14, Color.WHITE);
             addTextToList("Y: " + y + " mm", 400, 400, 90, 14, Color.WHITE);
@@ -1118,29 +1130,24 @@ public class KlasikController {
 
         } else {
             if(secilenHidrolikKilitDurumu.contains("Var")) {
-                if(secilenPompaVal >= 33.3) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/sogutuculuotuzuc.png")));
-                    sonucTankGorsel.setImage(image);
-                    genislikSonucText.setRotate(27.5);
-                    derinlikSonucText.setRotate(-27.5);
-                    derinlikSonucText.setLayoutX(635.0);
-                } else {
-                    if(secilenValfTipi.contains("İnişte Tek Hız")) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
-                        sonucTankGorsel.setImage(image);
-                    }
-                }
-            } else {
-                if(Objects.equals(secilenValfTipi, "Kilitli Blok")) {
+                if(secilenValfTipi.contains("Kilitli Blok")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/kilitliblok.png")));
                     sonucTankGorsel.setImage(image);
                     genislikSonucText.setRotate(27.5);
                     derinlikSonucText.setRotate(-27.5);
                     derinlikSonucText.setLayoutX(635.0);
-                } else if(secilenValfTipi.contains("İnişte Tek Hız")) {
+                } else {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/sogutuculuotuzuc.png")));
+                    sonucTankGorsel.setImage(image);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-27.5);
+                    derinlikSonucText.setLayoutX(635.0);
+                }
+            } else {
+                if(secilenValfTipi.contains("İnişte Tek Hız")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
                     sonucTankGorsel.setImage(image);
-                } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
+                } else if(secilenValfTipi.contains("İnişte Çift Hız")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/cifthiz.png")));
                     sonucTankGorsel.setImage(image);
                 }
@@ -1176,6 +1183,105 @@ public class KlasikController {
             sonucAnaLabelTxt.setFill(Color.web("#B7C3D7"));
             kullanilacakKabin.setFill(Color.web("#B7C3D7"));
             textColorChange(1);
+        }
+    }
+
+    private void collapseComboBoxes(String optionValue) {
+        if(optionValue.equals("motor")) {
+            sogutmaComboBox.setDisable(true);
+            sogutmaComboBox.getItems().clear();
+            hidrolikKilitComboBox.setDisable(true);
+            hidrolikKilitComboBox.getItems().clear();
+            pompaComboBox.setDisable(true);
+            pompaComboBox.getItems().clear();
+            tankKapasitesiTextField.setDisable(true);
+            kompanzasyonComboBox.setDisable(true);
+            kompanzasyonComboBox.getItems().clear();
+            valfTipiComboBox.setDisable(true);
+            valfTipiComboBox.getItems().clear();
+            kilitMotorComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().clear();
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        } else if(optionValue.equals("sogutma")) {
+            hidrolikKilitComboBox.setDisable(true);
+            hidrolikKilitComboBox.getItems().clear();
+            pompaComboBox.setDisable(true);
+            pompaComboBox.getItems().clear();
+            tankKapasitesiTextField.setDisable(true);
+            kompanzasyonComboBox.setDisable(true);
+            kompanzasyonComboBox.getItems().clear();
+            valfTipiComboBox.setDisable(true);
+            valfTipiComboBox.getItems().clear();
+            kilitMotorComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().clear();
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        } else if(optionValue.equals("hidrolikKilit")) {
+            pompaComboBox.setDisable(true);
+            pompaComboBox.getItems().clear();
+            tankKapasitesiTextField.setDisable(true);
+            kompanzasyonComboBox.setDisable(true);
+            kompanzasyonComboBox.getItems().clear();
+            valfTipiComboBox.setDisable(true);
+            valfTipiComboBox.getItems().clear();
+            kilitMotorComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().clear();
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        } else if(optionValue.equals("pompa")) {
+            tankKapasitesiTextField.setDisable(true);
+            kompanzasyonComboBox.setDisable(true);
+            kompanzasyonComboBox.getItems().clear();
+            valfTipiComboBox.setDisable(true);
+            valfTipiComboBox.getItems().clear();
+            kilitMotorComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().clear();
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        } else if(optionValue.equals("tankKapasitesi")) {
+            kompanzasyonComboBox.setDisable(true);
+            kompanzasyonComboBox.getItems().clear();
+            valfTipiComboBox.setDisable(true);
+            valfTipiComboBox.getItems().clear();
+            kilitMotorComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().clear();
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        } else if(optionValue.equals("kompanzasyon")) {
+            valfTipiComboBox.setDisable(true);
+            valfTipiComboBox.getItems().clear();
+            kilitMotorComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().clear();
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        } else if(optionValue.equals("valfTipi")) {
+            kilitMotorComboBox.setDisable(true);
+            kilitMotorComboBox.getItems().clear();
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        } else if(optionValue.equals("kilitMotor")) {
+            kilitPompaComboBox.setDisable(true);
+            kilitPompaComboBox.getItems().clear();
+        }
+    }
+
+    private void initValfValues() {
+        valfTipiComboBox.getItems().clear();
+        if(Objects.equals(kompanzasyonDurumu, "Var")) {
+            dataInit("valfTipi", 1);
+        } else {
+            if(secilenHidrolikKilitDurumu.equals("Yok")) {
+                dataInit("valfTipi", 0);
+            } else {
+                if(secilenPompaVal <= 28.1) {
+                    //dataInit("valfTipi", 1);
+                    valfTipiComboBox.getItems().addAll("Kilitli Blok");
+                    valfTipiComboBox.setDisable(false);
+                } else {
+                    dataInit("valfTipi", 0);
+                }
+            }
         }
     }
 }

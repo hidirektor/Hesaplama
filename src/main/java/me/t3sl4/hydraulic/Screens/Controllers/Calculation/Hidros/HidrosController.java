@@ -44,6 +44,9 @@ public class HidrosController {
     private ComboBox<String> pompaComboBox;
 
     @FXML
+    private ComboBox<String> uniteTipiComboBox;
+
+    @FXML
     private ComboBox<String> tankTipiComboBox;
 
     @FXML
@@ -93,6 +96,7 @@ public class HidrosController {
     public static String secilenMotorTipi = null;
     public static String secilenMotorGucu = null;
     public static String secilenPompa = null;
+    public static String uniteTipiDurumu = null;
     public static String secilenTankTipi = null;
     public static String secilenTankKapasitesi = null;
     public static String secilenBirinciValf = null;
@@ -135,6 +139,8 @@ public class HidrosController {
         motorGucuComboBox.setPromptText("Motor Gücü");
         pompaComboBox.getSelectionModel().clearSelection();
         pompaComboBox.setPromptText("Pompa");
+        uniteTipiComboBox.getSelectionModel().clearSelection();
+        uniteTipiComboBox.setPromptText("Ünite Tipi");
         tankTipiComboBox.getSelectionModel().clearSelection();
         tankTipiComboBox.setPromptText("Tank Tipi");
         tankKapasitesiComboBox.getSelectionModel().clearSelection();
@@ -237,6 +243,16 @@ public class HidrosController {
         pompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if(!pompaComboBox.getItems().isEmpty() && newValue != null) {
                 secilenPompa = newValue.toString();
+                initUniteTipi();
+                if(secilenPompa != null) {
+                    tabloGuncelle();
+                }
+            }
+        });
+
+        uniteTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if(!uniteTipiComboBox.getItems().isEmpty() && newValue != null) {
+                uniteTipiDurumu = newValue.toString();
                 initTankTipi();
                 if(secilenPompa != null) {
                     tabloGuncelle();
@@ -325,6 +341,9 @@ public class HidrosController {
         data = new TableData("Pompa:", secilenPompa);
         sonucTablo.getItems().add(data);
 
+        data = new TableData("Ünite Tipi:", uniteTipiDurumu);
+        sonucTablo.getItems().add(data);
+
         data = new TableData("Tank Tipi:", secilenTankTipi);
         sonucTablo.getItems().add(data);
 
@@ -361,6 +380,11 @@ public class HidrosController {
     private void initPompa() {
         pompaComboBox.getItems().clear();
         pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaKapasiteDegerleriHidros);
+    }
+
+    private void initUniteTipi() {
+        uniteTipiComboBox.getItems().clear();
+        uniteTipiComboBox.getItems().addAll("Hidros", "İthal");
     }
 
     private void initTankTipi() {
@@ -425,6 +449,14 @@ public class HidrosController {
     public void pompaPressed() {
         if(pompaComboBox.getValue() != null) {
             secilenPompa = pompaComboBox.getValue();
+            uniteTipiComboBox.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void uniteTipiPressed() {
+        if(uniteTipiComboBox.getValue() != null) {
+            uniteTipiDurumu = uniteTipiComboBox.getValue();
             tankTipiComboBox.setDisable(false);
         }
     }
@@ -581,6 +613,7 @@ public class HidrosController {
         motorComboBox.setDisable(true);
         motorGucuComboBox.setDisable(true);
         pompaComboBox.setDisable(true);
+        uniteTipiComboBox.setDisable(true);
         tankTipiComboBox.setDisable(true);
         tankKapasitesiComboBox.setDisable(true);
         birinciValfComboBox.setDisable(true);
