@@ -50,4 +50,16 @@ public class Launcher {
         }
         Main.main(args);
     }
+
+    public static String getUserID() {
+        return userID.replaceAll("userID: ", "");
+    }
+
+    public static String getAccessToken() {
+        return accessToken.replaceAll("AccessToken: ", "");
+    }
+
+    public static String getRefreshToken() {
+        return refreshToken.replaceAll("RefreshToken: ", "");
+    }
 }

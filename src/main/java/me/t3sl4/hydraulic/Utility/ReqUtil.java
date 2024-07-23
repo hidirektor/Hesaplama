@@ -33,13 +33,13 @@ public class ReqUtil {
 
                 String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
                 String jsonProfileInfoBody = "{\"userID\": \"" + userID + "\"}";
-                HTTPRequest.sendRequest(profileInfoUrl, jsonProfileInfoBody, new HTTPRequest.RequestCallback() {
+                HTTPRequest.sendRequestAuthorized(profileInfoUrl, jsonProfileInfoBody, accessToken, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String profileInfoResponse) {
                         JSONObject mainObject = new JSONObject(profileInfoResponse);
 
-                        JSONObject userObject = new JSONObject(mainObject.getJSONObject("user"));
-                        JSONObject userPreferencesObject = new JSONObject(mainObject.getJSONObject("userPreferences"));
+                        JSONObject userObject = mainObject.getJSONObject("user");
+                        JSONObject userPreferencesObject = mainObject.getJSONObject("userPreferences");
 
                         String roleValue = userObject.getString("userType");
                         if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
@@ -67,19 +67,19 @@ public class ReqUtil {
 
     public static void updateUserReq(Runnable onUserUpdateComplete) {
         String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
-        String profileInfoBody = "{\"userID\": \"" + Launcher.userID + "\"}";
+        String profileInfoBody = "{\"userID\": \"" + Launcher.getUserID() + "\"}";
 
-        HTTPRequest.sendRequest(profileInfoUrl, profileInfoBody, new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendRequestAuthorized(profileInfoUrl, profileInfoBody, Launcher.getAccessToken(), new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String profileInfoResponse) {
                 JSONObject responseJson = new JSONObject(profileInfoResponse);
                 JSONObject userInfoObject = responseJson.getJSONObject("user");
 
-                String parsedRole = responseJson.getString("userType");
-                String parsedFullName = responseJson.getString("nameSurname");
-                String parsedEmail = responseJson.getString("eMail");
-                String parsedPhone = responseJson.getString("phoneNumber");
-                String parsedCompanyName = responseJson.getString("companyName");
+                String parsedRole = userInfoObject.getString("userType");
+                String parsedFullName = userInfoObject.getString("nameSurname");
+                String parsedEmail = userInfoObject.getString("eMail");
+                String parsedPhone = userInfoObject.getString("phoneNumber");
+                String parsedCompanyName = userInfoObject.getString("companyName");
 
                 loggedInUser.setRole(parsedRole);
                 loggedInUser.setFullName(parsedFullName);
