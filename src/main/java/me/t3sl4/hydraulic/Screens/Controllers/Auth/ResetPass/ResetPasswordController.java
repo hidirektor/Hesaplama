@@ -33,6 +33,7 @@ public class ResetPasswordController implements Initializable {
 
     public static String enteredEmail;
     public static String otpCode;
+    public static String takedUserName;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,8 +74,9 @@ public class ResetPasswordController implements Initializable {
                     @Override
                     public void onSuccess(String otpResponse) throws IOException {
                         JSONObject otpResponseObject = new JSONObject(otpResponse);
-                        Launcher.otpSentTime = otpResponseObject.getString("otpSentTime");
+                        Launcher.otpSentTime = String.valueOf(otpResponseObject.get("otpSent"));
                         otpCode = otpResponseObject.getString("otpCode");
+                        takedUserName = otpResponseObject.getString("userName");
 
                         if (Launcher.otpSentTime != null) {
                             System.out.println("OTP Sent Time: " + Launcher.otpSentTime);
