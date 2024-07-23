@@ -308,7 +308,8 @@ public class KlasikController {
                     dataInit("valfTipi", 0);
                 } else {
                     if(secilenPompaVal <= 28.1) {
-                        dataInit("valfTipi", 1);
+                        //dataInit("valfTipi", 1);
+                        hidrolikKilitComboBox.getItems().addAll("Kilitli Blok");
                     } else {
                         dataInit("valfTipi", 0);
                     }
@@ -821,6 +822,9 @@ public class KlasikController {
 
         valfTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             secilenValfTipi = newValue;
+            if(kompanzasyonDurumu.equals("Var") && secilenHidrolikKilitDurumu.equals("Var")) {
+                dataInit("kilitMotor", null);
+            }
             if(secilenValfTipi != null) {
                 tabloGuncelle();
             }
