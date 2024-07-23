@@ -31,9 +31,7 @@ public class ResetPasswordController implements Initializable {
     @FXML
     private Label lblErrors;
 
-    public static String enteredEmail;
-    public static String otpCode;
-    public static String takedUserName;
+    public static String enteredUserName;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,42 +58,33 @@ public class ResetPasswordController implements Initializable {
 
     @FXML
     private void sifreyiSifirla() {
-        String email = txtEmail.getText();
+        enteredUserName = txtEmail.getText();
 
-        if (email.isEmpty()) {
-            Utils.showErrorOnLabel(lblErrors, "E-posta adresi boş olamaz.");
+        if (enteredUserName.isEmpty()) {
+            Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı boş olamaz.");
         } else {
-            if (isValidEmail(email)) {
+            String otpUrl = BASE_URL + otpURLPrefix;
+            String jsonOTPBody = "{\"userName\": \"" + enteredUserName + "\"}";
 
-                String otpUrl = BASE_URL + otpURLPrefix;
-                String jsonOTPBody = "{\"email\": \"" + email + "\"}";
+            HTTPRequest.sendRequest(otpUrl, jsonOTPBody, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String otpResponse) throws IOException {
+                    JSONObject otpResponseObject = new JSONObject(otpResponse);
+                    Launcher.otpSentTime = String.valueOf(otpResponseObject.get("otpSentTime"));
 
-                HTTPRequest.sendRequest(otpUrl, jsonOTPBody, new HTTPRequest.RequestCallback() {
-                    @Override
-                    public void onSuccess(String otpResponse) throws IOException {
-                        JSONObject otpResponseObject = new JSONObject(otpResponse);
-                        Launcher.otpSentTime = String.valueOf(otpResponseObject.get("otpSent"));
-                        otpCode = otpResponseObject.getString("otpCode");
-                        takedUserName = otpResponseObject.getString("userName");
-
-                        if (Launcher.otpSentTime != null) {
-                            System.out.println("OTP Sent Time: " + Launcher.otpSentTime);
-                            enteredEmail = email;
-                            changeOTPScreen();
-                        } else {
-                            Utils.showErrorOnLabel(lblErrors, "OTP kodu alınamadı.");
-                        }
+                    if (Launcher.otpSentTime != null) {
+                        System.out.println("OTP Sent Time: " + Launcher.otpSentTime);
+                        changeOTPScreen();
+                    } else {
+                        Utils.showErrorOnLabel(lblErrors, "OTP kodu alınamadı.");
                     }
+                }
 
-                    @Override
-                    public void onFailure() {
-                        Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
-                    }
-                });
-
-            } else {
-                Utils.showErrorOnLabel(lblErrors, "Geçerli bir e-posta adresi girin.");
-            }
+                @Override
+                public void onFailure() {
+                    Utils.showErrorOnLabel(lblErrors, "Kullanıcı adı veya şifre hatalı !");
+                }
+            });
         }
     }
 
@@ -104,9 +93,5 @@ public class ResetPasswordController implements Initializable {
 
         stage.close();
         SceneUtil.changeScreen("fxml/ResetPasswordEnterOTP.fxml");
-    }
-
-    private boolean isValidEmail(String email) {
-        return email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
     }
 }

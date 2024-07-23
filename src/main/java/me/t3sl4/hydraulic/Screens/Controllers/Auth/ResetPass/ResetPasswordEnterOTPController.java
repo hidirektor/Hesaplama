@@ -11,12 +11,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Utils;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.verifyOTPURLPrefix;
 
 public class ResetPasswordEnterOTPController implements Initializable {
 
@@ -88,11 +93,23 @@ public class ResetPasswordEnterOTPController implements Initializable {
     public void koduDogrula() throws IOException {
         if(!txtOtp.getText().isEmpty()) {
             girilenOTP = txtOtp.getText();
-            if(ResetPasswordController.otpCode.equals(girilenOTP)) {
-                changeOTPScreen();
-            } else {
-                Utils.showErrorOnLabel(lblErrors, "Girdiğin OTP kodu hatalı !");
-            }
+
+            String otpVerifyUrl = BASE_URL + verifyOTPURLPrefix;
+            String jsonOTPVerifyBody = "{\"userName\": \"" + ResetPasswordController.enteredUserName + "\", " +
+                    "\"otpCode\": \"" + girilenOTP + "\", " +
+                    "\"otpSentTime\": \"" + Launcher.otpSentTime + "\"}";
+
+            HTTPRequest.sendRequest(otpVerifyUrl, jsonOTPVerifyBody, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String otpResponse) throws IOException {
+                    changeOTPScreen();
+                }
+
+                @Override
+                public void onFailure() {
+                    Utils.showErrorOnLabel(lblErrors, "Girdiğin OTP kodu hatalı !");
+                }
+            });
         } else {
             Utils.showErrorOnLabel(lblErrors, "OTP kodunu girmedin !");
         }
