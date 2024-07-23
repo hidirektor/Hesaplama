@@ -187,6 +187,8 @@ public class RegisterController implements Initializable {
         String uploadUrl = BASE_URL + uploadProfilePhotoURLPrefix;
         String username = kullaniciAdiText.getText();
 
+        System.out.println(uploadUrl + username);
+
         File profilePhotoFile = new File(secilenPhotoPath);
         if (!profilePhotoFile.exists()) {
             Utils.showErrorMessage("Profil fotoğrafı bulunamadı !");

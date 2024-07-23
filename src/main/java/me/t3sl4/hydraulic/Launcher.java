@@ -13,7 +13,7 @@ public class Launcher {
 
     public static String loginURLPrefix = "/auth/login";
     public static String registerURLPrefix = "/auth/register";
-    public static String uploadProfilePhotoURLPrefix = "/auth/register";
+    public static String uploadProfilePhotoURLPrefix = "/user/uploadProfilePhoto";
     public static String updatePassURLPrefix = "/auth/resetPass";
 
     public static String profileInfoURLPrefix = "/user/getProfile";
