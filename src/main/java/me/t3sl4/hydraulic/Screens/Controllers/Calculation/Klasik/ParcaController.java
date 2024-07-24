@@ -644,7 +644,7 @@ public class ParcaController {
                 ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                 parcaListesiTablo.getItems().add(data);
             }
-        } else if(Objects.equals(KlasikController.secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+        } else if(Objects.equals(KlasikController.secilenValfTipi, "Kilitli Blok")) {
             for (String veri : ExcelUtil.dataManipulator.parcaListesiValfBloklariKilitliBlok) {
                 String[] veriParcalari = veri.split(";");
 
@@ -655,7 +655,7 @@ public class ParcaController {
                 ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
                 parcaListesiTablo.getItems().add(data);
             }
-        } else if(Objects.equals(KlasikController.secilenValfTipi, "Kompanzasyon + İnişte Tek Hız")) {
+        } else if(Objects.equals(KlasikController.secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
             for (String veri : ExcelUtil.dataManipulator.parcaListesiValfBloklariKompanzasyon) {
                 String[] veriParcalari = veri.split(";");
 
