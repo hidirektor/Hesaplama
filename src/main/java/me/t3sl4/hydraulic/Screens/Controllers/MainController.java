@@ -38,6 +38,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -169,6 +173,22 @@ public class MainController implements Initializable {
 
         if(loggedInUser != null) {
             loggedInUser = null;
+        }
+
+        Path authFilePath = Paths.get(Launcher.tokenPath);
+        try {
+            Files.deleteIfExists(authFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Path profilePhotoDir = Paths.get(Launcher.profilePhotoLocalPath);
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(profilePhotoDir)) {
+            for (Path file: stream) {
+                Files.deleteIfExists(file);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         stage.close();

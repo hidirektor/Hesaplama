@@ -5,6 +5,7 @@ import me.t3sl4.hydraulic.Screens.Main;
 public class Launcher {
     public static String BASE_URL = "http://ondergrup.hidirektor.com.tr:3000/api/v2";
 
+    public static String userName;
     public static String userID;
     public static String accessToken;
     public static String refreshToken;
@@ -61,5 +62,9 @@ public class Launcher {
 
     public static String getRefreshToken() {
         return refreshToken.replaceAll("RefreshToken: ", "");
+    }
+
+    public static String getUserName() {
+        return userName.replaceAll("userName: ", "");
     }
 }

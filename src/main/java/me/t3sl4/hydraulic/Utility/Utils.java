@@ -215,6 +215,31 @@ public class Utils {
         timeline.playFromStart();
     }
 
+    public static void autoLogin(Label lblErrors) {
+        Utils.showErrorOnLabel(lblErrors, "Hesaba giriş yapılıyor !");
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(2);
+
+        final int[] countdown = {1};
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
+            if (countdown[0] > 0) {
+                Utils.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);
+                countdown[0]--;
+            } else {
+                timeline.stop();
+                try {
+                    Utils.openMainScreen(lblErrors);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.playFromStart();
+    }
+
     public static Tank findTankByTankName(String tankName) {
         for (Tank tank : ExcelUtil.dataManipulator.inputTanks) {
             if (tank.getTankName().equals(tankName)) {

@@ -110,14 +110,13 @@ public class SystemUtil {
                 myReader.close();
 
                 for(String line : lines) {
-                    if(line.contains("userID: ")) {
-                        line.replaceAll("userID: ", "");
+                    if(line.contains("userName: ")) {
+                        Launcher.userName = line;
+                    } else if(line.contains("userID: ")) {
                         Launcher.userID = line;
                     } else if(line.contains("AccessToken: ")) {
-                        line.replaceAll("AccessToken: ", "");
                         Launcher.accessToken = line;
                     } else if(line.contains("RefreshToken: ")) {
-                        line.replaceAll("RefreshToken: ", "");
                         Launcher.refreshToken = line;
                     }
                 }

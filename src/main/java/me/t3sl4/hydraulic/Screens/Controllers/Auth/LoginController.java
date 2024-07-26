@@ -12,6 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Controllers.MainController;
+import me.t3sl4.hydraulic.Screens.Main;
+import me.t3sl4.hydraulic.Utility.Data.User.User;
 import me.t3sl4.hydraulic.Utility.ReqUtil;
 import me.t3sl4.hydraulic.Utility.SystemDefaults;
 import me.t3sl4.hydraulic.Utility.Utils;
@@ -25,6 +27,7 @@ import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.Launcher.BASE_URL;
 import static me.t3sl4.hydraulic.Launcher.loginURLPrefix;
+import static me.t3sl4.hydraulic.Utility.ReqUtil.updateUserAndOpenMainScreen;
 
 public class LoginController implements Initializable {
 
@@ -93,10 +96,18 @@ public class LoginController implements Initializable {
 
     @FXML
     public void onlineMod() {
+        Stage stage = (Stage) btnSignin.getScene().getWindow();
         if (Utils.netIsAvailable()) {
-            loginPane.setVisible(true);
-            offlineMod.setVisible(false);
-            onlineMod.setVisible(false);
+            if(Launcher.userID != null && Launcher.accessToken != null && Launcher.refreshToken!= null) {
+                System.out.println("test başarılı");
+                Utils.autoLogin(lblErrors);
+                Main.loggedInUser = new User(Launcher.getUserName());
+                updateUserAndOpenMainScreen(stage, lblErrors);
+            } else {
+                loginPane.setVisible(true);
+                offlineMod.setVisible(false);
+                onlineMod.setVisible(false);
+            }
         } else {
             SystemDefaults.offlineMode = false;
             Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");

@@ -26,6 +26,7 @@ public class ReqUtil {
                 String refreshToken = loginObject.getString("refreshToken");
                 String tokenFilePath = Launcher.tokenPath;
                 FileWriter writer = new FileWriter(tokenFilePath);
+                writer.write("userName: " + userName + "\n");
                 writer.write("userID: " + userID + "\n");
                 writer.write("AccessToken: " + accessToken + "\n");
                 writer.write("RefreshToken: " + refreshToken + "\n");
@@ -68,6 +69,7 @@ public class ReqUtil {
     public static void updateUserReq(Runnable onUserUpdateComplete) {
         String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
         String profileInfoBody = "{\"userID\": \"" + Launcher.getUserID() + "\"}";
+        System.out.println(profileInfoBody);
 
         HTTPRequest.sendRequestAuthorized(profileInfoUrl, profileInfoBody, Launcher.getAccessToken(), new HTTPRequest.RequestCallback() {
             @Override
