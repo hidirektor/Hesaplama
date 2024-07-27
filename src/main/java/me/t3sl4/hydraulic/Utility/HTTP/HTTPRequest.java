@@ -4,12 +4,11 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import okhttp3.*;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HTTPRequest {
 
@@ -19,310 +18,160 @@ public class HTTPRequest {
         void onFailure();
     }
 
-    public static void sendRequest(String url, String jsonBody, RequestCallback callback) {
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    URL urlObj = new URL(url);
-                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setDoOutput(true);
+    private static final OkHttpClient client = new OkHttpClient();
 
-                    try (OutputStream os = conn.getOutputStream()) {
-                        byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
-                        os.write(input, 0, input.length);
+    public enum RequestType {
+        JSON_BODY,
+        JSON_BODYLESS,
+        JSON_BODY_AUTHORIZED,
+        JSON_BODYLESS_AUTHORIZED,
+        FILE_DOWNLOAD,
+        FILE_UPLOAD,
+        MULTIPLE_FILE_UPLOAD,
+        FILE_DOWNLOAD_AUTHORIZED,
+        MULTIPLE_FILE_UPLOAD_AUTHORIZED
+    }
+
+    public static void sendRequest(String url, String reqMethod, RequestType reqType, String jsonBody, Map<String, String> headers, Map<String, File> files, String localFilePath, RequestCallback callback) {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                try {
+                    Request.Builder requestBuilder = new Request.Builder().url(url);
+
+                    switch (reqType) {
+                        case JSON_BODY:
+                            requestBuilder.method(reqMethod, RequestBody.create(jsonBody, MediaType.parse("application/json")));
+                            requestBuilder.addHeader("Content-Type", "application/json");
+                            break;
+
+                        case JSON_BODYLESS:
+                            requestBuilder.method(reqMethod, null);
+                            break;
+
+                        case JSON_BODY_AUTHORIZED:
+                            requestBuilder.method(reqMethod, RequestBody.create(jsonBody, MediaType.parse("application/json")));
+                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            requestBuilder.addHeader("Content-Type", "application/json");
+                            break;
+
+                        case JSON_BODYLESS_AUTHORIZED:
+                            requestBuilder.method(reqMethod, null);
+                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            break;
+
+                        case FILE_DOWNLOAD:
+                            requestBuilder.method(reqMethod, null);
+                            break;
+
+                        case FILE_UPLOAD:
+                            MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                            files.forEach((name, file) -> multipartBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
+                            requestBuilder.method(reqMethod, multipartBuilder.build());
+                            break;
+
+                        case MULTIPLE_FILE_UPLOAD:
+                            MultipartBody.Builder multipleFilesBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                            files.forEach((name, file) -> multipleFilesBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
+                            requestBuilder.method(reqMethod, multipleFilesBuilder.build());
+                            break;
+
+                        case FILE_DOWNLOAD_AUTHORIZED:
+                            requestBuilder.method(reqMethod, null);
+                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            break;
+
+                        case MULTIPLE_FILE_UPLOAD_AUTHORIZED:
+                            MultipartBody.Builder authMultipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                            files.forEach((name, file) -> authMultipartBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
+                            requestBuilder.method(reqMethod, authMultipartBuilder.build());
+                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            break;
                     }
 
-                    int responseCode = conn.getResponseCode();
+                    Request request = requestBuilder.build();
 
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        String response = HTTPUtil.readResponse(conn.getInputStream());
-                        Platform.runLater(() -> {
-                            try {
-                                callback.onSuccess(response);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
+                    try (Response response = client.newCall(request).execute()) {
+                        if (response.isSuccessful()) {
+                            if (reqType == RequestType.FILE_DOWNLOAD || reqType == RequestType.FILE_DOWNLOAD_AUTHORIZED) {
+                                if (response.body() != null) {
+                                    Files.copy(response.body().byteStream(), new File(localFilePath).toPath());
+                                    Platform.runLater(() -> {
+                                        try {
+                                            callback.onSuccess("File downloaded to " + localFilePath);
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    });
+                                } else {
+                                    Platform.runLater(callback::onFailure);
+                                }
+                            } else {
+                                String responseBody = response.body() != null ? response.body().string() : "";
+                                Platform.runLater(() -> {
+                                    try {
+                                        callback.onSuccess(responseBody);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
                             }
-                        });
-                    } else {
-                        Platform.runLater(callback::onFailure);
-                    }
-                } catch (IOException e) {
-                    Platform.runLater(callback::onFailure);
-                }
-
-                return null;
-            }
-        };
-
-        Thread thread = new Thread(task);
-        thread.start();
-    }
-
-    public static void sendRequestNormal(String url, RequestCallback callback) {
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    URL urlObj = new URL(url);
-                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setDoOutput(true);
-
-                    int responseCode = conn.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        String response = HTTPUtil.readResponse(conn.getInputStream());
-                        Platform.runLater(() -> {
-                            try {
-                                callback.onSuccess(response);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                    } else {
-                        Platform.runLater(callback::onFailure);
-                    }
-                } catch (IOException e) {
-                    Platform.runLater(callback::onFailure);
-                }
-
-                return null;
-            }
-        };
-
-        Thread thread = new Thread(task);
-        thread.start();
-    }
-
-    public static void sendRequestAuthorized(String url, String jsonBody, String bearerToken, RequestCallback callback) {
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    URL urlObj = new URL(url);
-                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Authorization", "Bearer " + bearerToken);
-                    conn.setDoOutput(true);
-
-                    try (OutputStream os = conn.getOutputStream()) {
-                        byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
-                        os.write(input, 0, input.length);
-                    }
-
-                    int responseCode = conn.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        String response = HTTPUtil.readResponse(conn.getInputStream());
-                        Platform.runLater(() -> {
-                            try {
-                                callback.onSuccess(response);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                    } else {
-                        Platform.runLater(callback::onFailure);
-                    }
-                } catch (IOException e) {
-                    Platform.runLater(callback::onFailure);
-                }
-
-                return null;
-            }
-        };
-
-        Thread thread = new Thread(task);
-        thread.start();
-    }
-
-    public static void sendRequest4File(String url, String jsonBody, String localFilePath, RequestCallback callback) {
-        OkHttpClient client = new OkHttpClient();
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, jsonBody);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .addHeader("Content-Type", "application/json")
-                .build();
-
-        Thread thread = new Thread(() -> {
-            try (Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) {
-                    throw new IOException("Unexpected code " + response);
-                }
-
-                try (ResponseBody responseBody = response.body()) {
-                    if (responseBody != null) {
-                        try (FileOutputStream fos = new FileOutputStream(localFilePath)) {
-                            fos.write(responseBody.bytes());
-                        }
-
-                        System.out.println("Photo saved to " + localFilePath);
-                        callback.onSuccess("Photo saved to " + localFilePath);
-                    } else {
-                        System.out.println("Response body is empty.");
-                        callback.onFailure();
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                callback.onFailure();
-            }
-        });
-
-        thread.start();
-    }
-
-    public static void sendMultipartRequest(String url, String username, File file, RequestCallback callback) {
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    URL urlObj = new URL(url);
-                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setDoOutput(true);
-
-                    String boundary = "Boundary-" + System.currentTimeMillis();
-                    conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-
-                    try (OutputStream os = conn.getOutputStream()) {
-                        try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8), true)) {
-                            writer.append("--" + boundary).append("\r\n");
-                            writer.append("Content-Disposition: form-data; name=\"userName\"").append("\r\n");
-                            writer.append("\r\n").append(username).append("\r\n");
-
-                            writer.append("--" + boundary).append("\r\n");
-                            writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"" + file.getName() + "\"").append("\r\n");
-                            writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(file.getName())).append("\r\n");
-                            writer.append("Content-Transfer-Encoding: binary").append("\r\n");
-                            writer.append("\r\n");
-                            writer.flush();
-
-                            Files.copy(file.toPath(), os);
-                            os.flush();
-
-                            writer.append("\r\n");
-                            writer.append("--" + boundary + "--").append("\r\n");
+                        } else {
+                            Platform.runLater(callback::onFailure);
                         }
                     }
-
-                    int responseCode = conn.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        String response = HTTPUtil.readResponse(conn.getInputStream());
-                        Platform.runLater(() -> {
-                            try {
-                                callback.onSuccess(response);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                    } else {
-                        Platform.runLater(callback::onFailure);
-                    }
                 } catch (IOException e) {
                     Platform.runLater(callback::onFailure);
                 }
-
                 return null;
             }
         };
-
-        Thread thread = new Thread(task);
-        thread.start();
+        new Thread(task).start();
     }
 
-    public static void sendMultipartRequestMultiple(String url, String username, String orderID, String hydraulicType, File partListFile, File schematicFile, RequestCallback callback) {
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    URL urlObj = new URL(url);
-                    HttpURLConnection conn = (HttpURLConnection) urlObj.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setDoOutput(true);
+    public static void sendJsonRequest(String url, String reqMethod, String jsonBody, RequestCallback callback) {
+        sendRequest(url, reqMethod, RequestType.JSON_BODY, jsonBody, new HashMap<>(), null, null, callback);
+    }
 
-                    String boundary = "Boundary-" + System.currentTimeMillis();
-                    conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+    public static void sendJsonlessRequest(String url, String reqMethod, RequestCallback callback) {
+        sendRequest(url, reqMethod, RequestType.JSON_BODYLESS, null, new HashMap<>(), null, null, callback);
+    }
 
-                    try (OutputStream os = conn.getOutputStream();
-                         PrintWriter writer = new PrintWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8), true)) {
+    public static void sendAuthorizedJsonRequest(String url, String reqMethod, String jsonBody, String bearerToken, RequestCallback callback) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + bearerToken);
+        sendRequest(url, reqMethod, RequestType.JSON_BODY_AUTHORIZED, jsonBody, headers, null, null, callback);
+    }
 
-                        // Add userName field
-                        writer.append("--" + boundary).append("\r\n");
-                        writer.append("Content-Disposition: form-data; name=\"userName\"").append("\r\n");
-                        writer.append("\r\n").append(username).append("\r\n");
+    public static void sendAuthorizedJsonlessRequest(String url, String reqMethod, String bearerToken, RequestCallback callback) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + bearerToken);
+        sendRequest(url, reqMethod, RequestType.JSON_BODYLESS_AUTHORIZED, null, headers, null, null, callback);
+    }
 
-                        // Add orderID field
-                        writer.append("--" + boundary).append("\r\n");
-                        writer.append("Content-Disposition: form-data; name=\"orderID\"").append("\r\n");
-                        writer.append("\r\n").append(orderID).append("\r\n");
+    public static void downloadFile(String url, String reqMethod, String localFilePath, RequestCallback callback) {
+        sendRequest(url, reqMethod, RequestType.FILE_DOWNLOAD, null, new HashMap<>(), null, localFilePath, callback);
+    }
 
-                        // Add hydraulicType field
-                        writer.append("--" + boundary).append("\r\n");
-                        writer.append("Content-Disposition: form-data; name=\"hydraulicType\"").append("\r\n");
-                        writer.append("\r\n").append(hydraulicType).append("\r\n");
+    public static void uploadFile(String url, String reqMethod, File file, RequestCallback callback) {
+        Map<String, File> files = new HashMap<>();
+        files.put("file", file);
+        sendRequest(url, reqMethod, RequestType.FILE_UPLOAD, null, new HashMap<>(), files, null, callback);
+    }
 
-                        // Add partListFile field
-                        writer.append("--" + boundary).append("\r\n");
-                        writer.append("Content-Disposition: form-data; name=\"partListFile\"; filename=\"" + partListFile.getName() + "\"").append("\r\n");
-                        writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(partListFile.getName())).append("\r\n");
-                        writer.append("Content-Transfer-Encoding: binary").append("\r\n");
-                        writer.append("\r\n");
-                        writer.flush();
+    public static void authorizedDownloadFile(String url, String reqMethod, String localFilePath, String bearerToken, RequestCallback callback) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + bearerToken);
+        sendRequest(url, reqMethod, RequestType.FILE_DOWNLOAD_AUTHORIZED, null, headers, null, localFilePath, callback);
+    }
 
-                        Files.copy(partListFile.toPath(), os);
-                        os.flush();
+    public static void uploadMultipleFiles(String url, String reqMethod, Map<String, File> files, RequestCallback callback) {
+        sendRequest(url, reqMethod, RequestType.MULTIPLE_FILE_UPLOAD, null, new HashMap<>(), files, null, callback);
+    }
 
-                        // Add schematicFile field if provided
-                        if (schematicFile != null) {
-                            writer.append("\r\n");
-                            writer.append("--" + boundary).append("\r\n");
-                            writer.append("Content-Disposition: form-data; name=\"schematicFile\"; filename=\"" + schematicFile.getName() + "\"").append("\r\n");
-                            writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(schematicFile.getName())).append("\r\n");
-                            writer.append("Content-Transfer-Encoding: binary").append("\r\n");
-                            writer.append("\r\n");
-                            writer.flush();
-
-                            Files.copy(schematicFile.toPath(), os);
-                            os.flush();
-                        }
-
-                        // End of multipart
-                        writer.append("\r\n");
-                        writer.append("--" + boundary + "--").append("\r\n");
-                        writer.flush();
-                    }
-
-                    int responseCode = conn.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        String response = HTTPUtil.readResponse(conn.getInputStream());
-                        Platform.runLater(() -> {
-                            try {
-                                callback.onSuccess(response);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                    } else {
-                        Platform.runLater(callback::onFailure);
-                    }
-                } catch (IOException e) {
-                    Platform.runLater(callback::onFailure);
-                }
-
-                return null;
-            }
-        };
-
-        Thread thread = new Thread(task);
-        thread.start();
+    public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, RequestCallback callback) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + bearerToken);
+        sendRequest(url, reqMethod, RequestType.MULTIPLE_FILE_UPLOAD_AUTHORIZED, null, headers, files, null, callback);
     }
 }

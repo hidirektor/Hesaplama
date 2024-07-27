@@ -78,7 +78,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
 
             System.out.println(otpUrl + jsonUpdatePassBody);
 
-            HTTPRequest.sendRequest(otpUrl, jsonUpdatePassBody, new HTTPRequest.RequestCallback() {
+            HTTPRequest.sendJsonRequest(otpUrl, "POST", jsonUpdatePassBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String changeResponse) throws IOException {
                     backMainScreen();

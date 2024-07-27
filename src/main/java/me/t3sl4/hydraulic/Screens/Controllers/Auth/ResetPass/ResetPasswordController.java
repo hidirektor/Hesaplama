@@ -66,7 +66,7 @@ public class ResetPasswordController implements Initializable {
             String otpUrl = BASE_URL + otpURLPrefix;
             String jsonOTPBody = "{\"userName\": \"" + enteredUserName + "\"}";
 
-            HTTPRequest.sendRequest(otpUrl, jsonOTPBody, new HTTPRequest.RequestCallback() {
+            HTTPRequest.sendJsonRequest(otpUrl, "POST", jsonOTPBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String otpResponse) throws IOException {
                     JSONObject otpResponseObject = new JSONObject(otpResponse);

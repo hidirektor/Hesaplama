@@ -290,7 +290,7 @@ public class MainController implements Initializable {
     public void hidrolikUnitStats(Runnable updateHydraulicText) {
         String profileInfoUrl = BASE_URL + hydraulicGetStatsURLPrefix;
 
-        HTTPRequest.sendRequestNormal(profileInfoUrl, new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendJsonlessRequest(profileInfoUrl, "GET", new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String hydraulicResponse) {
                 JSONObject responseJson = new JSONObject(hydraulicResponse);
@@ -302,7 +302,7 @@ public class MainController implements Initializable {
 
             @Override
             public void onFailure() {
-                System.out.println("Kullanıcı bilgileri alınamadı!");
+                System.out.println("hydraulicGetStatsURLPrefix Error!");
             }
         });
     }
@@ -312,7 +312,7 @@ public class MainController implements Initializable {
 
         if(type == 1) {
             //Tümü
-            HTTPRequest.sendRequestNormal(BASE_URL + hydraulicGetInfoURLPrefix, new HTTPRequest.RequestCallback() {
+            HTTPRequest.sendJsonlessRequest(BASE_URL + hydraulicGetDetailsURLPrefix, "GET", new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     cachedHydraulicInfos = parseJsonResponse(response);
@@ -321,14 +321,14 @@ public class MainController implements Initializable {
 
                 @Override
                 public void onFailure() {
-                    System.out.println("API request failed.");
+                    System.out.println("hydraulicGetDetailsURLPrefix All Units Error.");
                 }
             });
         } else if(type == 2) {
             //Klasik
-            String reqURL = BASE_URL + hydraulicGetCustomInfoURLPrefix;
+            String reqURL = BASE_URL + hydraulicGetDetailsURLPrefix;
             String jsonHydraulicBody = "{\"UnitType\": \"" + "Klasik" + "\"}";
-            HTTPRequest.sendRequest(reqURL, jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+            HTTPRequest.sendJsonRequest(reqURL, "GET", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     cachedHydraulicInfos = parseJsonResponse(response);
@@ -337,14 +337,14 @@ public class MainController implements Initializable {
 
                 @Override
                 public void onFailure() {
-                    System.out.println("API request failed.");
+                    System.out.println("hydraulicGetDetailsURLPrefix Klasik Error.");
                 }
             });
         } else if(type == 3) {
             //Hidros
-            String reqURL = BASE_URL + hydraulicGetCustomInfoURLPrefix;
+            String reqURL = BASE_URL + hydraulicGetDetailsURLPrefix;
             String jsonHydraulicBody = "{\"UnitType\": \"" + "Hidros" + "\"}";
-            HTTPRequest.sendRequest(reqURL, jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+            HTTPRequest.sendJsonRequest(reqURL, "GET", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     cachedHydraulicInfos = parseJsonResponse(response);
@@ -353,7 +353,7 @@ public class MainController implements Initializable {
 
                 @Override
                 public void onFailure() {
-                    System.out.println("API request failed.");
+                    System.out.println("hydraulicGetDetailsURLPrefix Hidros Error.");
                 }
             });
         }

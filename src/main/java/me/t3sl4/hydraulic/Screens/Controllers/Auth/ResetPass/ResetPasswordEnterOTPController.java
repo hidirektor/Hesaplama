@@ -99,7 +99,7 @@ public class ResetPasswordEnterOTPController implements Initializable {
                     "\"otpCode\": \"" + girilenOTP + "\", " +
                     "\"otpSentTime\": \"" + Launcher.otpSentTime + "\"}";
 
-            HTTPRequest.sendRequest(otpVerifyUrl, jsonOTPVerifyBody, new HTTPRequest.RequestCallback() {
+            HTTPRequest.sendJsonRequest(otpVerifyUrl, "POST", jsonOTPVerifyBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String otpResponse) throws IOException {
                     changeOTPScreen();

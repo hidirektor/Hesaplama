@@ -29,8 +29,7 @@ public class Launcher {
     public static String getPartListURLPrefix = "/hydraulic/getPartList/";
     public static String getSchematicURLPrefix = "/hydraulic/getSchematic/";
     public static String hydraulicGetStatsURLPrefix = "/hydraulic/getHydraulicStats";
-    public static String hydraulicGetInfoURLPrefix = "/hydraulic/getHydraulicInfo";
-    public static String hydraulicGetCustomInfoURLPrefix = "/hydraulic/getHydraulicCustomInfo";
+    public static String hydraulicGetDetailsURLPrefix = "/hydraulic/getHydraulicDetails";
 
     public static String mainPath;
     public static String tokenPath;

@@ -17,7 +17,7 @@ import static me.t3sl4.hydraulic.Screens.Main.loggedInUser;
 public class ReqUtil {
 
     public static void loginReq(String loginUrl, String jsonLoginBody, Stage stage, String userName, String password, Label lblErrors) throws IOException {
-        HTTPRequest.sendRequest(loginUrl, jsonLoginBody, new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendJsonRequest(loginUrl, "POST", jsonLoginBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String loginResponse) throws IOException {
                 JSONObject loginObject = new JSONObject(loginResponse);
@@ -34,7 +34,7 @@ public class ReqUtil {
 
                 String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
                 String jsonProfileInfoBody = "{\"userID\": \"" + userID + "\"}";
-                HTTPRequest.sendRequestAuthorized(profileInfoUrl, jsonProfileInfoBody, accessToken, new HTTPRequest.RequestCallback() {
+                HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", jsonProfileInfoBody, Launcher.getRefreshToken(), new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String profileInfoResponse) {
                         JSONObject mainObject = new JSONObject(profileInfoResponse);
@@ -71,7 +71,7 @@ public class ReqUtil {
         String profileInfoBody = "{\"userID\": \"" + Launcher.getUserID() + "\"}";
         System.out.println(profileInfoBody);
 
-        HTTPRequest.sendRequestAuthorized(profileInfoUrl, profileInfoBody, Launcher.getAccessToken(), new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", profileInfoBody, Launcher.getRefreshToken(), new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String profileInfoResponse) {
                 JSONObject responseJson = new JSONObject(profileInfoResponse);
@@ -121,7 +121,7 @@ public class ReqUtil {
             return createSucc[0];
         }
 
-        HTTPRequest.sendMultipartRequestMultiple(creationURL, userName, orderID, hydraulicType, partListFile, schematicFile, new HTTPRequest.RequestCallback() {
+        /*HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", userName, orderID, hydraulicType, partListFile, schematicFile, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 createSucc[0] = true;
@@ -131,7 +131,7 @@ public class ReqUtil {
             public void onFailure() {
                 Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
             }
-        });
+        });*/
 
         return createSucc[0];
     }

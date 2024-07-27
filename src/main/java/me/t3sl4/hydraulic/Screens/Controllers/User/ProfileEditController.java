@@ -1,6 +1,5 @@
 package me.t3sl4.hydraulic.Screens.Controllers.User;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +12,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.Data.User.Profile;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Utils;
@@ -152,7 +150,7 @@ public class ProfileEditController {
 
     private void sendUpdateRequest(String jsonBody, String username, Stage stage) {
         String registerUrl = BASE_URL + updateProfileURLPrefix;
-        HTTPRequest.sendRequest(registerUrl, jsonBody, new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendJsonRequest(registerUrl, "POST", jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
                 if(secilenPhotoPath != null) {
@@ -180,7 +178,7 @@ public class ProfileEditController {
             return;
         }
 
-        HTTPRequest.sendMultipartRequest(uploadUrl, username, profilePhotoFile, new HTTPRequest.RequestCallback() {
+        /*HTTPRequest.sendMultipartRequest(uploadUrl, username, profilePhotoFile, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 Platform.runLater(() -> {
@@ -197,7 +195,7 @@ public class ProfileEditController {
             public void onFailure() {
                 Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
             }
-        });
+        });*/
     }
 
     private void deleteOldPhoto(String username) {
@@ -226,7 +224,7 @@ public class ProfileEditController {
         String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
         String jsonBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
 
-        HTTPRequest.sendRequest(profileInfoUrl, jsonBody, new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendJsonRequest(profileInfoUrl, "POST", jsonBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String hydraulicResponse) {
                 JSONObject responseJson = new JSONObject(hydraulicResponse);
