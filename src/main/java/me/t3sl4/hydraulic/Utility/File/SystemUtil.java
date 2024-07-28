@@ -16,12 +16,15 @@ import java.util.Scanner;
 
 public class SystemUtil {
 
-    public static void systemSetup() {
+    public static void firstLaunch() {
         changeDataStoragePath();
         createDirectories();
+        initializeTokens();
+    }
+
+    public static void systemSetup() {
         fileCopy();
         ExcelUtil.excelDataRead();
-        initializeTokens();
     }
 
     public static String getOperatingSystem() {
@@ -94,7 +97,7 @@ public class SystemUtil {
         }
     }
 
-    private static void initializeTokens() {
+    public static void initializeTokens() {
         try {
             File authFile = new File(Launcher.tokenPath);
             if(authFile.exists()) {

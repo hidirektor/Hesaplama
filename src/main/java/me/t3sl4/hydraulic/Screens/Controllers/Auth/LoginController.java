@@ -99,8 +99,6 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
         if (Utils.netIsAvailable()) {
             if(Launcher.userID != null && Launcher.accessToken != null && Launcher.refreshToken!= null) {
-                System.out.println("test başarılı");
-                Utils.autoLogin(lblErrors);
                 Main.loggedInUser = new User(Launcher.getUserName());
                 updateUserAndOpenMainScreen(stage, lblErrors);
             } else {

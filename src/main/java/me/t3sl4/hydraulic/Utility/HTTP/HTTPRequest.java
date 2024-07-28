@@ -51,13 +51,13 @@ public class HTTPRequest {
 
                         case JSON_BODY_AUTHORIZED:
                             requestBuilder.method(reqMethod, RequestBody.create(jsonBody, MediaType.parse("application/json")));
-                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            requestBuilder.addHeader("authorization", headers.get("authorization"));
                             requestBuilder.addHeader("Content-Type", "application/json");
                             break;
 
                         case JSON_BODYLESS_AUTHORIZED:
                             requestBuilder.method(reqMethod, null);
-                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            requestBuilder.addHeader("authorization", headers.get("authorization"));
                             break;
 
                         case FILE_DOWNLOAD:
@@ -78,14 +78,14 @@ public class HTTPRequest {
 
                         case FILE_DOWNLOAD_AUTHORIZED:
                             requestBuilder.method(reqMethod, null);
-                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            requestBuilder.addHeader("authorization", headers.get("authorization"));
                             break;
 
                         case MULTIPLE_FILE_UPLOAD_AUTHORIZED:
                             MultipartBody.Builder authMultipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
                             files.forEach((name, file) -> authMultipartBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
                             requestBuilder.method(reqMethod, authMultipartBuilder.build());
-                            requestBuilder.addHeader("Authorization", headers.get("Authorization"));
+                            requestBuilder.addHeader("authorization", headers.get("authorization"));
                             break;
                     }
 
@@ -139,13 +139,13 @@ public class HTTPRequest {
 
     public static void sendAuthorizedJsonRequest(String url, String reqMethod, String jsonBody, String bearerToken, RequestCallback callback) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + bearerToken);
+        headers.put("authorization", "Bearer " + bearerToken);
         sendRequest(url, reqMethod, RequestType.JSON_BODY_AUTHORIZED, jsonBody, headers, null, null, callback);
     }
 
     public static void sendAuthorizedJsonlessRequest(String url, String reqMethod, String bearerToken, RequestCallback callback) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + bearerToken);
+        headers.put("authorization", "Bearer " + bearerToken);
         sendRequest(url, reqMethod, RequestType.JSON_BODYLESS_AUTHORIZED, null, headers, null, null, callback);
     }
 
@@ -161,7 +161,7 @@ public class HTTPRequest {
 
     public static void authorizedDownloadFile(String url, String reqMethod, String localFilePath, String bearerToken, RequestCallback callback) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + bearerToken);
+        headers.put("authorization", "Bearer " + bearerToken);
         sendRequest(url, reqMethod, RequestType.FILE_DOWNLOAD_AUTHORIZED, null, headers, null, localFilePath, callback);
     }
 
@@ -171,7 +171,7 @@ public class HTTPRequest {
 
     public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, RequestCallback callback) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + bearerToken);
+        headers.put("authorization", "Bearer " + bearerToken);
         sendRequest(url, reqMethod, RequestType.MULTIPLE_FILE_UPLOAD_AUTHORIZED, null, headers, files, null, callback);
     }
 }

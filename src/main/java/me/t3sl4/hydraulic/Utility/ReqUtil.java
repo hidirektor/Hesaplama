@@ -34,7 +34,7 @@ public class ReqUtil {
 
                 String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
                 String jsonProfileInfoBody = "{\"userID\": \"" + userID + "\"}";
-                HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", jsonProfileInfoBody, Launcher.getRefreshToken(), new HTTPRequest.RequestCallback() {
+                HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", jsonProfileInfoBody, accessToken, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String profileInfoResponse) {
                         JSONObject mainObject = new JSONObject(profileInfoResponse);
@@ -69,9 +69,9 @@ public class ReqUtil {
     public static void updateUserReq(Runnable onUserUpdateComplete) {
         String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
         String profileInfoBody = "{\"userID\": \"" + Launcher.getUserID() + "\"}";
-        System.out.println(profileInfoBody);
+        System.out.println(profileInfoBody + Launcher.getRefreshToken());
 
-        HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", profileInfoBody, Launcher.getRefreshToken(), new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", profileInfoBody, Launcher.getAccessToken(), new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String profileInfoResponse) {
                 JSONObject responseJson = new JSONObject(profileInfoResponse);
