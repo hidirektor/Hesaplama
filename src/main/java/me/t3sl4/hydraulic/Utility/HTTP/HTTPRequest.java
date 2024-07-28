@@ -61,7 +61,7 @@ public class HTTPRequest {
                             break;
 
                         case FILE_DOWNLOAD:
-                            requestBuilder.method(reqMethod, null);
+                            requestBuilder.method(reqMethod, RequestBody.create(jsonBody, MediaType.parse("application/json")));
                             break;
 
                         case FILE_UPLOAD:
@@ -152,14 +152,15 @@ public class HTTPRequest {
         sendRequest(url, reqMethod, RequestType.JSON_BODYLESS_AUTHORIZED, null, headers, null, null, callback);
     }
 
-    public static void downloadFile(String url, String reqMethod, String localFilePath, RequestCallback callback) {
-        sendRequest(url, reqMethod, RequestType.FILE_DOWNLOAD, null, new HashMap<>(), null, localFilePath, callback);
+    public static void downloadFile(String url, String reqMethod, String localFilePath, String userName, RequestCallback callback) {
+        String jsonBody = "{\"userName\":\"" + userName + "\"}";
+        sendRequest(url, reqMethod, RequestType.FILE_DOWNLOAD, jsonBody, new HashMap<>(), null, localFilePath, callback);
     }
 
     public static void uploadFile(String url, String reqMethod, File file, String userName, RequestCallback callback) {
         Map<String, File> files = new HashMap<>();
         files.put("file", file);
-        String jsonBody = "{\"userName\":\"" + userName + "\"}";
+        String jsonBody = userName;
         sendRequest(url, reqMethod, RequestType.FILE_UPLOAD, jsonBody, new HashMap<>(), files, null, callback);
     }
 

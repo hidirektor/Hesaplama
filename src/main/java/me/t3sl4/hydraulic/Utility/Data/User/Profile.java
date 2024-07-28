@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 
 import java.io.File;
 
@@ -21,9 +22,8 @@ public class Profile {
             setProfilePhoto(username, secilenFoto, profilePhotoImageView);
         } else {
             String photoUrl = BASE_URL + downloadPhotoURLPrefix;
-            String jsonBody = "{\"userName\":\"" + username + "\"} ";
 
-            /*HTTPRequest.sendRequest4File(photoUrl, jsonBody, localFileFinalPath, new HTTPRequest.RequestCallback() {
+            HTTPRequest.downloadFile(photoUrl, "POST", localFileFinalPath, username, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     setProfilePhoto(username, secilenFoto, profilePhotoImageView);
@@ -33,7 +33,7 @@ public class Profile {
                 public void onFailure() {
                     System.out.println("Profil fotoğrafı indirilemedi.");
                 }
-            });*/
+            });
         }
     }
 

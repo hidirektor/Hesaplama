@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.Screens.Controllers.Auth;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -194,7 +195,7 @@ public class RegisterController implements Initializable {
             return;
         }
 
-        /*HTTPRequest.sendMultipartRequest(uploadUrl, username, profilePhotoFile, new HTTPRequest.RequestCallback() {
+        HTTPRequest.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 Platform.runLater(() -> {
@@ -211,7 +212,7 @@ public class RegisterController implements Initializable {
             public void onFailure() {
                 Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
             }
-        });*/
+        });
     }
 
     @FXML

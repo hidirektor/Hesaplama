@@ -1,6 +1,5 @@
 package me.t3sl4.hydraulic.Screens.Controllers.User;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +12,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.Data.User.Profile;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Utils;
@@ -210,20 +208,11 @@ public class ProfileEditController {
         HTTPRequest.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
-                System.out.println(response);
-                Platform.runLater(() -> {
-                    try {
-                        stage.close();
-                        SceneUtil.openMainScreen();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+                Utils.showSuccessMessage("Profil fotoğrafı güncellendi!");
             }
 
             @Override
             public void onFailure() {
-                System.out.println("Profil fotoğrafı yüklenirken hata meydana geldi!");
                 Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi!");
             }
         });
