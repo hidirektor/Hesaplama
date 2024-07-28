@@ -40,8 +40,6 @@ public class PDFFileUtil {
             document.open();
 
             PdfContentByte contentByte = writer.getDirectContentUnder();
-            //BaseColor backgroundColor = new BaseColor(53, 58, 70);
-            //BaseColor backgroundColor = new BaseColor(249, 248, 113);
             BaseColor backgroundColor = new BaseColor(255, 255, 255);
             contentByte.setColorFill(backgroundColor);
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
@@ -67,20 +65,23 @@ public class PDFFileUtil {
             image2.setAbsolutePosition(x, y);
             document.add(image2);
 
-            PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
-            PdfImportedPage page = writer.getImportedPage(reader, 1);
-            document.newPage();
+            if(pdfFilePath != null) {
+                PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
+                PdfImportedPage page = writer.getImportedPage(reader, 1);
+                document.newPage();
 
-            float targetWidth = document.getPageSize().getWidth();
-            float targetHeight = document.getPageSize().getHeight();
+                float targetWidth = document.getPageSize().getWidth();
+                float targetHeight = document.getPageSize().getHeight();
 
-            float originalWidth = page.getWidth();
-            float originalHeight = page.getHeight();
+                float originalWidth = page.getWidth();
+                float originalHeight = page.getHeight();
 
-            float widthScale = targetWidth / originalWidth;
-            float heightScale = targetHeight / originalHeight;
+                float widthScale = targetWidth / originalWidth;
+                float heightScale = targetHeight / originalHeight;
 
-            writer.getDirectContent().addTemplate(page, widthScale, 0, 0, heightScale, 0, 0);
+                writer.getDirectContent().addTemplate(page, widthScale, 0, 0, heightScale, 0, 0);
+                reader.close();
+            }
 
             document.close();
             writer.close();

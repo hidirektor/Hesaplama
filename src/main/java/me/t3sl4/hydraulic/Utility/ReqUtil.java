@@ -7,11 +7,11 @@ import me.t3sl4.hydraulic.Utility.Data.User.User;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static me.t3sl4.hydraulic.Launcher.*;
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.profileInfoURLPrefix;
 import static me.t3sl4.hydraulic.Screens.Main.loggedInUser;
 
 public class ReqUtil {
@@ -106,32 +106,5 @@ public class ReqUtil {
             }
             stage.close();
         });
-    }
-
-    public static boolean createHydraulicUnit(String userName, String orderID, String hydraulicType, String partListPath, String schematicPath) {
-        String creationURL = BASE_URL + createHydraulicURLPrefix;
-        final boolean[] createSucc = {false};
-
-        File partListFile = new File(partListPath);
-        File schematicFile = new File(schematicPath);
-
-        if(!partListFile.exists() || !schematicFile.exists()) {
-            Utils.showErrorMessage(".xlsx ya da .pdf dosyası bulunamadı !");
-            return createSucc[0];
-        }
-
-        /*HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", userName, orderID, hydraulicType, partListFile, schematicFile, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String response) {
-                createSucc[0] = true;
-            }
-
-            @Override
-            public void onFailure() {
-                Utils.showErrorMessage("Ünite dosyaları yüklenirken hata meydana geldi !");
-            }
-        });*/
-
-        return createSucc[0];
     }
 }

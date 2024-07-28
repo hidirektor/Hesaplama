@@ -169,9 +169,49 @@ public class HTTPRequest {
         sendRequest(url, reqMethod, RequestType.MULTIPLE_FILE_UPLOAD, null, new HashMap<>(), files, null, callback);
     }
 
-    public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, RequestCallback callback) {
+    public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, String userName, String orderID, String hydraulicType, RequestCallback callback) {
         Map<String, String> headers = new HashMap<>();
         headers.put("authorization", "Bearer " + bearerToken);
-        sendRequest(url, reqMethod, RequestType.MULTIPLE_FILE_UPLOAD_AUTHORIZED, null, headers, files, null, callback);
+
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                try {
+                    MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    multipartBuilder.addFormDataPart("userName", userName);
+                    multipartBuilder.addFormDataPart("orderID", orderID);
+                    multipartBuilder.addFormDataPart("hydraulicType", hydraulicType);
+
+                    files.forEach((name, file) -> multipartBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
+
+                    RequestBody requestBody = multipartBuilder.build();
+                    Request.Builder requestBuilder = new Request.Builder()
+                            .url(url)
+                            .method(reqMethod, requestBody)
+                            .addHeader("authorization", "Bearer " + bearerToken);
+
+                    Request request = requestBuilder.build();
+
+                    try (Response response = client.newCall(request).execute()) {
+                        if (response.isSuccessful()) {
+                            String responseBody = response.body() != null ? response.body().string() : "";
+                            Platform.runLater(() -> {
+                                try {
+                                    callback.onSuccess(responseBody);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        } else {
+                            Platform.runLater(callback::onFailure);
+                        }
+                    }
+                } catch (IOException e) {
+                    Platform.runLater(callback::onFailure);
+                }
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 }

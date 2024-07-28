@@ -19,13 +19,17 @@ import me.t3sl4.hydraulic.Utility.Data.Table.TableData;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
 import me.t3sl4.hydraulic.Utility.File.SystemUtil;
-import me.t3sl4.hydraulic.Utility.ReqUtil;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Utils;
 
+import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.createHydraulicURLPrefix;
 
 public class HidrosController {
     @FXML
@@ -195,14 +199,30 @@ public class HidrosController {
 
     @FXML
     public void transferCalculation() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
+        String creationURL = BASE_URL + createHydraulicURLPrefix;
 
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
         if (SystemUtil.fileExists(pdfPath) && SystemUtil.fileExists(excelPath)) {
-            ReqUtil.createHydraulicUnit(Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, excelPath, pdfPath);
+            File partListFile = new File(excelPath);
+            File schematicFile = new File(pdfPath);
+
+            Map<String, File> files = new HashMap<>();
+            files.put("partListFile", partListFile);
+            files.put("schematicFile", schematicFile);
+
+            HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", files, Launcher.getAccessToken(), Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.");
+                }
+
+                @Override
+                public void onFailure() {
+                    Utils.showErrorMessage("Hidrolik ünitesi kaydedilemedi !");
+                }
+            });
         } else {
             Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }

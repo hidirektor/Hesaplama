@@ -24,13 +24,19 @@ import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
 import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
 import me.t3sl4.hydraulic.Utility.File.SystemUtil;
-import me.t3sl4.hydraulic.Utility.ReqUtil;
+import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Utils;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import static me.t3sl4.hydraulic.Launcher.BASE_URL;
+import static me.t3sl4.hydraulic.Launcher.createHydraulicURLPrefix;
 
 public class KlasikController {
 
@@ -229,11 +235,30 @@ public class KlasikController {
 
     @FXML
     public void transferCalculation() {
+        String creationURL = BASE_URL + createHydraulicURLPrefix;
+
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
         if (SystemUtil.fileExists(pdfPath) && SystemUtil.fileExists(excelPath)) {
-            ReqUtil.createHydraulicUnit(Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, excelPath, pdfPath);
+            File partListFile = new File(excelPath);
+            File schematicFile = new File(pdfPath);
+
+            Map<String, File> files = new HashMap<>();
+            files.put("partListFile", partListFile);
+            files.put("schematicFile", schematicFile);
+
+            HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", files, Launcher.getAccessToken(), Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPRequest.RequestCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.");
+                }
+
+                @Override
+                public void onFailure() {
+                    Utils.showErrorMessage("Hidrolik ünitesi kaydedilemedi !");
+                }
+            });
         } else {
             Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
         }
@@ -402,13 +427,14 @@ public class KlasikController {
             PDFFileUtil.cropImage(680, startY, 370, height);
 
             String pdfPath = "";
-            if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
+            if(secilenValfTipi.contains("İnişte Tek Hız")) {
                 pdfPath = "/assets/data/pdf/klasikinistetek.pdf";
-            } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
+            } else if(secilenValfTipi.contains("İnişte Çift Hız")) {
                 pdfPath = "/assets/data/pdf/klasikinistecift.pdf";
-            } else if(Objects.equals(secilenValfTipi, "Kilitli Blok || Çift Hız")) {
+            } else if(secilenValfTipi.contains("Kilitli Blok")) {
                 pdfPath = "/assets/data/pdf/klasikkilitliblokcift.pdf";
             }
+            pdfPath = null;
             PDFFileUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
