@@ -42,7 +42,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
@@ -308,11 +310,15 @@ public class MainController implements Initializable {
     }
 
     public void hydraulicUnitInit(int type) {
+        String reqURL = BASE_URL + hydraulicGetDetailsURLPrefix;
+        String jsonHydraulicBody;
+
         populateUIWithCachedData();
 
         if(type == 1) {
             //Tümü
-            HTTPRequest.sendJsonlessRequest(BASE_URL + hydraulicGetDetailsURLPrefix, "GET", new HTTPRequest.RequestCallback() {
+            jsonHydraulicBody = "{\"UnitType\": \"" + "" + "\"}";
+            HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     cachedHydraulicInfos = parseJsonResponse(response);
@@ -321,14 +327,14 @@ public class MainController implements Initializable {
 
                 @Override
                 public void onFailure() {
+                    System.out.println(jsonHydraulicBody);
                     System.out.println("hydraulicGetDetailsURLPrefix All Units Error.");
                 }
             });
         } else if(type == 2) {
             //Klasik
-            String reqURL = BASE_URL + hydraulicGetDetailsURLPrefix;
-            String jsonHydraulicBody = "{\"UnitType\": \"" + "Klasik" + "\"}";
-            HTTPRequest.sendJsonRequest(reqURL, "GET", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+            jsonHydraulicBody = "{\"UnitType\": \"" + "Klasik" + "\"}";
+            HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     cachedHydraulicInfos = parseJsonResponse(response);
@@ -342,9 +348,8 @@ public class MainController implements Initializable {
             });
         } else if(type == 3) {
             //Hidros
-            String reqURL = BASE_URL + hydraulicGetDetailsURLPrefix;
-            String jsonHydraulicBody = "{\"UnitType\": \"" + "Hidros" + "\"}";
-            HTTPRequest.sendJsonRequest(reqURL, "GET", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+            jsonHydraulicBody = "{\"UnitType\": \"" + "Hidros" + "\"}";
+            HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     cachedHydraulicInfos = parseJsonResponse(response);
@@ -375,14 +380,14 @@ public class MainController implements Initializable {
                 Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
                 ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
 
-                orderNumberLabel.setText(info.getSiparisNumarasi());
-                orderDateLabel.setText(formatDateTime(info.getSiparisTarihi()));
-                typeLabel.setText(info.getUniteTipi());
+                orderNumberLabel.setText(info.getOrderID());
+                orderDateLabel.setText(formatDateTime(String.valueOf(info.getCreatedDate())));
+                typeLabel.setText(info.getHydraulicType());
                 InChargeLabel.setText(info.getUserName());
 
-                pdfViewButton.setOnAction(event -> openURL(BASE_URL + getSchematicURLPrefix + info.getSiparisNumarasi()));
+                pdfViewButton.setOnAction(event -> openURL(BASE_URL + getSchematicURLPrefix + info.getOrderID()));
 
-                excelViewButton.setOnMouseClicked(event -> openURL(BASE_URL + getPartListURLPrefix + info.getSiparisNumarasi()));
+                excelViewButton.setOnMouseClicked(event -> openURL(BASE_URL + getPartListURLPrefix + info.getOrderID()));
 
                 node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #0A0E3F"));
                 node.setOnMouseExited(event -> itemC.setStyle("-fx-background-color : #02030A"));
@@ -394,9 +399,10 @@ public class MainController implements Initializable {
         }
     }
 
-    public String formatDateTime(String dateTimeString) {
+    public static String formatDateTime(String unixTimestamp) {
         try {
-            OffsetDateTime dateTime = OffsetDateTime.parse(dateTimeString);
+            Instant instant = Instant.ofEpochSecond(Long.valueOf(unixTimestamp));
+            OffsetDateTime dateTime = instant.atOffset(ZoneId.of("Europe/Istanbul").getRules().getOffset(instant));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
             return dateTime.format(formatter);
         } catch (Exception e) {

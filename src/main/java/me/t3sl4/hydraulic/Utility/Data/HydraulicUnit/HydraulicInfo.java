@@ -1,21 +1,30 @@
 package me.t3sl4.hydraulic.Utility.Data.HydraulicUnit;
 
 public class HydraulicInfo {
-    private int unitID;
+    private int id;
+    private String userID;
     private String userName;
-    private String siparisNumarasi;
-    private String siparisTarihi;
-    private String uniteTipi;
-    private String pdfFile;
-    private String excelFile;
-    private String createdBy;
+    private String orderID;
+    private String partListID;
+    private String schematicID;
+    private String hydraulicType;
+    private long createdDate;
 
-    public int getUnitID() {
-        return unitID;
+    // Getter ve Setter metodları
+    public int getId() {
+        return id;
     }
 
-    public void setUnitID(int unitID) {
-        this.unitID = unitID;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getUserName() {
@@ -26,51 +35,43 @@ public class HydraulicInfo {
         this.userName = userName;
     }
 
-    public String getSiparisNumarasi() {
-        return siparisNumarasi;
+    public String getOrderID() {
+        return orderID;
     }
 
-    public void setSiparisNumarasi(String siparisNumarasi) {
-        this.siparisNumarasi = siparisNumarasi;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
-    public String getSiparisTarihi() {
-        return siparisTarihi;
+    public String getPartListID() {
+        return partListID;
     }
 
-    public void setSiparisTarihi(String siparisTarihi) {
-        this.siparisTarihi = siparisTarihi;
+    public void setPartListID(String partListID) {
+        this.partListID = partListID;
     }
 
-    public String getUniteTipi() {
-        return uniteTipi;
+    public String getSchematicID() {
+        return schematicID;
     }
 
-    public void setUniteTipi(String uniteTipi) {
-        this.uniteTipi = uniteTipi;
+    public void setSchematicID(String schematicID) {
+        this.schematicID = schematicID;
     }
 
-    public String getPdfFile() {
-        return pdfFile;
+    public String getHydraulicType() {
+        return hydraulicType;
     }
 
-    public void setPdfFile(String pdfFile) {
-        this.pdfFile = pdfFile;
+    public void setHydraulicType(String hydraulicType) {
+        this.hydraulicType = hydraulicType;
     }
 
-    public String getExcelFile() {
-        return excelFile;
+    public long getCreatedDate() {
+        return createdDate;
     }
 
-    public void setExcelFile(String excelFile) {
-        this.excelFile = excelFile;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setCreatedDate(long createdDate) {
+        this.createdDate = createdDate;
     }
 }

@@ -69,7 +69,6 @@ public class ReqUtil {
     public static void updateUserReq(Runnable onUserUpdateComplete) {
         String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
         String profileInfoBody = "{\"userID\": \"" + Launcher.getUserID() + "\"}";
-        System.out.println(profileInfoBody + Launcher.getRefreshToken());
 
         HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", profileInfoBody, Launcher.getAccessToken(), new HTTPRequest.RequestCallback() {
             @Override
