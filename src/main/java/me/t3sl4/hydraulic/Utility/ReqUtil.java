@@ -32,6 +32,10 @@ public class ReqUtil {
                 writer.write("RefreshToken: " + refreshToken + "\n");
                 writer.close();
 
+                Launcher.userID = userID;
+                Launcher.accessToken = accessToken;
+                Launcher.refreshToken = refreshToken;
+
                 String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
                 String jsonProfileInfoBody = "{\"userID\": \"" + userID + "\"}";
                 HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", jsonProfileInfoBody, accessToken, new HTTPRequest.RequestCallback() {

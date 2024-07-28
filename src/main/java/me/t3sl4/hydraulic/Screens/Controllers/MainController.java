@@ -193,6 +193,10 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
+        userID = null;
+        accessToken = null;
+        refreshToken = null;
+
         stage.close();
         SceneUtil.changeScreen("fxml/Login.fxml");
     }

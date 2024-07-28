@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.Screens.Controllers.User;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
+import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.Data.User.Profile;
 import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utility.Utils;
@@ -64,7 +66,7 @@ public class ProfileEditController {
 
     @FXML
     public void initialize() {
-        getUserInfo();
+        initializeUser();
         Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         sifreText.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -134,23 +136,41 @@ public class ProfileEditController {
         if (password.isEmpty()) {
             password = null;
         }
+        String registerJsonBody;
 
-        String registerJsonBody =
-                "{" +
-                        "\"userID\": \"" + userID + "\"," +
-                        "\"userData\": {" +
-                        "  \"name\": \"" + nameSurname + "\"," +
-                        "  \"email\": \"" + eMail + "\"," +
-                        "  \"phoneNumber\": \"" + phone + "\"" +
-                        "}" +
-                        "}";
+        if (password != null) {
+            registerJsonBody =
+                    "{" +
+                            "\"userID\": \"" + Launcher.getUserID() + "\"," +
+                            "\"userData\": {" +
+                            "  \"userName\": \"" + userName + "\"," +
+                            "  \"nameSurname\": \"" + nameSurname + "\"," +
+                            "  \"eMail\": \"" + eMail + "\"," +
+                            "  \"phoneNumber\": \"" + phone + "\"," +
+                            "  \"companyName\": \"" + companyName + "\"," +
+                            "  \"password\": \"" + password + "\"" +
+                            "}" +
+                            "}";
+        } else {
+            registerJsonBody =
+                    "{" +
+                            "\"userID\": \"" + Launcher.getUserID() + "\"," +
+                            "\"userData\": {" +
+                            "  \"userName\": \"" + userName + "\"," +
+                            "  \"nameSurname\": \"" + nameSurname + "\"," +
+                            "  \"eMail\": \"" + eMail + "\"," +
+                            "  \"phoneNumber\": \"" + phone + "\"," +
+                            "  \"companyName\": \"" + companyName + "\"" +
+                            "}" +
+                            "}";
+        }
 
         sendUpdateRequest(registerJsonBody, userName, stage);
     }
 
     private void sendUpdateRequest(String jsonBody, String username, Stage stage) {
         String registerUrl = BASE_URL + updateProfileURLPrefix;
-        HTTPRequest.sendJsonRequest(registerUrl, "POST", jsonBody, new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendAuthorizedJsonRequest(registerUrl, "POST", jsonBody, Launcher.getAccessToken(), new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
                 if(secilenPhotoPath != null) {
@@ -158,11 +178,20 @@ public class ProfileEditController {
                     uploadProfilePhoto2Server(stage);
                 }
                 Utils.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
+                JSONObject userCred = new JSONObject(jsonBody);
+                JSONObject dataCred = userCred.getJSONObject("userData");
+
+                loggedInUser.setUsername(dataCred.getString("userName"));
+                loggedInUser.setFullName(dataCred.getString("nameSurname"));
+                loggedInUser.setEmail(dataCred.getString("eMail"));
+                loggedInUser.setPhone(dataCred.getString("phoneNumber"));
+                loggedInUser.setCompanyName(dataCred.getString("companyName"));
                 refreshScreen();
             }
 
             @Override
             public void onFailure() {
+                System.out.println(registerUrl + jsonBody);
                 Utils.showErrorMessage("Profil güncellenirken hata meydana geldi !");
             }
         });
@@ -174,13 +203,14 @@ public class ProfileEditController {
 
         File profilePhotoFile = new File(secilenPhotoPath);
         if (!profilePhotoFile.exists()) {
-            Utils.showErrorMessage("Profil fotoğrafı bulunamadı !");
+            Utils.showErrorMessage("Profil fotoğrafı bulunamadı!");
             return;
         }
 
-        /*HTTPRequest.sendMultipartRequest(uploadUrl, username, profilePhotoFile, new HTTPRequest.RequestCallback() {
+        HTTPRequest.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
+                System.out.println(response);
                 Platform.runLater(() -> {
                     try {
                         stage.close();
@@ -193,9 +223,10 @@ public class ProfileEditController {
 
             @Override
             public void onFailure() {
-                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
+                System.out.println("Profil fotoğrafı yüklenirken hata meydana geldi!");
+                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi!");
             }
-        });*/
+        });
     }
 
     private void deleteOldPhoto(String username) {
@@ -215,39 +246,16 @@ public class ProfileEditController {
     }
 
     private void refreshScreen() {
-        getUserInfo();
+        initializeUser();
         Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
         sifreText.clear();
     }
 
-    private void getUserInfo() {
-        String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
-        String jsonBody = "{\"username\": \"" + loggedInUser.getUsername() + "\"}";
-
-        HTTPRequest.sendJsonRequest(profileInfoUrl, "POST", jsonBody, new HTTPRequest.RequestCallback() {
-            @Override
-            public void onSuccess(String hydraulicResponse) {
-                JSONObject responseJson = new JSONObject(hydraulicResponse);
-                JSONObject userInfoObject = responseJson.getJSONObject("user");
-
-                String parsedRole = responseJson.getString("userType");
-                String parsedUserName = responseJson.getString("userName");
-                String parsedFullName = responseJson.getString("nameSurname");
-                String parsedEmail = responseJson.getString("eMail");
-                String parsedPhone = responseJson.getString("phoneNumber");
-                String parsedCompanyName = responseJson.getString("companyName");
-
-                isimSoyisimText.setText(parsedFullName);
-                kullaniciAdiText.setText(parsedUserName);
-                ePostaText.setText(parsedEmail);
-                telefonText.setText(parsedPhone);
-                sirketText.setText(parsedCompanyName);
-            }
-
-            @Override
-            public void onFailure() {
-                System.out.println("Kullanıcı bilgileri alınamadı!");
-            }
-        });
+    private void initializeUser() {
+        isimSoyisimText.setText(loggedInUser.getFullName());
+        kullaniciAdiText.setText(loggedInUser.getUsername());
+        ePostaText.setText(loggedInUser.getEmail());
+        telefonText.setText(loggedInUser.getPhone());
+        sirketText.setText(loggedInUser.getCompanyName());
     }
 }

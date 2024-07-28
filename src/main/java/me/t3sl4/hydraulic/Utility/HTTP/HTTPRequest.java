@@ -67,6 +67,9 @@ public class HTTPRequest {
                         case FILE_UPLOAD:
                             MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
                             files.forEach((name, file) -> multipartBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
+                            if (jsonBody != null) {
+                                multipartBuilder.addFormDataPart("userName", jsonBody);
+                            }
                             requestBuilder.method(reqMethod, multipartBuilder.build());
                             break;
 
@@ -153,10 +156,11 @@ public class HTTPRequest {
         sendRequest(url, reqMethod, RequestType.FILE_DOWNLOAD, null, new HashMap<>(), null, localFilePath, callback);
     }
 
-    public static void uploadFile(String url, String reqMethod, File file, RequestCallback callback) {
+    public static void uploadFile(String url, String reqMethod, File file, String userName, RequestCallback callback) {
         Map<String, File> files = new HashMap<>();
         files.put("file", file);
-        sendRequest(url, reqMethod, RequestType.FILE_UPLOAD, null, new HashMap<>(), files, null, callback);
+        String jsonBody = "{\"userName\":\"" + userName + "\"}";
+        sendRequest(url, reqMethod, RequestType.FILE_UPLOAD, jsonBody, new HashMap<>(), files, null, callback);
     }
 
     public static void authorizedDownloadFile(String url, String reqMethod, String localFilePath, String bearerToken, RequestCallback callback) {
