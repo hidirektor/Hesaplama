@@ -1049,7 +1049,7 @@ public class KlasikController {
             addTextToList("50 mm", 652, 484, 0, 10, Color.WHITE);
             addTextToList("Ø20", 677, 463, 0, 10, Color.WHITE);
             addTextToList("50 mm", 705, 484, 0, 8, Color.WHITE);
-            addTextToList("Ø50", 723, 455, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 723, 455, 0, 10, Color.WHITE);
             addTextToList("50 mm", 740, 457, 90, 8, Color.WHITE);
         } else if(calculatedImage.equals("kilitMotor")) {
             addTextToList("X: " + x + " mm", 590, 510, 0, 14, Color.WHITE);
@@ -1060,7 +1060,7 @@ public class KlasikController {
             addTextToList("50 mm", 450, 480, 0, 7, Color.WHITE);
             addTextToList("50 mm", 482, 490, 0, 10, Color.WHITE);
             addTextToList("50 mm", 555, 490, 0, 10, Color.WHITE);
-            addTextToList("Ø50", 470, 460, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 470, 460, 0, 10, Color.WHITE);
             addTextToList("Ø20", 550, 462, 0, 10, Color.WHITE);
             addTextToList(secilenValfTipi, 475, 430, 0, 12, Color.WHITE);
             addTextToList(getKampanaText(), 630, 365, 0, 12, Color.WHITE);
@@ -1071,11 +1071,15 @@ public class KlasikController {
             addTextToList("Y: " + y + " mm", 400, 400, 90, 14, Color.WHITE);
 
             addTextToList("50 mm", 465, 300, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 450, 358, 90, 10, Color.WHITE);
+            if(secilenSogutmaDurumu.equals("Yok") && secilenHidrolikKilitDurumu.equals("Yok")) {
+                addTextToList("120 mm", 450, 358, 90, 10, Color.WHITE);
+            } else {
+                addTextToList("50 mm", 450, 358, 90, 10, Color.WHITE);
+            }
             addTextToList("50 mm", 450, 460, 0, 8, Color.WHITE);
             addTextToList("50 mm", 497, 490, 0, 10, Color.WHITE);
             addTextToList("50 mm", 570, 490, 0, 10, Color.WHITE);
-            addTextToList("Ø50", 485, 460, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 485, 460, 0, 10, Color.WHITE);
             addTextToList("Ø20", 555, 455, 0, 10, Color.WHITE);
             addTextToList(secilenValfTipi, 460, 383, 0, 10, Color.WHITE);
             addTextToList(getKampanaText(), 630, 357, 0, 12, Color.WHITE);
@@ -1090,7 +1094,7 @@ public class KlasikController {
             addTextToList("50 mm", 450, 465, 0, 8, Color.WHITE);
             addTextToList("50 mm", 497, 490, 0, 10, Color.WHITE);
             addTextToList("50 mm", 570, 490, 0, 10, Color.WHITE);
-            addTextToList("Ø50", 485, 460, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 485, 460, 0, 10, Color.WHITE);
             addTextToList("Ø20", 555, 455, 0, 10, Color.WHITE);
             addTextToList(secilenValfTipi, 470, 383, 0, 10, Color.WHITE);
             addTextToList(getKampanaText(), 630, 357, 0, 12, Color.WHITE);
