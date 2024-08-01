@@ -33,6 +33,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -300,9 +301,11 @@ public class MainController implements Initializable {
             @Override
             public void onSuccess(String hydraulicResponse) {
                 JSONObject responseJson = new JSONObject(hydraulicResponse);
-                siparisSayisi = responseJson.getInt("Sipariş Sayısı");
-                klasik = responseJson.getInt("Klasik");
-                hidros = responseJson.getInt("Hidros");
+                JSONObject mainObject = responseJson.getJSONObject("payload").getJSONObject("statistics");
+
+                siparisSayisi = mainObject.getInt("Sipariş Sayısı");
+                klasik = mainObject.getInt("Klasik");
+                hidros = mainObject.getInt("Hidros");
                 updateHydraulicText.run();
             }
 
@@ -325,7 +328,8 @@ public class MainController implements Initializable {
             HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    cachedHydraulicInfos = parseJsonResponse(response);
+                    JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
+                    cachedHydraulicInfos = parseJsonResponse(String.valueOf(responseJson));
                     populateUIWithCachedData();
                 }
 
@@ -341,7 +345,8 @@ public class MainController implements Initializable {
             HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    cachedHydraulicInfos = parseJsonResponse(response);
+                    JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
+                    cachedHydraulicInfos = parseJsonResponse(String.valueOf(responseJson));
                     populateUIWithCachedData();
                 }
 
@@ -356,7 +361,8 @@ public class MainController implements Initializable {
             HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    cachedHydraulicInfos = parseJsonResponse(response);
+                    JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
+                    cachedHydraulicInfos = parseJsonResponse(String.valueOf(responseJson));
                     populateUIWithCachedData();
                 }
 

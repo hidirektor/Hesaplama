@@ -20,7 +20,8 @@ public class ReqUtil {
         HTTPRequest.sendJsonRequest(loginUrl, "POST", jsonLoginBody, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String loginResponse) throws IOException {
-                JSONObject loginObject = new JSONObject(loginResponse);
+                JSONObject mainObject = new JSONObject(loginResponse);
+                JSONObject loginObject = mainObject.getJSONObject("payload");
                 String userID = loginObject.getString("userID");
                 String accessToken = loginObject.getString("accessToken");
                 String refreshToken = loginObject.getString("refreshToken");
@@ -41,7 +42,8 @@ public class ReqUtil {
                 HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", jsonProfileInfoBody, accessToken, new HTTPRequest.RequestCallback() {
                     @Override
                     public void onSuccess(String profileInfoResponse) {
-                        JSONObject mainObject = new JSONObject(profileInfoResponse);
+                        JSONObject defaultObject = new JSONObject(profileInfoResponse);
+                        JSONObject mainObject = defaultObject.getJSONObject("payload");
 
                         JSONObject userObject = mainObject.getJSONObject("user");
                         JSONObject userPreferencesObject = mainObject.getJSONObject("userPreferences");
@@ -78,7 +80,8 @@ public class ReqUtil {
             @Override
             public void onSuccess(String profileInfoResponse) {
                 JSONObject responseJson = new JSONObject(profileInfoResponse);
-                JSONObject userInfoObject = responseJson.getJSONObject("user");
+                JSONObject defaultInfoObject = responseJson.getJSONObject("payload");
+                JSONObject userInfoObject = defaultInfoObject.getJSONObject("user");
 
                 String parsedRole = userInfoObject.getString("userType");
                 String parsedFullName = userInfoObject.getString("nameSurname");
