@@ -4,7 +4,7 @@ import me.t3sl4.hydraulic.Screens.Main;
 import me.t3sl4.hydraulic.Utility.File.SystemUtil;
 
 public class Launcher {
-    public static String BASE_URL = "http://ondergrup.hidirektor.com.tr:3000/api/v2";
+    public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
 
     public static String userName;
     public static String userID;
