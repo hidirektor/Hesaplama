@@ -2,6 +2,7 @@ package me.t3sl4.hydraulic.Utility.HTTP;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import me.t3sl4.hydraulic.Screens.Main;
 import okhttp3.*;
 
 import java.io.File;
@@ -186,6 +187,13 @@ public class HTTPRequest {
                     multipartBuilder.addFormDataPart("userName", userName);
                     multipartBuilder.addFormDataPart("orderID", orderID);
                     multipartBuilder.addFormDataPart("hydraulicType", hydraulicType);
+                    multipartBuilder.addFormDataPart("operationPlatform", "Desktop -- JavaFX");
+                    multipartBuilder.addFormDataPart("sourceUserID", Main.loggedInUser.getUserID());
+                    multipartBuilder.addFormDataPart("affectedUserID", null);
+                    multipartBuilder.addFormDataPart("affectedUserName", null);
+                    multipartBuilder.addFormDataPart("affectedMachineID", null);
+                    multipartBuilder.addFormDataPart("affectedMaintenanceID", null);
+                    multipartBuilder.addFormDataPart("affectedHydraulicUnitID", orderID);
 
                     files.forEach((name, file) -> multipartBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
 
