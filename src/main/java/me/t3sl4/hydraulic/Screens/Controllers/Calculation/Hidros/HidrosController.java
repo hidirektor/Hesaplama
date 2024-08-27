@@ -406,7 +406,11 @@ public class HidrosController {
 
     private void initPompa() {
         pompaComboBox.getItems().clear();
-        pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaKapasiteDegerleriHidros);
+        if(uniteTipiDurumu.equals("Hidros")) {
+            pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaKapasiteDegerleriHidros);
+        } else {
+            pompaComboBox.getItems().addAll(ExcelUtil.dataManipulator.pompaKapasiteDegerleriIthal);
+        }
     }
 
     private void initUniteTipi() {

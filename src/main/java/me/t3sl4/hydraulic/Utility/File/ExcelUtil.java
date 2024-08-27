@@ -75,6 +75,7 @@ public class ExcelUtil {
         readExcel4HidrosMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
         readExcel4IthalMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPompaKapasite(Launcher.excelDBPath, dataManipulator);
+        readExcel4IthalPompaKapasite(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosTankDikey(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosTankYatay(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPlatform(Launcher.excelDBPath, dataManipulator);
@@ -1085,6 +1086,28 @@ public class ExcelUtil {
                 Cell cell = row.getCell(0);
                 String data = cell.getStringCellValue();
                 dataManipulator.pompaKapasiteDegerleriHidros.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4IthalPompaKapasite(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "İthal-Pompa";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.pompaKapasiteDegerleriIthal.add(data);
             }
 
             workbook.close();

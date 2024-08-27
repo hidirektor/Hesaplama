@@ -107,6 +107,7 @@ public class DataManipulator {
     public ArrayList<String> motorDegerleriHidros220 = new ArrayList<>();
     public ArrayList<String> motorDegerleriIthal220 = new ArrayList<>();
     public ArrayList<String> pompaKapasiteDegerleriHidros = new ArrayList<>();
+    public ArrayList<String> pompaKapasiteDegerleriIthal = new ArrayList<>();
     public ArrayList<String> tankKapasitesiDegerleriHidrosDikey = new ArrayList<>();
     public ArrayList<String> tankKapasitesiDegerleriHidrosYatay = new ArrayList<>();
     public ArrayList<String> platformDegerleriHidros = new ArrayList<>();
