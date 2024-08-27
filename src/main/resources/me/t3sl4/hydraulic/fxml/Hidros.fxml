@@ -22,7 +22,7 @@
                 </TableView>
                 <Text fill="#B7C3D7" layoutX="71.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Tipi" />
                 <Text fill="#B7C3D7" layoutX="60.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor Voltaj" />
-                <Text fill="#B7C3D7" layoutX="77.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
+                <Text fill="#B7C3D7" layoutX="250.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pompa" />
                 <Text fill="#B7C3D7" layoutX="137.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası" />
                 <Text fill="#B7C3D7" layoutX="241.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Valf Tipi" />
                 <Text fill="#B7C3D7" layoutX="241.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Valf Tipi" />
@@ -42,23 +42,23 @@
                         <ImageView fx:id="sonucTankGorsel" fitHeight="399.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </StackPane>
-            <ComboBox fx:id="pompaComboBox" disable="true" layoutX="27.0" layoutY="135.0" onAction="#pompaPressed" prefHeight="18.0" prefWidth="137.0" promptText="Pompa" />
+            <ComboBox fx:id="pompaComboBox" disable="true" layoutX="200.0" layoutY="135.0" onAction="#pompaPressed" prefHeight="18.0" prefWidth="137.0" promptText="Pompa" />
             <ComboBox fx:id="tankTipiComboBox" disable="true" layoutX="26.0" layoutY="185.0" onAction="#tankTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Tank Tipi" />
             <ComboBox fx:id="birinciValfComboBox" disable="true" layoutX="200.0" layoutY="238.0" onAction="#birinciValfPressed" prefHeight="18.0" prefWidth="137.0" promptText="1. Valf Tipi" />
             <ComboBox fx:id="ikinciValfComboBox" disable="true" layoutX="200.0" layoutY="291.0" onAction="#ikinciValfPressed" prefHeight="18.0" prefWidth="137.0" promptText="2. Valf Tipi" />
             <ComboBox fx:id="platformTipiComboBox" disable="true" layoutX="26.0" layoutY="237.0" onAction="#platformTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Platform Tipi" />
-            <ComboBox fx:id="motorGucuComboBox" disable="true" layoutX="191.0" layoutY="86.0" onAction="#motorGucuPressed" prefHeight="18.0" prefWidth="137.0" promptText="Motor Gücü" />
-            <Text fill="#B7C3D7" layoutX="228.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor Gücü" />
+            <ComboBox fx:id="motorGucuComboBox" disable="true" layoutX="27.0" layoutY="135.0" onAction="#motorGucuPressed" prefHeight="18.0" prefWidth="137.0" promptText="Motor Gücü" />
+            <Text fill="#B7C3D7" layoutX="64.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor Gücü" />
             <Text fill="#B7C3D7" layoutX="228.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Kapasitesi" />
-            <ComboBox fx:id="tankKapasitesiComboBox" disable="true" layoutX="200.0" layoutY="185.0" onAction="#tankKapasitesiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Tank Kapasitesi" />
             <Text fill="#B7C3D7" layoutX="61.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="İniş Metodu" />
             <ComboBox fx:id="inisTipiComboBox" disable="true" layoutX="26.0" layoutY="290.0" onAction="#inisTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="İniş Metodu" />
             <Text fx:id="kullanilacakKabinText" fill="WHITE" layoutX="484.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanılacak Kabin: " textAlignment="CENTER" visible="false">
                <font>
                   <Font size="12.0" />
                </font></Text>
-            <Text fill="#B7C3D7" layoutX="234.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ünite Tipi" />
-            <ComboBox fx:id="uniteTipiComboBox" disable="true" layoutX="200.0" layoutY="135.0" onAction="#uniteTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Ünite Tipi" />
+            <Text fill="#B7C3D7" layoutX="235.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ünite Tipi" />
+            <ComboBox fx:id="uniteTipiComboBox" disable="true" layoutX="201.0" layoutY="85.0" onAction="#uniteTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Ünite Tipi" />
+            <TextField fx:id="tankKapasitesiField" disable="true" layoutX="188.0" layoutY="184.0" onKeyTyped="#siparisNumarasiEntered" promptText="Tank Kapasitesi" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
             </children>
         </AnchorPane>
     </children>

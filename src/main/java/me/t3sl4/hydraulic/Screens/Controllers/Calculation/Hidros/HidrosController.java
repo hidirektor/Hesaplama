@@ -54,7 +54,7 @@ public class HidrosController {
     private ComboBox<String> tankTipiComboBox;
 
     @FXML
-    private ComboBox<String> tankKapasitesiComboBox;
+    private TextField tankKapasitesiField;
 
     @FXML
     private ComboBox<String> birinciValfComboBox;
@@ -147,8 +147,7 @@ public class HidrosController {
         uniteTipiComboBox.setPromptText("Ünite Tipi");
         tankTipiComboBox.getSelectionModel().clearSelection();
         tankTipiComboBox.setPromptText("Tank Tipi");
-        tankKapasitesiComboBox.getSelectionModel().clearSelection();
-        tankKapasitesiComboBox.setPromptText("Tank Kapasitesi");
+        tankKapasitesiField.setText("");
         platformTipiComboBox.getSelectionModel().clearSelection();
         platformTipiComboBox.setPromptText("Platform Tipi");
         birinciValfComboBox.getSelectionModel().clearSelection();
@@ -243,8 +242,18 @@ public class HidrosController {
         motorComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if(!motorComboBox.getItems().isEmpty() && newValue != null) {
                 secilenMotorTipi = newValue.toString();
-                initMotorGucu();
+                initUniteTipi();
                 if(secilenMotorTipi != null) {
+                    tabloGuncelle();
+                }
+            }
+        });
+
+        uniteTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if(!uniteTipiComboBox.getItems().isEmpty() && newValue != null) {
+                uniteTipiDurumu = newValue.toString();
+                initMotorGucu();
+                if(secilenPompa != null) {
                     tabloGuncelle();
                 }
             }
@@ -263,16 +272,6 @@ public class HidrosController {
         pompaComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if(!pompaComboBox.getItems().isEmpty() && newValue != null) {
                 secilenPompa = newValue.toString();
-                initUniteTipi();
-                if(secilenPompa != null) {
-                    tabloGuncelle();
-                }
-            }
-        });
-
-        uniteTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            if(!uniteTipiComboBox.getItems().isEmpty() && newValue != null) {
-                uniteTipiDurumu = newValue.toString();
                 initTankTipi();
                 if(secilenPompa != null) {
                     tabloGuncelle();
@@ -290,8 +289,8 @@ public class HidrosController {
             }
         });
 
-        tankKapasitesiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            if(!tankKapasitesiComboBox.getItems().isEmpty() && newValue != null) {
+        tankKapasitesiField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!tankKapasitesiField.getText().isEmpty()) {
                 secilenTankKapasitesi = newValue.toString();
                 initPlatformTipi();
                 if(secilenTankKapasitesi != null) {
@@ -390,10 +389,18 @@ public class HidrosController {
 
     private void initMotorGucu() {
         motorGucuComboBox.getItems().clear();
-        if(secilenMotorTipi.equals("380 V")) {
-            motorGucuComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleriHidros380);
+        if(uniteTipiDurumu.equals("Hidros")) {
+            if(secilenMotorTipi.equals("380 V")) {
+                motorGucuComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleriHidros380);
+            } else if(secilenMotorTipi.equals("220 V")) {
+                motorGucuComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleriHidros220);
+            }
         } else {
-            motorGucuComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleriHidros220);
+            if(secilenMotorTipi.equals("380 V")) {
+                motorGucuComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleriIthal380);
+            } else if(secilenMotorTipi.equals("220 V")) {
+                motorGucuComboBox.getItems().addAll(ExcelUtil.dataManipulator.motorDegerleriIthal220);
+            }
         }
     }
 
@@ -409,16 +416,11 @@ public class HidrosController {
 
     private void initTankTipi() {
         tankTipiComboBox.getItems().clear();
-        tankTipiComboBox.getItems().addAll("Dikey", "Yatay");
+        tankTipiComboBox.getItems().addAll("Dikey", "Yatay", "Özel");
     }
 
     private void initTankKapasitesi() {
-        tankKapasitesiComboBox.getItems().clear();
-        if(secilenTankTipi.equals("Dikey")) {
-            tankKapasitesiComboBox.getItems().addAll(ExcelUtil.dataManipulator.tankKapasitesiDegerleriHidrosDikey);
-        } else {
-            tankKapasitesiComboBox.getItems().addAll(ExcelUtil.dataManipulator.tankKapasitesiDegerleriHidrosYatay);
-        }
+        //Eklenebilir ileride
     }
 
     private void initPlatformTipi() {
@@ -453,7 +455,8 @@ public class HidrosController {
     public void motorTipiPressed() {
         if(motorComboBox.getValue() != null) {
             secilenMotorTipi = motorComboBox.getValue();
-            motorGucuComboBox.setDisable(false);
+            uniteTipiComboBox.setDisable(false);
+
         }
     }
 
@@ -469,7 +472,7 @@ public class HidrosController {
     public void pompaPressed() {
         if(pompaComboBox.getValue() != null) {
             secilenPompa = pompaComboBox.getValue();
-            uniteTipiComboBox.setDisable(false);
+            tankTipiComboBox.setDisable(false);
         }
     }
 
@@ -477,7 +480,7 @@ public class HidrosController {
     public void uniteTipiPressed() {
         if(uniteTipiComboBox.getValue() != null) {
             uniteTipiDurumu = uniteTipiComboBox.getValue();
-            tankTipiComboBox.setDisable(false);
+            motorGucuComboBox.setDisable(false);
         }
     }
 
@@ -485,15 +488,7 @@ public class HidrosController {
     public void tankTipiPressed() {
         if(tankTipiComboBox.getValue() != null) {
             secilenTankTipi = tankTipiComboBox.getValue();
-            tankKapasitesiComboBox.setDisable(false);
-        }
-    }
-
-    @FXML
-    public void tankKapasitesiPressed() {
-        if(tankKapasitesiComboBox.getValue() != null) {
-            secilenTankKapasitesi = tankKapasitesiComboBox.getValue();
-            platformTipiComboBox.setDisable(false);
+            tankKapasitesiField.setDisable(false);
         }
     }
 
@@ -546,18 +541,18 @@ public class HidrosController {
             return siparisNumarasi.getText().isEmpty() ||
                     motorComboBox.getSelectionModel().isEmpty() || motorGucuComboBox.getSelectionModel().isEmpty() ||
                     pompaComboBox.getSelectionModel().isEmpty() || tankTipiComboBox.getSelectionModel().isEmpty() ||
-                    tankKapasitesiComboBox.getSelectionModel().isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty() ||
+                    secilenTankKapasitesi.isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty() ||
                     inisTipiComboBox.getSelectionModel().isEmpty();
         } else if(Objects.equals(secilenPlatformTipi, "Devirmeli") || Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
             return siparisNumarasi.getText().isEmpty() ||
                     motorComboBox.getSelectionModel().isEmpty() || motorGucuComboBox.getSelectionModel().isEmpty() ||
                     pompaComboBox.getSelectionModel().isEmpty() || tankTipiComboBox.getSelectionModel().isEmpty() ||
-                    tankKapasitesiComboBox.getSelectionModel().isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty();
+                    secilenTankKapasitesi.isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty();
         } else if(Objects.equals(secilenPlatformTipi, "Özel")) {
             return siparisNumarasi.getText().isEmpty() ||
                     motorComboBox.getSelectionModel().isEmpty() || motorGucuComboBox.getSelectionModel().isEmpty() ||
                     pompaComboBox.getSelectionModel().isEmpty() || tankTipiComboBox.getSelectionModel().isEmpty() ||
-                    tankKapasitesiComboBox.getSelectionModel().isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty() ||
+                    secilenTankKapasitesi.isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty() ||
                     birinciValfComboBox.getSelectionModel().isEmpty() || ikinciValfComboBox.getSelectionModel().isEmpty();
         }
 
@@ -635,7 +630,7 @@ public class HidrosController {
         pompaComboBox.setDisable(true);
         uniteTipiComboBox.setDisable(true);
         tankTipiComboBox.setDisable(true);
-        tankKapasitesiComboBox.setDisable(true);
+        tankKapasitesiField.setDisable(true);
         birinciValfComboBox.setDisable(true);
         inisTipiComboBox.setDisable(true);
         platformTipiComboBox.setDisable(true);
