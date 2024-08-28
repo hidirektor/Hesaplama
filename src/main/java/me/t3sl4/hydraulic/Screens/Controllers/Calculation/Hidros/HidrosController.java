@@ -497,6 +497,13 @@ public class HidrosController {
     }
 
     @FXML
+    public void tankKapasitesiEntered() {
+        if (tankKapasitesiField.getText() != null) {
+            platformTipiComboBox.setDisable(false);
+        }
+    }
+
+    @FXML
     public void platformTipiPressed() {
         if(platformTipiComboBox.getValue() != null) {
             secilenPlatformTipi = platformTipiComboBox.getValue();
