@@ -72,7 +72,7 @@ public class ReqUtil {
         });
     }
 
-    public static void updateUserReq(Runnable onUserUpdateComplete) {
+    public static void updateUserReq(Runnable onUserUpdateComplete, Runnable onFailure) {
         String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
         String profileInfoBody = "{\"userID\": \"" + Launcher.getUserID() + "\"}";
 
@@ -99,6 +99,9 @@ public class ReqUtil {
 
             @Override
             public void onFailure() {
+                if(onFailure != null) {
+                    onFailure.run();
+                }
                 System.out.println("Kullanıcı bilgileri alınamadı!");
             }
         });
@@ -112,6 +115,8 @@ public class ReqUtil {
                 e.printStackTrace();
             }
             stage.close();
+        }, () -> {
+            Utils.deleteLocalData();
         });
     }
 }

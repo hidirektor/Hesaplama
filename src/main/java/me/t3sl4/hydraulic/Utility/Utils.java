@@ -8,10 +8,14 @@ import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.Screens.Main;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
 import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
 import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utility.File.SystemUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -231,5 +235,61 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static void deleteLocalData() {
+        deleteFile(Launcher.tokenPath);
+
+        deleteDirectory(new File(Launcher.profilePhotoLocalPath));
+
+        deleteDirectory(new File(Launcher.pdfFileLocalPath));
+
+        deleteDirectory(new File(Launcher.excelFileLocalPath));
+
+        deleteDirectory(new File(Launcher.dataFileLocalPath));
+
+        Main.loggedInUser = null;
+        Launcher.accessToken = null;
+        Launcher.refreshToken = null;
+        Launcher.userID = null;
+        Launcher.userName = null;
+
+        SystemUtil.firstLaunch();
+        SystemUtil.systemSetup();
+    }
+
+    private static void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("Dosya silindi: " + filePath);
+            } else {
+                System.err.println("Dosya silinemedi: " + filePath);
+            }
+        } else {
+            System.out.println("Dosya bulunamadı: " + filePath);
+        }
+    }
+
+    private static void deleteDirectory(File directory) {
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        deleteDirectory(file);
+                    } else {
+                        deleteFile(file.getAbsolutePath());
+                    }
+                }
+            }
+            if (directory.delete()) {
+                System.out.println("Dizin silindi: " + directory.getAbsolutePath());
+            } else {
+                System.err.println("Dizin silinemedi: " + directory.getAbsolutePath());
+            }
+        } else {
+            System.out.println("Dizin bulunamadı: " + directory.getAbsolutePath());
+        }
     }
 }

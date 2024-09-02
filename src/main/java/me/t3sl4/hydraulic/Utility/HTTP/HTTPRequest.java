@@ -2,7 +2,7 @@ package me.t3sl4.hydraulic.Utility.HTTP;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import me.t3sl4.hydraulic.Screens.Main;
+import me.t3sl4.hydraulic.Launcher;
 import okhttp3.*;
 
 import java.io.File;
@@ -188,7 +188,7 @@ public class HTTPRequest {
                     multipartBuilder.addFormDataPart("orderID", orderID);
                     multipartBuilder.addFormDataPart("hydraulicType", hydraulicType);
                     multipartBuilder.addFormDataPart("operationPlatform", "Desktop -- JavaFX");
-                    multipartBuilder.addFormDataPart("sourceUserID", Main.loggedInUser.getUserID());
+                    multipartBuilder.addFormDataPart("sourceUserID", Launcher.userID);
                     multipartBuilder.addFormDataPart("affectedUserID", null);
                     multipartBuilder.addFormDataPart("affectedUserName", null);
                     multipartBuilder.addFormDataPart("affectedMachineID", null);
@@ -218,6 +218,7 @@ public class HTTPRequest {
                         } else {
                             Platform.runLater(callback::onFailure);
                         }
+                        System.out.println(response);
                     }
                 } catch (IOException e) {
                     Platform.runLater(callback::onFailure);
