@@ -49,6 +49,8 @@ public class Launcher {
             System.setProperty("CG_PDF_VERBOSE", "1");
             System.setProperty("apple.awt.UIElement", "true");
         }
+        System.setProperty("java.util.logging.level", "WARNING");
+
         GeneralFileSystem.firstLaunch();
         Main.main(args);
     }
