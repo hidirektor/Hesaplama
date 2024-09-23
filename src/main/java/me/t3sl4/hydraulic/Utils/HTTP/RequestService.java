@@ -3,7 +3,7 @@ package me.t3sl4.hydraulic.Utils.HTTP;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utils.Data.User.User;
+import me.t3sl4.hydraulic.Utils.UserDataService.User;
 import me.t3sl4.hydraulic.Utils.Utils;
 import org.json.JSONObject;
 

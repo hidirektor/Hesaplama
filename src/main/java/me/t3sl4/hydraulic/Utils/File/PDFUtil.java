@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PDFFileUtil {
+public class PDFUtil {
 
     private static final Logger logger = Logger.getLogger(Utils.class.getName());
 

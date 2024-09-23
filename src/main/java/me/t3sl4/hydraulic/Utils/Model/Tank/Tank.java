@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utils.Data.Tank;
+package me.t3sl4.hydraulic.Utils.Model.Tank;
 
 public class Tank {
 

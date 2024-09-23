@@ -22,10 +22,10 @@ import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Component.FilterSwitch;
 import me.t3sl4.hydraulic.Screens.Controllers.Calculation.PopupController;
-import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utils.Data.HydraulicUnit.HydraulicInfo;
-import me.t3sl4.hydraulic.Utils.Data.User.Profile;
-import me.t3sl4.hydraulic.Utils.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utils.SceneUtil;
+import me.t3sl4.hydraulic.Utils.Model.HydraulicUnit.HydraulicInfo;
+import me.t3sl4.hydraulic.Utils.UserDataService.Profile;
+import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
 import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utils.SystemDefaults;
 import me.t3sl4.hydraulic.Utils.Utils;
@@ -552,12 +552,12 @@ public class MainController implements Initializable {
                 parametrePane.setLayoutY(centerY);
 
                 PopupController popupController = loader.getController();
-                popupController.setValues(ExcelUtil.dataManipulator.kampanaBoslukX, ExcelUtil.dataManipulator.kampanaBoslukY,
-                        ExcelUtil.dataManipulator.valfBoslukX, ExcelUtil.dataManipulator.valfBoslukYArka, ExcelUtil.dataManipulator.valfBoslukYOn,
-                        ExcelUtil.dataManipulator.kilitliBlokAraBoslukX, ExcelUtil.dataManipulator.tekHizAraBoslukX, ExcelUtil.dataManipulator.ciftHizAraBoslukX,
-                        ExcelUtil.dataManipulator.kompanzasyonTekHizAraBoslukX, ExcelUtil.dataManipulator.sogutmaAraBoslukX, ExcelUtil.dataManipulator.sogutmaAraBoslukYkOn,
-                        ExcelUtil.dataManipulator.sogutmaAraBoslukYkArka, ExcelUtil.dataManipulator.kilitMotorKampanaBosluk, ExcelUtil.dataManipulator.kilitMotorMotorBoslukX,
-                        ExcelUtil.dataManipulator.kilitMotorBoslukYOn, ExcelUtil.dataManipulator.kilitMotorBoslukYArka, ExcelUtil.dataManipulator.kayipLitre, ExcelUtil.dataManipulator.kilitPlatformMotorBosluk, ExcelUtil.dataManipulator.valfXBoslukSogutma);
+                popupController.setValues(ExcelDataReadUtil.dataManipulator.kampanaBoslukX, ExcelDataReadUtil.dataManipulator.kampanaBoslukY,
+                        ExcelDataReadUtil.dataManipulator.valfBoslukX, ExcelDataReadUtil.dataManipulator.valfBoslukYArka, ExcelDataReadUtil.dataManipulator.valfBoslukYOn,
+                        ExcelDataReadUtil.dataManipulator.kilitliBlokAraBoslukX, ExcelDataReadUtil.dataManipulator.tekHizAraBoslukX, ExcelDataReadUtil.dataManipulator.ciftHizAraBoslukX,
+                        ExcelDataReadUtil.dataManipulator.kompanzasyonTekHizAraBoslukX, ExcelDataReadUtil.dataManipulator.sogutmaAraBoslukX, ExcelDataReadUtil.dataManipulator.sogutmaAraBoslukYkOn,
+                        ExcelDataReadUtil.dataManipulator.sogutmaAraBoslukYkArka, ExcelDataReadUtil.dataManipulator.kilitMotorKampanaBosluk, ExcelDataReadUtil.dataManipulator.kilitMotorMotorBoslukX,
+                        ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYOn, ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYArka, ExcelDataReadUtil.dataManipulator.kayipLitre, ExcelDataReadUtil.dataManipulator.kilitPlatformMotorBosluk, ExcelDataReadUtil.dataManipulator.valfXBoslukSogutma);
                 popupController.showValues();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);

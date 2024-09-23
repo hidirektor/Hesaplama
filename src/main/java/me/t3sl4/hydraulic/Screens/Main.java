@@ -2,8 +2,9 @@ package me.t3sl4.hydraulic.Screens;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.Utils.Data.User.User;
-import me.t3sl4.hydraulic.Utils.File.SystemUtil;
+import me.t3sl4.hydraulic.Utils.SceneUtil;
+import me.t3sl4.hydraulic.Utils.UserDataService.User;
+import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
 
 public class Main extends Application {
     private double x, y;
@@ -13,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         SceneUtil.openMainScreen();
 
-        Thread systemThread = new Thread(SystemUtil::systemSetup);
+        Thread systemThread = new Thread(GeneralFileSystem::systemSetup);
 
         systemThread.start();
     }

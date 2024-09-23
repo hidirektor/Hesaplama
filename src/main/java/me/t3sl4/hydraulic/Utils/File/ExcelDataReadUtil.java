@@ -1,8 +1,8 @@
 package me.t3sl4.hydraulic.Utils.File;
 
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utils.Data.Excel.DataManipulator;
-import me.t3sl4.hydraulic.Utils.Data.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.Model.Excel.DataManipulator;
+import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
@@ -12,9 +12,9 @@ import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ExcelUtil {
+public class ExcelDataReadUtil {
 
-    private static final Logger logger = Logger.getLogger(ExcelUtil.class.getName());
+    private static final Logger logger = Logger.getLogger(ExcelDataReadUtil.class.getName());
 
     public static DataManipulator dataManipulator;
 

@@ -9,9 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.Utils.Data.Table.ParcaTableData;
-import me.t3sl4.hydraulic.Utils.Data.Tank.Tank;
-import me.t3sl4.hydraulic.Utils.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utils.Model.Table.ParcaTableData;
+import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
 import me.t3sl4.hydraulic.Utils.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -207,23 +207,23 @@ public class ParcaController {
 
         if(KlasikController.secilenPompaVal >= 33.3) {
             if(KlasikController.secilenKampana == 250) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana2502k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana2502k;
             } else if(KlasikController.secilenKampana == 300) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana3002k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana3002k;
             } else if(KlasikController.secilenKampana == 350) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana3502k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana3502k;
             } else if(KlasikController.secilenKampana == 400) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana4002k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana4002k;
             }
         } else {
             if(KlasikController.secilenKampana == 250) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana2501k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana2501k;
             } else if(KlasikController.secilenKampana == 300) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana3001k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana3001k;
             } else if(KlasikController.secilenKampana == 350) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana3501k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana3501k;
             } else if(KlasikController.secilenKampana == 400) {
-                loadingList = ExcelUtil.dataManipulator.parcaListesiKampana4001k;
+                loadingList = ExcelDataReadUtil.dataManipulator.parcaListesiKampana4001k;
             }
         }
 
@@ -241,7 +241,7 @@ public class ParcaController {
 
     private void loadPompaParca() {
         if(Objects.equals(KlasikController.secilenPompa, "9.5 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa95) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa95) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -252,7 +252,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "11.9 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa119) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa119) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -263,7 +263,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "14 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa14) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa14) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -274,7 +274,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "14.6 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa146) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa146) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -285,7 +285,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "16.8 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa168) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa168) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -296,7 +296,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "19.2 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa192) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa192) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -307,7 +307,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "22.9 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa229) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa229) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -318,7 +318,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "28.1 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa281) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa281) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -329,7 +329,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "28.8 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa288) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa288) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -340,7 +340,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "33.3 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa333) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa333) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -351,7 +351,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "37.9 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa379) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa379) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -362,7 +362,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "42.6 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa426) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa426) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -373,7 +373,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "45.5 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa455) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa455) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -384,7 +384,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "49.4 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa494) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa494) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -395,7 +395,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenPompa, "56.1 cc")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiPompa561) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiPompa561) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -410,7 +410,7 @@ public class ParcaController {
 
     private void loadMotorParca() {
         if(Objects.equals(KlasikController.secilenMotor, "2.2 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor202) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor202) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -421,7 +421,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "3 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor3) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor3) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -432,7 +432,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "4 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor4) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor4) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -443,7 +443,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "5.5 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor55) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor55) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -454,7 +454,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor55Kompakt) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor55Kompakt) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -465,7 +465,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor75Kompakt) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor75Kompakt) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -476,7 +476,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "11 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor11) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor11) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -487,7 +487,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor11Kompakt) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor11Kompakt) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -498,7 +498,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "15 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor15) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor15) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -509,7 +509,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "18.5 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor185) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor185) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -520,7 +520,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "22 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor22) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor22) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -531,7 +531,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenMotor, "37 kW")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiMotor37) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiMotor37) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -550,7 +550,7 @@ public class ParcaController {
 
         if(secilenPompaVal < 33.3) {
             if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
-                for (String veri : ExcelUtil.dataManipulator.parcaListesiKaplin1PN28) {
+                for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiKaplin1PN28) {
                     String[] veriParcalari = veri.split(";");
 
                     String malzemeKodu = veriParcalari[0];
@@ -561,7 +561,7 @@ public class ParcaController {
                     parcaListesiTablo.getItems().add(data);
                 }
             } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
-                for (String veri : ExcelUtil.dataManipulator.parcaListesiKaplin1PN38) {
+                for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiKaplin1PN38) {
                     String[] veriParcalari = veri.split(";");
 
                     String malzemeKodu = veriParcalari[0];
@@ -572,7 +572,7 @@ public class ParcaController {
                     parcaListesiTablo.getItems().add(data);
                 }
             } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37 kW")) {
-                for (String veri : ExcelUtil.dataManipulator.parcaListesiKaplin1PN42) {
+                for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiKaplin1PN42) {
                     String[] veriParcalari = veri.split(";");
 
                     String malzemeKodu = veriParcalari[0];
@@ -585,7 +585,7 @@ public class ParcaController {
             }
         } else {
             if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
-                for (String veri : ExcelUtil.dataManipulator.parcaListesiKaplin2PN28) {
+                for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiKaplin2PN28) {
                     String[] veriParcalari = veri.split(";");
 
                     String malzemeKodu = veriParcalari[0];
@@ -596,7 +596,7 @@ public class ParcaController {
                     parcaListesiTablo.getItems().add(data);
                 }
             } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
-                for (String veri : ExcelUtil.dataManipulator.parcaListesiKaplin2PN38) {
+                for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiKaplin2PN38) {
                     String[] veriParcalari = veri.split(";");
 
                     String malzemeKodu = veriParcalari[0];
@@ -607,7 +607,7 @@ public class ParcaController {
                     parcaListesiTablo.getItems().add(data);
                 }
             } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37 kW")) {
-                for (String veri : ExcelUtil.dataManipulator.parcaListesiKaplin2PN42) {
+                for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiKaplin2PN42) {
                     String[] veriParcalari = veri.split(";");
 
                     String malzemeKodu = veriParcalari[0];
@@ -623,7 +623,7 @@ public class ParcaController {
 
     private void loadValfBlokParca() {
         if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Tek Hız")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiValfBloklariTekHiz) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiValfBloklariTekHiz) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -634,7 +634,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Çift Hız")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiValfBloklariCiftHiz) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiValfBloklariCiftHiz) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -645,7 +645,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenValfTipi, "Kilitli Blok")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiValfBloklariKilitliBlok) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiValfBloklariKilitliBlok) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -656,7 +656,7 @@ public class ParcaController {
                 parcaListesiTablo.getItems().add(data);
             }
         } else if(Objects.equals(KlasikController.secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiValfBloklariKompanzasyon) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiValfBloklariKompanzasyon) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -671,7 +671,7 @@ public class ParcaController {
 
     private void loadBasincSalteriParca() {
         if(Objects.equals(basincSalteriDurumu, "Var")) {
-            for (String veri : ExcelUtil.dataManipulator.parcaListesiBasincSalteri) {
+            for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiBasincSalteri) {
                 String[] veriParcalari = veri.split(";");
 
                 String malzemeKodu = veriParcalari[0];
@@ -697,9 +697,9 @@ public class ParcaController {
 
     private void loadBasincStandart() {
         int index = 0;
-        int totalElements = ExcelUtil.dataManipulator.parcaListesiStandart.size();
+        int totalElements = ExcelDataReadUtil.dataManipulator.parcaListesiStandart.size();
 
-        for (String veri : ExcelUtil.dataManipulator.parcaListesiStandart) {
+        for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiStandart) {
             String[] veriParcalari = veri.split(";");
 
             String malzemeKodu = veriParcalari[0];
@@ -735,7 +735,7 @@ public class ParcaController {
     }
 
     private void loadSogutucuParca() {
-        for (String veri : ExcelUtil.dataManipulator.parcaListesiSogutucu) {
+        for (String veri : ExcelDataReadUtil.dataManipulator.parcaListesiSogutucu) {
             String[] veriParcalari = veri.split(";");
 
             String malzemeKodu = veriParcalari[0];

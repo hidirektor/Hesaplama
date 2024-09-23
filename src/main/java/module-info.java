@@ -22,17 +22,16 @@ module me.t3sl.hydraulic {
     exports me.t3sl4.hydraulic.Screens.Controllers;
     exports me.t3sl4.hydraulic.Utils;
     opens me.t3sl4.hydraulic.Screens.Controllers to javafx.fxml;
-    opens me.t3sl4.hydraulic.Utils to javafx.base;
     exports me.t3sl4.hydraulic.Utils.HTTP;
     opens me.t3sl4.hydraulic.Utils.HTTP to javafx.base;
-    exports me.t3sl4.hydraulic.Utils.Data.Table;
-    opens me.t3sl4.hydraulic.Utils.Data.Table to javafx.base;
-    exports me.t3sl4.hydraulic.Utils.Data.Excel;
-    opens me.t3sl4.hydraulic.Utils.Data.Excel to javafx.base;
-    exports me.t3sl4.hydraulic.Utils.Data.User;
-    opens me.t3sl4.hydraulic.Utils.Data.User to javafx.base;
-    exports me.t3sl4.hydraulic.Utils.Data.HydraulicUnit;
-    opens me.t3sl4.hydraulic.Utils.Data.HydraulicUnit to javafx.base;
+    exports me.t3sl4.hydraulic.Utils.Model.Table;
+    opens me.t3sl4.hydraulic.Utils.Model.Table to javafx.base;
+    exports me.t3sl4.hydraulic.Utils.Model.Excel;
+    opens me.t3sl4.hydraulic.Utils.Model.Excel to javafx.base;
+    exports me.t3sl4.hydraulic.Utils.UserDataService;
+    opens me.t3sl4.hydraulic.Utils.UserDataService to javafx.base;
+    exports me.t3sl4.hydraulic.Utils.Model.HydraulicUnit;
+    opens me.t3sl4.hydraulic.Utils.Model.HydraulicUnit to javafx.base;
     exports me.t3sl4.hydraulic.Screens;
     opens me.t3sl4.hydraulic.Screens to javafx.base, javafx.fxml;
     exports me.t3sl4.hydraulic.Screens.Controllers.Calculation;
@@ -47,4 +46,5 @@ module me.t3sl.hydraulic {
     opens me.t3sl4.hydraulic.Screens.Controllers.Auth.ResetPass to javafx.fxml;
     exports me.t3sl4.hydraulic.Screens.Controllers.User;
     opens me.t3sl4.hydraulic.Screens.Controllers.User to javafx.fxml;
+    opens me.t3sl4.hydraulic.Utils to javafx.base, javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utils.Data.User;
+package me.t3sl4.hydraulic.Utils.UserDataService;
 
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;

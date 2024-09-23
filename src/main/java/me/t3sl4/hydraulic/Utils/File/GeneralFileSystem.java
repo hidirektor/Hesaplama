@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class SystemUtil {
+public class GeneralFileSystem {
 
     public static void firstLaunch() {
         changeDataStoragePath();
@@ -24,7 +24,7 @@ public class SystemUtil {
 
     public static void systemSetup() {
         fileCopy();
-        ExcelUtil.excelDataRead();
+        ExcelDataReadUtil.excelDataRead();
     }
 
     public static String getOperatingSystem() {

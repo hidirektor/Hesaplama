@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Controllers.MainController;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.Data.User.User;
+import me.t3sl4.hydraulic.Utils.UserDataService.User;
 import me.t3sl4.hydraulic.Utils.HTTP.RequestService;
 import me.t3sl4.hydraulic.Utils.SystemDefaults;
 import me.t3sl4.hydraulic.Utils.Utils;

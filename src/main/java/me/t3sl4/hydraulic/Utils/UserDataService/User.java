@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utils.Data.User;
+package me.t3sl4.hydraulic.Utils.UserDataService;
 
 public class User {
     private String userID;

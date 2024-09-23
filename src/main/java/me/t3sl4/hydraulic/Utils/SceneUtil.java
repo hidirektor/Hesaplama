@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Screens;
+package me.t3sl4.hydraulic.Utils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

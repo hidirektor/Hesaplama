@@ -1,7 +1,7 @@
 package me.t3sl4.hydraulic;
 
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.File.SystemUtil;
+import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
 
 public class Launcher {
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
@@ -49,7 +49,7 @@ public class Launcher {
             System.setProperty("CG_PDF_VERBOSE", "1");
             System.setProperty("apple.awt.UIElement", "true");
         }
-        SystemUtil.firstLaunch();
+        GeneralFileSystem.firstLaunch();
         Main.main(args);
     }
 
