@@ -1,10 +1,10 @@
-package me.t3sl4.hydraulic.Utility;
+package me.t3sl4.hydraulic.Utils.HTTP;
 
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utility.Data.User.User;
-import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.Data.User.User;
+import me.t3sl4.hydraulic.Utils.Utils;
 import org.json.JSONObject;
 
 import java.io.FileWriter;
@@ -14,7 +14,7 @@ import static me.t3sl4.hydraulic.Launcher.BASE_URL;
 import static me.t3sl4.hydraulic.Launcher.profileInfoURLPrefix;
 import static me.t3sl4.hydraulic.Screens.Main.loggedInUser;
 
-public class ReqUtil {
+public class RequestService {
 
     public static void loginReq(String loginUrl, String jsonLoginBody, Stage stage, String userName, String password, Label lblErrors) throws IOException {
         HTTPRequest.sendJsonRequest(loginUrl, "POST", jsonLoginBody, new HTTPRequest.RequestCallback() {
@@ -108,7 +108,7 @@ public class ReqUtil {
     }
 
     public static void updateUserAndOpenMainScreen(Stage stage, Label inLabel) {
-        ReqUtil.updateUserReq(() -> {
+        RequestService.updateUserReq(() -> {
             try {
                 Utils.openMainScreen(inLabel);
             } catch (IOException e) {

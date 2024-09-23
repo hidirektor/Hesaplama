@@ -3,7 +3,7 @@ package me.t3sl4.hydraulic.Screens.Controllers.Calculation.Klasik;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.Utility.Utils;
+import me.t3sl4.hydraulic.Utils.Utils;
 
 public class CyclinderController {
 

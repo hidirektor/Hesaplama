@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.Data.User;
+package me.t3sl4.hydraulic.Utils.Data.User;
 
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility;
+package me.t3sl4.hydraulic.Utils;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,9 +11,9 @@ import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
-import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.File.SystemUtil;
+import me.t3sl4.hydraulic.Utils.Data.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utils.File.SystemUtil;
 
 import java.io.File;
 import java.io.IOException;

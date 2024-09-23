@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.HTTP;
+package me.t3sl4.hydraulic.Utils.HTTP;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;

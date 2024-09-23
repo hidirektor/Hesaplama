@@ -1,8 +1,8 @@
-package me.t3sl4.hydraulic.Utility.File;
+package me.t3sl4.hydraulic.Utils.File;
 
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utility.Data.Excel.DataManipulator;
-import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.Data.Excel.DataManipulator;
+import me.t3sl4.hydraulic.Utils.Data.Tank.Tank;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;

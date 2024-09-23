@@ -1,6 +1,6 @@
-package me.t3sl4.hydraulic.Utility.Data.Excel;
+package me.t3sl4.hydraulic.Utils.Data.Excel;
 
-import me.t3sl4.hydraulic.Utility.Data.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.Data.Tank.Tank;
 
 import java.util.ArrayList;
 import java.util.HashMap;

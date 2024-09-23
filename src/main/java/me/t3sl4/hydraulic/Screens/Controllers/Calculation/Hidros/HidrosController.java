@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utility.Data.Table.TableData;
-import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.File.PDFFileUtil;
-import me.t3sl4.hydraulic.Utility.File.SystemUtil;
-import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.Utils;
+import me.t3sl4.hydraulic.Utils.Data.Table.TableData;
+import me.t3sl4.hydraulic.Utils.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utils.File.PDFFileUtil;
+import me.t3sl4.hydraulic.Utils.File.SystemUtil;
+import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.Utils;
 
 import java.io.File;
 import java.io.IOException;

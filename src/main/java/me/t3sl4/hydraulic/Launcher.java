@@ -1,7 +1,7 @@
 package me.t3sl4.hydraulic;
 
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utility.File.SystemUtil;
+import me.t3sl4.hydraulic.Utils.File.SystemUtil;
 
 public class Launcher {
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";

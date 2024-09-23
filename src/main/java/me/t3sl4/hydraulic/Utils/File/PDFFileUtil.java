@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility.File;
+package me.t3sl4.hydraulic.Utils.File;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -13,7 +13,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utility.Utils;
+import me.t3sl4.hydraulic.Utils.Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

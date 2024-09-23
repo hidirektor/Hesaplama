@@ -23,12 +23,12 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Component.FilterSwitch;
 import me.t3sl4.hydraulic.Screens.Controllers.Calculation.PopupController;
 import me.t3sl4.hydraulic.Screens.SceneUtil;
-import me.t3sl4.hydraulic.Utility.Data.HydraulicUnit.HydraulicInfo;
-import me.t3sl4.hydraulic.Utility.Data.User.Profile;
-import me.t3sl4.hydraulic.Utility.File.ExcelUtil;
-import me.t3sl4.hydraulic.Utility.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Utility.SystemDefaults;
-import me.t3sl4.hydraulic.Utility.Utils;
+import me.t3sl4.hydraulic.Utils.Data.HydraulicUnit.HydraulicInfo;
+import me.t3sl4.hydraulic.Utils.Data.User.Profile;
+import me.t3sl4.hydraulic.Utils.File.ExcelUtil;
+import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.SystemDefaults;
+import me.t3sl4.hydraulic.Utils.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -53,7 +53,7 @@ import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.Launcher.*;
 import static me.t3sl4.hydraulic.Screens.Main.loggedInUser;
-import static me.t3sl4.hydraulic.Utility.Utils.openURL;
+import static me.t3sl4.hydraulic.Utils.Utils.openURL;
 
 public class MainController implements Initializable {
 

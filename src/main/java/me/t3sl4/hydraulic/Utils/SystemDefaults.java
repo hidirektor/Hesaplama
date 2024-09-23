@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.Utility;
+package me.t3sl4.hydraulic.Utils;
 
 public class SystemDefaults {
     public static boolean offlineMode = false;
