@@ -2,6 +2,7 @@ package me.t3sl4.hydraulic.Screens.Controllers.Calculation.Klasik;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -421,6 +422,13 @@ public class KlasikController {
         int height = 565;
 
         if(hesaplamaBitti) {
+            int selectedCylinders = showCyclinderPopup();
+            if (selectedCylinders == -1) {
+                // Kullanıcı popup'u iptal etti veya seçim yapmadı
+                Utils.showErrorMessage("Silindir sayısı seçilmedi. İşlem iptal edildi.");
+                return;
+            }
+
             pdfShaper(0);
             PDFFileUtil.coords2Png(startX, startY, width, height, exportButton);
             pdfShaper(1);
@@ -1391,6 +1399,32 @@ public class KlasikController {
         if(secilenKilitPompa != null) {
             kilitPompaComboBox.getSelectionModel().clearSelection();
             secilenKilitPompa = null;
+        }
+    }
+
+    private int showCyclinderPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CyclinderCount.fxml"));
+            Parent root = loader.load();
+
+            CyclinderController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Silindir Seçimi");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            if (controller.isConfirmed()) {
+                return controller.getSelectedCylinders();
+            } else {
+                return -1;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Utils.showErrorMessage("Silindir seçimi sırasında bir hata oluştu.");
+            return -1;
         }
     }
 }
