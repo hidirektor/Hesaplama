@@ -58,7 +58,7 @@
                </font></Text>
             <Text fill="#B7C3D7" layoutX="235.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ünite Tipi" />
             <ComboBox fx:id="uniteTipiComboBox" disable="true" layoutX="201.0" layoutY="85.0" onAction="#uniteTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Ünite Tipi" />
-            <TextField fx:id="tankKapasitesiField" disable="true" layoutX="188.0" layoutY="184.0" onKeyTyped="#tankKapasitesiEntered" promptText="Tank Kapasitesi" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
+            <ComboBox fx:id="tankKapasitesiComboBox" disable="true" layoutX="202.0" layoutY="185.0" onAction="#tankKapasitesiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Tank Kapasitesi" />
             </children>
         </AnchorPane>
     </children>

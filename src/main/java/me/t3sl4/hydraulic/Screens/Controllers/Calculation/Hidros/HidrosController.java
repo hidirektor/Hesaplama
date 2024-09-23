@@ -54,7 +54,7 @@ public class HidrosController {
     private ComboBox<String> tankTipiComboBox;
 
     @FXML
-    private TextField tankKapasitesiField;
+    private ComboBox<String> tankKapasitesiComboBox;
 
     @FXML
     private ComboBox<String> birinciValfComboBox;
@@ -147,7 +147,7 @@ public class HidrosController {
         uniteTipiComboBox.setPromptText("Ünite Tipi");
         tankTipiComboBox.getSelectionModel().clearSelection();
         tankTipiComboBox.setPromptText("Tank Tipi");
-        tankKapasitesiField.setText("");
+        tankKapasitesiComboBox.setPromptText("Tank Kapasitesi");
         platformTipiComboBox.getSelectionModel().clearSelection();
         platformTipiComboBox.setPromptText("Platform Tipi");
         birinciValfComboBox.getSelectionModel().clearSelection();
@@ -282,15 +282,19 @@ public class HidrosController {
         tankTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if(!tankTipiComboBox.getItems().isEmpty() && newValue != null) {
                 secilenTankTipi = newValue.toString();
-                initTankKapasitesi();
+                if(secilenTankTipi.equals("Özel")) {
+                    //Özelde text field açılacak genişlik derinlik ve yükseklik için
+                } else {
+                    initTankKapasitesi();
+                }
                 if(secilenTankTipi != null) {
                     tabloGuncelle();
                 }
             }
         });
 
-        tankKapasitesiField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!tankKapasitesiField.getText().isEmpty()) {
+        tankKapasitesiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            if(!tankKapasitesiComboBox.getItems().isEmpty() && newValue != null) {
                 secilenTankKapasitesi = newValue.toString();
                 initPlatformTipi();
                 if(secilenTankKapasitesi != null) {
@@ -420,11 +424,17 @@ public class HidrosController {
 
     private void initTankTipi() {
         tankTipiComboBox.getItems().clear();
-        tankTipiComboBox.getItems().addAll("Dikey", "Yatay");
+        tankTipiComboBox.getItems().addAll("Dikey", "Yatay", "Özel");
     }
 
     private void initTankKapasitesi() {
-        //Eklenebilir ileride
+        if(secilenTankTipi.equals("Dikey")) {
+            tankKapasitesiComboBox.getItems().clear();
+            tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriHidrosDikey);
+        } else if(secilenTankTipi.equals("Yatay")) {
+            tankKapasitesiComboBox.getItems().clear();
+            tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriHidrosYatay);
+        }
     }
 
     private void initPlatformTipi() {
@@ -460,7 +470,6 @@ public class HidrosController {
         if(motorComboBox.getValue() != null) {
             secilenMotorTipi = motorComboBox.getValue();
             uniteTipiComboBox.setDisable(false);
-
         }
     }
 
@@ -492,13 +501,14 @@ public class HidrosController {
     public void tankTipiPressed() {
         if(tankTipiComboBox.getValue() != null) {
             secilenTankTipi = tankTipiComboBox.getValue();
-            tankKapasitesiField.setDisable(false);
+            tankKapasitesiComboBox.setDisable(false);
         }
     }
 
     @FXML
-    public void tankKapasitesiEntered() {
-        if (tankKapasitesiField.getText() != null) {
+    public void tankKapasitesiPressed() {
+        if(tankKapasitesiComboBox.getValue() != null) {
+            secilenTankKapasitesi = tankKapasitesiComboBox.getValue();
             platformTipiComboBox.setDisable(false);
         }
     }
@@ -641,7 +651,7 @@ public class HidrosController {
         pompaComboBox.setDisable(true);
         uniteTipiComboBox.setDisable(true);
         tankTipiComboBox.setDisable(true);
-        tankKapasitesiField.setDisable(true);
+        tankKapasitesiComboBox.setDisable(true);
         birinciValfComboBox.setDisable(true);
         inisTipiComboBox.setDisable(true);
         platformTipiComboBox.setDisable(true);
