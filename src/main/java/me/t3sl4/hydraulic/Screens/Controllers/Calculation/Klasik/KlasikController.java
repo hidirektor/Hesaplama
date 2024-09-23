@@ -725,9 +725,9 @@ public class KlasikController {
             valfTipiComboBox.setDisable(false);
             valfTipiComboBox.getItems().clear();
             if(valfTipiStat == 1) {
-                valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri1); //Kompanzasyon || İnişte Tek Hız
+                valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri2); //Kompanzasyon || İnişte Tek Hız
             } else {
-                valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri2); //İnişte Tek Hız, İnişte Çift Hız
+                valfTipiComboBox.getItems().addAll(ExcelUtil.dataManipulator.valfTipiDegerleri1); //İnişte Tek Hız, İnişte Çift Hız
             }
         } else if(componentName.equals("hidrolikKilit")) {
             hidrolikKilitComboBox.setDisable(false);
