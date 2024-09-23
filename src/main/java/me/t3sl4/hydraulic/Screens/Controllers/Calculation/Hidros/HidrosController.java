@@ -95,6 +95,21 @@ public class HidrosController {
     @FXML
     private Text kullanilacakKabinText;
 
+    @FXML
+    private Text tankOlculeriText;
+
+    @FXML
+    private TextField ozelTankGenislik;
+
+    @FXML
+    private TextField ozelTankYukseklik;
+
+    @FXML
+    private TextField ozelTankDerinlik;
+
+    @FXML
+    private Text tankKapasitesiMainText;
+
 
     public static String girilenSiparisNumarasi;
     public static String secilenMotorTipi = null;
@@ -103,6 +118,9 @@ public class HidrosController {
     public static String uniteTipiDurumu = null;
     public static String secilenTankTipi = null;
     public static String secilenTankKapasitesi = null;
+    public static String secilenOzelTankGenislik = null;
+    public static String secilenOzelTankYukseklik = null;
+    public static String secilenOzelTankDerinlik = null;
     public static String secilenBirinciValf = null;
     public static String secilenInisTipi = null;
     public static String secilenPlatformTipi = null;
@@ -121,6 +139,7 @@ public class HidrosController {
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
+        ozelTankStatus("null");
     }
 
     @FXML
@@ -161,6 +180,7 @@ public class HidrosController {
         disableAllCombos();
         sonucButtonDisable();
         kullanilacakKabinText.setVisible(false);
+        ozelTankStatus("null");
     }
 
     @FXML
@@ -283,8 +303,9 @@ public class HidrosController {
             if(!tankTipiComboBox.getItems().isEmpty() && newValue != null) {
                 secilenTankTipi = newValue.toString();
                 if(secilenTankTipi.equals("Özel")) {
-                    //Özelde text field açılacak genişlik derinlik ve yükseklik için
+                    ozelTankStatus("Özel");
                 } else {
+                    ozelTankStatus("Normal");
                     initTankKapasitesi();
                 }
                 if(secilenTankTipi != null) {
@@ -300,6 +321,36 @@ public class HidrosController {
                 if(secilenTankKapasitesi != null) {
                     tabloGuncelle();
                 }
+            }
+        });
+
+        ozelTankGenislik.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!ozelTankGenislik.getText().isEmpty()) {
+                secilenOzelTankGenislik = newValue;
+            }
+
+            if(secilenOzelTankGenislik != null) {
+                tabloGuncelle();
+            }
+        });
+
+        ozelTankYukseklik.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!ozelTankYukseklik.getText().isEmpty()) {
+                secilenOzelTankYukseklik = newValue;
+            }
+
+            if(secilenOzelTankYukseklik != null) {
+                tabloGuncelle();
+            }
+        });
+
+        ozelTankDerinlik.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!ozelTankDerinlik.getText().isEmpty()) {
+                secilenOzelTankDerinlik = newValue;
+            }
+            initPlatformTipi();
+            if(secilenOzelTankDerinlik != null) {
+                tabloGuncelle();
             }
         });
 
@@ -350,6 +401,30 @@ public class HidrosController {
         });
     }
 
+    private void ozelTankStatus(String tankType) {
+        if(tankType.equals("Özel")) {
+            tankKapasitesiMainText.setVisible(false);
+            tankKapasitesiComboBox.setVisible(false);
+            tankOlculeriText.setVisible(true);
+            ozelTankGenislik.setVisible(true);
+            ozelTankYukseklik.setVisible(true);
+            ozelTankDerinlik.setVisible(true);
+        } else if(tankType.equals("null")) {
+            //Başlangıç durumu:
+            tankOlculeriText.setVisible(false);
+            ozelTankGenislik.setVisible(false);
+            ozelTankYukseklik.setVisible(false);
+            ozelTankDerinlik.setVisible(false);
+        } else {
+            tankKapasitesiMainText.setVisible(true);
+            tankKapasitesiComboBox.setVisible(true);
+            tankOlculeriText.setVisible(false);
+            ozelTankGenislik.setVisible(false);
+            ozelTankYukseklik.setVisible(false);
+            ozelTankDerinlik.setVisible(false);
+        }
+    }
+
     private void tabloGuncelle() {
         sonucTablo.getItems().clear();
         TableData data = new TableData("Sipariş Numarası:", girilenSiparisNumarasi);
@@ -371,6 +446,15 @@ public class HidrosController {
         sonucTablo.getItems().add(data);
 
         data = new TableData("Tank Kapasitesi:", secilenTankKapasitesi);
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Özel Tank Genişlik:", secilenOzelTankGenislik);
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Özel Tank Yükseklik:", secilenOzelTankYukseklik);
+        sonucTablo.getItems().add(data);
+
+        data = new TableData("Özel Tank Derinlik:", secilenOzelTankDerinlik);
         sonucTablo.getItems().add(data);
 
         data = new TableData("Platform Tipi:", secilenPlatformTipi);
@@ -462,6 +546,27 @@ public class HidrosController {
     public void siparisNumarasiEntered() {
         if(siparisNumarasi.getText() != null) {
             motorComboBox.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void ozelTankGenislikEntered() {
+        if(ozelTankGenislik.getText() != null) {
+            ozelTankYukseklik.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void ozelTankYukseklikEntered() {
+        if(ozelTankYukseklik.getText() != null) {
+            ozelTankDerinlik.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void ozelTankDerinlikEntered() {
+        if(ozelTankDerinlik.getText() != null) {
+            platformTipiComboBox.setDisable(false);
         }
     }
 
@@ -558,23 +663,51 @@ public class HidrosController {
     }
 
     private boolean checkComboBox() {
-        if(Objects.equals(secilenPlatformTipi, "ESP")) {
-            return siparisNumarasi.getText().isEmpty() ||
-                    motorComboBox.getSelectionModel().isEmpty() || motorGucuComboBox.getSelectionModel().isEmpty() ||
-                    pompaComboBox.getSelectionModel().isEmpty() || tankTipiComboBox.getSelectionModel().isEmpty() ||
-                    secilenTankKapasitesi.isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty() ||
-                    inisTipiComboBox.getSelectionModel().isEmpty();
-        } else if(Objects.equals(secilenPlatformTipi, "Devirmeli") || Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
-            return siparisNumarasi.getText().isEmpty() ||
-                    motorComboBox.getSelectionModel().isEmpty() || motorGucuComboBox.getSelectionModel().isEmpty() ||
-                    pompaComboBox.getSelectionModel().isEmpty() || tankTipiComboBox.getSelectionModel().isEmpty() ||
-                    secilenTankKapasitesi.isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty();
-        } else if(Objects.equals(secilenPlatformTipi, "Özel")) {
-            return siparisNumarasi.getText().isEmpty() ||
-                    motorComboBox.getSelectionModel().isEmpty() || motorGucuComboBox.getSelectionModel().isEmpty() ||
-                    pompaComboBox.getSelectionModel().isEmpty() || tankTipiComboBox.getSelectionModel().isEmpty() ||
-                    secilenTankKapasitesi.isEmpty() || platformTipiComboBox.getSelectionModel().isEmpty() ||
-                    birinciValfComboBox.getSelectionModel().isEmpty() || ikinciValfComboBox.getSelectionModel().isEmpty();
+        boolean isSiparisNumarasiEmpty = isStringEmpty(siparisNumarasi.getText());
+        boolean isMotorComboBoxEmpty = isComboBoxEmpty(motorComboBox);
+        boolean isMotorGucuComboBoxEmpty = isComboBoxEmpty(motorGucuComboBox);
+        boolean isPompaComboBoxEmpty = isComboBoxEmpty(pompaComboBox);
+        boolean isTankTipiComboBoxEmpty = isComboBoxEmpty(tankTipiComboBox);
+        boolean isPlatformTipiComboBoxEmpty = isComboBoxEmpty(platformTipiComboBox);
+
+        boolean isTankKapasitesiEmpty = isStringEmpty(secilenTankKapasitesi);
+        boolean isOzelTankGenislikEmpty = isStringEmpty(secilenOzelTankGenislik);
+        boolean isOzelTankYukseklikEmpty = isStringEmpty(secilenOzelTankYukseklik);
+        boolean isOzelTankDerinlikEmpty = isStringEmpty(secilenOzelTankDerinlik);
+
+        boolean isTankCapacityInvalid = isTankKapasitesiEmpty &&
+                (isOzelTankGenislikEmpty || isOzelTankYukseklikEmpty || isOzelTankDerinlikEmpty);
+
+        if (Objects.equals(secilenPlatformTipi, "ESP")) {
+            boolean isInisTipiComboBoxEmpty = isComboBoxEmpty(inisTipiComboBox);
+            return isSiparisNumarasiEmpty ||
+                    isMotorComboBoxEmpty ||
+                    isMotorGucuComboBoxEmpty ||
+                    isPompaComboBoxEmpty ||
+                    isTankTipiComboBoxEmpty ||
+                    isTankCapacityInvalid ||
+                    isPlatformTipiComboBoxEmpty ||
+                    isInisTipiComboBoxEmpty;
+        } else if (Objects.equals(secilenPlatformTipi, "Devirmeli") || Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
+            return isSiparisNumarasiEmpty ||
+                    isMotorComboBoxEmpty ||
+                    isMotorGucuComboBoxEmpty ||
+                    isPompaComboBoxEmpty ||
+                    isTankTipiComboBoxEmpty ||
+                    isTankCapacityInvalid ||
+                    isPlatformTipiComboBoxEmpty;
+        } else if (Objects.equals(secilenPlatformTipi, "Özel")) {
+            boolean isBirinciValfComboBoxEmpty = isComboBoxEmpty(birinciValfComboBox);
+            boolean isIkinciValfComboBoxEmpty = isComboBoxEmpty(ikinciValfComboBox);
+            return isSiparisNumarasiEmpty ||
+                    isMotorComboBoxEmpty ||
+                    isMotorGucuComboBoxEmpty ||
+                    isPompaComboBoxEmpty ||
+                    isTankTipiComboBoxEmpty ||
+                    isTankCapacityInvalid ||
+                    isPlatformTipiComboBoxEmpty ||
+                    isBirinciValfComboBoxEmpty ||
+                    isIkinciValfComboBoxEmpty;
         }
 
         return false;
@@ -683,73 +816,93 @@ public class HidrosController {
     }
 
     private void calculateKabin() {
-        String motorKW = secilenMotorGucu.trim();
-        String tankKapasite = secilenTankKapasitesi.trim();
+        if(!secilenTankTipi.equals("Özel")) {
+            String motorKW = secilenMotorGucu.trim();
+            String tankKapasite = secilenTankKapasitesi.trim();
 
-        if(Objects.equals(motorKW, "0.37 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                kabinKodu = "KD-10 (CARREFOUR)";
-            }
-        } else if(Objects.equals(motorKW, "0.55 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                kabinKodu = "KD-10 (CARREFOUR)";
-            }
-        } else if(Objects.equals(motorKW, "0.75 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                kabinKodu = "KD-10 (CARREFOUR)";
-            }
-        } else if(Objects.equals(motorKW, "1.1 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                kabinKodu = "KD-10 (CARREFOUR)";
-            }
-        } else if(Objects.equals(motorKW, "1.5 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                kabinKodu = "KD-10 (CARREFOUR)";
-            }
-        } else if(Objects.equals(motorKW, "2.2 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                kabinKodu = "KD-10 (CARREFOUR)";
-            }
-        } else if(Objects.equals(motorKW, "3 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                kabinKodu = "KD-10 (CARREFOUR)";
-            }
-        } else if(Objects.equals(motorKW, "4 kW")) {
-            if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                kabinKodu = "KD-8 Engelli";
-            } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                kullanilacakKabinText.setText("Kullanılacak Kabin: KDB-20 (BALİNA)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103\nKabin Kodu: 150-52-19-011");
-                kabinKodu = "KDB-20 (BALİNA)";
+            if(Objects.equals(motorKW, "0.37 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                    kabinKodu = "KD-10 (CARREFOUR)";
+                }
+            } else if(Objects.equals(motorKW, "0.55 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                    kabinKodu = "KD-10 (CARREFOUR)";
+                }
+            } else if(Objects.equals(motorKW, "0.75 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                    kabinKodu = "KD-10 (CARREFOUR)";
+                }
+            } else if(Objects.equals(motorKW, "1.1 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                    kabinKodu = "KD-10 (CARREFOUR)";
+                }
+            } else if(Objects.equals(motorKW, "1.5 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                    kabinKodu = "KD-10 (CARREFOUR)";
+                }
+            } else if(Objects.equals(motorKW, "2.2 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                    kabinKodu = "KD-10 (CARREFOUR)";
+                }
+            } else if(Objects.equals(motorKW, "3 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
+                    kabinKodu = "KD-10 (CARREFOUR)";
+                }
+            } else if(Objects.equals(motorKW, "4 kW")) {
+                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
+                    kabinKodu = "KD-8 Engelli";
+                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
+                    kullanilacakKabinText.setText("Kullanılacak Kabin: KDB-20 (BALİNA)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103\nKabin Kodu: 150-52-19-011");
+                    kabinKodu = "KDB-20 (BALİNA)";
+                }
             }
         }
+    }
+
+    /**
+     * Verilen bir String'in boş veya null olup olmadığını kontrol eder.
+     * @param text Kontrol edilecek String
+     * @return Eğer String boş veya null ise true, aksi halde false
+     */
+    private boolean isStringEmpty(String text) {
+        return text == null || text.trim().isEmpty();
+    }
+
+    /**
+     * Verilen bir ComboBox'ın seçiminin boş olup olmadığını kontrol eder.
+     * @param comboBox Kontrol edilecek ComboBox
+     * @return Eğer ComboBox'ta seçim yapılmamışsa true, aksi halde false
+     */
+    private boolean isComboBoxEmpty(ComboBox<?> comboBox) {
+        return comboBox.getSelectionModel() == null || comboBox.getSelectionModel().getSelectedItem() == null;
     }
 }

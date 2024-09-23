@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
 <VBox fx:id="klasikVBox" prefHeight="620.0" prefWidth="592" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Screens.Controllers.Calculation.Hidros.HidrosController">
     <children>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="620.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
@@ -49,7 +55,7 @@
             <ComboBox fx:id="platformTipiComboBox" disable="true" layoutX="26.0" layoutY="237.0" onAction="#platformTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Platform Tipi" />
             <ComboBox fx:id="motorGucuComboBox" disable="true" layoutX="27.0" layoutY="135.0" onAction="#motorGucuPressed" prefHeight="18.0" prefWidth="137.0" promptText="Motor Gücü" />
             <Text fill="#B7C3D7" layoutX="64.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor Gücü" />
-            <Text fill="#B7C3D7" layoutX="228.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Kapasitesi" />
+            <Text fx:id="tankKapasitesiMainText" fill="#B7C3D7" layoutX="228.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tank Kapasitesi" />
             <Text fill="#B7C3D7" layoutX="61.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="İniş Metodu" />
             <ComboBox fx:id="inisTipiComboBox" disable="true" layoutX="26.0" layoutY="290.0" onAction="#inisTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="İniş Metodu" />
             <Text fx:id="kullanilacakKabinText" fill="WHITE" layoutX="484.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanılacak Kabin: " textAlignment="CENTER" visible="false">
@@ -58,7 +64,11 @@
                </font></Text>
             <Text fill="#B7C3D7" layoutX="235.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ünite Tipi" />
             <ComboBox fx:id="uniteTipiComboBox" disable="true" layoutX="201.0" layoutY="85.0" onAction="#uniteTipiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Ünite Tipi" />
-            <TextField fx:id="tankKapasitesiField" disable="true" layoutX="188.0" layoutY="184.0" onKeyTyped="#tankKapasitesiEntered" promptText="Tank Kapasitesi" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
+            <ComboBox fx:id="tankKapasitesiComboBox" disable="true" layoutX="202.0" layoutY="185.0" onAction="#tankKapasitesiPressed" prefHeight="18.0" prefWidth="137.0" promptText="Tank Kapasitesi" />
+            <TextField fx:id="ozelTankGenislik" layoutX="173.0" layoutY="188.0" onKeyTyped="#ozelTankGenislikEntered" prefHeight="27.0" prefWidth="69.0" promptText="Genişlik" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
+            <Text fx:id="tankOlculeriText" fill="#B7C3D7" layoutX="237.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Özel Tank Ölçüleri" />
+            <TextField fx:id="ozelTankYukseklik" layoutX="252.0" layoutY="188.0" onKeyTyped="#ozelTankYukseklikEntered" prefHeight="27.0" prefWidth="69.0" promptText="Yükseklik" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
+            <TextField fx:id="ozelTankDerinlik" layoutX="331.0" layoutY="188.0" onKeyTyped="#ozelTankDerinlikEntered" prefHeight="27.0" prefWidth="69.0" promptText="Derinlik" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
             </children>
         </AnchorPane>
     </children>
