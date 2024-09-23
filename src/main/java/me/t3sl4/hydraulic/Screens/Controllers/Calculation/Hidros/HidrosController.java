@@ -15,11 +15,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.Model.Table.TableData;
 import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
-import me.t3sl4.hydraulic.Utils.File.PDFUtil;
 import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
+import me.t3sl4.hydraulic.Utils.File.PDFUtil;
 import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.Model.Table.TableData;
 import me.t3sl4.hydraulic.Utils.Utils;
 
 import java.io.File;
@@ -384,21 +384,21 @@ public class HidrosController {
 
     private void initMotorTipi() {
         motorComboBox.getItems().clear();
-        motorComboBox.getItems().addAll("380 V", "220 V");
+        motorComboBox.getItems().addAll("380 V (AC)", "220 V (AC)", "12 V (DC)", "24 V (DC)");
     }
 
     private void initMotorGucu() {
         motorGucuComboBox.getItems().clear();
         if(uniteTipiDurumu.equals("Hidros")) {
-            if(secilenMotorTipi.equals("380 V")) {
+            if(secilenMotorTipi.equals("380 V (AC)")) {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriHidros380);
-            } else if(secilenMotorTipi.equals("220 V")) {
+            } else if(secilenMotorTipi.equals("220 V (AC)")) {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriHidros220);
             }
         } else {
-            if(secilenMotorTipi.equals("380 V")) {
+            if(secilenMotorTipi.equals("380 V (AC)")) {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriIthal380);
-            } else if(secilenMotorTipi.equals("220 V")) {
+            } else if(secilenMotorTipi.equals("220 V (AC)")) {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriIthal220);
             }
         }
@@ -420,7 +420,7 @@ public class HidrosController {
 
     private void initTankTipi() {
         tankTipiComboBox.getItems().clear();
-        tankTipiComboBox.getItems().addAll("Dikey", "Yatay", "Özel");
+        tankTipiComboBox.getItems().addAll("Dikey", "Yatay");
     }
 
     private void initTankKapasitesi() {
