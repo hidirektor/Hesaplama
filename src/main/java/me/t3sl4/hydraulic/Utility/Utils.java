@@ -194,7 +194,7 @@ public class Utils {
         SceneUtil.changeScreen("fxml/ResetPassword.fxml");
     }
 
-    public static void offlineMod(Label lblErrors) {
+    public static void offlineMod(Label lblErrors, Runnable onComplete) {
         Utils.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
 
         Timeline timeline = new Timeline();
@@ -209,6 +209,9 @@ public class Utils {
                 timeline.stop();
                 try {
                     Utils.openMainScreen(lblErrors);
+                    if (onComplete != null) {
+                        onComplete.run();
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

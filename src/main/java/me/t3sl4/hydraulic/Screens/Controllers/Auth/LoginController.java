@@ -114,12 +114,16 @@ public class LoginController implements Initializable {
 
     @FXML
     public void offlineMod() {
+        offlineMod.setDisable(true);
+
         SystemDefaults.offlineMode = true;
         loginPane.setVisible(false);
         offlineMod.setVisible(true);
         onlineMod.setVisible(true);
 
-        Utils.offlineMod(lblErrors);
+        Utils.offlineMod(lblErrors, () -> {
+            offlineMod.setDisable(false);
+        });
     }
 
     @FXML
