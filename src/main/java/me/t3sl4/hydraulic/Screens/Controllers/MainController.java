@@ -22,12 +22,12 @@ import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Component.FilterSwitch;
 import me.t3sl4.hydraulic.Screens.Controllers.Calculation.PopupController;
-import me.t3sl4.hydraulic.Utils.SceneUtil;
-import me.t3sl4.hydraulic.Utils.Model.HydraulicUnit.HydraulicInfo;
-import me.t3sl4.hydraulic.Utils.UserDataService.Profile;
 import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
 import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.Model.HydraulicUnit.HydraulicInfo;
+import me.t3sl4.hydraulic.Utils.SceneUtil;
 import me.t3sl4.hydraulic.Utils.SystemDefaults;
+import me.t3sl4.hydraulic.Utils.UserDataService.Profile;
 import me.t3sl4.hydraulic.Utils.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -476,17 +476,6 @@ public class MainController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Klasik.fxml"));
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
-
-                double paneWidth = pnlMenus.getWidth();
-                double paneHeight = pnlMenus.getHeight();
-
-                double parametreWidth = parametrePane.getPrefWidth();
-                double parametreHeight = parametrePane.getPrefHeight();
-
-                double centerX = (paneWidth - parametreWidth) / 2;
-                double centerY = (paneHeight - parametreHeight) / 2;
-                parametrePane.setLayoutX(centerX-100);
-                parametrePane.setLayoutY(centerY+20);
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);
             }
