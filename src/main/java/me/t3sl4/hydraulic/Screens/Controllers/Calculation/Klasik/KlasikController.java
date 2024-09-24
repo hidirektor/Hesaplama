@@ -1416,6 +1416,7 @@ public class KlasikController {
     }
 
     private int showCyclinderPopup() {
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
         try {
             FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CyclinderCount.fxml"));
             Parent root = loader.load();
@@ -1425,7 +1426,9 @@ public class KlasikController {
             Stage stage = new Stage();
             stage.setTitle("Silindir Seçimi");
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
+            stage.getIcons().add(icon);
             stage.showAndWait();
 
             if (controller.isConfirmed()) {

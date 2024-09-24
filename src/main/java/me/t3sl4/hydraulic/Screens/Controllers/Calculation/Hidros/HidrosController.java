@@ -688,7 +688,7 @@ public class HidrosController {
                     isTankCapacityInvalid ||
                     isPlatformTipiComboBoxEmpty ||
                     isInisTipiComboBoxEmpty;
-        } else if (Objects.equals(secilenPlatformTipi, "Devirmeli") || Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
+        } else if (Objects.equals(secilenPlatformTipi, "Devirmeli + Yürüyüş")) {
             return isSiparisNumarasiEmpty ||
                     isMotorComboBoxEmpty ||
                     isMotorGucuComboBoxEmpty ||
@@ -724,9 +724,7 @@ public class HidrosController {
                 } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/cifthiz.png")));
                 }
-            } else if(Objects.equals(secilenPlatformTipi, "Devirmeli")) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/ozel.png")));
-            } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
+            } else if(Objects.equals(secilenPlatformTipi, "Devirmeli + Yürüyüş")) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/ozel.png")));
             } else if(Objects.equals(secilenPlatformTipi, "Özel")) {
                 if(secilenBirinciValf != null && Objects.equals(secilenIkinciValf, "Yok")) {
@@ -767,9 +765,7 @@ public class HidrosController {
                 } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
                     pdfPath = "/assets/data/hidrosinistecift.pdf";
                 }
-            } else if(Objects.equals(secilenPlatformTipi, "Devirmeli")) {
-                pdfPath = "/assets/data/pdf/hidrosdevirmeli.pdf";
-            } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
+            } else if(Objects.equals(secilenPlatformTipi, "Devirmeli + Yürüyüş")) {
                 pdfPath = "/assets/data/pdf/hidrosdevirmeli.pdf";
             }
             pdfPath = null;
