@@ -122,11 +122,14 @@ public class KlasikController {
     @FXML
     private VBox klasikVBox;
 
+    private static final int DEFAULT_HEIGHT = 350;
+    private static final int MAX_TANK_CAPACITY = 500;
+
     /*
     Seçilen Değerler:
      */
-    public static String girilenSiparisNumarasi = null;
     public String secilenUniteTipi = "Klasik";
+    public static String girilenSiparisNumarasi = null;
     public static String secilenMotor = null;
     public static String kompanzasyonDurumu = null;
     public static int secilenKampana = 0;
