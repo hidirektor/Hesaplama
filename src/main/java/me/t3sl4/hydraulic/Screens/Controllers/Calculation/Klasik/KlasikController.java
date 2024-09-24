@@ -421,6 +421,11 @@ public class KlasikController {
         int tankImageWidth = 340;
         int tankImageHeight = 245;
 
+        int schematicImageStartX = 740;
+        int schematicImageStartY = 400;
+        int schematicImageWidth = 400;
+        int schematicImageHeight = 246;
+
         if(hesaplamaBitti) {
             int selectedCylinders = showCyclinderPopup();
             if (selectedCylinders == -1) {
@@ -431,18 +436,20 @@ public class KlasikController {
             pdfShaper(0);
             PDFUtil.coords2Png(tankImageStartX, tankImageStartY, tankImageWidth, tankImageHeight, exportButton);
             pdfShaper(1);
-            PDFUtil.cropImage(tankImageStartX, tankImageStartY, tankImageWidth, tankImageHeight);
+            PDFUtil.cropImage(tankImageStartX, tankImageStartY, tankImageWidth, tankImageHeight, "tankImage.png");
+
+            pdfShaper(0);
+            PDFUtil.coords2Png(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, exportButton);
+            pdfShaper(1);
+            PDFUtil.cropImage(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, "schematicImage.png");
 
             String pdfPath = "";
-            if(secilenValfTipi.contains("İnişte Tek Hız")) {
-                pdfPath = "/assets/data/pdf/klasikinistetek.pdf";
-            } else if(secilenValfTipi.contains("İnişte Çift Hız")) {
-                pdfPath = "/assets/data/pdf/klasikinistecift.pdf";
-            } else if(secilenValfTipi.contains("Kilitli Blok")) {
-                pdfPath = "/assets/data/pdf/klasikkilitliblokcift.pdf";
+            if(selectedCylinders != -1) {
+                pdfPath = "/assets/data/pdf/testsema.pdf";
             }
             pdfPath = null;
-            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
+
+            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "tankImage.png", "schematicImage.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
@@ -1267,7 +1274,7 @@ public class KlasikController {
     private void pdfShaper(int type) {
         if(type == 0) {
             //pdf oluşturma öncesi
-            klasikVBox.setStyle("-fx-background-color: #F9F871;"); //sarı: #F9F871
+            klasikVBox.setStyle("-fx-background-color: #999999;"); //sarı: #F9F871
             sonucAnaLabelTxt.setFill(Color.BLACK);
             genislikSonucText.setTextFill(Color.BLACK);
             derinlikSonucText.setTextFill(Color.BLACK);

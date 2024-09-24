@@ -756,7 +756,7 @@ public class HidrosController {
             pdfShaper(0);
             PDFUtil.coords2Png(startX, startY, width, height, exportButton);
             pdfShaper(1);
-            PDFUtil.cropImage(680, startY, 370, height);
+            PDFUtil.cropImage(680, startY, 370, height, "cropped_screenshot.png");
 
             String pdfPath = "";
             if(Objects.equals(secilenPlatformTipi, "Özel")) {
@@ -772,7 +772,7 @@ public class HidrosController {
             } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
                 pdfPath = "/assets/data/pdf/hidrosdevirmeli.pdf";
             }
-            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi);
+            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString());
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }

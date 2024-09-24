@@ -26,7 +26,7 @@ public class PDFUtil {
 
     private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
-    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pdfFilePath, String girilenSiparisNumarasi) {
+    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pngFilePath3, String pdfFilePath, String girilenSiparisNumarasi, String kullanilacakKabin) {
         try {
             String userHome = System.getProperty("user.home");
             String ExPDFFilePath = userHome + File.separator + "Desktop" + File.separator + girilenSiparisNumarasi + ".pdf";
@@ -36,15 +36,15 @@ public class PDFUtil {
             document.open();
 
             PdfContentByte contentByte = writer.getDirectContentUnder();
-            BaseColor backgroundColor = new BaseColor(255, 255, 255);
+            BaseColor backgroundColor = new BaseColor(153, 153, 153);
             contentByte.setColorFill(backgroundColor);
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
 
-            // İlk resmi ekle
+            // İlk resmi ekle ve boyutunu ayarla (yükseklik küçültüldü)
             Image image1 = Image.getInstance(Objects.requireNonNull(Launcher.class.getResource(pngFilePath1)));
-            float targetWidth1 = document.getPageSize().getWidth() * 0.5f;
-            float targetHeight1 = (image1.getHeight() / (float) image1.getWidth()) * targetWidth1;
+            float targetWidth1 = document.getPageSize().getWidth() * 0.8f;  // Genişliği %80'e ayarla
+            float targetHeight1 = (image1.getHeight() / (float) image1.getWidth()) * targetWidth1 * 0.7f; // Yüksekliği %70'e küçült
             image1.scaleToFit(targetWidth1, targetHeight1);
             image1.setAlignment(Image.ALIGN_CENTER);
             document.add(image1);
@@ -56,39 +56,56 @@ public class PDFUtil {
             // Girilen Sipariş Numarasını ve metni ekle
             Paragraph paragraph = new Paragraph(girilenSiparisNumarasi + " Numaralı Sipariş", unicodeFont);
             paragraph.setAlignment(Element.ALIGN_CENTER);
-            paragraph.setSpacingBefore(25);  // 10dp üst boşluk
+            paragraph.setSpacingBefore(15);  // 15dp üst boşluk
             document.add(paragraph);
 
-            // İkinci resmi ekle
+            // İkinci resmi ekle ve boyutunu ayarla (yükseklik küçültüldü)
             Image image2 = Image.getInstance(pngFilePath2);
-
-            float documentWidth = document.getPageSize().getWidth();
-            float documentHeight = document.getPageSize().getHeight();
-            float imageWidth = image2.getWidth();
-            float imageHeight = image2.getHeight();
-
-            float x = (documentWidth - imageWidth) / 2;
-            float y = (documentHeight - imageHeight) / 2;
-
-            image2.setAbsolutePosition(x, y);
+            float targetWidth2 = document.getPageSize().getWidth() * 0.8f;  // Genişliği %80'e ayarla
+            float targetHeight2 = (image2.getHeight() / (float) image2.getWidth()) * targetWidth2 * 0.7f; // Yüksekliği %70'e küçült
+            image2.scaleToFit(targetWidth2, targetHeight2);
+            image2.setAlignment(Image.ALIGN_CENTER);
+            image2.setSpacingBefore(10);  // 10dp üst boşluk
             document.add(image2);
 
+            // Üçüncü resmi yükleyip beyaz alanlarını siyaha çevirelim
+            BufferedImage originalImage = ImageIO.read(new File(pngFilePath3));
+            BufferedImage processedImage = convertWhiteToBlack(originalImage);
+
+            // İşlenmiş görüntüyü geçici bir dosyaya kaydet
+            File tempFile = new File("processed_image.png");
+            ImageIO.write(processedImage, "png", tempFile);
+
+            // Üçüncü resmi ekle ve boyutunu ayarla (yükseklik küçültüldü)
+            Image image3 = Image.getInstance(tempFile.getAbsolutePath());
+            float targetWidth3 = document.getPageSize().getWidth() * 0.8f;  // Genişliği %80'e ayarla
+            float targetHeight3 = (image3.getHeight() / (float) image3.getWidth()) * targetWidth3 * 0.7f; // Yüksekliği %70'e küçült
+            image3.scaleToFit(targetWidth3, targetHeight3);
+            image3.setAlignment(Image.ALIGN_CENTER);
+            image3.setSpacingBefore(10);  // 10dp üst boşluk
+            document.add(image3);
+
+            // "HALİL" metnini sayfanın en altına yerleştir
+            Paragraph halilParagraph = new Paragraph(kullanilacakKabin, unicodeFont);
+            halilParagraph.setAlignment(Element.ALIGN_CENTER);
+            halilParagraph.setSpacingBefore(20);  // 20dp boşluk
+            document.add(halilParagraph);
+
             if (pdfFilePath != null) {
-                PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
-                PdfImportedPage page = writer.getImportedPage(reader, 1);
+                // PdfReader ile PDF'yi yükle
+                PdfReader reader = new PdfReader(Launcher.class.getResource(pdfFilePath));
+
+                // Sayfa eklemek için yeni bir sayfa açın
                 document.newPage();
 
-                float targetWidth = document.getPageSize().getWidth();
-                float targetHeight = document.getPageSize().getHeight();
+                // PdfWriter üzerinden sayfayı al ve yeni PDF'ye ekle
+                PdfImportedPage importedPage = writer.getImportedPage(reader, 1);
+                PdfContentByte cb = writer.getDirectContent();
 
-                float originalWidth = page.getWidth();
-                float originalHeight = page.getHeight();
+                // Sayfayı ekle (orijinal PDF'den alınan sayfa boyutlarını kullanarak)
+                cb.addTemplate(importedPage, 0, 0);
 
-                float widthScale = targetWidth / originalWidth;
-                float heightScale = targetHeight / originalHeight;
-
-                writer.getDirectContent().addTemplate(page, widthScale, 0, 0, heightScale, 0, 0);
-                reader.close();
+                reader.close();  // PdfReader'ı kapatmayı unutmayın
             }
 
             document.close();
@@ -120,15 +137,14 @@ public class PDFUtil {
         }
     }
 
-    public static void cropImage(int startX, int startY, int width, int height) {
+    public static void cropImage(int startX, int startY, int width, int height, String fileName) {
         try {
             BufferedImage originalImage = ImageIO.read(new File("screenshot.png"));
 
             BufferedImage croppedImage = originalImage.getSubimage(startX, startY, width, height);
 
-            String croppedFilePath = "cropped_screenshot.png";
-            ImageIO.write(croppedImage, "png", new File(croppedFilePath));
-            System.out.println("Kırpılmış fotoğraf başarıyla kaydedildi: " + croppedFilePath);
+            ImageIO.write(croppedImage, "png", new File(fileName));
+            System.out.println("Kırpılmış fotoğraf başarıyla kaydedildi: " + fileName);
 
             File originalFile = new File("screenshot.png");
             if (originalFile.delete()) {
@@ -173,5 +189,24 @@ public class PDFUtil {
         bufferedImage.setRGB(0, 0, width, height, pixelData, 0, width);
 
         return bufferedImage;
+    }
+
+    public static BufferedImage convertWhiteToBlack(BufferedImage originalImage) {
+        BufferedImage newImage = new BufferedImage(
+                originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        for (int x = 0; x < originalImage.getWidth(); x++) {
+            for (int y = 0; y < originalImage.getHeight(); y++) {
+                int rgb = originalImage.getRGB(x, y);
+                Color color = new Color(rgb, true);
+
+                if (color.getRed() > 200 && color.getGreen() > 200 && color.getBlue() > 200) {
+                    newImage.setRGB(x, y, Color.BLACK.getRGB());
+                } else {
+                    newImage.setRGB(x, y, rgb);
+                }
+            }
+        }
+        return newImage;
     }
 }
