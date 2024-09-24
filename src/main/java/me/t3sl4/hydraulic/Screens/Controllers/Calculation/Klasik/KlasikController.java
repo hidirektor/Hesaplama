@@ -20,12 +20,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
+import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
+import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
+import me.t3sl4.hydraulic.Utils.File.PDFUtil;
+import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utils.Model.Table.TableData;
 import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
-import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
-import me.t3sl4.hydraulic.Utils.File.PDFUtil;
-import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
-import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utils.Utils;
 import org.jetbrains.annotations.Nullable;
 
@@ -776,7 +776,7 @@ public class KlasikController {
                 girilenSiparisNumarasi = newValue;
             }
 
-            sonucAnaLabelTxt.setText("Sipariş Numarası: " + girilenSiparisNumarasi);
+            sonucAnaLabelTxt.setText(girilenSiparisNumarasi + " Numaralı Sipariş");
             dataInit("motor", null);
 
             if(girilenSiparisNumarasi != null) {
@@ -974,7 +974,7 @@ public class KlasikController {
         parcaListesiButton.setDisable(true);
         exportButton.setDisable(true);
         kullanilacakKabin.setVisible(false);
-        sonucAnaLabelTxt.setText("Sipariş Numarası: ");
+        sonucAnaLabelTxt.setText("");
         sonucTankGorsel.setImage(null);
 
         imageTextDisable();
