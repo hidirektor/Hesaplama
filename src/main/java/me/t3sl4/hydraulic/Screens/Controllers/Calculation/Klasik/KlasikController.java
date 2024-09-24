@@ -739,9 +739,9 @@ public class KlasikController {
             valfTipiComboBox.setDisable(false);
             valfTipiComboBox.getItems().clear();
             if(valfTipiStat == 1) {
-                valfTipiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfTipiDegerleri2); //Kompanzasyon || İnişte Tek Hız
+                valfTipiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfTipiDegerleri2); //İnişte Tek Hız, İnişte Çift Hız
             } else {
-                valfTipiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfTipiDegerleri1); //İnişte Tek Hız, İnişte Çift Hız
+                valfTipiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfTipiDegerleri1); //Kompanzasyon || İnişte Tek Hız
             }
         } else if(componentName.equals("hidrolikKilit")) {
             hidrolikKilitComboBox.setDisable(false);
@@ -1301,15 +1301,15 @@ public class KlasikController {
         if(secilenSogutmaDurumu.equals("Var")) {
             if(secilenHidrolikKilitDurumu.equals("Var")) {
                 if(kompanzasyonDurumu.equals("Var")) {
-                    dataInit("valfTipi", 1); //Komp + Tek
+                    dataInit("valfTipi", 0); //Komp + Tek
                 } else {
-                    dataInit("valfTipi", 0); //Tek + Çift
+                    dataInit("valfTipi", 1); //Tek + Çift
                 }
             } else {
                 if(kompanzasyonDurumu.equals("Var")) {
-                    dataInit("valfTipi", 1); //Komp + Tek
+                    dataInit("valfTipi", 0); //Komp + Tek
                 } else {
-                    dataInit("valfTipi", 0); //Tek + Çift
+                    dataInit("valfTipi", 1); //Tek + Çift
                 }
             }
         } else {
