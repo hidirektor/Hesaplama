@@ -416,23 +416,22 @@ public class KlasikController {
 
     @FXML
     public void exportProcess() {
-        int startX = 500;
-        int startY = 10;
-        int width = 800;
-        int height = 565;
+        int tankImageStartX = 258;
+        int tankImageStartY = 430;
+        int tankImageWidth = 340;
+        int tankImageHeight = 245;
 
         if(hesaplamaBitti) {
             int selectedCylinders = showCyclinderPopup();
             if (selectedCylinders == -1) {
-                // Kullanıcı popup'u iptal etti veya seçim yapmadı
                 Utils.showErrorMessage("Silindir sayısı seçilmedi. İşlem iptal edildi.");
                 return;
             }
 
             pdfShaper(0);
-            PDFUtil.coords2Png(startX, startY, width, height, exportButton);
+            PDFUtil.coords2Png(tankImageStartX, tankImageStartY, tankImageWidth, tankImageHeight, exportButton);
             pdfShaper(1);
-            PDFUtil.cropImage(680, startY, 370, height);
+            PDFUtil.cropImage(tankImageStartX, tankImageStartY, tankImageWidth, tankImageHeight);
 
             String pdfPath = "";
             if(secilenValfTipi.contains("İnişte Tek Hız")) {
@@ -1268,7 +1267,7 @@ public class KlasikController {
     private void pdfShaper(int type) {
         if(type == 0) {
             //pdf oluşturma öncesi
-            klasikVBox.setStyle("-fx-background-color: #FFFFFF;"); //sarı: #F9F871
+            klasikVBox.setStyle("-fx-background-color: #F9F871;"); //sarı: #F9F871
             sonucAnaLabelTxt.setFill(Color.BLACK);
             genislikSonucText.setTextFill(Color.BLACK);
             derinlikSonucText.setTextFill(Color.BLACK);

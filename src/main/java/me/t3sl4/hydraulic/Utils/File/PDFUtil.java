@@ -1,13 +1,9 @@
 package me.t3sl4.hydraulic.Utils.File;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
@@ -45,6 +41,7 @@ public class PDFUtil {
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
 
+            // İlk resmi ekle
             Image image1 = Image.getInstance(Objects.requireNonNull(Launcher.class.getResource(pngFilePath1)));
             float targetWidth1 = document.getPageSize().getWidth() * 0.5f;
             float targetHeight1 = (image1.getHeight() / (float) image1.getWidth()) * targetWidth1;
@@ -52,6 +49,17 @@ public class PDFUtil {
             image1.setAlignment(Image.ALIGN_CENTER);
             document.add(image1);
 
+            // Türkçe karakter destekleyen fontu yükle
+            BaseFont baseFont = BaseFont.createFont(String.valueOf(Launcher.class.getResource("/assets/fonts/Roboto/Roboto-Bold.ttf")), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font unicodeFont = new Font(baseFont, 22, Font.BOLD);
+
+            // Girilen Sipariş Numarasını ve metni ekle
+            Paragraph paragraph = new Paragraph(girilenSiparisNumarasi + " Numaralı Sipariş", unicodeFont);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            paragraph.setSpacingBefore(25);  // 10dp üst boşluk
+            document.add(paragraph);
+
+            // İkinci resmi ekle
             Image image2 = Image.getInstance(pngFilePath2);
 
             float documentWidth = document.getPageSize().getWidth();
@@ -65,7 +73,7 @@ public class PDFUtil {
             image2.setAbsolutePosition(x, y);
             document.add(image2);
 
-            if(pdfFilePath != null) {
+            if (pdfFilePath != null) {
                 PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
                 PdfImportedPage page = writer.getImportedPage(reader, 1);
                 document.newPage();
