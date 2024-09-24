@@ -4,7 +4,9 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
@@ -116,15 +118,12 @@ public class PDFUtil {
             System.out.println("PDF oluşturuldu.");
 
             File pngFile2 = new File(pngFilePath2);
-            if (pngFile2.exists()) {
-                if (pngFile2.delete()) {
-                    System.out.println("İkinci PNG dosyası silindi.");
-                } else {
-                    System.out.println("İkinci PNG dosyası silinemedi.");
-                }
-            } else {
-                System.out.println("İkinci PNG dosyası bulunamadı.");
+            if(pngFilePath3 != null) {
+                File pngFile3 = new File(pngFilePath3);
+                pngFile3.delete();
             }
+            pngFile2.delete();
+            new File("processed_image.png").delete();
 
             if (Desktop.isDesktopSupported()) {
                 try {
@@ -159,9 +158,9 @@ public class PDFUtil {
         }
     }
 
-    public static void coords2Png(int startX, int startY, int width, int height, javafx.scene.control.Button exportButton) {
+    public static void coords2Png(int startX, int startY, int width, int height, Button exportButton) {
         SnapshotParameters parameters = new SnapshotParameters();
-        parameters.setViewport(new javafx.geometry.Rectangle2D(startX, startY, width, height));
+        parameters.setViewport(new Rectangle2D(startX, startY, width, height));
 
         WritableImage screenshot = exportButton.getScene().snapshot(null);
 
