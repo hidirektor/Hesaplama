@@ -747,16 +747,16 @@ public class HidrosController {
 
     @FXML
     public void exportProcess() {
-        int startX = 500;
-        int startY = 10;
-        int width = 800;
-        int height = 565;
+        int startX = 800;
+        int startY = 270;
+        int width = 370;
+        int height = 430;
 
         if(hesaplamaBitti) {
             pdfShaper(0);
             PDFUtil.coords2Png(startX, startY, width, height, exportButton);
             pdfShaper(1);
-            PDFUtil.cropImage(680, startY, 370, height, "cropped_screenshot.png");
+            PDFUtil.cropImage(startX, startY, width, height, "cropped_screenshot.png");
 
             String pdfPath = "";
             if(Objects.equals(secilenPlatformTipi, "Özel")) {
@@ -772,7 +772,8 @@ public class HidrosController {
             } else if(Objects.equals(secilenPlatformTipi, "Yürüyüş")) {
                 pdfPath = "/assets/data/pdf/hidrosdevirmeli.pdf";
             }
-            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", "cropped_screenshot.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString());
+            pdfPath = null;
+            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString());
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
@@ -794,7 +795,7 @@ public class HidrosController {
     private void pdfShaper(int type) {
         if(type == 0) {
             //pdf oluşturma öncesi
-            klasikVBox.setStyle("-fx-background-color: #FFFFFF;"); //sarı: #F9F871
+            klasikVBox.setStyle("-fx-background-color: #999999;"); //sarı: #F9F871
             sonucAnaLabelTxt.setFill(Color.BLACK);
         } else {
             //pdf oluşturma sonrası

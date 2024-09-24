@@ -417,12 +417,12 @@ public class KlasikController {
     @FXML
     public void exportProcess() {
         int tankImageStartX = 258;
-        int tankImageStartY = 430;
+        int tankImageStartY = 230;
         int tankImageWidth = 340;
         int tankImageHeight = 245;
 
         int schematicImageStartX = 740;
-        int schematicImageStartY = 400;
+        int schematicImageStartY = 200;
         int schematicImageWidth = 400;
         int schematicImageHeight = 246;
 
@@ -443,16 +443,23 @@ public class KlasikController {
             pdfShaper(1);
             PDFUtil.cropImage(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, "schematicImage.png");
 
-            String pdfPath = "";
-            if(selectedCylinders != -1) {
-                pdfPath = "/assets/data/pdf/testsema.pdf";
-            }
-            pdfPath = null;
+            String pdfPath = hydraulicSchemaSelection(selectedCylinders);
+            //pdfPath = null;
 
             PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "tankImage.png", "schematicImage.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
+    }
+
+    private String hydraulicSchemaSelection(int selectedCylinders) {
+        if(secilenSogutmaDurumu.equals("Var")) {
+            //Soğutma Var
+            //if()
+        } else {
+            //Soğutma Yok
+        }
+        return null;
     }
 
     private boolean checkComboBox() {
@@ -995,125 +1002,125 @@ public class KlasikController {
 
     private void imageTextEnable(int x, int y, String calculatedImage) {
         if(calculatedImage.equals("sogutmaKilit")) {
-            addTextToList("X: " + x + " mm", 662, 643, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 472, 518, 90, 14, Color.WHITE);
+            addTextToList("X: " + x + " mm", 662, 443, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 472, 318, 90, 14, Color.WHITE);
 
-            addTextToList("40 mm", 502, 438, 90, 10, Color.WHITE);
-            addTextToList("100 mm", 542, 428, 0, 10, Color.WHITE);
-            addTextToList("230 mm", 532, 498, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 607, 428, 0, 9, Color.WHITE);
-            addTextToList("100 mm", 607, 478, 0, 9, Color.WHITE);
-            addTextToList("40 mm", 607, 520, 0, 9, Color.WHITE);
-            addTextToList("50 mm", 517, 583, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 529, 623, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 822, 431, 90, 9, Color.WHITE);
-            addTextToList("60 mm", 847, 473, 90, 10, Color.WHITE);
-            addTextToList("70 mm", 655, 613, 90, 5, Color.WHITE);
-            addTextToList("50 mm", 732, 618, 0, 9, Color.WHITE);
-            addTextToList("230 mm", 717, 563, 0, 10, Color.WHITE);
-            addTextToList("70 mm", 810, 618, 0, 9, Color.WHITE);
-            addTextToList("70 mm", 845, 543, 90, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 770, 553, 0, 10, Color.WHITE);
-            addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 637, 568, 0, 8, Color.WHITE);
+            addTextToList("40 mm", 502, 238, 90, 10, Color.WHITE);
+            addTextToList("100 mm", 542, 228, 0, 10, Color.WHITE);
+            addTextToList("230 mm", 532, 298, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 607, 228, 0, 9, Color.WHITE);
+            addTextToList("100 mm", 607, 278, 0, 9, Color.WHITE);
+            addTextToList("40 mm", 607, 320, 0, 9, Color.WHITE);
+            addTextToList("50 mm", 517, 383, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 529, 423, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 822, 231, 90, 9, Color.WHITE);
+            addTextToList("60 mm", 847, 273, 90, 10, Color.WHITE);
+            addTextToList("70 mm", 655, 413, 90, 5, Color.WHITE);
+            addTextToList("50 mm", 732, 418, 0, 9, Color.WHITE);
+            addTextToList("230 mm", 717, 363, 0, 10, Color.WHITE);
+            addTextToList("70 mm", 810, 418, 0, 9, Color.WHITE);
+            addTextToList("70 mm", 845, 343, 90, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 770, 353, 0, 10, Color.WHITE);
+            addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 637, 368, 0, 8, Color.WHITE);
             if(secilenValfTipi.contains("Kompanzasyon")) {
                 String text = "Kompanzasyon\nİnişte Tek Hız";
-                addTextToList(text, 547, 543, 0, 10, Color.WHITE);
+                addTextToList(text, 547, 343, 0, 10, Color.WHITE);
             } else {
-                addTextToList(secilenValfTipi, 537, 558, 0, 10, Color.WHITE);
+                addTextToList(secilenValfTipi, 537, 358, 0, 10, Color.WHITE);
             }
         } else if(calculatedImage.equals("sogutmaKilitsiz")) {
-            addTextToList("X: " + x + " mm", 672, 633, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 518, 90, 14, Color.WHITE);
+            addTextToList("X: " + x + " mm", 672, 433, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
 
-            addTextToList("230 mm", 547, 498, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 615, 443, 0, 9, Color.WHITE);
-            addTextToList("100 mm", 615, 481, 0, 9, Color.WHITE);
-            addTextToList("40 mm", 615, 520, 0, 9, Color.WHITE);
-            addTextToList("50 mm", 537, 578, 0, 9, Color.WHITE);
-            addTextToList("50 mm", 542, 613, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 804, 440, 90, 9, Color.WHITE);
-            addTextToList("60 mm", 830, 481, 90, 10, Color.WHITE);
-            addTextToList("70 mm", 657, 605, 90, 6, Color.WHITE);
-            addTextToList("50 mm", 730, 608, 0, 9, Color.WHITE);
-            addTextToList("230 mm", 712, 561, 0, 10, Color.WHITE);
-            addTextToList("70 mm", 802, 608, 0, 9, Color.WHITE);
-            addTextToList("70 mm", 830, 541, 90, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 762, 553, 0, 9, Color.WHITE);
-            addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 639, 563, 0, 8, Color.WHITE);
+            addTextToList("230 mm", 547, 298, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 615, 243, 0, 9, Color.WHITE);
+            addTextToList("100 mm", 615, 281, 0, 9, Color.WHITE);
+            addTextToList("40 mm", 615, 320, 0, 9, Color.WHITE);
+            addTextToList("50 mm", 537, 378, 0, 9, Color.WHITE);
+            addTextToList("50 mm", 542, 413, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 804, 240, 90, 9, Color.WHITE);
+            addTextToList("60 mm", 830, 281, 90, 10, Color.WHITE);
+            addTextToList("70 mm", 657, 405, 90, 6, Color.WHITE);
+            addTextToList("50 mm", 730, 408, 0, 9, Color.WHITE);
+            addTextToList("230 mm", 712, 361, 0, 10, Color.WHITE);
+            addTextToList("70 mm", 802, 408, 0, 9, Color.WHITE);
+            addTextToList("70 mm", 830, 341, 90, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 762, 353, 0, 9, Color.WHITE);
+            addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 639, 363, 0, 8, Color.WHITE);
             if(secilenValfTipi.contains("Kompanzasyon")) {
                 String text = "Kompanzasyon\nİnişte Tek Hız";
-                addTextToList(text, 547, 543, 0, 10, Color.WHITE);
+                addTextToList(text, 547, 343, 0, 10, Color.WHITE);
             } else {
-                addTextToList(secilenValfTipi, 537, 558, 0, 10, Color.WHITE);
+                addTextToList(secilenValfTipi, 537, 358, 0, 10, Color.WHITE);
             }
         } else if(calculatedImage.equals("standartUnite")) {
-            addTextToList("X: " + x + " mm", 672, 628, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 518, 90, 14, Color.WHITE);
+            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
 
-            addTextToList("50 mm", 570, 415, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 547, 438, 0, 9, Color.WHITE);
-            addTextToList("Boğaz: Ø200\nKesim: Ø115", 587, 441, 0, 7.5, Color.WHITE);
-            addTextToList("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa, 577, 473, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 617, 573, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 537, 593, 90, 8, Color.WHITE);
-            addTextToList("50 mm", 559, 608, 0, 8, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 468, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 767, 420, 0, 10, Color.WHITE);
-            addTextToList("70 mm", 817, 495, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 734, 602, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 759, 581, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 787, 602, 0, 8, Color.WHITE);
-            addTextToList("Ø30", 805, 573, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 822, 575, 90, 8, Color.WHITE);
+            addTextToList("50 mm", 570, 215, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 547, 238, 0, 9, Color.WHITE);
+            addTextToList("Boğaz: Ø200\nKesim: Ø115", 587, 241, 0, 7.5, Color.WHITE);
+            addTextToList("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa, 577, 273, 0, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 617, 373, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 537, 393, 90, 8, Color.WHITE);
+            addTextToList("50 mm", 559, 408, 0, 8, Color.WHITE);
+            addTextToList(getKampanaText(), 712, 268, 0, 12, Color.WHITE);
+            addTextToList("70 mm", 767, 220, 0, 10, Color.WHITE);
+            addTextToList("70 mm", 817, 295, 90, 10, Color.WHITE);
+            addTextToList("50 mm", 734, 402, 0, 10, Color.WHITE);
+            addTextToList("Ø20", 759, 381, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 787, 402, 0, 8, Color.WHITE);
+            addTextToList("Ø30", 805, 373, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 822, 375, 90, 8, Color.WHITE);
         } else if(calculatedImage.equals("kilitMotor")) {
-            addTextToList("X: " + x + " mm", 672, 628, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 418, 90, 14, Color.WHITE);
+            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 218, 90, 14, Color.WHITE);
 
-            addTextToList("50 mm", 562, 418, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 534, 466, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 532, 598, 0, 7, Color.WHITE);
-            addTextToList("50 mm", 564, 608, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 637, 608, 0, 10, Color.WHITE);
-            addTextToList("Ø30", 552, 578, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 632, 580, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 557, 548, 0, 12, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 483, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 764, 428, 0, 11, Color.WHITE);
-            addTextToList("70 mm", 817, 508, 90, 11, Color.WHITE);
+            addTextToList("50 mm", 562, 218, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 534, 266, 90, 10, Color.WHITE);
+            addTextToList("50 mm", 532, 398, 0, 7, Color.WHITE);
+            addTextToList("50 mm", 564, 408, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 637, 408, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 552, 378, 0, 10, Color.WHITE);
+            addTextToList("Ø20", 632, 380, 0, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 557, 348, 0, 12, Color.WHITE);
+            addTextToList(getKampanaText(), 712, 283, 0, 12, Color.WHITE);
+            addTextToList("70 mm", 764, 228, 0, 11, Color.WHITE);
+            addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
         } else if(calculatedImage.equals("kompanzasyon")) {
-            addTextToList("X: " + x + " mm", 672, 628, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 418, 90, 14, Color.WHITE);
+            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 218, 90, 14, Color.WHITE);
 
-            addTextToList("50 mm", 547, 418, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 547, 218, 0, 10, Color.WHITE);
             if(secilenSogutmaDurumu.equals("Yok") && secilenHidrolikKilitDurumu.equals("Yok")) {
-                addTextToList("120 mm", 532, 476, 90, 10, Color.WHITE);
+                addTextToList("120 mm", 532, 276, 90, 10, Color.WHITE);
             } else {
-                addTextToList("50 mm", 532, 476, 90, 10, Color.WHITE);
+                addTextToList("50 mm", 532, 276, 90, 10, Color.WHITE);
             }
-            addTextToList("50 mm", 532, 578, 0, 8, Color.WHITE);
-            addTextToList("50 mm", 579, 608, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 652, 608, 0, 10, Color.WHITE);
-            addTextToList("Ø30", 567, 578, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 637, 573, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 542, 501, 0, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 475, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 764, 428, 0, 11, Color.WHITE);
-            addTextToList("70 mm", 817, 508, 90, 11, Color.WHITE);
+            addTextToList("50 mm", 532, 378, 0, 8, Color.WHITE);
+            addTextToList("50 mm", 579, 408, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 652, 408, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 567, 378, 0, 10, Color.WHITE);
+            addTextToList("Ø20", 637, 373, 0, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 542, 301, 0, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 712, 275, 0, 12, Color.WHITE);
+            addTextToList("70 mm", 764, 228, 0, 11, Color.WHITE);
+            addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
         } else if(calculatedImage.equals("tekhizcifthiz")) {
-            addTextToList("X: " + x + " mm", 672, 628, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 418, 90, 14, Color.WHITE);
+            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 218, 90, 14, Color.WHITE);
 
-            addTextToList("50 mm", 547, 418, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 532, 476, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 532, 583, 0, 8, Color.WHITE);
-            addTextToList("50 mm", 579, 608, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 652, 608, 0, 10, Color.WHITE);
-            addTextToList("Ø30", 567, 578, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 637, 573, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 552, 501, 0, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 475, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 764, 428, 0, 11, Color.WHITE);
-            addTextToList("70 mm", 817, 508, 90, 11, Color.WHITE);
+            addTextToList("50 mm", 547, 218, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 532, 276, 90, 10, Color.WHITE);
+            addTextToList("50 mm", 532, 383, 0, 8, Color.WHITE);
+            addTextToList("50 mm", 579, 408, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 652, 408, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 567, 378, 0, 10, Color.WHITE);
+            addTextToList("Ø20", 637, 373, 0, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 552, 301, 0, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 712, 275, 0, 12, Color.WHITE);
+            addTextToList("70 mm", 764, 228, 0, 11, Color.WHITE);
+            addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
         }
 
         for (Text text : sonucTexts) {
@@ -1212,14 +1219,14 @@ public class KlasikController {
             if(secilenHidrolikKilitDurumu.equals("Var")) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/ingilteresogutuculu.png")));
                 sonucTankGorsel.setImage(image);
-                genislikSonucText.setLayoutY(612.0);
+                genislikSonucText.setLayoutY(412.0);
                 genislikSonucText.setRotate(33.5);
                 derinlikSonucText.setRotate(-30.0);
                 derinlikSonucText.setLayoutX(193.0);
             } else {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/sogutuculukilitsiz.png")));
                 sonucTankGorsel.setImage(image);
-                genislikSonucText.setLayoutY(612.0);
+                genislikSonucText.setLayoutY(412.0);
                 genislikSonucText.setRotate(33.5);
                 derinlikSonucText.setRotate(-30.0);
                 derinlikSonucText.setLayoutX(193.0);

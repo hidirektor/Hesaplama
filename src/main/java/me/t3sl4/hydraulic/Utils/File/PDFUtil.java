@@ -68,22 +68,24 @@ public class PDFUtil {
             image2.setSpacingBefore(10);  // 10dp üst boşluk
             document.add(image2);
 
-            // Üçüncü resmi yükleyip beyaz alanlarını siyaha çevirelim
-            BufferedImage originalImage = ImageIO.read(new File(pngFilePath3));
-            BufferedImage processedImage = convertWhiteToBlack(originalImage);
+            if(pngFilePath3 != null) {
+                // Üçüncü resmi yükleyip beyaz alanlarını siyaha çevirelim
+                BufferedImage originalImage = ImageIO.read(new File(pngFilePath3));
+                BufferedImage processedImage = convertWhiteToBlack(originalImage);
 
-            // İşlenmiş görüntüyü geçici bir dosyaya kaydet
-            File tempFile = new File("processed_image.png");
-            ImageIO.write(processedImage, "png", tempFile);
+                // İşlenmiş görüntüyü geçici bir dosyaya kaydet
+                File tempFile = new File("processed_image.png");
+                ImageIO.write(processedImage, "png", tempFile);
 
-            // Üçüncü resmi ekle ve boyutunu ayarla (yükseklik küçültüldü)
-            Image image3 = Image.getInstance(tempFile.getAbsolutePath());
-            float targetWidth3 = document.getPageSize().getWidth() * 0.8f;  // Genişliği %80'e ayarla
-            float targetHeight3 = (image3.getHeight() / (float) image3.getWidth()) * targetWidth3 * 0.7f; // Yüksekliği %70'e küçült
-            image3.scaleToFit(targetWidth3, targetHeight3);
-            image3.setAlignment(Image.ALIGN_CENTER);
-            image3.setSpacingBefore(10);  // 10dp üst boşluk
-            document.add(image3);
+                // Üçüncü resmi ekle ve boyutunu ayarla (yükseklik küçültüldü)
+                Image image3 = Image.getInstance(tempFile.getAbsolutePath());
+                float targetWidth3 = document.getPageSize().getWidth() * 0.8f;  // Genişliği %80'e ayarla
+                float targetHeight3 = (image3.getHeight() / (float) image3.getWidth()) * targetWidth3 * 0.7f; // Yüksekliği %70'e küçült
+                image3.scaleToFit(targetWidth3, targetHeight3);
+                image3.setAlignment(Image.ALIGN_CENTER);
+                image3.setSpacingBefore(10);  // 10dp üst boşluk
+                document.add(image3);
+            }
 
             // "HALİL" metnini sayfanın en altına yerleştir
             Paragraph halilParagraph = new Paragraph(kullanilacakKabin, unicodeFont);
