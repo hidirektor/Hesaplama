@@ -444,7 +444,8 @@ public class KlasikController {
             PDFUtil.cropImage(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, "schematicImage.png");
 
             String pdfPath = hydraulicSchemaSelection(selectedCylinders);
-            //pdfPath = null;
+            System.out.println("Şema Yolu: " + pdfPath);
+            pdfPath = null;
 
             PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "tankImage.png", "schematicImage.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
         } else {
@@ -453,13 +454,61 @@ public class KlasikController {
     }
 
     private String hydraulicSchemaSelection(int selectedCylinders) {
-        if(secilenSogutmaDurumu.equals("Var")) {
-            //Soğutma Var
-            //if()
+        boolean isSogutmaVar = secilenSogutmaDurumu.equals("Var");
+        boolean isKilitMotorVar = secilenKilitMotor != null;
+        boolean isKompanzasyonVar = kompanzasyonDurumu.equals("Var");
+        boolean isInisteCiftHiz = secilenValfTipi.equals("İnişte Çift Hız");
+        boolean isInisteTekHiz = secilenValfTipi.equals("İnişte Tek Hız");
+        boolean isKilitliBlok = secilenValfTipi.equals("Kilitli Blok");
+
+        if (isSogutmaVar) {
+            if (isKilitMotorVar) {
+                if (isKompanzasyonVar) {
+                    return getCylinderImage(selectedCylinders, 13, 14, 15, 16);
+                } else {
+                    return getCylinderImage(selectedCylinders, 5, 6, 7, 8);
+                }
+            } else {
+                if (isKompanzasyonVar) {
+                    return getCylinderImage(selectedCylinders, 9, 10, 11, 12);
+                } else {
+                    return getCylinderImage(selectedCylinders, 1, 2, 3, 4);
+                }
+            }
         } else {
-            //Soğutma Yok
+            if (isKilitMotorVar) {
+                if (isKompanzasyonVar) {
+                    return getCylinderImage(selectedCylinders, 33, 34, 35, 36);
+                } else if (isInisteTekHiz) {
+                    return getCylinderImage(selectedCylinders, 17, 18, 19, 20);
+                } else {
+                    return getCylinderImage(selectedCylinders, 21, 22, 23, 24);
+                }
+            } else {
+                if (isKompanzasyonVar) {
+                    return getCylinderImage(selectedCylinders, 29, 30, 31, 32);
+                } else if (isKilitliBlok) {
+                    return getCylinderImage(selectedCylinders, 25, 26, 27, 28);
+                } else if (isInisteCiftHiz) {
+                    return getCylinderImage(selectedCylinders, 37, 38, 39, 40);
+                } else {
+                    return getCylinderImage(selectedCylinders, 41, 42, 43, 44);
+                }
+            }
         }
-        return null;
+    }
+
+    private String getCylinderImage(int selectedCylinders, int one, int two, int three, int other) {
+        switch (selectedCylinders) {
+            case 1:
+                return one + ".png";
+            case 2:
+                return two + ".png";
+            case 3:
+                return three + ".png";
+            default:
+                return other + ".png";
+        }
     }
 
     private boolean checkComboBox() {
