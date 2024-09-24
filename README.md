@@ -47,12 +47,17 @@
 
 [![ScreenShot][product-screenshot]](https://ondergrup.com)
 [![ScreenShot-2][product-screenshot2]](https://ondergrup.com)
+[![ScreenShot-3][product-screenshot3]](https://ondergrup.com)
+[![ScreenShot-4][product-screenshot4]](https://ondergrup.com)
+[![ScreenShot-5][product-screenshot5]](https://ondergrup.com)
+[![ScreenShot-6][product-screenshot6]](https://ondergrup.com)
+[![ScreenShot-7][product-screenshot7]](https://ondergrup.com)
 
 Önder Grup çalışanlarının gelen işlere göre hidrolik ünitesi hesaplayabildikleri araçtır. Amaç hidrolik ünitesi hesaplama işlemini olabildiğince standart hale getirmektir.
 
 Programın yapabildikleri:
 * Klasik tipteki hidrolik ünitesi hesaplama işlemini gerçekleştirme
-* Hidros tipindeki hidrolik ünitesi hesaplama işlemini gerçekleştirme
+* PowerPack tipindeki hidrolik ünitesi hesaplama işlemini gerçekleştirme
 * Hesaplama sonrası PDF dokümanı oluşturabilme
 * Hesaplama sonrası parça listesini excel formatında oluşturabilme
 * Hesaplama sonrası sonuç dosyalarını ve değerlerini veritabanına kaydedebilme
@@ -101,11 +106,9 @@ Aşağıdaki dokümanı kullanarak programın kullanımına ve hata kodlarına i
 - [x] "Copy Clipboard" option for part list
 - [x] General statistics system for whole generated data from calculation program
 - [x] Password reset system
-- [ ] Hidros calculation method
+- [x] Hidros calculation method
 - [x] Profile update screen
 - [x] Program settings screen
-- [ ] Multi-language Support
-    - [ ] English
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -164,6 +167,11 @@ I've included a few of my favorites to kick things off!
 [linkedin-url]: https://www.linkedin.com/in/hidirektor/
 [product-screenshot]: readme/ss-1.png
 [product-screenshot2]: readme/ss-2.png
+[product-screenshot3]: readme/ss-3.png
+[product-screenshot4]: readme/ss-4.png
+[product-screenshot5]: readme/ss-5.png
+[product-screenshot6]: readme/ss-6.png
+[product-screenshot7]: readme/ss-7.png
 [Next.js]: https://img.shields.io/badge/java-000000?style=for-the-badge&logo=java&logoColor=white
 [Next-url]: https://www.java.com/tr/
 [React.js]: https://img.shields.io/badge/javafx-20232A?style=for-the-badge&logo=javafx&logoColor=61DAFB
