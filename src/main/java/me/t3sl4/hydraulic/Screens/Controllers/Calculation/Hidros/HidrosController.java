@@ -252,7 +252,7 @@ public class HidrosController {
             if(!siparisNumarasi.getText().isEmpty()) {
                 girilenSiparisNumarasi = newValue;
             }
-            sonucAnaLabelTxt.setText("Sipariş Numarası: " + girilenSiparisNumarasi);
+            sonucAnaLabelTxt.setText(girilenSiparisNumarasi + " Numaralı Sipariş");
             initMotorTipi();
             if(girilenSiparisNumarasi != null) {
                 tabloGuncelle();
