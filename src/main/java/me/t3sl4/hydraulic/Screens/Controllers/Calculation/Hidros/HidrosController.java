@@ -532,11 +532,21 @@ public class HidrosController {
 
     private void initTankKapasitesi() {
         if(secilenTankTipi.equals("Dikey")) {
-            tankKapasitesiComboBox.getItems().clear();
-            tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriHidrosDikey);
+            if(uniteTipiDurumu.equals("Hidros")) {
+                tankKapasitesiComboBox.getItems().clear();
+                tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriHidrosDikey);
+            } else {
+                tankKapasitesiComboBox.getItems().clear();
+                tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriIthalDikey);
+            }
         } else if(secilenTankTipi.equals("Yatay")) {
-            tankKapasitesiComboBox.getItems().clear();
-            tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriHidrosYatay);
+            if(uniteTipiDurumu.equals("Hidros")) {
+                tankKapasitesiComboBox.getItems().clear();
+                tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriHidrosYatay);
+            } else {
+                tankKapasitesiComboBox.getItems().clear();
+                tankKapasitesiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.tankKapasitesiDegerleriIthalYatay);
+            }
         }
     }
 

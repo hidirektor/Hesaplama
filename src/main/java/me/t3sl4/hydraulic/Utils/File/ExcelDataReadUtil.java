@@ -80,6 +80,8 @@ public class ExcelDataReadUtil {
         readExcel4IthalPompaKapasite(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosTankDikey(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosTankYatay(Launcher.excelDBPath, dataManipulator);
+        readExcel4IthalTankDikey(Launcher.excelDBPath, dataManipulator);
+        readExcel4IthalTankYatay(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPlatform(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosValf(Launcher.excelDBPath, dataManipulator);
         readExcel4ParcaHidrosMotor380(Launcher.excelDBPath, dataManipulator);
@@ -1216,6 +1218,50 @@ public class ExcelDataReadUtil {
                 Cell cell = row.getCell(0);
                 String data = cell.getStringCellValue();
                 dataManipulator.tankKapasitesiDegerleriHidrosYatay.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4IthalTankDikey(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "İthal-Tank-Dikey";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.tankKapasitesiDegerleriIthalDikey.add(data);
+            }
+
+            workbook.close();
+        } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4IthalTankYatay(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "İthal-Tank-Yatay";
+
+        try(InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i=1; i<rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cell = row.getCell(0);
+                String data = cell.getStringCellValue();
+                dataManipulator.tankKapasitesiDegerleriIthalYatay.add(data);
             }
 
             workbook.close();
