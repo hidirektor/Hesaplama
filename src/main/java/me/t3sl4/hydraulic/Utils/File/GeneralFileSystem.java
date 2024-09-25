@@ -7,12 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class GeneralFileSystem {
 
@@ -23,7 +20,12 @@ public class GeneralFileSystem {
     }
 
     public static void systemSetup() {
-        fileCopy();
+        fileCopy("/assets/data/Hidrolik.xlsx", Launcher.excelDBPath);
+        fileCopy("/assets/data/general.json", Launcher.generalDBPath);
+        fileCopy("/assets/data/kabinler.json", Launcher.cabinetesDBPath);
+        fileCopy("/assets/data/klasik.json", Launcher.classicDBPath);
+        fileCopy("/assets/data/powerpack.json", Launcher.powerPackDBPath);
+        JSONDataUtil.loadJSONData();
         ExcelDataReadUtil.excelDataRead();
     }
 
@@ -31,66 +33,48 @@ public class GeneralFileSystem {
         return System.getProperty("os.name");
     }
 
-    public static boolean fileExists(String filePath) {
-        File file = new File(filePath);
-        return file.exists();
-    }
-
     public static void createDirectories() {
-        createMainDirectory();
-        createDirectory(Launcher.profilePhotoLocalPath);
-        createDirectory(Launcher.pdfFileLocalPath);
-        createDirectory(Launcher.excelFileLocalPath);
-        createDirectory(Launcher.dataFileLocalPath);
+        List<String> directories = Arrays.asList(
+                Launcher.mainPath,
+                Launcher.profilePhotoLocalPath,
+                Launcher.pdfFileLocalPath,
+                Launcher.excelFileLocalPath,
+                Launcher.dataFileLocalPath
+        );
+
+        directories.forEach(GeneralFileSystem::createDirectory);
     }
 
     private static void createDirectory(String path) {
         File file = new File(path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-    }
-
-    public static void createMainDirectory() {
-        File mainDir = new File(Launcher.mainPath);
-        if (!mainDir.exists()) {
-            if (mainDir.mkdirs()) {
-                System.out.println("Main directory created: " + Launcher.mainPath);
-            } else {
-                System.err.println("Failed to create main directory: " + Launcher.mainPath);
-                System.err.println("Absolute path: " + mainDir.getAbsolutePath());
-                System.err.println("Writable: " + mainDir.canWrite());
-                System.err.println("Readable: " + mainDir.canRead());
-                System.err.println("Executable: " + mainDir.canExecute());
-            }
+        if (!file.exists() && file.mkdirs()) {
+            System.out.println("Directory created: " + path);
         }
     }
 
     public static void changeDataStoragePath() {
-        if (getOperatingSystem().contains("Windows")) {
-            Launcher.mainPath = "C:/Users/" + System.getProperty("user.name") + "/OnderGrup/";
-        } else {
-            Launcher.mainPath = "/Users/" + System.getProperty("user.name") + "/OnderGrup/";
-        }
-
+        String userHome = System.getProperty("user.name");
+        String basePath = getOperatingSystem().contains("Windows") ? "C:/Users/" + userHome + "/" : "/Users/" + userHome + "/";
+        Launcher.mainPath = basePath + "OnderGrup/";
         Launcher.tokenPath = Launcher.mainPath + "auth.txt";
         Launcher.profilePhotoLocalPath = Launcher.mainPath + "profilePhoto/";
         Launcher.pdfFileLocalPath = Launcher.mainPath + "hydraulicUnits/";
         Launcher.excelFileLocalPath = Launcher.mainPath + "partList/";
         Launcher.dataFileLocalPath = Launcher.mainPath + "assets/data/";
         Launcher.excelDBPath = Launcher.mainPath + "assets/data/Hidrolik.xlsx";
+        Launcher.generalDBPath = Launcher.mainPath + "assets/data/general.json";
+        Launcher.cabinetesDBPath = Launcher.mainPath + "assets/data/kabinler.json";
+        Launcher.classicDBPath = Launcher.mainPath + "assets/data/klasik.json";
+        Launcher.powerPackDBPath = Launcher.mainPath + "assets/data/powerpack.json";
     }
 
-    public static void fileCopy() {
-        Path targetPath = Paths.get(Launcher.excelDBPath);
-        System.out.println("Target path: " + targetPath.toString());
-
-        try (InputStream inputStream = Launcher.class.getResourceAsStream("/assets/data/Hidrolik.xlsx")) {
+    public static void fileCopy(String resourcePath, String targetPath) {
+        try (InputStream inputStream = Launcher.class.getResourceAsStream(resourcePath)) {
             if (inputStream != null) {
-                Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Hidrolik.xlsx kopyalandı: " + targetPath);
+                Files.copy(inputStream, Paths.get(targetPath), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("File copied to: " + targetPath);
             } else {
-                System.err.println("Hidrolik.xlsx dosyası bulunamadı.");
+                System.err.println("Resource not found: " + resourcePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,35 +82,23 @@ public class GeneralFileSystem {
     }
 
     public static void initializeTokens() {
-        try {
-            File authFile = new File(Launcher.tokenPath);
-            if(authFile.exists()) {
-                Scanner myReader = new Scanner(authFile);
+        File authFile = new File(Launcher.tokenPath);
+        if (!authFile.exists()) return;
 
-                List<String> lines = new ArrayList<String>();
-
-                while (myReader.hasNextLine()) {
-                    String data = myReader.nextLine();
-                    lines.add(data);
-                    System.out.println(data);
-                }
-                myReader.close();
-
-                for(String line : lines) {
-                    if(line.contains("userName: ")) {
-                        Launcher.userName = line;
-                    } else if(line.contains("userID: ")) {
-                        Launcher.userID = line;
-                    } else if(line.contains("AccessToken: ")) {
-                        Launcher.accessToken = line;
-                    } else if(line.contains("RefreshToken: ")) {
-                        Launcher.refreshToken = line;
-                    }
+        try (Scanner scanner = new Scanner(authFile)) {
+            Map<String, String> tokenMap = new HashMap<>();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains(": ")) {
+                    String[] parts = line.split(": ");
+                    tokenMap.put(parts[0].trim(), parts[1].trim());
                 }
             }
-
+            Launcher.userName = tokenMap.getOrDefault("userName", "");
+            Launcher.userID = tokenMap.getOrDefault("userID", "");
+            Launcher.accessToken = tokenMap.getOrDefault("AccessToken", "");
+            Launcher.refreshToken = tokenMap.getOrDefault("RefreshToken", "");
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }

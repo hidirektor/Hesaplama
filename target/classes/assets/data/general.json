@@ -1,0 +1,27 @@
+{
+  "unit_types": {
+    "power_pack": "PowerPack",
+    "classic": "Klasik"
+  },
+  "void_values": {
+    "kampanaBoslukX": "30",
+    "kampanaBoslukY": "30",
+    "valfBoslukX": "50",
+    "valfBoslukYArka": "50",
+    "valfBoslukYOn": "50",
+    "kilitliBlokAraBoslukX": "100",
+    "tekHizAraBoslukX": "50",
+    "ciftHizAraBoslukX": "50",
+    "kompanzasyonTekHizAraBoslukX": "100",
+    "sogutmaAraBoslukX": "100",
+    "sogutmaAraBoslukYkOn": "100",
+    "sogutmaAraBoslukYkArka": "40",
+    "kilitMotorKampanaBosluk": "100",
+    "kilitMotorMotorBoslukX": "100",
+    "kilitMotorBoslukYOn": "100",
+    "kilitMotorBoslukYArka": "40",
+    "kayipLitre": "11",
+    "kilitPlatformMotorBosluk": "130",
+    "valfXBoslukSogutma": "80"
+  }
+}

@@ -10,9 +10,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
-import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
 import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
+import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
 
 import java.io.File;
 import java.io.IOException;
@@ -222,7 +221,7 @@ public class Utils {
     }
 
     public static Tank findTankByTankName(String tankName) {
-        for (Tank tank : ExcelDataReadUtil.dataManipulator.inputTanks) {
+        for (Tank tank : Launcher.getDataManipulator().inputTanks) {
             if (tank.getTankName().equals(tankName)) {
                 return tank;
             }
@@ -231,7 +230,7 @@ public class Utils {
     }
 
     public static Tank findTankByKabinName(String kabinName) {
-        for (Tank tank : ExcelDataReadUtil.dataManipulator.inputTanks) {
+        for (Tank tank : Launcher.getDataManipulator().inputTanks) {
             if (tank.getKabinName().equals(kabinName)) {
                 return tank;
             }

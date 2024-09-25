@@ -2,6 +2,7 @@ package me.t3sl4.hydraulic;
 
 import me.t3sl4.hydraulic.Screens.Main;
 import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
+import me.t3sl4.hydraulic.Utils.Model.Excel.DataManipulator;
 
 public class Launcher {
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
@@ -39,6 +40,12 @@ public class Launcher {
     public static String excelFileLocalPath;
     public static String dataFileLocalPath;
     public static String excelDBPath;
+    public static String generalDBPath;
+    public static String cabinetesDBPath;
+    public static String classicDBPath;
+    public static String powerPackDBPath;
+
+    public static DataManipulator dataManipulator = new DataManipulator();
 
     public static void main(String[] args) {
         if(System.getProperty("os.name").contains("Windows")) {
@@ -69,5 +76,9 @@ public class Launcher {
 
     public static String getUserName() {
         return userName.replaceAll("userName: ", "");
+    }
+
+    public static DataManipulator getDataManipulator() {
+        return dataManipulator;
     }
 }

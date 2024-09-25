@@ -22,7 +22,6 @@ import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Component.FilterSwitch;
 import me.t3sl4.hydraulic.Screens.Controllers.Calculation.PopupController;
-import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
 import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utils.Model.HydraulicUnit.HydraulicInfo;
 import me.t3sl4.hydraulic.Utils.SceneUtil;
@@ -530,12 +529,12 @@ public class MainController implements Initializable {
                 parametrePane.setLayoutY(centerY);
 
                 PopupController popupController = loader.getController();
-                popupController.setValues(ExcelDataReadUtil.dataManipulator.kampanaBoslukX, ExcelDataReadUtil.dataManipulator.kampanaBoslukY,
-                        ExcelDataReadUtil.dataManipulator.valfBoslukX, ExcelDataReadUtil.dataManipulator.valfBoslukYArka, ExcelDataReadUtil.dataManipulator.valfBoslukYOn,
-                        ExcelDataReadUtil.dataManipulator.kilitliBlokAraBoslukX, ExcelDataReadUtil.dataManipulator.tekHizAraBoslukX, ExcelDataReadUtil.dataManipulator.ciftHizAraBoslukX,
-                        ExcelDataReadUtil.dataManipulator.kompanzasyonTekHizAraBoslukX, ExcelDataReadUtil.dataManipulator.sogutmaAraBoslukX, ExcelDataReadUtil.dataManipulator.sogutmaAraBoslukYkOn,
-                        ExcelDataReadUtil.dataManipulator.sogutmaAraBoslukYkArka, ExcelDataReadUtil.dataManipulator.kilitMotorKampanaBosluk, ExcelDataReadUtil.dataManipulator.kilitMotorMotorBoslukX,
-                        ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYOn, ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYArka, ExcelDataReadUtil.dataManipulator.kayipLitre, ExcelDataReadUtil.dataManipulator.kilitPlatformMotorBosluk, ExcelDataReadUtil.dataManipulator.valfXBoslukSogutma);
+                popupController.setValues(Launcher.getDataManipulator().kampanaBoslukX, Launcher.getDataManipulator().kampanaBoslukY,
+                        Launcher.getDataManipulator().valfBoslukX, Launcher.getDataManipulator().valfBoslukYArka, Launcher.getDataManipulator().valfBoslukYOn,
+                        Launcher.getDataManipulator().kilitliBlokAraBoslukX, Launcher.getDataManipulator().tekHizAraBoslukX, Launcher.getDataManipulator().ciftHizAraBoslukX,
+                        Launcher.getDataManipulator().kompanzasyonTekHizAraBoslukX, Launcher.getDataManipulator().sogutmaAraBoslukX, Launcher.getDataManipulator().sogutmaAraBoslukYkOn,
+                        Launcher.getDataManipulator().sogutmaAraBoslukYkArka, Launcher.getDataManipulator().kilitMotorKampanaBosluk, Launcher.getDataManipulator().kilitMotorMotorBoslukX,
+                        Launcher.getDataManipulator().kilitMotorBoslukYOn, Launcher.getDataManipulator().kilitMotorBoslukYArka, Launcher.getDataManipulator().kayipLitre, Launcher.getDataManipulator().kilitPlatformMotorBosluk, Launcher.getDataManipulator().valfXBoslukSogutma);
                 popupController.showValues();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);

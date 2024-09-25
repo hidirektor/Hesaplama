@@ -8,7 +8,6 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,95 +15,61 @@ public class ExcelDataReadUtil {
 
     private static final Logger logger = Logger.getLogger(ExcelDataReadUtil.class.getName());
 
-    public static DataManipulator dataManipulator;
-
-    static {
-        dataManipulator = new DataManipulator();
-    }
-
-    public static void readExcelData(String filePath, String sheetName, DataManipulator dataManipulator, BiConsumer<Row, DataManipulator> rowProcessor) {
-        try (InputStream file = new FileInputStream(filePath)) {
-            Workbook workbook = WorkbookFactory.create(file);
-            Sheet sheet = workbook.getSheet(sheetName);
-
-            if (sheet == null) {
-                logger.log(Level.SEVERE, "Sheet " + sheetName + " not found in " + filePath);
-                return;
-            }
-
-            int rowCount = sheet.getPhysicalNumberOfRows();
-            for (int i = 1; i < rowCount; i++) {
-                Row row = sheet.getRow(i);
-                if (row != null) {
-                    rowProcessor.accept(row, dataManipulator);
-                } else {
-                    //logger.log(Level.WARNING, "Null row encountered at index " + i + " in sheet " + sheetName);
-                }
-            }
-
-            workbook.close();
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
     public static void excelDataRead() {
-        readExcel4DefinedTanks(Launcher.excelDBPath, dataManipulator);
-        readExcel4Bosluk(Launcher.excelDBPath, dataManipulator);
-        readExcel4Kampana(Launcher.excelDBPath, dataManipulator);
-        readExcel4Motor(Launcher.excelDBPath, dataManipulator);
-        readExcel4UniteTipi(Launcher.excelDBPath, dataManipulator);
-        readExcel4PompaHidros(Launcher.excelDBPath, dataManipulator);
-        readExcel4PompaKlasik(Launcher.excelDBPath, dataManipulator);
-        readExcel4PompaTumu(Launcher.excelDBPath, dataManipulator);
-        readExcel4KilitMotor(Launcher.excelDBPath, dataManipulator);
-        readExcel4KilitPompa(Launcher.excelDBPath, dataManipulator);
-        readExcel4ValfTipi1(Launcher.excelDBPath, dataManipulator);
-        readExcel4ValfTipi2(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiKampana1k(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiKampana2k(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiPompa(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiMotor(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiKaplin(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiValfBlok(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiBasincSalteri(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiStandart(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaListesiSogutucu(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosMotorDegerleri380(Launcher.excelDBPath, dataManipulator);
-        readExcel4IthalMotorDegerleri380(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
-        readExcel4IthalMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosMotorDegerleri1224(Launcher.excelDBPath, dataManipulator);
-        readExcel4IthalMotorDegerleri1224(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosPompaKapasite(Launcher.excelDBPath, dataManipulator);
-        readExcel4IthalPompaKapasite(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosTankDikey(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosTankYatay(Launcher.excelDBPath, dataManipulator);
-        readExcel4IthalTankDikey(Launcher.excelDBPath, dataManipulator);
-        readExcel4IthalTankYatay(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosPlatform(Launcher.excelDBPath, dataManipulator);
-        readExcel4HidrosValf(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosMotor380(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosMotor220(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosPompa(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosPompaCivata(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosTankDikey(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosTankYatay(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfDikeyCift(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfDikeyTek(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfYatayTek(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfYatayCift(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfDikeyCiftESP(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfDikeyTekESP(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfYatayTekESP(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosValfYatayCiftESP(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosPlatformDevirmeli(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosGenel(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosTam(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosTamYatay(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosTamDikey(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosTamESPYok(Launcher.excelDBPath, dataManipulator);
-        readExcel4ParcaHidrosOzelTekValf(Launcher.excelDBPath, dataManipulator);
+        readExcel4Kampana(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4Motor(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4UniteTipi(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4PompaHidros(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4PompaKlasik(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4PompaTumu(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4KilitMotor(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4KilitPompa(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ValfTipi1(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ValfTipi2(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiKampana1k(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiKampana2k(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiPompa(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiMotor(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiKaplin(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiValfBlok(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiBasincSalteri(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiStandart(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaListesiSogutucu(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosMotorDegerleri380(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalMotorDegerleri380(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosMotorDegerleri220(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalMotorDegerleri220(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosMotorDegerleri1224(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalMotorDegerleri1224(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosPompaKapasite(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalPompaKapasite(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosTankDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosTankYatay(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalTankDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalTankYatay(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosPlatform(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4HidrosValf(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosMotor380(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosMotor220(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosPompa(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosPompaCivata(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosTankDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosTankYatay(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfDikeyCift(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfDikeyTek(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfYatayTek(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfYatayCift(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfDikeyCiftESP(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfDikeyTekESP(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfYatayTekESP(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosValfYatayCiftESP(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosPlatformDevirmeli(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosGenel(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosTam(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosTamYatay(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosTamDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosTamESPYok(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4ParcaHidrosOzelTekValf(Launcher.excelDBPath, Launcher.getDataManipulator());
         initMotorYukseklik();
     }
 
@@ -2026,18 +1991,18 @@ public class ExcelDataReadUtil {
     }
 
     public static void initMotorYukseklik() {
-        dataManipulator.motorYukseklikVerileri.add("345 mm"); //2.2 kW
-        dataManipulator.motorYukseklikVerileri.add("345 mm"); //3 kW
-        dataManipulator.motorYukseklikVerileri.add("345 mm");
-        dataManipulator.motorYukseklikVerileri.add("375 mm");
-        dataManipulator.motorYukseklikVerileri.add("365 mm");
-        dataManipulator.motorYukseklikVerileri.add("410 mm");
-        dataManipulator.motorYukseklikVerileri.add("500 mm");
-        dataManipulator.motorYukseklikVerileri.add("470 mm");
-        dataManipulator.motorYukseklikVerileri.add("540 mm");
-        dataManipulator.motorYukseklikVerileri.add("565 mm");
-        dataManipulator.motorYukseklikVerileri.add("565 mm");
-        dataManipulator.motorYukseklikVerileri.add("600 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("345 mm"); //2.2 kW
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("345 mm"); //3 kW
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("345 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("375 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("365 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("410 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("500 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("470 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("540 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("565 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("565 mm");
+        Launcher.getDataManipulator().motorYukseklikVerileri.add("600 mm");
     }
 
     private static String getStringValueFromCell(Cell cell) {

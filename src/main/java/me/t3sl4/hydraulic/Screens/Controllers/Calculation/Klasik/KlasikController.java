@@ -20,8 +20,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.File.ExcelDataReadUtil;
-import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
 import me.t3sl4.hydraulic.Utils.File.PDFUtil;
 import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
 import me.t3sl4.hydraulic.Utils.Model.Table.TableData;
@@ -184,7 +182,7 @@ public class KlasikController {
             imageTextDisable();
 
             enableSonucSection();
-            results = calcDimensions(ExcelDataReadUtil.dataManipulator.kampanaDegerleri);
+            results = calcDimensions(Launcher.getDataManipulator().kampanaDegerleri);
 
             if (results.size() == 4) {
                 calculatedX = results.get(0);
@@ -253,7 +251,7 @@ public class KlasikController {
         String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
         String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
 
-        if (GeneralFileSystem.fileExists(pdfPath) && GeneralFileSystem.fileExists(excelPath)) {
+        if (new File(pdfPath).exists() && new File(excelPath).exists()) {
             File partListFile = new File(excelPath);
             File schematicFile = new File(pdfPath);
 
@@ -281,7 +279,7 @@ public class KlasikController {
     public void motorPressed() {
         if(motorComboBox.getValue() != null) {
             secilenMotor = motorComboBox.getValue();
-            secilenKampana = ExcelDataReadUtil.dataManipulator.kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+            secilenKampana = Launcher.getDataManipulator().kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
 
             if(secilenSogutmaDurumu == null) {
                 initComboBoxes("motor", 0);
@@ -550,12 +548,12 @@ public class KlasikController {
         secilenPompaVal = Utils.string2Double(secilenPompa);
 
         //Standart Boşluk Değerleri:
-        int kampanaBoslukX = ExcelDataReadUtil.dataManipulator.kampanaBoslukX;
-        int kampanaBoslukY = ExcelDataReadUtil.dataManipulator.kampanaBoslukY;
-        int kilitAraBoslukX = ExcelDataReadUtil.dataManipulator.kilitliBlokAraBoslukX;
-        int valfBoslukX = ExcelDataReadUtil.dataManipulator.valfBoslukX;
-        int valfBoslukYArka = ExcelDataReadUtil.dataManipulator.valfBoslukYArka;
-        int valfBoslukYOn = ExcelDataReadUtil.dataManipulator.valfBoslukYOn;
+        int kampanaBoslukX = Launcher.getDataManipulator().kampanaBoslukX;
+        int kampanaBoslukY = Launcher.getDataManipulator().kampanaBoslukY;
+        int kilitAraBoslukX = Launcher.getDataManipulator().kilitliBlokAraBoslukX;
+        int valfBoslukX = Launcher.getDataManipulator().valfBoslukX;
+        int valfBoslukYArka = Launcher.getDataManipulator().valfBoslukYArka;
+        int valfBoslukYOn = Launcher.getDataManipulator().valfBoslukYOn;
         int defaultHeight = 350; //standart yükseklik ölçüsü
 
         //Hesaplama Standartları
@@ -604,57 +602,57 @@ public class KlasikController {
                         }
 
                         if(Objects.equals(secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
-                            yV += 180 + ExcelDataReadUtil.dataManipulator.valfBoslukYArka + ExcelDataReadUtil.dataManipulator.valfBoslukYOn;
+                            yV += 180 + Launcher.getDataManipulator().valfBoslukYArka + Launcher.getDataManipulator().valfBoslukYOn;
                             System.out.println("Kompanzasyon + İnişte Tek Hız (Kilitli Blok) (Pompa > 28.1) için:");
-                            System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelDataReadUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                            System.out.println("yV += " + Launcher.getDataManipulator().valfBoslukYOn + " (Valf Boşluk Ön) + " + Launcher.getDataManipulator().valfBoslukYArka + " (Valf Boşluk Arka)");
                         } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
                             System.out.println("İnişte Çift Hız (Kilitli Blok) için:");
                             if(secilenPompaVal >= 28.1) {
-                                yV += 90 + ExcelDataReadUtil.dataManipulator.valfBoslukYOn;
+                                yV += 90 + Launcher.getDataManipulator().valfBoslukYOn;
                                 System.out.println("(Pompa > 28.1) için:");
-                                System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön)");
+                                System.out.println("yV += " + Launcher.getDataManipulator().valfBoslukYOn + " (Valf Boşluk Ön)");
                             } else {
-                                yV += 90 + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + ExcelDataReadUtil.dataManipulator.valfBoslukYArka;
+                                yV += 90 + Launcher.getDataManipulator().valfBoslukYOn + Launcher.getDataManipulator().valfBoslukYArka;
                                 System.out.println("(Pompa <= 28.1) için:");
-                                System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelDataReadUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                                System.out.println("yV += " + Launcher.getDataManipulator().valfBoslukYOn + " (Valf Boşluk Ön) + " + Launcher.getDataManipulator().valfBoslukYArka + " (Valf Boşluk Arka)");
                             }
                         } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                            yV += 180 + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + ExcelDataReadUtil.dataManipulator.valfBoslukYArka;
+                            yV += 180 + Launcher.getDataManipulator().valfBoslukYOn + Launcher.getDataManipulator().valfBoslukYArka;
                             System.out.println("İnişte Tek Hız (Kilitli Blok) için:");
-                            System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelDataReadUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                            System.out.println("yV += " + Launcher.getDataManipulator().valfBoslukYOn + " (Valf Boşluk Ön) + " + Launcher.getDataManipulator().valfBoslukYArka + " (Valf Boşluk Arka)");
                         }
 
                         if(secilenKilitMotorVal != 0) {
-                            x += 200 + ExcelDataReadUtil.dataManipulator.kilitMotorKampanaBosluk + ExcelDataReadUtil.dataManipulator.kilitMotorMotorBoslukX;
-                            yV += 200 + ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYOn + ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYArka;
+                            x += 200 + Launcher.getDataManipulator().kilitMotorKampanaBosluk + Launcher.getDataManipulator().kilitMotorMotorBoslukX;
+                            yV += 200 + Launcher.getDataManipulator().kilitMotorBoslukYOn + Launcher.getDataManipulator().kilitMotorBoslukYArka;
                             System.out.println("Kilit Motor için:");
-                            System.out.println("X += " + ExcelDataReadUtil.dataManipulator.kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + ExcelDataReadUtil.dataManipulator.kilitMotorMotorBoslukX + " (Kilit Motor Boşluk)");
-                            System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + ExcelDataReadUtil.dataManipulator.kilitMotorBoslukYArka + " (Kilit Motor Arka)");
+                            System.out.println("X += " + Launcher.getDataManipulator().kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + Launcher.getDataManipulator().kilitMotorMotorBoslukX + " (Kilit Motor Boşluk)");
+                            System.out.println("yV += " + Launcher.getDataManipulator().kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + Launcher.getDataManipulator().kilitMotorBoslukYArka + " (Kilit Motor Arka)");
                         }
                     }
                 }
             } else { //hidrolik kilit olmadığı durumlarda valf tipleri için
                 if(kompanzasyonDurumu.equals("Var")) {
-                    x += 140 + ExcelDataReadUtil.dataManipulator.kompanzasyonTekHizAraBoslukX;
-                    yV += 180 + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + ExcelDataReadUtil.dataManipulator.valfBoslukYArka;
+                    x += 140 + Launcher.getDataManipulator().kompanzasyonTekHizAraBoslukX;
+                    yV += 180 + Launcher.getDataManipulator().valfBoslukYOn + Launcher.getDataManipulator().valfBoslukYArka;
                     System.out.println("Kompanzasyon + Tek Hız İçin: (Hidrolik Kilit Yok)");
-                    System.out.println("X += " + ExcelDataReadUtil.dataManipulator.kompanzasyonTekHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
-                    System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelDataReadUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                    System.out.println("X += " + Launcher.getDataManipulator().kompanzasyonTekHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
+                    System.out.println("yV += " + Launcher.getDataManipulator().valfBoslukYOn + " (Valf Boşluk Ön) + " + Launcher.getDataManipulator().valfBoslukYArka + " (Valf Boşluk Arka)");
                 } else {
                     if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
                         // X yönünde +120 olacak Y yönünde 180 mm eklenecek
-                        x += 70 + ExcelDataReadUtil.dataManipulator.valfBoslukX + ExcelDataReadUtil.dataManipulator.tekHizAraBoslukX;
-                        yV += 180 + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + ExcelDataReadUtil.dataManipulator.valfBoslukYArka;
+                        x += 70 + Launcher.getDataManipulator().valfBoslukX + Launcher.getDataManipulator().tekHizAraBoslukX;
+                        yV += 180 + Launcher.getDataManipulator().valfBoslukYOn + Launcher.getDataManipulator().valfBoslukYArka;
                         System.out.println("İnişte Tek Hız İçin: (Hidrolik Kilit Yok)");
-                        System.out.println("X += " + ExcelDataReadUtil.dataManipulator.valfBoslukX + " (Valf Boşluk) + " + ExcelDataReadUtil.dataManipulator.tekHizAraBoslukX + " (Tek Hız Boşluk)");
-                        System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelDataReadUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                        System.out.println("X += " + Launcher.getDataManipulator().valfBoslukX + " (Valf Boşluk) + " + Launcher.getDataManipulator().tekHizAraBoslukX + " (Tek Hız Boşluk)");
+                        System.out.println("yV += " + Launcher.getDataManipulator().valfBoslukYOn + " (Valf Boşluk Ön) + " + Launcher.getDataManipulator().valfBoslukYArka + " (Valf Boşluk Arka)");
                     } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
                         //X yönünde 190 Y yönünde 90
-                        x += 140 + ExcelDataReadUtil.dataManipulator.ciftHizAraBoslukX + ExcelDataReadUtil.dataManipulator.valfBoslukX;
-                        yV += 90 + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + ExcelDataReadUtil.dataManipulator.valfBoslukYArka;
+                        x += 140 + Launcher.getDataManipulator().ciftHizAraBoslukX + Launcher.getDataManipulator().valfBoslukX;
+                        yV += 90 + Launcher.getDataManipulator().valfBoslukYOn + Launcher.getDataManipulator().valfBoslukYArka;
                         System.out.println("İnişte Çift Hız İçin: (Hidrolik Kilit Yok)");
-                        System.out.println("X += " + ExcelDataReadUtil.dataManipulator.valfBoslukX + " (Valf Boşluk) + " + ExcelDataReadUtil.dataManipulator.ciftHizAraBoslukX + " (Tek Hız Boşluk)");
-                        System.out.println("yV += " + ExcelDataReadUtil.dataManipulator.valfBoslukYOn + " (Valf Boşluk Ön) + " + ExcelDataReadUtil.dataManipulator.valfBoslukYArka + " (Valf Boşluk Arka)");
+                        System.out.println("X += " + Launcher.getDataManipulator().valfBoslukX + " (Valf Boşluk) + " + Launcher.getDataManipulator().ciftHizAraBoslukX + " (Tek Hız Boşluk)");
+                        System.out.println("yV += " + Launcher.getDataManipulator().valfBoslukYOn + " (Valf Boşluk Ön) + " + Launcher.getDataManipulator().valfBoslukYArka + " (Valf Boşluk Arka)");
                     }
                 }
             }
@@ -668,18 +666,18 @@ public class KlasikController {
             }
             h = defaultHeight;
 
-            String veri = ExcelDataReadUtil.dataManipulator.motorYukseklikVerileri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+            String veri = Launcher.getDataManipulator().motorYukseklikVerileri.get(motorComboBox.getSelectionModel().getSelectedIndex());
             String sayiKismi = veri.replaceAll("[^0-9]", "");
             motorYukseklik = Integer.parseInt(sayiKismi);
 
-            hesaplananHacim = ((x*h*y) / 1000000) - ExcelDataReadUtil.dataManipulator.kayipLitre;
+            hesaplananHacim = ((x*h*y) / 1000000) - Launcher.getDataManipulator().kayipLitre;
             eskiX = x;
             eskiY = y;
             eskiH = h;
         }
 
         Tank finalTank = null;
-        for(Tank selectedTank : ExcelDataReadUtil.dataManipulator.inputTanks) {
+        for(Tank selectedTank : Launcher.getDataManipulator().inputTanks) {
             int litre = selectedTank.getKabinHacim();
             int tempX = selectedTank.getKabinX();
             int tempY = selectedTank.getKabinY();
@@ -708,7 +706,7 @@ public class KlasikController {
             h = finalTank.getKabinH();
             atananHacim = finalTank.getKabinHacim();
             if(finalTank.getGecisH() < (motorYukseklik + h)) {
-                for(Tank selectedTank : ExcelDataReadUtil.dataManipulator.inputTanks) {
+                for(Tank selectedTank : Launcher.getDataManipulator().inputTanks) {
                     int kabinYukseklik = selectedTank.getGecisH();
                     //System.out.println("Kabin Yükseklik: " + kabinYukseklik + "\nÖnceden Seçilen Kabin Yükseklik: " + finalTank.getKabinH());
 
@@ -747,7 +745,7 @@ public class KlasikController {
         x = 1000;
         y = 600;
         h = 350;
-        hesaplananHacim = ((x*h*y) / 1000000) - ExcelDataReadUtil.dataManipulator.kayipLitre;
+        hesaplananHacim = ((x*h*y) / 1000000) - Launcher.getDataManipulator().kayipLitre;
 
         atananHT = "HT SOĞUTMA";
         String atananKabin = "KD SOĞUTMA";
@@ -796,28 +794,28 @@ public class KlasikController {
         if(componentName.equals("motor")) {
             motorComboBox.setDisable(false);
             motorComboBox.getItems().clear();
-            motorComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleri);
+            motorComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleri);
             //motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
         } else if(componentName.equals("pompa")) {
             pompaComboBox.setDisable(false);
             pompaComboBox.getItems().clear();
             if(Objects.equals(secilenUniteTipi, "Hidros")) {
-                pompaComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.pompaDegerleriHidros);
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaDegerleriHidros);
                 //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
             } else if(Objects.equals(secilenUniteTipi, "Klasik")) {
-                pompaComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.pompaDegerleriKlasik);
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaDegerleriKlasik);
                 //pompaComboBox.getItems().addAll("9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
             } else {
-                pompaComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.pompaDegerleriTumu);
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaDegerleriTumu);
                 //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc", "9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
             }
         } else if(componentName.equals("valfTipi")) {
             valfTipiComboBox.setDisable(false);
             valfTipiComboBox.getItems().clear();
             if(valfTipiStat == 1) {
-                valfTipiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfTipiDegerleri2); //İnişte Tek Hız, İnişte Çift Hız
+                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiDegerleri2); //İnişte Tek Hız, İnişte Çift Hız
             } else {
-                valfTipiComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfTipiDegerleri1); //Kompanzasyon || İnişte Tek Hız
+                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiDegerleri1); //Kompanzasyon || İnişte Tek Hız
             }
         } else if(componentName.equals("hidrolikKilit")) {
             hidrolikKilitComboBox.setDisable(false);
@@ -830,12 +828,12 @@ public class KlasikController {
         } else if(componentName.equals("kilitMotor")) {
             kilitMotorComboBox.setDisable(false);
             kilitMotorComboBox.getItems().clear();
-            kilitMotorComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.kilitMotorDegerleri);
+            kilitMotorComboBox.getItems().addAll(Launcher.getDataManipulator().kilitMotorDegerleri);
             //kilitMotorComboBox.getItems().addAll("1.5 kW", "2.2 kW");
         } else if(componentName.equals("kilitPompa")) {
             kilitPompaComboBox.setDisable(false);
             kilitPompaComboBox.getItems().clear();
-            kilitPompaComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.kilitPompaDegerleri);
+            kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().kilitPompaDegerleri);
             //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
         } else if(componentName.equals("kompanzasyon")) {
             kompanzasyonComboBox.setDisable(false);
@@ -870,7 +868,7 @@ public class KlasikController {
         motorComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if(!motorComboBox.getItems().isEmpty() && newValue != null) {
                 secilenMotor = newValue;
-                secilenKampana = ExcelDataReadUtil.dataManipulator.kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+                secilenKampana = Launcher.getDataManipulator().kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
 
                 dataInit("sogutma", null);
 
@@ -976,36 +974,28 @@ public class KlasikController {
         girilenSiparisNumarasi = null;
         siparisNumarasi.setPromptText("x Numaralı Sipariş");
 
-        motorComboBox.getItems().clear();
         motorComboBox.setDisable(true);
         if(secilenMotor != null) {
-            motorComboBox.getSelectionModel().clearSelection();
             secilenMotor = null;
             secilenKampana = 0;
         }
         motorComboBox.setPromptText("Motor");
 
-        sogutmaComboBox.getItems().clear();
         sogutmaComboBox.setDisable(true);
         if(secilenSogutmaDurumu != null) {
-            sogutmaComboBox.getSelectionModel().clearSelection();
             secilenSogutmaDurumu = null;
         }
         sogutmaComboBox.setPromptText("Soğutma");
 
-        hidrolikKilitComboBox.getItems().clear();
         hidrolikKilitComboBox.setDisable(true);
         if(secilenHidrolikKilitDurumu != null) {
-            hidrolikKilitComboBox.getSelectionModel().clearSelection();
             secilenHidrolikKilitDurumu = null;
             hidrolikKilitStat = false;
         }
         hidrolikKilitComboBox.setPromptText("Hidrolik Kilit");
 
-        pompaComboBox.getItems().clear();
         pompaComboBox.setDisable(true);
         if(secilenPompa != null) {
-            pompaComboBox.getSelectionModel().clearSelection();
             secilenPompa = null;
             secilenPompaVal = 0;
         }
@@ -1018,7 +1008,6 @@ public class KlasikController {
         }
         tankKapasitesiTextField.setPromptText("Gerekli Yağ Miktarı (L)");
 
-        kompanzasyonComboBox.getItems().clear();
         kompanzasyonComboBox.setDisable(true);
         if(kompanzasyonDurumu != null) {
             kompanzasyonComboBox.getSelectionModel().clearSelection();
@@ -1026,26 +1015,20 @@ public class KlasikController {
         }
         kompanzasyonComboBox.setPromptText("Kompanzasyon");
 
-        valfTipiComboBox.getItems().clear();
         valfTipiComboBox.setDisable(true);
         if(secilenValfTipi != null) {
-            valfTipiComboBox.getSelectionModel().clearSelection();
             secilenValfTipi = null;
         }
         valfTipiComboBox.setPromptText("Valf Tipi");
 
-        kilitMotorComboBox.getItems().clear();
         kilitMotorComboBox.setDisable(true);
         if(secilenKilitMotor != null) {
-            kilitMotorComboBox.getSelectionModel().clearSelection();
             secilenKilitMotor = null;
         }
         kilitMotorComboBox.setPromptText("Kilit Motor");
 
-        kilitPompaComboBox.getItems().clear();
         kilitPompaComboBox.setDisable(true);
         if(secilenKilitPompa != null) {
-            kilitPompaComboBox.getSelectionModel().clearSelection();
             secilenKilitPompa = null;
         }
         kilitPompaComboBox.setPromptText("Kilit Pompa");
@@ -1463,7 +1446,7 @@ public class KlasikController {
             //kilit motor değiştiğinde nereler etkilenecek
             if(listenerStatus == 0) {
                 kilitPompaComboBox.setDisable(false);
-                kilitPompaComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.kilitPompaDegerleri);
+                kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().kilitPompaDegerleri);
                 //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
             }
         } else if(currentComponent.equals("kilitPompa")) {
