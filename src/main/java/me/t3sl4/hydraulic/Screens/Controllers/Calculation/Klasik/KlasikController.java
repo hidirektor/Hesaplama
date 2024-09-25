@@ -1126,7 +1126,7 @@ public class KlasikController {
             addTextToList("50 mm", 822, 375, 90, 8, Color.WHITE);
         } else if(calculatedImage.equals("kilitMotor")) {
             addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 218, 90, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
 
             addTextToList("50 mm", 562, 218, 0, 10, Color.WHITE);
             addTextToList("50 mm", 534, 266, 90, 10, Color.WHITE);
@@ -1141,7 +1141,7 @@ public class KlasikController {
             addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
         } else if(calculatedImage.equals("kompanzasyon")) {
             addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 218, 90, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
 
             addTextToList("50 mm", 547, 218, 0, 10, Color.WHITE);
             if(secilenSogutmaDurumu.equals("Yok") && secilenHidrolikKilitDurumu.equals("Yok")) {
@@ -1160,7 +1160,7 @@ public class KlasikController {
             addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
         } else if(calculatedImage.equals("tekhizcifthiz")) {
             addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 218, 90, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
 
             addTextToList("50 mm", 547, 218, 0, 10, Color.WHITE);
             addTextToList("50 mm", 532, 276, 90, 10, Color.WHITE);
@@ -1374,21 +1374,21 @@ public class KlasikController {
         } else {
             if(secilenHidrolikKilitDurumu.equals("Var")) {
                 if(kompanzasyonDurumu.equals("Var")) {
-                    dataInit("valfTipi", 1);
+                    dataInit("valfTipi", 0);
                 } else {
                     if(secilenPompaVal <= 28.1) {
                         valfTipiComboBox.getItems().clear();
                         valfTipiComboBox.getItems().addAll("Kilitli Blok");
                         valfTipiComboBox.setDisable(false);
                     } else {
-                        dataInit("valfTipi", 0); //Tek + Çift
+                        dataInit("valfTipi", 1); //Tek + Çift
                     }
                 }
             } else {
                 if(kompanzasyonDurumu.equals("Var")) {
-                    dataInit("valfTipi", 1); //Komp + Tek
+                    dataInit("valfTipi", 0); //Komp + Tek
                 } else {
-                    dataInit("valfTipi", 0); //Tek + Çift
+                    dataInit("valfTipi", 1); //Tek + Çift
                 }
             }
         }
