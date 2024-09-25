@@ -1,7 +1,7 @@
 {
   "unit_types": {
-    "power_pack": "PowerPack",
-    "classic": "Klasik"
+    "classic": "Klasik",
+    "power_pack": "PowerPack"
   },
   "void_values": {
     "kampanaBoslukX": "30",

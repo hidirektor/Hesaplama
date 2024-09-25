@@ -2,7 +2,6 @@ package me.t3sl4.hydraulic.Utils.File;
 
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Utils.Model.Excel.DataManipulator;
-import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
@@ -18,7 +17,6 @@ public class ExcelDataReadUtil {
     public static void excelDataRead() {
         readExcel4Kampana(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4Motor(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4UniteTipi(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4PompaHidros(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4PompaKlasik(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4PompaTumu(Launcher.excelDBPath, Launcher.getDataManipulator());
@@ -73,76 +71,6 @@ public class ExcelDataReadUtil {
         initMotorYukseklik();
     }
 
-    public static void readExcel4DefinedTanks(String filePath, DataManipulator dataManipulator) {
-        String sheetName = "Kabinler";
-
-        try(InputStream file = new FileInputStream(filePath)) {
-            Workbook workbook = WorkbookFactory.create(file);
-            Sheet sheet = workbook.getSheet(sheetName);
-
-            int rowCount = sheet.getPhysicalNumberOfRows();
-
-            for(int i=1; i<rowCount; i++) {
-                Row row = sheet.getRow(i);
-
-                String tankName = row.getCell(0).getStringCellValue();
-                String kabinName = row.getCell(1).getStringCellValue();
-                int kabinHacim = (int) row.getCell(8).getNumericCellValue();
-                int gecisX = (int) row.getCell(2).getNumericCellValue();
-                int gecisY = (int) row.getCell(3).getNumericCellValue();
-                int gecisH = (int) row.getCell(4).getNumericCellValue();
-                int kabinX = (int) row.getCell(5).getNumericCellValue();
-                int kabinY = (int) row.getCell(6).getNumericCellValue();
-                int kabinH = (int) row.getCell(7).getNumericCellValue();
-                String malzemeKodu = String.valueOf(row.getCell(9).getStringCellValue());
-                String malzemeAdi = String.valueOf(row.getCell(10).getStringCellValue());
-
-                Tank tank = new Tank(tankName, kabinName, kabinHacim, gecisX, gecisY, gecisH, kabinX, kabinY, kabinH, malzemeKodu, malzemeAdi);
-                dataManipulator.inputTanks.add(tank);
-            }
-
-            workbook.close();
-        } catch(Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public static void readExcel4Bosluk(String filePath, DataManipulator dataManipulator) {
-        String sheetName = "Boşluk Değerleri";
-
-        try(InputStream file = new FileInputStream(filePath)) {
-            Workbook workbook = WorkbookFactory.create(file);
-            Sheet sheet = workbook.getSheet(sheetName);
-
-            //Row variableNamesRow = sheet.getRow(0);
-            Row variableValuesRow = sheet.getRow(1);
-
-            dataManipulator.kampanaBoslukX = (int) variableValuesRow.getCell(0).getNumericCellValue();
-            dataManipulator.kampanaBoslukY = (int) variableValuesRow.getCell(1).getNumericCellValue();
-            dataManipulator.valfBoslukX = (int) variableValuesRow.getCell(2).getNumericCellValue();
-            dataManipulator.valfBoslukYArka = (int) variableValuesRow.getCell(3).getNumericCellValue();
-            dataManipulator.valfBoslukYOn = (int) variableValuesRow.getCell(4).getNumericCellValue();
-            dataManipulator.kilitliBlokAraBoslukX = (int) variableValuesRow.getCell(5).getNumericCellValue();
-            dataManipulator.tekHizAraBoslukX = (int) variableValuesRow.getCell(6).getNumericCellValue();
-            dataManipulator.ciftHizAraBoslukX = (int) variableValuesRow.getCell(7).getNumericCellValue();
-            dataManipulator.kompanzasyonTekHizAraBoslukX = (int) variableValuesRow.getCell(8).getNumericCellValue();
-            dataManipulator.sogutmaAraBoslukX = (int) variableValuesRow.getCell(9).getNumericCellValue();
-            dataManipulator.sogutmaAraBoslukYkOn = (int) variableValuesRow.getCell(10).getNumericCellValue();
-            dataManipulator.sogutmaAraBoslukYkArka = (int) variableValuesRow.getCell(11).getNumericCellValue();
-            dataManipulator.kilitMotorKampanaBosluk = (int) variableValuesRow.getCell(12).getNumericCellValue();
-            dataManipulator.kilitMotorMotorBoslukX = (int) variableValuesRow.getCell(13).getNumericCellValue();
-            dataManipulator.kilitMotorBoslukYOn = (int) variableValuesRow.getCell(14).getNumericCellValue();
-            dataManipulator.kilitMotorBoslukYArka = (int) variableValuesRow.getCell(15).getNumericCellValue();
-            dataManipulator.kayipLitre = (int) variableValuesRow.getCell(16).getNumericCellValue();
-            dataManipulator.kilitPlatformMotorBosluk = (int) variableValuesRow.getCell(17).getNumericCellValue();
-            dataManipulator.valfXBoslukSogutma = (int) variableValuesRow.getCell(18).getNumericCellValue();
-
-            workbook.close();
-        } catch(Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
     public static void readExcel4Kampana(String filePath, DataManipulator dataManipulator) {
         String sheetName = "Kampana";
 
@@ -181,28 +109,6 @@ public class ExcelDataReadUtil {
                 Cell cell = row.getCell(0);
                 String data = cell.getStringCellValue();
                 dataManipulator.motorDegerleri.add(data);
-            }
-
-            workbook.close();
-        } catch(Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public static void readExcel4UniteTipi(String filePath, DataManipulator dataManipulator) {
-        String sheetName = "Ünite Tipi";
-
-        try(InputStream file = new FileInputStream(filePath)) {
-            Workbook workbook = WorkbookFactory.create(file);
-            Sheet sheet = workbook.getSheet(sheetName);
-
-            int rowCount = sheet.getPhysicalNumberOfRows();
-
-            for(int i=1; i<rowCount; i++) {
-                Row row = sheet.getRow(i);
-                Cell cell = row.getCell(0);
-                String data = cell.getStringCellValue();
-                dataManipulator.uniteTipiDegerleri.add(data);
             }
 
             workbook.close();

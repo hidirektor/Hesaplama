@@ -16,8 +16,9 @@ public class JSONDataUtil {
     public static void loadJSONData() {
         readJson4DefinedTanks(Launcher.cabinetesDBPath, Launcher.getDataManipulator());
         readJson4Bosluk(Launcher.generalDBPath, Launcher.getDataManipulator());
+        readJson4UniteType(Launcher.generalDBPath, Launcher.getDataManipulator());
     }
-    public static void readJson4DefinedTanks(String filePath, DataManipulator dataManipulator) {
+    private static void readJson4DefinedTanks(String filePath, DataManipulator dataManipulator) {
         try {
             FileReader reader = new FileReader(filePath);
             StringBuilder sb = new StringBuilder();
@@ -54,7 +55,7 @@ public class JSONDataUtil {
         }
     }
 
-    public static void readJson4Bosluk(String filePath, DataManipulator dataManipulator) {
+    private static void readJson4Bosluk(String filePath, DataManipulator dataManipulator) {
         try {
             FileReader reader = new FileReader(filePath);
             StringBuilder sb = new StringBuilder();
@@ -87,6 +88,26 @@ public class JSONDataUtil {
             dataManipulator.kilitPlatformMotorBosluk = Integer.parseInt(voidValues.getString("kilitPlatformMotorBosluk"));
             dataManipulator.valfXBoslukSogutma = Integer.parseInt(voidValues.getString("valfXBoslukSogutma"));
 
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    private static void readJson4UniteType(String filePath, DataManipulator dataManipulator) {
+        try {
+            FileReader reader = new FileReader(filePath);
+            StringBuilder sb = new StringBuilder();
+            int i;
+            while ((i = reader.read()) != -1) {
+                sb.append((char) i);
+            }
+            reader.close();
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONObject unitTypeValues = jsonObject.getJSONObject("unit_types");
+
+            dataManipulator.uniteTipiDegerleri.add(unitTypeValues.getString("classic"));
+            dataManipulator.uniteTipiDegerleri.add(unitTypeValues.getString("power_pack"));
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
