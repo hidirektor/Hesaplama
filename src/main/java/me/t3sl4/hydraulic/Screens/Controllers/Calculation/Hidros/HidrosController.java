@@ -140,6 +140,9 @@ public class HidrosController {
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
         ozelTankStatus("null");
+        if(Main.loggedInUser == null) {
+            kaydetButton.setDisable(true);
+        }
     }
 
     @FXML

@@ -93,6 +93,9 @@ public class KlasikController {
     private Text kullanilacakKabin;
 
     @FXML
+    private Text kullanilacakKabinMainText;
+
+    @FXML
     private TableView<TableData> sonucTablo;
 
     @FXML
@@ -112,6 +115,9 @@ public class KlasikController {
 
     @FXML
     private Button exportButton;
+
+    @FXML
+    private Button kaydetButton;
 
     @FXML
     private Button parcaListesiButton;
@@ -161,6 +167,9 @@ public class KlasikController {
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
+        if(Main.loggedInUser == null) {
+            kaydetButton.setDisable(true);
+        }
     }
 
     @FXML
@@ -718,7 +727,8 @@ public class KlasikController {
         String atananKabin = finalTank.getKabinName();
         String gecisOlculeri = finalTank.getGecisOlculeri();
 
-        kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        //kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        kullanilacakKabin.setText("\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
         atananKabinFinal = atananKabin;
         gecisOlculeriFinal = gecisOlculeri;
         //int secilenMotorIndeks = motorComboBox.getSelectionModel().getSelectedIndex();
@@ -742,7 +752,8 @@ public class KlasikController {
         atananHT = "HT SOĞUTMA";
         String atananKabin = "KD SOĞUTMA";
         String gecisOlculeri = "1000x600x350";
-        kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        //kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        kullanilacakKabin.setText("\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
         atananKabinFinal = atananKabin;
         gecisOlculeriFinal = gecisOlculeri;
         atananHacim = hesaplananHacim;
@@ -834,6 +845,7 @@ public class KlasikController {
     }
 
     private void enableSonucSection() {
+        kullanilacakKabinMainText.setVisible(true);
         genislikSonucText.setVisible(true);
         yukseklikSonucText.setVisible(true);
         derinlikSonucText.setVisible(true);
@@ -962,7 +974,7 @@ public class KlasikController {
         //Kullanıcı Input Side
         siparisNumarasi.clear();
         girilenSiparisNumarasi = null;
-        siparisNumarasi.setPromptText("Sipariş Numarası");
+        siparisNumarasi.setPromptText("x Numaralı Sipariş");
 
         motorComboBox.getItems().clear();
         motorComboBox.setDisable(true);
@@ -1047,6 +1059,7 @@ public class KlasikController {
         kullanilacakKabin.setVisible(false);
         sonucAnaLabelTxt.setText("");
         sonucTankGorsel.setImage(null);
+        kullanilacakKabinMainText.setVisible(false);
 
         imageTextDisable();
     }
