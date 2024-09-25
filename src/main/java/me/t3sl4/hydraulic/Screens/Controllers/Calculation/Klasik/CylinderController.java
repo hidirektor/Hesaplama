@@ -5,7 +5,7 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Utils.Utils;
 
-public class CyclinderController {
+public class CylinderController {
 
     @FXML
     private ComboBox<String> silindirSayisiComboBox;

@@ -1472,10 +1472,10 @@ public class KlasikController {
     private String showCyclinderPopup() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
         try {
-            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CyclinderCount.fxml"));
+            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CylinderCount.fxml"));
             Parent root = loader.load();
 
-            CyclinderController controller = loader.getController();
+            CylinderController controller = loader.getController();
 
             Stage stage = new Stage();
             stage.setTitle("Silindir Seçimi");
