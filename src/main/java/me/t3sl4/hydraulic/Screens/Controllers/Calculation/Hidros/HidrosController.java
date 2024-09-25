@@ -466,11 +466,19 @@ public class HidrosController {
         data = new TableData("İniş Metodu:", secilenInisTipi);
         sonucTablo.getItems().add(data);
 
-        data = new TableData("Birinci Valf:", secilenBirinciValf);
-        sonucTablo.getItems().add(data);
+        if(secilenPlatformTipi != null && secilenPlatformTipi.equals("Özel")) {
+            data = new TableData("Valf Sayısı:", secilenBirinciValf);
+            sonucTablo.getItems().add(data);
 
-        data = new TableData("İkinci Valf:", secilenIkinciValf);
-        sonucTablo.getItems().add(data);
+            data = new TableData("Valf Tipi:", secilenIkinciValf);
+            sonucTablo.getItems().add(data);
+        } else {
+            data = new TableData("Birinci Valf:", secilenBirinciValf);
+            sonucTablo.getItems().add(data);
+
+            data = new TableData("İkinci Valf:", secilenIkinciValf);
+            sonucTablo.getItems().add(data);
+        }
     }
 
     private void initMotorTipi() {
@@ -576,7 +584,6 @@ public class HidrosController {
         if(secilenPlatformTipi.equals("Özel")) {
             if(secilenBirinciValf.equals("1")) {
                 //Tek Valf
-                System.out.println(secilenMotorTipi);
                 if(secilenMotorTipi.equals("12 V (DC)") || secilenMotorTipi.equals("24 V (DC)")) {
                     //DC Motor
                     ikinciValfComboBox.getItems().clear();
