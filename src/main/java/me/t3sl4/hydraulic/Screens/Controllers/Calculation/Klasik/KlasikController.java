@@ -430,8 +430,13 @@ public class KlasikController {
         int schematicImageHeight = 246;
 
         if(hesaplamaBitti) {
-            int selectedCylinders = showCyclinderPopup();
-            if (selectedCylinders == -1) {
+            String generalCyclinderString = showCyclinderPopup();
+            String numberPart = generalCyclinderString.replaceAll("[^0-9]", "");
+            String stringPart = generalCyclinderString.replaceAll("[0-9]", "");
+
+            int selectedCylinders = Integer.parseInt(numberPart);
+            String isPressureValf = stringPart;
+            if (selectedCylinders == -1 && isPressureValf.isEmpty()) {
                 Utils.showErrorMessage("Silindir sayısı seçilmedi. İşlem iptal edildi.");
                 return;
             }
@@ -446,7 +451,7 @@ public class KlasikController {
             pdfShaper(1);
             PDFUtil.cropImage(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, "schematicImage.png");
 
-            String pdfPath = hydraulicSchemaSelection(selectedCylinders);
+            String pdfPath = hydraulicSchemaSelection(selectedCylinders, isPressureValf);
             System.out.println("Şema Yolu: " + pdfPath);
             pdfPath = null;
 
@@ -456,7 +461,7 @@ public class KlasikController {
         }
     }
 
-    private String hydraulicSchemaSelection(int selectedCylinders) {
+    private String hydraulicSchemaSelection(int selectedCylinders, String isPressureValf) {
         boolean isSogutmaVar = secilenSogutmaDurumu.equals("Var");
         boolean isKilitMotorVar = secilenKilitMotor != null;
         boolean isKompanzasyonVar = kompanzasyonDurumu.equals("Var");
@@ -467,50 +472,51 @@ public class KlasikController {
         if (isSogutmaVar) {
             if (isKilitMotorVar) {
                 if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, 13, 14, 15, 16);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 13, 14, 15, 16);
                 } else {
-                    return getCylinderImage(selectedCylinders, 5, 6, 7, 8);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 5, 6, 7, 8);
                 }
             } else {
                 if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, 9, 10, 11, 12);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 9, 10, 11, 12);
                 } else {
-                    return getCylinderImage(selectedCylinders, 1, 2, 3, 4);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 1, 2, 3, 4);
                 }
             }
         } else {
             if (isKilitMotorVar) {
                 if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, 33, 34, 35, 36);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 33, 34, 35, 36);
                 } else if (isInisteTekHiz) {
-                    return getCylinderImage(selectedCylinders, 17, 18, 19, 20);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 17, 18, 19, 20);
                 } else {
-                    return getCylinderImage(selectedCylinders, 21, 22, 23, 24);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 21, 22, 23, 24);
                 }
             } else {
                 if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, 29, 30, 31, 32);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 29, 30, 31, 32);
                 } else if (isKilitliBlok) {
-                    return getCylinderImage(selectedCylinders, 25, 26, 27, 28);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 25, 26, 27, 28);
                 } else if (isInisteCiftHiz) {
-                    return getCylinderImage(selectedCylinders, 37, 38, 39, 40);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 37, 38, 39, 40);
                 } else {
-                    return getCylinderImage(selectedCylinders, 41, 42, 43, 44);
+                    return getCylinderImage(selectedCylinders, isPressureValf, 41, 42, 43, 44);
                 }
             }
         }
     }
 
-    private String getCylinderImage(int selectedCylinders, int one, int two, int three, int other) {
+    private String getCylinderImage(int selectedCylinders, String isPressureValf, int one, int two, int three, int other) {
+        String suffix = isPressureValf.equals("Var") ? "B" : "";
         switch (selectedCylinders) {
             case 1:
-                return one + ".png";
+                return one + suffix + ".png";
             case 2:
-                return two + ".png";
+                return two + suffix + ".png";
             case 3:
-                return three + ".png";
+                return three + suffix + ".png";
             default:
-                return other + ".png";
+                return other + suffix + ".png";
         }
     }
 
@@ -1467,7 +1473,7 @@ public class KlasikController {
         }
     }
 
-    private int showCyclinderPopup() {
+    private String showCyclinderPopup() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
         try {
             FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CyclinderCount.fxml"));
@@ -1484,15 +1490,15 @@ public class KlasikController {
             stage.showAndWait();
 
             if (controller.isConfirmed()) {
-                return controller.getSelectedCylinders();
+                return controller.getFinalResult();
             } else {
-                return -1;
+                return null;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
             Utils.showErrorMessage("Silindir seçimi sırasında bir hata oluştu.");
-            return -1;
+            return null;
         }
     }
 }

@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="500.0" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.Screens.Controllers.Calculation.Klasik.CyclinderController">
     <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0">
         <children>
@@ -16,12 +17,23 @@
                     <Image url="@../../../../assets/images/closeIcon.png" />
                 </image>
             </ImageView>
-            <Text fill="#B7C3D7" layoutX="124.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Oluşturduğunuz ünitenin şemasını oluşturabilmek için lütfen Silindir Sayısını seçin." textAlignment="CENTER" wrappingWidth="254.44534301757812">
+            <Text fill="#B7C3D7" layoutX="124.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Oluşturduğunuz ünitenin şemasını oluşturabilmek için lütfen Silindir Sayısı ve Basınç Şalteri durumunu seçin." textAlignment="CENTER" wrappingWidth="254.44534301757812">
                 <font>
                     <Font size="13.0" />
                 </font></Text>
+         <Text fill="#B7C3D7" layoutX="13.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Basınç Şalteri" textAlignment="CENTER" wrappingWidth="254.44534301757812">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </Text>
+            <ComboBox fx:id="silindirSayisiComboBox" layoutX="283.0" layoutY="85.0" prefHeight="26.0" prefWidth="168.0" />
+         <ComboBox fx:id="basincSalteriComboBox" layoutX="56.0" layoutY="85.0" prefHeight="26.0" prefWidth="168.0" />
+         <Text fill="#B7C3D7" layoutX="240.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Silindir Sayısı" textAlignment="CENTER" wrappingWidth="254.44534301757812">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </Text>
             <Button fx:id="pdfButton" layoutX="199.0" layoutY="122.0" mnemonicParsing="false" onAction="#handleOkButton" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
-            <ComboBox fx:id="silindirSayisiComboBox" layoutX="167.0" layoutY="72.0" prefHeight="26.0" prefWidth="168.0" />
         </children>
     </AnchorPane>
 </VBox>

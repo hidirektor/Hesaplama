@@ -10,7 +10,11 @@ public class CyclinderController {
     @FXML
     private ComboBox<String> silindirSayisiComboBox;
 
+    @FXML
+    private ComboBox<String> basincSalteriComboBox;
+
     private int selectedCylinders = -1;
+    private String pressureValfStatus = "";
     private boolean isConfirmed = false;
 
     @FXML
@@ -20,6 +24,10 @@ public class CyclinderController {
                 "2 Silindir",
                 "3 Silindir",
                 "4 Silindir"
+        );
+        basincSalteriComboBox.getItems().addAll(
+                "Var",
+                "Yok"
         );
     }
 
@@ -33,6 +41,7 @@ public class CyclinderController {
     @FXML
     public void handleOkButton() {
         String selected = silindirSayisiComboBox.getSelectionModel().getSelectedItem();
+        pressureValfStatus = basincSalteriComboBox.getSelectionModel().getSelectedItem();
         if (selected != null) {
             try {
                 selectedCylinders = Integer.parseInt(selected.split(" ")[0]);
@@ -53,6 +62,14 @@ public class CyclinderController {
 
     public int getSelectedCylinders() {
         return selectedCylinders;
+    }
+
+    public String getPressureValfStatus() {
+        return pressureValfStatus;
+    }
+
+    public String getFinalResult() {
+        return selectedCylinders + pressureValfStatus;
     }
 
     public boolean isConfirmed() {
