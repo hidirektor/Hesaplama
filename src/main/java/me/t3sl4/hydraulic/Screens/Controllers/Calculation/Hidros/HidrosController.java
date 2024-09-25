@@ -99,6 +99,12 @@ public class HidrosController {
     private Text tankOlculeriText;
 
     @FXML
+    private Text firstValveText;
+
+    @FXML
+    private Text secondValveText;
+
+    @FXML
     private TextField ozelTankGenislik;
 
     @FXML
@@ -532,8 +538,33 @@ public class HidrosController {
     }
 
     private void initValfTipi() {
-        birinciValfComboBox.getItems().clear();
-        birinciValfComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfDegerleriHidros);
+        if(secilenPlatformTipi.equals("Özel")) {
+            //Platform özelse:
+            initCustomPlatform(1);
+            birinciValfComboBox.getItems().clear();
+            birinciValfComboBox.getItems().addAll(
+                    "1",
+                    "2"
+            );
+        } else {
+            initCustomPlatform(0);
+            birinciValfComboBox.getItems().clear();
+            birinciValfComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfDegerleriHidros);
+        }
+    }
+
+    private void initCustomPlatform(int platformStatus) {
+        if(platformStatus == 1) {
+            firstValveText.setText("Valf Sayısı");
+            secondValveText.setText("Valf Tipi");
+            birinciValfComboBox.setPromptText("Valf Sayısı");
+            ikinciValfComboBox.setPromptText("Valf Tipi");
+        } else {
+            firstValveText.setText("1. Valf Tipi");
+            secondValveText.setText("2. Valf Tipi");
+            birinciValfComboBox.setPromptText("1. Valf Tipi");
+            ikinciValfComboBox.setPromptText("2. Valf Tipi");
+        }
     }
 
     private void initInisMetodu() {
@@ -542,9 +573,38 @@ public class HidrosController {
     }
 
     private void initIkinciValf() {
-        ikinciValfComboBox.getItems().clear();
-        ikinciValfComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfDegerleriHidros);
-        ikinciValfComboBox.getItems().addAll("Yok");
+        if(secilenPlatformTipi.equals("Özel")) {
+            if(secilenBirinciValf.equals("1")) {
+                //Tek Valf
+                System.out.println(secilenMotorTipi);
+                if(secilenMotorTipi.equals("12 V (DC)") || secilenMotorTipi.equals("24 V (DC)")) {
+                    //DC Motor
+                    ikinciValfComboBox.getItems().clear();
+                    ikinciValfComboBox.getItems().addAll(
+                            "J Merkez",
+                            "H Merkez",
+                            "Açık Merkez"
+                    );
+                } else {
+                    //AC
+                    ikinciValfComboBox.getItems().clear();
+                    ikinciValfComboBox.getItems().addAll(
+                            "J Merkez",
+                            "H Merkez"
+                    );
+                }
+            } else {
+                //Çift Valf
+                ikinciValfComboBox.getItems().clear();
+                ikinciValfComboBox.getItems().addAll(
+                        "1. Valf: J Merkez\n2. Valf: Kapalı Merkez"
+                );
+            }
+        } else {
+            ikinciValfComboBox.getItems().clear();
+            ikinciValfComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.valfDegerleriHidros);
+            ikinciValfComboBox.getItems().addAll("Yok");
+        }
     }
 
     @FXML

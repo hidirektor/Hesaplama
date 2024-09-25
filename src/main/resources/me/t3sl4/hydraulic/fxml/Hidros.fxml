@@ -30,11 +30,11 @@
             <TextField fx:id="ozelTankDerinlik" layoutX="517.0" layoutY="127.0" onKeyTyped="#ozelTankDerinlikEntered" prefHeight="27.0" prefWidth="69.0" promptText="Derinlik" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
                 <Text fill="#B7C3D7" layoutX="350.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Platform Tipi" />
             <ComboBox fx:id="platformTipiComboBox" disable="true" layoutX="310.0" layoutY="178.0" onAction="#platformTipiPressed" prefHeight="18.0" prefWidth="150.0" promptText="Platform Tipi" />
-                <Text fill="#B7C3D7" layoutX="538.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Valf Tipi" />
+                <Text fx:id="firstValveText" fill="#B7C3D7" layoutX="538.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Valf Tipi" />
             <ComboBox fx:id="birinciValfComboBox" disable="true" layoutX="493.0" layoutY="178.0" onAction="#birinciValfPressed" prefHeight="18.0" prefWidth="150.0" promptText="1. Valf Tipi" />
             <Text fill="#B7C3D7" layoutX="350.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="İniş Metodu" />
             <ComboBox fx:id="inisTipiComboBox" disable="true" layoutX="309.0" layoutY="230.0" onAction="#inisTipiPressed" prefHeight="18.0" prefWidth="150.0" promptText="İniş Metodu" />
-                <Text fill="#B7C3D7" layoutX="538.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Valf Tipi" />
+                <Text fx:id="secondValveText" fill="#B7C3D7" layoutX="538.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Valf Tipi" />
             <ComboBox fx:id="ikinciValfComboBox" disable="true" layoutX="493.0" layoutY="230.0" onAction="#ikinciValfPressed" prefHeight="18.0" prefWidth="150.0" promptText="2. Valf Tipi" />
                 <Button fx:id="hesaplaButton" layoutX="745.0" layoutY="65.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
                 <Button fx:id="temizleButton" layoutX="830.0" layoutY="65.0" mnemonicParsing="false" onAction="#temizleFunc" style="-fx-background-color: #1761ab;" text="Temizle" />
