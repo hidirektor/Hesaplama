@@ -74,6 +74,8 @@ public class ExcelDataReadUtil {
         readExcel4IthalMotorDegerleri380(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
         readExcel4IthalMotorDegerleri220(Launcher.excelDBPath, dataManipulator);
+        readExcel4HidrosMotorDegerleri1224(Launcher.excelDBPath, dataManipulator);
+        readExcel4IthalMotorDegerleri1224(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosPompaKapasite(Launcher.excelDBPath, dataManipulator);
         readExcel4IthalPompaKapasite(Launcher.excelDBPath, dataManipulator);
         readExcel4HidrosTankDikey(Launcher.excelDBPath, dataManipulator);
@@ -1068,6 +1070,68 @@ public class ExcelDataReadUtil {
 
             workbook.close();
         } catch(Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4HidrosMotorDegerleri1224(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "Hidros-DC";
+
+        try (InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for (int i = 1; i < rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cellA = row.getCell(0); // A sütunundaki hücre
+                Cell cellB = row.getCell(1); // B sütunundaki hücre
+
+                if (i >= 2 && i <= 4 && cellA != null && cellA.getCellType() == CellType.STRING) {
+                    String dataA = cellA.getStringCellValue();
+                    dataManipulator.motorDegerleriHidros12.add(dataA);
+                }
+
+                if (cellB != null && cellB.getCellType() == CellType.STRING) {
+                    String dataB = cellB.getStringCellValue();
+                    dataManipulator.motorDegerleriHidros24.add(dataB);
+                }
+            }
+
+            workbook.close();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static void readExcel4IthalMotorDegerleri1224(String filePath, DataManipulator dataManipulator) {
+        String sheetName = "İthal-DC";
+
+        try (InputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = WorkbookFactory.create(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for (int i = 1; i < rowCount; i++) {
+                Row row = sheet.getRow(i);
+                Cell cellA = row.getCell(0); // A sütunundaki hücre
+                Cell cellB = row.getCell(1); // B sütunundaki hücre
+
+                if (i >= 2 && i <= 4 && cellA != null && cellA.getCellType() == CellType.STRING) {
+                    String dataA = cellA.getStringCellValue();
+                    dataManipulator.motorDegerleriIthal12.add(dataA);
+                }
+
+                if (cellB != null && cellB.getCellType() == CellType.STRING) {
+                    String dataB = cellB.getStringCellValue();
+                    dataManipulator.motorDegerleriIthal24.add(dataB);
+                }
+            }
+
+            workbook.close();
+        } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }

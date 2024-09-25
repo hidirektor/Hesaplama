@@ -479,12 +479,20 @@ public class HidrosController {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriHidros380);
             } else if(secilenMotorTipi.equals("220 V (AC)")) {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriHidros220);
+            } else if(secilenMotorTipi.equals("24 V (DC)")) {
+                motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriHidros24);
+            } else if(secilenMotorTipi.equals("12 V (DC)")) {
+                motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriHidros12);
             }
         } else {
             if(secilenMotorTipi.equals("380 V (AC)")) {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriIthal380);
             } else if(secilenMotorTipi.equals("220 V (AC)")) {
                 motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriIthal220);
+            } else if(secilenMotorTipi.equals("24 V (DC)")) {
+                motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriIthal24);
+            } else if(secilenMotorTipi.equals("12 V (DC)")) {
+                motorGucuComboBox.getItems().addAll(ExcelDataReadUtil.dataManipulator.motorDegerleriIthal12);
             }
         }
     }
