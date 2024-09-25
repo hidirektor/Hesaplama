@@ -451,13 +451,7 @@ public class HidrosController {
         data = new TableData("Tank Kapasitesi:", secilenTankKapasitesi);
         sonucTablo.getItems().add(data);
 
-        data = new TableData("Özel Tank Genişlik:", secilenOzelTankGenislik);
-        sonucTablo.getItems().add(data);
-
-        data = new TableData("Özel Tank Yükseklik:", secilenOzelTankYukseklik);
-        sonucTablo.getItems().add(data);
-
-        data = new TableData("Özel Tank Derinlik:", secilenOzelTankDerinlik);
+        data = new TableData("Özel Tank Ölçüleri: ", "G: " + secilenOzelTankGenislik + " Y: " + secilenOzelTankYukseklik + " D: " + secilenOzelTankDerinlik);
         sonucTablo.getItems().add(data);
 
         data = new TableData("Platform Tipi:", secilenPlatformTipi);
