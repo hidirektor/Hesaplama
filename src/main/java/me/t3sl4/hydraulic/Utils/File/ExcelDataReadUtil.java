@@ -17,7 +17,6 @@ public class ExcelDataReadUtil {
     public static void excelDataRead() {
         readExcel4Kampana(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4Motor(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4PompaHidros(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4PompaKlasik(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4PompaTumu(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4KilitMotor(Launcher.excelDBPath, Launcher.getDataManipulator());
@@ -33,20 +32,28 @@ public class ExcelDataReadUtil {
         readExcel4ParcaListesiBasincSalteri(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4ParcaListesiStandart(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4ParcaListesiSogutucu(Launcher.excelDBPath, Launcher.getDataManipulator());
+        initMotorYukseklik();
+
+        /*
+        Power Pack
+         */
+        readExcel4PompaHidros(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosMotorDegerleri380(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4IthalMotorDegerleri380(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosMotorDegerleri220(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4IthalMotorDegerleri220(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosMotorDegerleri1224(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4IthalMotorDegerleri1224(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosPompaKapasite(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4IthalPompaKapasite(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosTankDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosTankYatay(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4IthalTankDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
-        readExcel4IthalTankYatay(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosPlatform(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4HidrosValf(Launcher.excelDBPath, Launcher.getDataManipulator());
+
+        readExcel4IthalMotorDegerleri380(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalMotorDegerleri220(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalMotorDegerleri1224(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalPompaKapasite(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalTankDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
+        readExcel4IthalTankYatay(Launcher.excelDBPath, Launcher.getDataManipulator());
+
         readExcel4ParcaHidrosMotor380(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4ParcaHidrosMotor220(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4ParcaHidrosPompa(Launcher.excelDBPath, Launcher.getDataManipulator());
@@ -68,7 +75,6 @@ public class ExcelDataReadUtil {
         readExcel4ParcaHidrosTamDikey(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4ParcaHidrosTamESPYok(Launcher.excelDBPath, Launcher.getDataManipulator());
         readExcel4ParcaHidrosOzelTekValf(Launcher.excelDBPath, Launcher.getDataManipulator());
-        initMotorYukseklik();
     }
 
     public static void readExcel4Kampana(String filePath, DataManipulator dataManipulator) {

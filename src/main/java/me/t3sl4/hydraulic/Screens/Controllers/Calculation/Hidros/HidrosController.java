@@ -309,7 +309,7 @@ public class HidrosController {
         tankTipiComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if(!tankTipiComboBox.getItems().isEmpty() && newValue != null) {
                 secilenTankTipi = newValue.toString();
-                if(secilenTankTipi.equals("Özel")) {
+                if(secilenTankTipi.contains("Özel")) {
                     ozelTankStatus("Özel");
                 } else {
                     ozelTankStatus("Normal");
@@ -525,7 +525,7 @@ public class HidrosController {
 
     private void initTankTipi() {
         tankTipiComboBox.getItems().clear();
-        tankTipiComboBox.getItems().addAll("Dikey", "Yatay", "Özel");
+        tankTipiComboBox.getItems().addAll("Dikey", "Yatay", "Özel - Dikey", "Özel - Yatay");
     }
 
     private void initTankKapasitesi() {
@@ -893,7 +893,7 @@ public class HidrosController {
     }
 
     private void calculateKabin() {
-        if(!secilenTankTipi.equals("Özel")) {
+        if(!secilenTankTipi.contains("Özel")) {
             String motorKW = secilenMotorGucu.trim();
             String tankKapasite = secilenTankKapasitesi.trim();
 
