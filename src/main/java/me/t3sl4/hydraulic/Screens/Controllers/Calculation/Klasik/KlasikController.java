@@ -427,9 +427,9 @@ public class KlasikController {
     @FXML
     public void exportProcess() {
         int tankImageStartX = 258;
-        int tankImageStartY = 230;
+        int tankImageStartY = 213;
         int tankImageWidth = 340;
-        int tankImageHeight = 245;
+        int tankImageHeight = 262;
 
         int schematicImageStartX = 740;
         int schematicImageStartY = 200;
