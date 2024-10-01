@@ -120,8 +120,7 @@ public class DataManipulator {
     public ArrayList<String> valfDegerleriHidros = new ArrayList<>();
 
 
-    //Hidros Parça Listesi:
-    //hidrosDataMap.put("hidros380Parca", new HashMap<>());
+    //PowerPack - Hidros Parça Listesi:
     public HashMap<String, HashMap<String, String>> hidros380Parca = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidros220Parca = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosPompaParca = new HashMap<>();
@@ -143,6 +142,14 @@ public class DataManipulator {
     public HashMap<String, HashMap<String, String>> hidrosTamParcaDikey = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosTamParcaESPHaric = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosTamParcaOzelTekValf = new HashMap<>();
+
+    //PowerPack - İthal Parçalar
+    public HashMap<String, HashMap<String, String>> hidrosIthalParcaMotor380 = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosIthalParcaMotor220 = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosIthalParcaPompa = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosIthalParcaPompaCivata = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosIthalParcaTankDikey = new HashMap<>();
+    public HashMap<String, HashMap<String, String>> hidrosIthalParcaTankYatay = new HashMap<>();
 
     public DataManipulator() {
         //TODO

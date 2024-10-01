@@ -235,7 +235,9 @@ public class KlasikController {
 
                 sonucKapakImage.setImage(image);
                 parcaListesiButton.setDisable(false);
-                exportButton.setDisable(false);
+                if(Main.loggedInUser != null) {
+                    exportButton.setDisable(false);
+                }
 
                 hesaplamaBitti = true;
             } else {
