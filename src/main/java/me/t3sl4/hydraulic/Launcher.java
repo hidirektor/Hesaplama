@@ -48,6 +48,8 @@ public class Launcher {
     public static DataManipulator dataManipulator = new DataManipulator();
 
     public static void main(String[] args) {
+        System.setProperty("prism.allowhidpi", "false");
+
         if(System.getProperty("os.name").contains("Windows")) {
             System.setProperty("prism.order", "sw");
             System.setProperty("prism.verbose", "true");

@@ -28,15 +28,11 @@ import me.t3sl4.hydraulic.Utils.SceneUtil;
 import me.t3sl4.hydraulic.Utils.SystemDefaults;
 import me.t3sl4.hydraulic.Utils.UserDataService.Profile;
 import me.t3sl4.hydraulic.Utils.Utils;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -436,32 +432,19 @@ public class MainController implements Initializable {
     }
 
     private void excelVoidCount() {
-        String excelPath = "/assets/data/programDatabase/Hidrolik.xlsx";
-        String sheetName = "Boşluk Değerleri";
-
-        try (InputStream file = Launcher.class.getResourceAsStream(excelPath)) {
-            assert file != null;
-            Workbook workbook = new XSSFWorkbook(file);
-            Sheet sheet = workbook.getSheet(sheetName);
-
-            if (sheet != null) {
-                int rowCount = sheet.getPhysicalNumberOfRows();
-                int maxColumnCount = 0;
-
-                for (int i = 0; i < rowCount; i++) {
-                    Row row = sheet.getRow(i);
-                    if (row != null) {
-                        int columnCount = row.getPhysicalNumberOfCells();
-                        if (columnCount > maxColumnCount) maxColumnCount = columnCount;
-                    }
-                }
-
-                parametreCount.setText(String.valueOf(maxColumnCount));
-            } else {
-                System.out.println("Sayfa bulunamadı: " + sheetName);
+        try {
+            FileReader reader = new FileReader(Launcher.generalDBPath);
+            StringBuilder sb = new StringBuilder();
+            int i;
+            while ((i = reader.read()) != -1) {
+                sb.append((char) i);
             }
+            reader.close();
 
-            workbook.close();
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONObject voidValues = jsonObject.getJSONObject("void_values");
+
+            parametreCount.setText(String.valueOf(voidValues.length()));
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
