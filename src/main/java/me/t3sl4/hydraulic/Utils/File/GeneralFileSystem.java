@@ -36,10 +36,10 @@ public class GeneralFileSystem {
     public static void createDirectories() {
         List<String> directories = Arrays.asList(
                 Launcher.mainPath,
+                Launcher.dataFileLocalPath,
                 Launcher.profilePhotoLocalPath,
                 Launcher.pdfFileLocalPath,
-                Launcher.excelFileLocalPath,
-                Launcher.dataFileLocalPath
+                Launcher.excelFileLocalPath
         );
 
         directories.forEach(GeneralFileSystem::createDirectory);
@@ -56,16 +56,19 @@ public class GeneralFileSystem {
         String userHome = System.getProperty("user.name");
         String basePath = getOperatingSystem().contains("Windows") ? "C:/Users/" + userHome + "/" : "/Users/" + userHome + "/";
         Launcher.mainPath = basePath + "OnderGrup/";
-        Launcher.tokenPath = Launcher.mainPath + "auth.txt";
-        Launcher.profilePhotoLocalPath = Launcher.mainPath + "profilePhoto/";
-        Launcher.pdfFileLocalPath = Launcher.mainPath + "hydraulicUnits/";
-        Launcher.excelFileLocalPath = Launcher.mainPath + "partList/";
-        Launcher.dataFileLocalPath = Launcher.mainPath + "assets/data/";
-        Launcher.excelDBPath = Launcher.mainPath + "assets/data/Hidrolik.xlsx";
-        Launcher.generalDBPath = Launcher.mainPath + "assets/data/general.json";
-        Launcher.cabinetesDBPath = Launcher.mainPath + "assets/data/kabinler.json";
-        Launcher.classicDBPath = Launcher.mainPath + "assets/data/klasik.json";
-        Launcher.powerPackDBPath = Launcher.mainPath + "assets/data/powerpack.json";
+        Launcher.profilePhotoLocalPath = Launcher.mainPath + "userData/";
+        Launcher.dataFileLocalPath = Launcher.mainPath + "data/";
+
+        Launcher.tokenPath = Launcher.profilePhotoLocalPath + "auth.txt";
+
+        Launcher.pdfFileLocalPath = Launcher.dataFileLocalPath + "schematicFiles/";
+        Launcher.excelFileLocalPath = Launcher.dataFileLocalPath + "excelFiles/";
+
+        Launcher.excelDBPath = Launcher.dataFileLocalPath + "Hidrolik.xlsx";
+        Launcher.generalDBPath = Launcher.dataFileLocalPath + "general.json";
+        Launcher.cabinetesDBPath = Launcher.dataFileLocalPath + "kabinler.json";
+        Launcher.classicDBPath = Launcher.dataFileLocalPath + "klasik.json";
+        Launcher.powerPackDBPath = Launcher.dataFileLocalPath + "powerpack.json";
     }
 
     public static void fileCopy(String resourcePath, String targetPath) {
