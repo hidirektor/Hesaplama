@@ -13,9 +13,9 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Controllers.MainController;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.HTTP.RequestService;
-import me.t3sl4.hydraulic.Utils.SystemDefaults;
-import me.t3sl4.hydraulic.Utils.UserDataService.User;
+import me.t3sl4.hydraulic.Utils.API.RequestService;
+import me.t3sl4.hydraulic.Utils.System.SystemDefaults;
+import me.t3sl4.hydraulic.Utils.System.UserDataService.User;
 import me.t3sl4.hydraulic.Utils.Utils;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.Launcher.BASE_URL;
 import static me.t3sl4.hydraulic.Launcher.loginURLPrefix;
-import static me.t3sl4.hydraulic.Utils.HTTP.RequestService.updateUserAndOpenMainScreen;
+import static me.t3sl4.hydraulic.Utils.API.RequestService.updateUserAndOpenMainScreen;
 
 public class LoginController implements Initializable {
 

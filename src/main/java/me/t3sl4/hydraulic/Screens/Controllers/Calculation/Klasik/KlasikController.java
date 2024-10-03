@@ -20,10 +20,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.File.PDFUtil;
-import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Utils.Model.Table.TableData;
-import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.API.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.Database.File.PDF.PDFUtil;
+import me.t3sl4.hydraulic.Utils.Database.Model.Table.PartList.TableData;
+import me.t3sl4.hydraulic.Utils.Database.Model.Tank.Tank;
 import me.t3sl4.hydraulic.Utils.Utils;
 import org.jetbrains.annotations.Nullable;
 
@@ -796,51 +796,45 @@ public class KlasikController {
         if(componentName.equals("motor")) {
             motorComboBox.setDisable(false);
             motorComboBox.getItems().clear();
-            motorComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleri);
-            //motorComboBox.getItems().addAll("4 kW", "5.5 kW", "5.5 kW (Kompakt)", "7.5 kW (Kompakt)", "11 kW", "11 kW (Kompakt)", "15 kW", "18.5 kW", "22 kW", "37 kW");
+            motorComboBox.getItems().addAll(Launcher.getDataManipulator().motorMap.get(0));
         } else if(componentName.equals("pompa")) {
             pompaComboBox.setDisable(false);
             pompaComboBox.getItems().clear();
             if(Objects.equals(secilenUniteTipi, "Hidros")) {
-                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaDegerleriHidros);
-                //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc");
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().powerPackPompaMap.get(0));
             } else if(Objects.equals(secilenUniteTipi, "Klasik")) {
-                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaDegerleriKlasik);
-                //pompaComboBox.getItems().addAll("9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
-            } else {
-                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaDegerleriTumu);
-                //pompaComboBox.getItems().addAll("1.1 cc", "1.6 cc", "2.1 cc", "2.7 cc", "3.2 cc", "3.7 cc", "4.2 cc", "4.8 cc", "5.8 cc", "7 cc", "8 cc", "9 cc", "9.5 cc", "11.9 cc", "14 cc", "14.6 cc", "16.8 cc", "19.2 cc", "22.9 cc", "28.1 cc", "28.8 cc", "33.3 cc", "37.9 cc", "42.6 cc", "45.5 cc", "49.4 cc", "56.1 cc");
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().klasikPompaMap.get(0));
+           } else {
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().klasikPompaMap.get(0) + Launcher.getDataManipulator().powerPackPompaMap.get(0));
             }
         } else if(componentName.equals("valfTipi")) {
             valfTipiComboBox.setDisable(false);
             valfTipiComboBox.getItems().clear();
             if(valfTipiStat == 1) {
-                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiDegerleri2); //İnişte Tek Hız, İnişte Çift Hız
+                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiMap.get(0)); //İnişte Tek Hız, İnişte Çift Hız
             } else {
-                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiDegerleri1); //Kompanzasyon || İnişte Tek Hız
+                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiMap.get(1)); //Kompanzasyon || İnişte Tek Hız
             }
         } else if(componentName.equals("hidrolikKilit")) {
             hidrolikKilitComboBox.setDisable(false);
             hidrolikKilitComboBox.getItems().clear();
-            hidrolikKilitComboBox.getItems().addAll("Var", "Yok");
+            hidrolikKilitComboBox.getItems().addAll(Launcher.getDataManipulator().hidrolikKilitMap.get(0));
         } else if(componentName.equals("sogutma")) {
             sogutmaComboBox.setDisable(false);
             sogutmaComboBox.getItems().clear();
-            sogutmaComboBox.getItems().addAll("Var", "Yok");
+            sogutmaComboBox.getItems().addAll(Launcher.getDataManipulator().sogutmaMap.get(0));
         } else if(componentName.equals("kilitMotor")) {
             kilitMotorComboBox.setDisable(false);
             kilitMotorComboBox.getItems().clear();
-            kilitMotorComboBox.getItems().addAll(Launcher.getDataManipulator().kilitMotorDegerleri);
-            //kilitMotorComboBox.getItems().addAll("1.5 kW", "2.2 kW");
+            kilitMotorComboBox.getItems().addAll(Launcher.getDataManipulator().kilitMotorMap.get(0));
         } else if(componentName.equals("kilitPompa")) {
             kilitPompaComboBox.setDisable(false);
             kilitPompaComboBox.getItems().clear();
-            kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().kilitPompaDegerleri);
-            //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
+            kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().kilitPompaMap.get(0));
         } else if(componentName.equals("kompanzasyon")) {
             kompanzasyonComboBox.setDisable(false);
             kompanzasyonComboBox.getItems().clear();
-            kompanzasyonComboBox.getItems().addAll("Var", "Yok");
+            kompanzasyonComboBox.getItems().addAll(Launcher.getDataManipulator().kompanzasyonMap.get(0));
         }
     }
 

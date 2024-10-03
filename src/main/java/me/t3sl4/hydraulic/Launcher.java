@@ -1,8 +1,8 @@
 package me.t3sl4.hydraulic;
 
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
-import me.t3sl4.hydraulic.Utils.Model.Excel.DataManipulator;
+import me.t3sl4.hydraulic.Utils.Database.File.FileUtil;
+import me.t3sl4.hydraulic.Utils.Database.Model.HydraulicData.HydraulicData;
 
 public class Launcher {
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
@@ -45,7 +45,7 @@ public class Launcher {
     public static String classicDBPath;
     public static String powerPackDBPath;
 
-    public static DataManipulator dataManipulator = new DataManipulator();
+    public static HydraulicData hydraulicData = new HydraulicData();
 
     public static void main(String[] args) {
         System.setProperty("prism.allowhidpi", "false");
@@ -60,7 +60,7 @@ public class Launcher {
         }
         System.setProperty("java.util.logging.level", "WARNING");
 
-        GeneralFileSystem.firstLaunch();
+        FileUtil.firstLaunch();
         Main.main(args);
     }
 
@@ -80,7 +80,7 @@ public class Launcher {
         return userName.replaceAll("userName: ", "");
     }
 
-    public static DataManipulator getDataManipulator() {
-        return dataManipulator;
+    public static HydraulicData getDataManipulator() {
+        return hydraulicData;
     }
 }

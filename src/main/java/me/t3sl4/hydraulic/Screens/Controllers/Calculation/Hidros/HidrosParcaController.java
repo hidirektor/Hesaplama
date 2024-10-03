@@ -10,7 +10,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utils.Model.Table.ParcaTableData;
+import me.t3sl4.hydraulic.Utils.Database.Model.Table.PartList.ParcaTableData;
 import me.t3sl4.hydraulic.Utils.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

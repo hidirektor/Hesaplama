@@ -10,8 +10,9 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.File.GeneralFileSystem;
-import me.t3sl4.hydraulic.Utils.Model.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.Database.File.FileUtil;
+import me.t3sl4.hydraulic.Utils.Database.Model.Tank.Tank;
+import me.t3sl4.hydraulic.Utils.General.SceneUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,6 @@ import java.util.function.UnaryOperator;
 import java.util.logging.Logger;
 
 public class Utils {
-
 
     private static final Logger logger = Logger.getLogger(Utils.class.getName());
     
@@ -255,8 +255,8 @@ public class Utils {
         Launcher.userID = null;
         Launcher.userName = null;
 
-        GeneralFileSystem.firstLaunch();
-        GeneralFileSystem.systemSetup();
+        FileUtil.firstLaunch();
+        FileUtil.systemSetup();
     }
 
     private static void deleteFile(String filePath) {

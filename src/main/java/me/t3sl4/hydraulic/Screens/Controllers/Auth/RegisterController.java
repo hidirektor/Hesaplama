@@ -14,8 +14,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Utils.SceneUtil;
+import me.t3sl4.hydraulic.Utils.API.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.General.SceneUtil;
 import me.t3sl4.hydraulic.Utils.Utils;
 
 import java.io.File;

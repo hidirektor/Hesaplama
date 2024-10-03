@@ -12,8 +12,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.HTTP.HTTPRequest;
-import me.t3sl4.hydraulic.Utils.UserDataService.Profile;
+import me.t3sl4.hydraulic.Utils.API.HTTPRequest;
+import me.t3sl4.hydraulic.Utils.System.UserDataService.Profile;
 import me.t3sl4.hydraulic.Utils.Utils;
 import org.json.JSONObject;
 
