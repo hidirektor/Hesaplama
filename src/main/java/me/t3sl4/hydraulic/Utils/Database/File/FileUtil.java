@@ -30,7 +30,7 @@ public class FileUtil {
         fileCopy("/assets/data/programDatabase/powerpack_combo.yml", Launcher.powerPackDBPath);
         JSONUtil.loadJSONData();
         ExcelUtil.excelDataRead();
-        YamlUtil yamlUtil = new YamlUtil(Launcher.classicDBPath);
+        new YamlUtil(Launcher.classicDBPath);
     }
 
     public static String getOperatingSystem() {

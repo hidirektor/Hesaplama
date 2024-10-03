@@ -25,7 +25,6 @@ module me.t3sl.hydraulic {
     opens me.t3sl4.hydraulic.Screens.Controllers to javafx.fxml;
     exports me.t3sl4.hydraulic.Utils.API;
     opens me.t3sl4.hydraulic.Utils.API to javafx.base;
-    opens me.t3sl4.hydraulic.Utils.Database.Model.Table to javafx.base;
     exports me.t3sl4.hydraulic.Utils.Database.Model.HydraulicData;
     opens me.t3sl4.hydraulic.Utils.Database.Model.HydraulicData to javafx.base;
     exports me.t3sl4.hydraulic.Utils.System.UserDataService;

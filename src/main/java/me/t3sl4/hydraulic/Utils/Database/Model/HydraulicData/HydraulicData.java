@@ -2,9 +2,7 @@ package me.t3sl4.hydraulic.Utils.Database.Model.HydraulicData;
 
 import me.t3sl4.hydraulic.Utils.Database.Model.Tank.Tank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class HydraulicData {
     public int kampanaBoslukX;
@@ -30,23 +28,27 @@ public class HydraulicData {
     //TODO
     //Yeni sistem değişkenleri
 
-    public HashMap<Integer, String> motorMap = new HashMap<>();
-    public HashMap<Integer, String> sogutmaMap = new HashMap<>();
-    public HashMap<Integer, String> hidrolikKilitMap = new HashMap<>();
-    public HashMap<Integer, String> powerPackPompaMap = new HashMap<>();
-    public HashMap<Integer, String> klasikPompaMap = new HashMap<>();
-    public HashMap<Integer, String> kompanzasyonMap = new HashMap<>();
-    public HashMap<Integer, String> valfTipiMap = new HashMap<>();
-    public HashMap<Integer, String> kilitMotorMap = new HashMap<>();
-    public HashMap<Integer, String> kilitPompaMap = new HashMap<>();
+    /*
+    Classic Side
+     */
+    public Map<String, LinkedList<String>> motorMap = new HashMap<>();
+    public Map<String, String> motorKampanaMap = new HashMap<>();
+    public Map<String, String> motorYukseklikMap = new HashMap<>();
 
+    public Map<String, LinkedList<String>> coolingMap = new HashMap<>();
+    public Map<String, LinkedList<String>> hydraulicLockMap = new HashMap<>();
+    public Map<String, LinkedList<String>> pumpMap = new HashMap<>();
+    public Map<String, LinkedList<String>> compensationMap = new HashMap<>();
+    public Map<String, LinkedList<String>> valveTypeMap = new HashMap<>();
+    public Map<String, LinkedList<String>> lockMotorMap = new HashMap<>();
+    public Map<String, LinkedList<String>> lockPumpMap = new HashMap<>();
+
+    /*
+    Power Pack Side
+     */
     //Bitişi
 
-    public ArrayList<Integer> kampanaDegerleri = new ArrayList<>();
-
     public List<Tank> inputTanks = new ArrayList<>();
-
-    public ArrayList<String> motorYukseklikVerileri = new ArrayList<>();
 
     public ArrayList<String> motorDegerleri = new ArrayList<>();
 

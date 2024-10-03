@@ -4,9 +4,10 @@ import me.t3sl4.hydraulic.Launcher;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class YamlUtil {
@@ -15,87 +16,194 @@ public class YamlUtil {
         loadYaml(filePath);
     }
 
-    @SuppressWarnings("unchecked")
-    private void loadYaml(String filePath) {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = null;
+    public void loadYaml(String filePath) {
         try {
-            // Resource dosyasını yükleme
-            inputStream = new FileInputStream(filePath);
-
-            // YAML dosyasını yükle ve haritalara ekle
-            Map<String, Object> data = yaml.load(inputStream);
-
-            // Motor map
-            LinkedHashMap<String, Object> motorData = (LinkedHashMap<String, Object>) data.get("motor");
-            for (Map.Entry<String, Object> entry : motorData.entrySet()) {
-                LinkedHashMap<String, String> motorDetails = (LinkedHashMap<String, String>) entry.getValue();
-                Launcher.getDataManipulator().motorMap.put(Integer.parseInt(entry.getKey()), motorDetails.get("name"));
-            }
-
-            // Sogutma map
-            LinkedHashMap<String, Object> sogutmaData = (LinkedHashMap<String, Object>) data.get("sogutma");
-            for (Map.Entry<String, Object> entry : sogutmaData.entrySet()) {
-                Launcher.getDataManipulator().sogutmaMap.put(Integer.parseInt(entry.getKey()), ((LinkedHashMap<String, String>) entry.getValue()).get("value"));
-            }
-
-            // Hidrolik kilit map
-            LinkedHashMap<String, Object> hidrolikKilitData = (LinkedHashMap<String, Object>) data.get("hidrolik_kilit");
-            for (Map.Entry<String, Object> entry : hidrolikKilitData.entrySet()) {
-                Launcher.getDataManipulator().hidrolikKilitMap.put(Integer.parseInt(entry.getKey()), ((LinkedHashMap<String, String>) entry.getValue()).get("value"));
-            }
-
-            // PowerPack Pompa map
-            LinkedHashMap<String, Object> powerPackPompaData = (LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) data.get("pompa")).get("0");
-            LinkedHashMap<String, Object> powerPackPompaValues = (LinkedHashMap<String, Object>) powerPackPompaData.get("values");
-            for (Map.Entry<String, Object> entry : powerPackPompaValues.entrySet()) {
-                LinkedHashMap<String, String> pompaDetails = (LinkedHashMap<String, String>) entry.getValue();
-                Launcher.getDataManipulator().powerPackPompaMap.put(Integer.parseInt(entry.getKey()), pompaDetails.get("name"));
-            }
-
-            // Klasik Pompa map
-            LinkedHashMap<String, Object> klasikPompaData = (LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) data.get("pompa")).get("1");
-            LinkedHashMap<String, Object> klasikPompaValues = (LinkedHashMap<String, Object>) klasikPompaData.get("values");
-            for (Map.Entry<String, Object> entry : klasikPompaValues.entrySet()) {
-                LinkedHashMap<String, String> pompaDetails = (LinkedHashMap<String, String>) entry.getValue();
-                Launcher.getDataManipulator().klasikPompaMap.put(Integer.parseInt(entry.getKey()), pompaDetails.get("name"));
-            }
-
-            // Kompanzasyon map
-            LinkedHashMap<String, Object> kompanzasyonData = (LinkedHashMap<String, Object>) data.get("kompanzasyon");
-            for (Map.Entry<String, Object> entry : kompanzasyonData.entrySet()) {
-                Launcher.getDataManipulator().kompanzasyonMap.put(Integer.parseInt(entry.getKey()), ((LinkedHashMap<String, String>) entry.getValue()).get("value"));
-            }
-
-            // Valf Tipi map
-            LinkedHashMap<String, Object> valfTipiData = (LinkedHashMap<String, Object>) data.get("valf_tipi");
-            for (Map.Entry<String, Object> entry : valfTipiData.entrySet()) {
-                LinkedHashMap<String, String> valfOptions = (LinkedHashMap<String, String>) ((LinkedHashMap<String, Object>) entry.getValue()).get("options");
-                Launcher.getDataManipulator().valfTipiMap.put(Integer.parseInt(entry.getKey()), valfOptions.get("value"));
-            }
-
-            // Kilit Motor map
-            LinkedHashMap<String, Object> kilitMotorData = (LinkedHashMap<String, Object>) data.get("kilit_motor");
-            for (Map.Entry<String, Object> entry : kilitMotorData.entrySet()) {
-                Launcher.getDataManipulator().kilitMotorMap.put(Integer.parseInt(entry.getKey()), ((LinkedHashMap<String, String>) entry.getValue()).get("value"));
-            }
-
-            // Kilit Pompa map
-            LinkedHashMap<String, Object> kilitPompaData = (LinkedHashMap<String, Object>) data.get("kilit_pompa");
-            for (Map.Entry<String, Object> entry : kilitPompaData.entrySet()) {
-                Launcher.getDataManipulator().kilitPompaMap.put(Integer.parseInt(entry.getKey()), ((LinkedHashMap<String, String>) entry.getValue()).get("value"));
-            }
-
+            loadMotor(filePath);
+            loadSogutma(filePath);
+            loadHydraulicLock(filePath);
+            loadPompa(filePath);
+            loadKompanzasyon(filePath);
+            loadValfTipi(filePath);
+            loadKilitMotor(filePath);
+            loadKilitPompa(filePath);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            // InputStream'in kapatılması
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        }
+    }
+
+    public void loadMotor(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+        Map<String, Map<String, Map<String, String>>> motorData = (Map<String, Map<String, Map<String, String>>>) yamlData.get("motor");
+
+        motorData.forEach((key, value) -> {
+            LinkedList<String> motorList = new LinkedList<>();
+            value.forEach((innerKey, motorDetails) -> {
+                String motorName = motorDetails.get("name");
+                motorList.add(motorName);
+
+                // Kampana ve yükseklik map'lerine atama
+                Launcher.getDataManipulator().motorKampanaMap.put(motorName, motorDetails.get("kampana"));
+                Launcher.getDataManipulator().motorYukseklikMap.put(motorName, motorDetails.get("yukseklik"));
+            });
+            Launcher.getDataManipulator().motorMap.put(key, motorList);
+        });
+    }
+
+    public void loadSogutma(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        Map<String, Object> sogutma = (Map<String, Object>) yamlData.get("sogutma");
+        if (sogutma != null) {
+            for (String key : sogutma.keySet()) {
+                Map<String, Object> options = (Map<String, Object>) ((Map<String, Object>) sogutma.get(key)).get("options");
+                LinkedList<String> valuesList = new LinkedList<>();
+                for (String optionKey : options.keySet()) {
+                    Object valueMap = options.get(optionKey);
+                    if (valueMap instanceof Map) {
+                        valuesList.add(((Map<String, String>) valueMap).get("value"));
+                    } else if (valueMap instanceof String) {
+                        valuesList.add((String) valueMap);
+                    }
                 }
+                Launcher.getDataManipulator().coolingMap.put(key, valuesList);
+            }
+        }
+    }
+
+    public void loadHydraulicLock(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        Map<String, Object> hydraulicLock = (Map<String, Object>) yamlData.get("hidrolik_kilit");
+        if (hydraulicLock != null) {
+            for (String key : hydraulicLock.keySet()) {
+                Map<String, Object> options = (Map<String, Object>) ((Map<String, Object>) hydraulicLock.get(key)).get("options");
+                LinkedList<String> valuesList = new LinkedList<>();
+                for (String optionKey : options.keySet()) {
+                    Object valueMap = options.get(optionKey);
+                    if (valueMap instanceof Map) {
+                        valuesList.add(((Map<String, String>) valueMap).get("value"));
+                    } else if (valueMap instanceof String) {
+                        valuesList.add((String) valueMap);
+                    }
+                }
+                Launcher.getDataManipulator().hydraulicLockMap.put(key, valuesList);
+            }
+        }
+    }
+
+    public void loadPompa(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        Map<String, Map<String, Object>> pompaData = (Map<String, Map<String, Object>>) yamlData.get("pompa");
+
+        pompaData.forEach((key, value) -> {
+            LinkedList<String> pompaList = new LinkedList<>();
+
+            Map<String, Map<String, String>> options = (Map<String, Map<String, String>>) value.get("options");
+
+            options.forEach((innerKey, pompaDetails) -> {
+                String pompaName = pompaDetails.get("name");
+                pompaList.add(pompaName);
+            });
+
+            Launcher.getDataManipulator().pumpMap.put(key, pompaList);
+        });
+    }
+
+    public void loadKompanzasyon(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        Map<String, Object> kompanzasyon = (Map<String, Object>) yamlData.get("kompanzasyon");
+        if (kompanzasyon != null) {
+            for (String key : kompanzasyon.keySet()) {
+                Map<String, Object> options = (Map<String, Object>) ((Map<String, Object>) kompanzasyon.get(key)).get("options");
+                LinkedList<String> valuesList = new LinkedList<>();
+                for (String optionKey : options.keySet()) {
+                    Object valueMap = options.get(optionKey);
+                    if (valueMap instanceof Map) {
+                        valuesList.add(((Map<String, String>) valueMap).get("value"));
+                    } else if (valueMap instanceof String) {
+                        valuesList.add((String) valueMap);
+                    }
+                }
+                Launcher.getDataManipulator().compensationMap.put(key, valuesList);
+            }
+        }
+    }
+
+    public void loadValfTipi(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        Map<String, Map<String, Object>> valfTipiData = (Map<String, Map<String, Object>>) yamlData.get("valf_tipi");
+
+        valfTipiData.forEach((key, value) -> {
+            LinkedList<String> valfTipiList = new LinkedList<>();
+
+            Map<String, Map<String, String>> options = (Map<String, Map<String, String>>) value.get("options");
+
+            options.forEach((innerKey, valfTipiDetails) -> {
+                String valfTipiName = valfTipiDetails.get("value");
+                valfTipiList.add(valfTipiName);
+            });
+
+            Launcher.getDataManipulator().valveTypeMap.put(key, valfTipiList);
+        });
+    }
+
+    public void loadKilitMotor(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        Map<String, Object> kilitMotor = (Map<String, Object>) yamlData.get("kilit_motor");
+        if (kilitMotor != null) {
+            for (String key : kilitMotor.keySet()) {
+                Map<String, Object> options = (Map<String, Object>) ((Map<String, Object>) kilitMotor.get(key)).get("options");
+                LinkedList<String> valuesList = new LinkedList<>();
+                for (String optionKey : options.keySet()) {
+                    Object valueMap = options.get(optionKey);
+                    if (valueMap instanceof Map) {
+                        valuesList.add(((Map<String, String>) valueMap).get("value"));
+                    } else if (valueMap instanceof String) {
+                        valuesList.add((String) valueMap);
+                    }
+                }
+                Launcher.getDataManipulator().lockMotorMap.put(key, valuesList);
+            }
+        }
+    }
+
+    public void loadKilitPompa(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        Map<String, Object> kilitPompa = (Map<String, Object>) yamlData.get("kilit_pompa");
+        if (kilitPompa != null) {
+            for (String key : kilitPompa.keySet()) {
+                Map<String, Object> options = (Map<String, Object>) ((Map<String, Object>) kilitPompa.get(key)).get("options");
+                LinkedList<String> valuesList = new LinkedList<>();
+                for (String optionKey : options.keySet()) {
+                    Object valueMap = options.get(optionKey);
+                    if (valueMap instanceof Map) {
+                        valuesList.add(((Map<String, String>) valueMap).get("value"));
+                    } else if (valueMap instanceof String) {
+                        valuesList.add((String) valueMap);
+                    }
+                }
+                Launcher.getDataManipulator().lockPumpMap.put(key, valuesList);
             }
         }
     }

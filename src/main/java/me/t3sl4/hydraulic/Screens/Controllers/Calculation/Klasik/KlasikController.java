@@ -29,10 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static me.t3sl4.hydraulic.Launcher.BASE_URL;
 import static me.t3sl4.hydraulic.Launcher.createHydraulicURLPrefix;
@@ -182,7 +179,7 @@ public class KlasikController {
             imageTextDisable();
 
             enableSonucSection();
-            results = calcDimensions(Launcher.getDataManipulator().kampanaDegerleri);
+            results = calcDimensions();
 
             if (results.size() == 4) {
                 calculatedX = results.get(0);
@@ -281,7 +278,7 @@ public class KlasikController {
     public void motorPressed() {
         if(motorComboBox.getValue() != null) {
             secilenMotor = motorComboBox.getValue();
-            secilenKampana = Launcher.getDataManipulator().kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+            secilenKampana = Integer.parseInt(Launcher.getDataManipulator().motorKampanaMap.get(motorComboBox.getSelectionModel().getSelectedItem().toString()).replace(" mm", ""));
 
             if(secilenSogutmaDurumu == null) {
                 initComboBoxes("motor", 0);
@@ -541,12 +538,11 @@ public class KlasikController {
         } else return girilenTankKapasitesi < 1 || girilenTankKapasitesi > 500;
     }
 
-    ArrayList<Integer> calcDimensions(ArrayList<Integer> kampanaDegerleri) {
+    ArrayList<Integer> calcDimensions() {
         //Eklenecek Değerler
-        int secilenMotorIndex = motorComboBox.getSelectionModel().getSelectedIndex();
-        int kampanaDegeri = kampanaDegerleri.get(secilenMotorIndex);
+        int kampanaDegeri = Integer.parseInt(Launcher.getDataManipulator().motorKampanaMap.get(motorComboBox.getSelectionModel().getSelectedItem().toString()).replace(" mm", ""));
 
-        secilenKampana = kampanaDegerleri.get(secilenMotorIndex);
+        secilenKampana = Integer.parseInt(Launcher.getDataManipulator().motorKampanaMap.get(motorComboBox.getSelectionModel().getSelectedItem().toString()).replace(" mm", ""));
         secilenPompaVal = Utils.string2Double(secilenPompa);
 
         //Standart Boşluk Değerleri:
@@ -668,7 +664,7 @@ public class KlasikController {
             }
             h = defaultHeight;
 
-            String veri = Launcher.getDataManipulator().motorYukseklikVerileri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+            String veri = Launcher.getDataManipulator().motorYukseklikMap.get(motorComboBox.getSelectionModel().getSelectedItem());
             String sayiKismi = veri.replaceAll("[^0-9]", "");
             motorYukseklik = Integer.parseInt(sayiKismi);
 
@@ -796,45 +792,51 @@ public class KlasikController {
         if(componentName.equals("motor")) {
             motorComboBox.setDisable(false);
             motorComboBox.getItems().clear();
-            motorComboBox.getItems().addAll(Launcher.getDataManipulator().motorMap.get(0));
+            motorComboBox.getItems().addAll(Launcher.getDataManipulator().motorMap.get("0"));
         } else if(componentName.equals("pompa")) {
             pompaComboBox.setDisable(false);
             pompaComboBox.getItems().clear();
             if(Objects.equals(secilenUniteTipi, "Hidros")) {
-                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().powerPackPompaMap.get(0));
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pumpMap.get("0"));
             } else if(Objects.equals(secilenUniteTipi, "Klasik")) {
-                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().klasikPompaMap.get(0));
+                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pumpMap.get("1"));
            } else {
-                pompaComboBox.getItems().addAll(Launcher.getDataManipulator().klasikPompaMap.get(0) + Launcher.getDataManipulator().powerPackPompaMap.get(0));
+                LinkedList<String> list1 = Launcher.getDataManipulator().pumpMap.get("0");
+                LinkedList<String> list2 = Launcher.getDataManipulator().pumpMap.get("1");
+                LinkedList<String> combinedList = new LinkedList<>();
+                combinedList.addAll(list1);
+                combinedList.addAll(list2);
+
+                pompaComboBox.getItems().addAll(combinedList);
             }
         } else if(componentName.equals("valfTipi")) {
             valfTipiComboBox.setDisable(false);
             valfTipiComboBox.getItems().clear();
             if(valfTipiStat == 1) {
-                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiMap.get(0)); //İnişte Tek Hız, İnişte Çift Hız
+                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valveTypeMap.get("0")); //İnişte Tek Hız, İnişte Çift Hız
             } else {
-                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiMap.get(1)); //Kompanzasyon || İnişte Tek Hız
+                valfTipiComboBox.getItems().addAll(Launcher.getDataManipulator().valveTypeMap.get("1")); //Kompanzasyon || İnişte Tek Hız
             }
         } else if(componentName.equals("hidrolikKilit")) {
             hidrolikKilitComboBox.setDisable(false);
             hidrolikKilitComboBox.getItems().clear();
-            hidrolikKilitComboBox.getItems().addAll(Launcher.getDataManipulator().hidrolikKilitMap.get(0));
+            hidrolikKilitComboBox.getItems().addAll(Launcher.getDataManipulator().hydraulicLockMap.get("0"));
         } else if(componentName.equals("sogutma")) {
             sogutmaComboBox.setDisable(false);
             sogutmaComboBox.getItems().clear();
-            sogutmaComboBox.getItems().addAll(Launcher.getDataManipulator().sogutmaMap.get(0));
+            sogutmaComboBox.getItems().addAll(Launcher.getDataManipulator().coolingMap.get("0"));
         } else if(componentName.equals("kilitMotor")) {
             kilitMotorComboBox.setDisable(false);
             kilitMotorComboBox.getItems().clear();
-            kilitMotorComboBox.getItems().addAll(Launcher.getDataManipulator().kilitMotorMap.get(0));
+            kilitMotorComboBox.getItems().addAll(Launcher.getDataManipulator().lockMotorMap.get("0"));
         } else if(componentName.equals("kilitPompa")) {
             kilitPompaComboBox.setDisable(false);
             kilitPompaComboBox.getItems().clear();
-            kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().kilitPompaMap.get(0));
+            kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().lockPumpMap.get("0"));
         } else if(componentName.equals("kompanzasyon")) {
             kompanzasyonComboBox.setDisable(false);
             kompanzasyonComboBox.getItems().clear();
-            kompanzasyonComboBox.getItems().addAll(Launcher.getDataManipulator().kompanzasyonMap.get(0));
+            kompanzasyonComboBox.getItems().addAll(Launcher.getDataManipulator().compensationMap.get("0"));
         }
     }
 
@@ -864,7 +866,7 @@ public class KlasikController {
         motorComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             if(!motorComboBox.getItems().isEmpty() && newValue != null) {
                 secilenMotor = newValue;
-                secilenKampana = Launcher.getDataManipulator().kampanaDegerleri.get(motorComboBox.getSelectionModel().getSelectedIndex());
+                secilenKampana = Integer.parseInt(Launcher.getDataManipulator().motorKampanaMap.get(motorComboBox.getSelectionModel().getSelectedItem().toString()).replace(" mm", ""));
 
                 dataInit("sogutma", null);
 
