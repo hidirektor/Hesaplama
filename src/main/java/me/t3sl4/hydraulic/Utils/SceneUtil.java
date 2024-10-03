@@ -39,7 +39,7 @@ public class SceneUtil {
 
     public static void openMainScreen() throws IOException {
         Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("/fxml/Login.fxml")));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
