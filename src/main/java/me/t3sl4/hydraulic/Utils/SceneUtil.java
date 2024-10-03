@@ -21,7 +21,7 @@ public class SceneUtil {
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         primaryStage.getIcons().add(icon);
 
         root.setOnMousePressed(event -> {
@@ -39,11 +39,11 @@ public class SceneUtil {
 
     public static void openMainScreen() throws IOException {
         Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("/fxml/Login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Login.fxml")));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         primaryStage.getIcons().add(icon);
 
         root.setOnMousePressed(event -> {

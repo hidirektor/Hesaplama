@@ -13,9 +13,9 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Screens.Controllers.MainController;
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.UserDataService.User;
 import me.t3sl4.hydraulic.Utils.HTTP.RequestService;
 import me.t3sl4.hydraulic.Utils.SystemDefaults;
+import me.t3sl4.hydraulic.Utils.UserDataService.User;
 import me.t3sl4.hydraulic.Utils.Utils;
 
 import java.io.IOException;
@@ -151,13 +151,13 @@ public class LoginController implements Initializable {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/hidePass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/icons/ikon_hide_pass.png"))));
         } else {
             txtPassword.setManaged(true);
             txtPassword.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/showPass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/icons/ikon_show_pass.png"))));
         }
     }
 

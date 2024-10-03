@@ -12,7 +12,7 @@
         <children>
             <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="473.0" layoutY="1.0" onMouseClicked="#popupKapat" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@../../../../assets/images/closeIcon.png" />
+                    <Image url="@../../../../assets/images/icons/ikon_close.png" />
                 </image>
             </ImageView>
             <Text fill="#B7C3D7" layoutX="124.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Oluşturduğunuz ünitenin şemasını oluşturabilmek için lütfen Silindir Sayısı ve Basınç Şalteri durumunu seçin." textAlignment="CENTER" wrappingWidth="254.44534301757812">

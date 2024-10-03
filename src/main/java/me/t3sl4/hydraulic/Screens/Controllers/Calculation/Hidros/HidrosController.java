@@ -192,7 +192,7 @@ public class HidrosController {
 
     @FXML
     public void parcaListesiGoster() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         if(hesaplamaBitti) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("fxml/HidrosParcaListesi.fxml"));
@@ -800,17 +800,17 @@ public class HidrosController {
         if(secilenPlatformTipi != null) {
             if(Objects.equals(secilenPlatformTipi, "ESP")) {
                 if(Objects.equals(secilenInisTipi, "İnişte Tek Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/tekhiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/powerpack/tekhiz.png")));
                 } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/cifthiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/powerpack/cifthiz.png")));
                 }
             } else if(Objects.equals(secilenPlatformTipi, "Devirmeli + Yürüyüş")) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/ozel.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/powerpack/ozel.png")));
             } else if(Objects.equals(secilenPlatformTipi, "Özel")) {
                 if(secilenBirinciValf != null && Objects.equals(secilenIkinciValf, "Yok")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/tekvalf.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/powerpack/tekvalf.png")));
                 } else if(secilenIkinciValf != null) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/hidros/ozel.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/powerpack/ozel.png")));
                 }
             }
         }
@@ -838,18 +838,18 @@ public class HidrosController {
 
             String pdfPath = "";
             if(Objects.equals(secilenPlatformTipi, "Özel")) {
-                pdfPath = "/assets/data/pdf/hidrosozel.pdf";
+                pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosozel.pdf";
             } else if(Objects.equals(secilenPlatformTipi, "ESP")) {
                 if(Objects.equals(secilenInisTipi, "İnişte Tek Hız")) {
-                    pdfPath = "/assets/data/pdf/hidrosinistetek.pdf";
+                    pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosinistetek.pdf";
                 } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
                     pdfPath = "/assets/data/hidrosinistecift.pdf";
                 }
             } else if(Objects.equals(secilenPlatformTipi, "Devirmeli + Yürüyüş")) {
-                pdfPath = "/assets/data/pdf/hidrosdevirmeli.pdf";
+                pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosdevirmeli.pdf";
             }
             pdfPath = null;
-            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString());
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString());
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }

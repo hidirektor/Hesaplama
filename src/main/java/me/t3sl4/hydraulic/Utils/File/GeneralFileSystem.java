@@ -20,11 +20,11 @@ public class GeneralFileSystem {
     }
 
     public static void systemSetup() {
-        fileCopy("/assets/data/Hidrolik.xlsx", Launcher.excelDBPath);
-        fileCopy("/assets/data/general.json", Launcher.generalDBPath);
-        fileCopy("/assets/data/kabinler.json", Launcher.cabinetesDBPath);
-        fileCopy("/assets/data/klasik.json", Launcher.classicDBPath);
-        fileCopy("/assets/data/powerpack.json", Launcher.powerPackDBPath);
+        fileCopy("/assets/data/programDatabase/Hidrolik.xlsx", Launcher.excelDBPath);
+        fileCopy("/assets/data/programDatabase/general.json", Launcher.generalDBPath);
+        fileCopy("/assets/data/programDatabase/kabinler.json", Launcher.cabinetesDBPath);
+        fileCopy("/assets/data/programDatabase/klasik.json", Launcher.classicDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack.json", Launcher.powerPackDBPath);
         JSONDataUtil.loadJSONData();
         ExcelDataReadUtil.excelDataRead();
     }

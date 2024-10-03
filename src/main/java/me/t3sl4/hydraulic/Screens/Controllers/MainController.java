@@ -436,7 +436,7 @@ public class MainController implements Initializable {
     }
 
     private void excelVoidCount() {
-        String excelPath = "/assets/data/Hidrolik.xlsx";
+        String excelPath = "/assets/data/programDatabase/Hidrolik.xlsx";
         String sheetName = "Boşluk Değerleri";
 
         try (InputStream file = Launcher.class.getResourceAsStream(excelPath)) {

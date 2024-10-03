@@ -200,32 +200,32 @@ public class KlasikController {
 
                 if(secilenSogutmaDurumu.equals("Var")) {
                     if(secilenHidrolikKilitDurumu.equals("Var")) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilit.png")));
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/sogutmaKilit.png")));
                         imageTextEnable(calculatedX, calculatedY, "sogutmaKilit");
                     } else {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/sogutmaKilitsiz.png")));
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/sogutmaKilitsiz.png")));
                         imageTextEnable(calculatedX, calculatedY, "sogutmaKilitsiz");
                     }
                 } else {
                     if(secilenHidrolikKilitDurumu.equals("Var")) {
                         if(kompanzasyonDurumu.equals("Var")) {
-                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
+                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/normal.png")));
                             imageTextEnable(calculatedX, calculatedY, "standartUnite");
                         } else {
                             if(secilenPompaVal > 28.1) {
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/normal.png")));
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/normal.png")));
                                 imageTextEnable(calculatedX, calculatedY, "standartUnite");
                             } else {
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kilitMotor.png")));
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilitMotor.png")));
                                 imageTextEnable(calculatedX, calculatedY, "kilitMotor");
                             }
                         }
                     } else {
                         if(kompanzasyonDurumu.equals("Var")) {
-                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/kompanzasyon.png")));
+                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kompanzasyon.png")));
                             imageTextEnable(calculatedX, calculatedY, "kompanzasyon");
                         } else {
-                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tekhizcifthiz.png")));
+                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/tekhizcifthiz.png")));
                             imageTextEnable(calculatedX, calculatedY, "tekhizcifthiz");
                         }
                     }
@@ -389,7 +389,7 @@ public class KlasikController {
 
     @FXML
     public void parcaListesiGoster() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         if(hesaplamaBitti) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("fxml/ParcaListesi.fxml"));
@@ -464,7 +464,7 @@ public class KlasikController {
             System.out.println("Şema Yolu: " + pdfPath);
             pdfPath = null;
 
-            PDFUtil.pdfGenerator("/assets/icons/onderGrupMain.png", "tankImage.png", "schematicImage.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
@@ -1273,14 +1273,14 @@ public class KlasikController {
 
         if(secilenSogutmaDurumu.equals("Var")) {
             if(secilenHidrolikKilitDurumu.equals("Var")) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/ingilteresogutuculu.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/ingilteresogutuculu.png")));
                 sonucTankGorsel.setImage(image);
                 genislikSonucText.setLayoutY(412.0);
                 genislikSonucText.setRotate(33.5);
                 derinlikSonucText.setRotate(-30.0);
                 derinlikSonucText.setLayoutX(193.0);
             } else {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/sogutuculukilitsiz.png")));
+                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/sogutuculukilitsiz.png")));
                 sonucTankGorsel.setImage(image);
                 genislikSonucText.setLayoutY(412.0);
                 genislikSonucText.setRotate(33.5);
@@ -1290,20 +1290,20 @@ public class KlasikController {
         } else {
             if(secilenHidrolikKilitDurumu.equals("Var")) {
                 if(kompanzasyonDurumu.equals("Var")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/sogutuculuotuzuc.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/sogutuculuotuzuc.png")));
                     sonucTankGorsel.setImage(image);
                     genislikSonucText.setRotate(27.5);
                     derinlikSonucText.setRotate(-27.5);
                     derinlikSonucText.setLayoutX(190.0);
                 } else {
                     if(secilenPompaVal > 28.1) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/sogutuculuotuzuc.png")));
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/sogutuculuotuzuc.png")));
                         sonucTankGorsel.setImage(image);
                         genislikSonucText.setRotate(27.5);
                         derinlikSonucText.setRotate(-27.5);
                         derinlikSonucText.setLayoutX(190.0);
                     } else {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/kilitliblok.png")));
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/kilitliblok.png")));
                         sonucTankGorsel.setImage(image);
                         genislikSonucText.setRotate(27.5);
                         derinlikSonucText.setRotate(-27.5);
@@ -1312,14 +1312,14 @@ public class KlasikController {
                 }
             } else {
                 if(kompanzasyonDurumu.equals("Var")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tekhiz.png")));
                     sonucTankGorsel.setImage(image);
                 } else {
                     if(secilenValfTipi.contains("Tek Hız")) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/tekhiz.png")));
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tekhiz.png")));
                         sonucTankGorsel.setImage(image);
                     } else {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/tanklar/cifthiz.png")));
+                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/cifthiz.png")));
                         sonucTankGorsel.setImage(image);
                     }
                 }
@@ -1472,7 +1472,7 @@ public class KlasikController {
     }
 
     private String showCyclinderPopup() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/icons/logo.png")));
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         try {
             FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CylinderCount.fxml"));
             Parent root = loader.load();
