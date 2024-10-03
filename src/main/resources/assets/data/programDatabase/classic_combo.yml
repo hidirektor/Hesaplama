@@ -1,78 +1,83 @@
 motor:
   '0':
-    name: "2.2 kW"
-    value: "2.2 kW"
-    kampana: "250 mm"
-    yukseklik: "345 mm"
-  '1':
-    name: "3 kW"
-    value: "3 kW"
-    kampana: "250 mm"
-    yukseklik: "345 mm"
-  '2':
-    name: "4 kW"
-    value: "4 kW"
-    kampana: "250 mm"
-    yukseklik: "345 mm"
-  '3':
-    name: "5.5 kW"
-    value: "5.5 kW"
-    kampana: "250 mm"
-    yukseklik: "375 mm"
-  '4':
-    name: "5.5 kW (Kompakt)"
-    value: "5.5 kW"
-    kampana: "250 mm"
-    yukseklik: "365 mm"
-  '5':
-    name: "7.5 kW (Kompakt)"
-    value: "7.5 kW"
-    kampana: "300 mm"
-    yukseklik: "410 mm"
-  '6':
-    name: "11 kW"
-    value: "11 kW"
-    kampana: "350 mm"
-    yukseklik: "500 mm"
-  '7':
-    name: "11 kW (Kompakt)"
-    value: "11 kW"
-    kampana: "300 mm"
-    yukseklik: "470 mm"
-  '8':
-    name: "15 kW"
-    value: "15 kW"
-    kampana: "350 mm"
-    yukseklik: "540 mm"
-  '9':
-    name: "18.5 kW"
-    value: "18.5 kW"
-    kampana: "350 mm"
-    yukseklik: "565 mm"
-  '10':
-    name: "22 kW"
-    value: "22 kW"
-    kampana: "350 mm"
-    yukseklik: "565 mm"
-  '11':
-    name: "37 kW"
-    value: "37 kW"
-    kampana: "400 mm"
-    yukseklik: "600 mm"
+    '0':
+      name: "2.2 kW"
+      value: "2.2 kW"
+      kampana: "250 mm"
+      yukseklik: "345 mm"
+    '1':
+      name: "3 kW"
+      value: "3 kW"
+      kampana: "250 mm"
+      yukseklik: "345 mm"
+    '2':
+      name: "4 kW"
+      value: "4 kW"
+      kampana: "250 mm"
+      yukseklik: "345 mm"
+    '3':
+      name: "5.5 kW"
+      value: "5.5 kW"
+      kampana: "250 mm"
+      yukseklik: "375 mm"
+    '4':
+      name: "5.5 kW (Kompakt)"
+      value: "5.5 kW"
+      kampana: "250 mm"
+      yukseklik: "365 mm"
+    '5':
+      name: "7.5 kW (Kompakt)"
+      value: "7.5 kW"
+      kampana: "300 mm"
+      yukseklik: "410 mm"
+    '6':
+      name: "11 kW"
+      value: "11 kW"
+      kampana: "350 mm"
+      yukseklik: "500 mm"
+    '7':
+      name: "11 kW (Kompakt)"
+      value: "11 kW"
+      kampana: "300 mm"
+      yukseklik: "470 mm"
+    '8':
+      name: "15 kW"
+      value: "15 kW"
+      kampana: "350 mm"
+      yukseklik: "540 mm"
+    '9':
+      name: "18.5 kW"
+      value: "18.5 kW"
+      kampana: "350 mm"
+      yukseklik: "565 mm"
+    '10':
+      name: "22 kW"
+      value: "22 kW"
+      kampana: "350 mm"
+      yukseklik: "565 mm"
+    '11':
+      name: "37 kW"
+      value: "37 kW"
+      kampana: "400 mm"
+      yukseklik: "600 mm"
 sogutma:
   '0':
-    value: "Var"
-  '1':
-    value: "Yok"
+    options:
+      '0':
+        value: "Var"
+      '1':
+        value: "Yok"
 hidrolik_kilit:
   '0':
-    value: "Var"
-  '1':
-    value: "Yok"
+    options:
+      '0':
+        value: "Var"
+      '1':
+        value: "Yok"
 pompa:
   '0': # Power Pack pompa listesi
     type: "powerpack"
-    values:
+    options:
       '0':
         name: "1.1 cc"
       '1':
@@ -99,7 +104,7 @@ pompa:
         name: "9 cc"
   '1': # Klasik ünite pompa listesi
     type: "klasik"
-    values:
+    options:
       '0':
         name: "9.5 cc"
       '1':
@@ -132,9 +137,11 @@ pompa:
         name: "56.1 cc"
 kompanzasyon:
   '0':
-    value: "Var"
-  '1':
-    value: "Yok"
+    options:
+      '0':
+        value: "Var"
+      '1':
+        value: "Yok"
 valf_tipi:
   '0': # Kompanzasyon olmayan durum
     options:
@@ -148,13 +155,17 @@ valf_tipi:
         value: "Kompanzasyon || İnişte Tek Hız"
 kilit_motor:
   '0':
-    value: "1.5 kW"
-  '1':
-    value: "2.2 kW"
+    options:
+      '0':
+        value: "1.5 kW"
+      '1':
+        value: "2.2 kW"
 kilit_pompa:
   '0':
-    value: "4.2 cc"
-  '1':
-    value: "4.8 cc"
-  '2':
-    value: "5.8 cc"
+    options:
+      '0':
+        value: "4.2 cc"
+      '1':
+        value: "4.8 cc"
+      '2':
+        value: "5.8 cc"

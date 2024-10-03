@@ -27,7 +27,7 @@ public class FileUtil {
         fileCopy("/assets/data/programDatabase/general.json", Launcher.generalDBPath);
         fileCopy("/assets/data/programDatabase/cabins.json", Launcher.cabinetesDBPath);
         fileCopy("/assets/data/programDatabase/classic_combo.yml", Launcher.classicDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_combo.json", Launcher.powerPackDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack_combo.yml", Launcher.powerPackDBPath);
         JSONUtil.loadJSONData();
         ExcelUtil.excelDataRead();
         YamlUtil yamlUtil = new YamlUtil(Launcher.classicDBPath);
@@ -72,7 +72,7 @@ public class FileUtil {
         Launcher.generalDBPath = Launcher.dataFileLocalPath + "general.json";
         Launcher.cabinetesDBPath = Launcher.dataFileLocalPath + "cabins.json";
         Launcher.classicDBPath = Launcher.dataFileLocalPath + "classic_combo.yml";
-        Launcher.powerPackDBPath = Launcher.dataFileLocalPath + "powerpack_combo.json";
+        Launcher.powerPackDBPath = Launcher.dataFileLocalPath + "powerpack_combo.yml";
     }
 
     public static void fileCopy(String resourcePath, String targetPath) {
