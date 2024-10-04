@@ -77,32 +77,20 @@ public class HydraulicData {
     /*
     PowerPack Parça Listesi
      */
-
+    public Map<String, LinkedList<String>> powerPackHidrosParcaMotor380 = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaMotor220 = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaPompa = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaTankDikey = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaTankYatay = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaESPGenel = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaESPCiftHiz = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaDevirmeli = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaDefault = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaOzelYatayGenel = new HashMap<>();
 
     //Bitişi
 
     //PowerPack - Hidros Parça Listesi:
-    public HashMap<String, HashMap<String, String>> hidros380Parca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidros220Parca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosPompaParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosPompaCivataParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosDikeyTankParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosYatayTankParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosDikeyCiftHizParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosDikeyTekHizParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosYatayCiftHizParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosYatayTekHizParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosDikeyCiftHizParcaESP = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosDikeyTekHizParcaESP = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosYatayCiftHizParcaESP = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosYatayTekHizParcaESP = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosDevirmeliParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosGenelParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosTamParca = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosTamParcaYatay = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosTamParcaDikey = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosTamParcaESPHaric = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosTamParcaOzelTekValf = new HashMap<>();
 
     //PowerPack - İthal Parçalar
     public HashMap<String, HashMap<String, String>> hidrosIthalParcaMotor380 = new HashMap<>();

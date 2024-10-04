@@ -1,7 +1,6 @@
 package me.t3sl4.hydraulic.Utils.Database.File;
 
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.Utils.Database.File.Excel.ExcelUtil;
 import me.t3sl4.hydraulic.Utils.Database.File.JSON.JSONUtil;
 import me.t3sl4.hydraulic.Utils.Database.File.Yaml.YamlUtil;
 
@@ -31,7 +30,6 @@ public class FileUtil {
         fileCopy("/assets/data/programDatabase/classic_parts.yml", Launcher.classicPartsDBPath);
         fileCopy("/assets/data/programDatabase/powerpack_parts.yml", Launcher.powerPackPartsDBPath);
         JSONUtil.loadJSONData();
-        ExcelUtil.excelDataRead();
         new YamlUtil(Launcher.classicComboDBPath, Launcher.powerPackComboDBPath, Launcher.classicPartsDBPath, Launcher.powerPackPartsDBPath);
     }
 

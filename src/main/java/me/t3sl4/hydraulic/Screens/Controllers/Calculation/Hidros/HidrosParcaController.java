@@ -11,7 +11,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Utils.Database.Model.Table.PartList.ParcaTableData;
-import me.t3sl4.hydraulic.Utils.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,8 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class HidrosParcaController {
@@ -165,7 +163,6 @@ public class HidrosParcaController {
             loadKabinKodu();
             loadMotorParca();
             loadPompaParca();
-            loadPompaCivataParca();
             loadTankTipi();
             loadPlatformTipi();
             loadYagMiktari();
@@ -173,14 +170,8 @@ public class HidrosParcaController {
             loadBasincSalteri();
             loadElPompasiParca();
             loadGenelParcalar();
-            if(Objects.equals(HidrosController.secilenTankTipi, "Yatay")) {
-                loadGenelParcalarYatay();
-            } else {
-                loadGenelParcalarDikey();
-            }
-            loadESPHaricTam();
-            if(Objects.equals(secilenPlatform, "Özel")) {
-                loadOzelTekValf();
+            if(secilenPlatform.equals("Özel - Yatay")) {
+                loadOzelYatayGenel();
             }
         } else {
             //İthal Parçalar buraya
@@ -192,44 +183,74 @@ public class HidrosParcaController {
         String motorGucu = HidrosController.secilenMotorGucu.trim();
 
         if (Objects.equals(voltajDegeri, "380")) {
-            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(Launcher.getDataManipulator().hidros380Parca, motorGucu);
-            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(Launcher.getDataManipulator().hidros380Parca, motorGucu) + " Motor";
-
-            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(Launcher.getDataManipulator().hidros380Parca, motorGucu));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
+            if(motorGucu.equals("0.37 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("0"));
+            } else if(motorGucu.equals("0.55 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("1"));
+            } else if(motorGucu.equals("0.75 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("2"));
+            } else if(motorGucu.equals("1.1 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("3"));
+            } else if(motorGucu.equals("1.5 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("4"));
+            } else if(motorGucu.equals("2.2 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("5"));
+            } else if(motorGucu.equals("3 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("6"));
+            } else if(motorGucu.equals("4 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor380.get("7"));
+            }
         } else if (Objects.equals(voltajDegeri, "220")) {
-            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(Launcher.getDataManipulator().hidros220Parca, motorGucu);
-            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(Launcher.getDataManipulator().hidros220Parca, motorGucu) + " Motor";
-
-            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(Launcher.getDataManipulator().hidros220Parca, motorGucu));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
+            if(motorGucu.equals("0.37 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor220.get("0"));
+            } else if(motorGucu.equals("0.55 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor220.get("1"));
+            } else if(motorGucu.equals("0.75 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor220.get("2"));
+            } else if(motorGucu.equals("1.1 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor220.get("3"));
+            } else if(motorGucu.equals("1.5 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor220.get("4"));
+            } else if(motorGucu.equals("2.2 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor220.get("5"));
+            } else if(motorGucu.equals("3 kW")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaMotor220.get("6"));
+            }
         }
     }
 
     private void loadPompaParca() {
         String pompaDegeri = HidrosController.secilenPompa.trim();
 
-        String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(Launcher.getDataManipulator().hidrosPompaParca, pompaDegeri);
-        String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(Launcher.getDataManipulator().hidrosPompaParca, pompaDegeri) + " Pompa";
-        String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(Launcher.getDataManipulator().hidrosPompaParca, pompaDegeri));
-
-        ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-        parcaListesiTablo.getItems().add(data);
-    }
-
-    private void loadPompaCivataParca() {
-        String pompaDegeri = HidrosController.secilenPompa.trim();
-
-        String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(Launcher.getDataManipulator().hidrosPompaCivataParca, pompaDegeri);
-        String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(Launcher.getDataManipulator().hidrosPompaCivataParca, pompaDegeri) + " Pompa Civata";
-        String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(Launcher.getDataManipulator().hidrosPompaCivataParca, pompaDegeri));
-
-        ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-        parcaListesiTablo.getItems().add(data);
+        if(pompaDegeri.equals("0.8 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("0"));
+        } else if(pompaDegeri.equals("1.1 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("1"));
+        } else if(pompaDegeri.equals("1.3 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("2"));
+        } else if(pompaDegeri.equals("1.8 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("3"));
+        } else if(pompaDegeri.equals("2.1 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("4"));
+        } else if(pompaDegeri.equals("2.7 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("5"));
+        } else if(pompaDegeri.equals("3.2 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("6"));
+        } else if(pompaDegeri.equals("3.7 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("7"));
+        } else if(pompaDegeri.equals("4.2 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("8"));
+        } else if(pompaDegeri.equals("4.8 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("9"));
+        } else if(pompaDegeri.equals("5.8 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("10"));
+        } else if(pompaDegeri.equals("7 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("11"));
+        } else if(pompaDegeri.equals("8 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("12"));
+        } else if(pompaDegeri.equals("9 cc")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaPompa.get("13"));
+        }
     }
 
     private void loadTankTipi() {
@@ -237,21 +258,35 @@ public class HidrosParcaController {
         String kontrolTankKapasitesi = HidrosController.secilenTankKapasitesi.trim();
 
         if(Objects.equals(kontrolTankTipi, "Yatay")) {
-            //ExcelUtil.dataManipulator.hidrosYatayTankParca
-            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(Launcher.getDataManipulator().hidrosYatayTankParca, kontrolTankKapasitesi);
-            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(Launcher.getDataManipulator().hidrosYatayTankParca, kontrolTankKapasitesi) + " Tank";
-            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(Launcher.getDataManipulator().hidrosYatayTankParca, kontrolTankKapasitesi));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
+            if(kontrolTankKapasitesi.equals("2 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankYatay.get("0"));
+            } else if(kontrolTankKapasitesi.equals("4 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankYatay.get("1"));
+            } else if(kontrolTankKapasitesi.equals("6 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankYatay.get("2"));
+            } else if(kontrolTankKapasitesi.equals("8 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankYatay.get("3"));
+            } else if(kontrolTankKapasitesi.equals("10 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankYatay.get("4"));
+            } else if(kontrolTankKapasitesi.equals("12 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankYatay.get("5"));
+            } else if(kontrolTankKapasitesi.equals("20 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankYatay.get("6"));
+            }
         } else if(Objects.equals(kontrolTankTipi, "Dikey")) {
-            //ExcelUtil.dataManipulator.hidrosDikeyTankParca
-            String malzemeKodu = Utils.getStockCodeFromDoubleHashMap(Launcher.getDataManipulator().hidrosDikeyTankParca, kontrolTankKapasitesi);
-            String secilenMalzeme = Utils.getMaterialFromDoubleHashMap(Launcher.getDataManipulator().hidrosDikeyTankParca, kontrolTankKapasitesi) + " Tank";
-            String adet = Utils.float2String(Utils.getAmountFromDoubleHashMap(Launcher.getDataManipulator().hidrosDikeyTankParca, kontrolTankKapasitesi));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
+            if(kontrolTankKapasitesi.equals("4 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankDikey.get("0"));
+            } else if(kontrolTankKapasitesi.equals("6 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankDikey.get("1"));
+            } else if(kontrolTankKapasitesi.equals("8 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankDikey.get("2"));
+            } else if(kontrolTankKapasitesi.equals("10 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankDikey.get("3"));
+            } else if(kontrolTankKapasitesi.equals("12 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankDikey.get("4"));
+            } else if(kontrolTankKapasitesi.equals("20 Lt")) {
+                generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaTankDikey.get("5"));
+            }
         }
     }
 
@@ -265,69 +300,23 @@ public class HidrosParcaController {
                 String secilenInis = HidrosController.secilenInisTipi.trim();
 
                 if(Objects.equals(secilenInis, "İnişte Tek Hız")) {
-                    for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosDikeyTekHizParca.entrySet()) {
-                        HashMap<String, String> innerMap = entry.getValue();
-
-                        String malzemeKodu = innerMap.get("B");
-                        String secilenMalzeme = entry.getKey();
-                        String adet = Utils.float2String(innerMap.get("C"));
-
-                        ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                        parcaListesiTablo.getItems().add(data);
-                    }
+                    generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaESPGenel.get("0"));
                 } else if(Objects.equals(secilenInis, "İnişte Çift Hız")) {
-                    for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosDikeyCiftHizParcaESP.entrySet()) {
-                        HashMap<String, String> innerMap = entry.getValue();
-
-                        String malzemeKodu = innerMap.get("B");
-                        String secilenMalzeme = entry.getKey();
-                        String adet = Utils.float2String(innerMap.get("C"));
-
-                        ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                        parcaListesiTablo.getItems().add(data);
-                    }
+                    generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaESPGenel.get("0"));
+                    generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaESPCiftHiz.get("0"));
                 }
             } else if(Objects.equals(secilenTank, "Yatay")) {
                 String secilenInis = HidrosController.secilenInisTipi.trim();
 
                 if(Objects.equals(secilenInis, "İnişte Tek Hız")) {
-                    for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosYatayTekHizParca.entrySet()) {
-                        HashMap<String, String> innerMap = entry.getValue();
-
-                        String malzemeKodu = innerMap.get("B");
-                        String secilenMalzeme = entry.getKey();
-                        String adet = Utils.float2String(innerMap.get("C"));
-
-                        ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                        parcaListesiTablo.getItems().add(data);
-                    }
+                    generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaESPGenel.get("0"));
                 } else if(Objects.equals(secilenInis, "İnişte Çift Hız")) {
-                    for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosYatayCiftHizParcaESP.entrySet()) {
-                        HashMap<String, String> innerMap = entry.getValue();
-
-                        String malzemeKodu = innerMap.get("B");
-                        String secilenMalzeme = entry.getKey();
-                        String adet = Utils.float2String(innerMap.get("C"));
-
-                        ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                        parcaListesiTablo.getItems().add(data);
-                    }
+                    generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaESPGenel.get("0"));
+                    generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaESPCiftHiz.get("0"));
                 }
             }
-        } else if(Objects.equals(secilenPlatform, "Devirmeli")) {
-            for(Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosDevirmeliParca.entrySet()) {
-                HashMap<String, String> innerMap = entry.getValue();
-
-                String malzemeKodu = innerMap.get("B");
-                String secilenMalzeme = entry.getKey();
-                String adet = Utils.float2String(innerMap.get("C"));
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
-        } else if(Objects.equals(secilenPlatform, "Yürüyüş")) {
-            //TODO
-            //Yürüyüş için parça listesi eklenecek
+        } else if(Objects.equals(secilenPlatform, "Devirmeli + Yürüyüş")) {
+            generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaDevirmeli.get("0"));
         } else if(Objects.equals(secilenPlatform, "Özel")) {
             ArrayList<String> eklenecekParcaListesi = new ArrayList<>();
             if(!Objects.equals(HidrosController.secilenIkinciValf, "Yok")) {
@@ -482,72 +471,11 @@ public class HidrosParcaController {
     }
 
     private void loadGenelParcalar() {
-        for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosTamParca.entrySet()) {
-            HashMap<String, String> innerMap = entry.getValue();
-
-            String malzemeKodu = innerMap.get("B");
-            String secilenMalzeme = entry.getKey();
-            String adet = Utils.float2String(innerMap.get("C"));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
-        }
+        generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaDefault.get("0"));
     }
 
-    private void loadGenelParcalarYatay() {
-        for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosTamParcaYatay.entrySet()) {
-            HashMap<String, String> innerMap = entry.getValue();
-
-            String malzemeKodu = innerMap.get("B");
-            String secilenMalzeme = entry.getKey();
-            String adet = Utils.float2String(innerMap.get("C"));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
-        }
-    }
-
-    private void loadGenelParcalarDikey() {
-        for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosTamParcaDikey.entrySet()) {
-            HashMap<String, String> innerMap = entry.getValue();
-
-            String malzemeKodu = innerMap.get("B");
-            String secilenMalzeme = entry.getKey();
-            String adet = Utils.float2String(innerMap.get("C"));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
-        }
-    }
-
-    private void loadESPHaricTam() {
-        String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
-
-        if(!Objects.equals(secilenPlatform, "ESP")) {
-            for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosTamParcaESPHaric.entrySet()) {
-                HashMap<String, String> innerMap = entry.getValue();
-
-                String malzemeKodu = innerMap.get("B");
-                String secilenMalzeme = entry.getKey();
-                String adet = Utils.float2String(innerMap.get("C"));
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
-        }
-    }
-
-    private void loadOzelTekValf() {
-        for (Map.Entry<String, HashMap<String, String>> entry : Launcher.getDataManipulator().hidrosTamParcaOzelTekValf.entrySet()) {
-            HashMap<String, String> innerMap = entry.getValue();
-
-            String malzemeKodu = innerMap.get("B");
-            String secilenMalzeme = entry.getKey();
-            String adet = Utils.float2String(innerMap.get("C"));
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
-        }
+    private void loadOzelYatayGenel() {
+        generalLoadFunc(Launcher.getDataManipulator().powerPackHidrosParcaOzelYatayGenel.get("0"));
     }
 
     private void loadYagMiktari() {
@@ -596,5 +524,18 @@ public class HidrosParcaController {
         }
         ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
         parcaListesiTablo.getItems().add(data);
+    }
+
+    private void generalLoadFunc(LinkedList<String> parcaListesi) {
+        for (String veri : parcaListesi) {
+            String[] veriParcalari = veri.split(";");
+
+            String malzemeKodu = veriParcalari[0];
+            String secilenMalzeme = veriParcalari[1];
+            String adet = veriParcalari[2];
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
     }
 }
