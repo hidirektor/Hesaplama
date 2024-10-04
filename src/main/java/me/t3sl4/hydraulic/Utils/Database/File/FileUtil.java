@@ -28,7 +28,7 @@ public class FileUtil {
         fileCopy("/assets/data/programDatabase/classic_combo.yml", Launcher.classicComboDBPath);
         fileCopy("/assets/data/programDatabase/powerpack_combo.yml", Launcher.powerPackComboDBPath);
         fileCopy("/assets/data/programDatabase/classic_parts.yml", Launcher.classicPartsDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_parts.yml", Launcher.powerPackPartsDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", Launcher.powerPackPartsDBPath);
         JSONUtil.loadJSONData();
         new YamlUtil(Launcher.classicComboDBPath, Launcher.powerPackComboDBPath, Launcher.classicPartsDBPath, Launcher.powerPackPartsDBPath);
     }
@@ -74,7 +74,7 @@ public class FileUtil {
         Launcher.classicComboDBPath = Launcher.dataFileLocalPath + "classic_combo.yml";
         Launcher.powerPackComboDBPath = Launcher.dataFileLocalPath + "powerpack_combo.yml";
         Launcher.classicPartsDBPath = Launcher.dataFileLocalPath + "classic_parts.yml";
-        Launcher.powerPackPartsDBPath = Launcher.dataFileLocalPath + "powerpack_parts.yml";
+        Launcher.powerPackPartsDBPath = Launcher.dataFileLocalPath + "powerpack_parts_hidros.yml";
     }
 
     public static void fileCopy(String resourcePath, String targetPath) {
