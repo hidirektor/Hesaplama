@@ -42,8 +42,11 @@ public class Launcher {
     public static String excelDBPath;
     public static String generalDBPath;
     public static String cabinetesDBPath;
-    public static String classicDBPath;
-    public static String powerPackDBPath;
+
+    public static String classicComboDBPath;
+    public static String powerPackComboDBPath;
+    public static String classicPartsDBPath;
+    public static String powerPackPartsDBPath;
 
     public static HydraulicData hydraulicData = new HydraulicData();
 

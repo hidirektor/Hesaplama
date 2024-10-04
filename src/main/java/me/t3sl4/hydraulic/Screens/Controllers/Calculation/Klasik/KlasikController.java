@@ -1444,8 +1444,7 @@ public class KlasikController {
             //kilit motor değiştiğinde nereler etkilenecek
             if(listenerStatus == 0) {
                 kilitPompaComboBox.setDisable(false);
-                kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().kilitPompaDegerleri);
-                //kilitPompaComboBox.getItems().addAll("4.2 cc", "4.8 cc", "5.8 cc");
+                kilitPompaComboBox.getItems().addAll(Launcher.getDataManipulator().lockPumpMap.get("0"));
             }
         } else if(currentComponent.equals("kilitPompa")) {
             //Bu kısımda sadece listener olacak

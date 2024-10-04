@@ -144,7 +144,7 @@
                   <Insets top="60.0" />
                </VBox.margin>
                   </Label>
-            <Label fx:id="versionCode1" text="v03.10.24">
+            <Label fx:id="versionCode1" text="v04.10.24">
                <font>
                   <Font size="15.0" />
                </font>

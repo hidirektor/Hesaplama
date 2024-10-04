@@ -28,6 +28,8 @@ public class HydraulicData {
     //TODO
     //Yeni sistem değişkenleri
 
+    public ArrayList<String> uniteTipiDegerleri = new ArrayList<>(); //Jsondan gelen değerler
+
     /*
     Classic Side
      */
@@ -46,22 +48,17 @@ public class HydraulicData {
     /*
     Power Pack Side
      */
+    public Map<String, LinkedList<String>> motorVoltajMap = new HashMap<>();
+    public Map<String, LinkedList<String>> uniteTipiMap = new HashMap<>();
+    public Map<String, LinkedList<String>> motorGucuMap = new HashMap<>();
+    public Map<String, LinkedList<String>> pompaPowerPackMap = new HashMap<>();
+    public Map<String, LinkedList<String>> tankTipiMap = new HashMap<>();
+    public Map<String, LinkedList<String>> tankKapasitesiMap = new HashMap<>();
+    public Map<String, LinkedList<String>> platformTipiMap = new HashMap<>();
+    public Map<String, LinkedList<String>> valfTipiMap = new HashMap<>();
     //Bitişi
 
     public List<Tank> inputTanks = new ArrayList<>();
-
-    public ArrayList<String> motorDegerleri = new ArrayList<>();
-
-    public ArrayList<String> uniteTipiDegerleri = new ArrayList<>();
-    public ArrayList<String> pompaDegerleriHidros = new ArrayList<>();
-    public ArrayList<String> pompaDegerleriKlasik = new ArrayList<>();
-    public ArrayList<String> pompaDegerleriTumu = new ArrayList<>();
-    public ArrayList<String> kilitMotorDegerleri = new ArrayList<>();
-    public ArrayList<String> kilitPompaDegerleri = new ArrayList<>();
-
-    public ArrayList<String> valfTipiDegerleri1 = new ArrayList<>();
-    public ArrayList<String> valfTipiDegerleri2 = new ArrayList<>();
-
 
     //Parça Listesi için değişkenler:
     public ArrayList<String> parcaListesiKampana2501k = new ArrayList<>();
@@ -118,25 +115,6 @@ public class HydraulicData {
     public ArrayList<String> parcaListesiBasincSalteri = new ArrayList<>();
 
     public ArrayList<String> parcaListesiStandart = new ArrayList<>();
-
-    //Hidros kısmı için geçerli olanlar:
-    public ArrayList<String> motorDegerleriHidros380 = new ArrayList<>();
-    public ArrayList<String> motorDegerleriIthal380 = new ArrayList<>();
-    public ArrayList<String> motorDegerleriHidros220 = new ArrayList<>();
-    public ArrayList<String> motorDegerleriIthal220 = new ArrayList<>();
-    public ArrayList<String> motorDegerleriHidros24 = new ArrayList<>();
-    public ArrayList<String> motorDegerleriHidros12 = new ArrayList<>();
-    public ArrayList<String> motorDegerleriIthal24 = new ArrayList<>();
-    public ArrayList<String> motorDegerleriIthal12 = new ArrayList<>();
-    public ArrayList<String> pompaKapasiteDegerleriHidros = new ArrayList<>();
-    public ArrayList<String> pompaKapasiteDegerleriIthal = new ArrayList<>();
-    public ArrayList<String> tankKapasitesiDegerleriHidrosDikey = new ArrayList<>();
-    public ArrayList<String> tankKapasitesiDegerleriHidrosYatay = new ArrayList<>();
-    public ArrayList<String> tankKapasitesiDegerleriIthalDikey = new ArrayList<>();
-    public ArrayList<String> tankKapasitesiDegerleriIthalYatay = new ArrayList<>();
-    public ArrayList<String> platformDegerleriHidros = new ArrayList<>();
-    public ArrayList<String> valfDegerleriHidros = new ArrayList<>();
-
 
     //PowerPack - Hidros Parça Listesi:
     public HashMap<String, HashMap<String, String>> hidros380Parca = new HashMap<>();

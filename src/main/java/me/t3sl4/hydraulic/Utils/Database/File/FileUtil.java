@@ -26,11 +26,13 @@ public class FileUtil {
         fileCopy("/assets/data/programDatabase/Hidrolik.xlsx", Launcher.excelDBPath);
         fileCopy("/assets/data/programDatabase/general.json", Launcher.generalDBPath);
         fileCopy("/assets/data/programDatabase/cabins.json", Launcher.cabinetesDBPath);
-        fileCopy("/assets/data/programDatabase/classic_combo.yml", Launcher.classicDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_combo.yml", Launcher.powerPackDBPath);
+        fileCopy("/assets/data/programDatabase/classic_combo.yml", Launcher.classicComboDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack_combo.yml", Launcher.powerPackComboDBPath);
+        fileCopy("/assets/data/programDatabase/classic_parts.yml", Launcher.classicPartsDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack_parts.yml", Launcher.powerPackPartsDBPath);
         JSONUtil.loadJSONData();
         ExcelUtil.excelDataRead();
-        new YamlUtil(Launcher.classicDBPath);
+        new YamlUtil(Launcher.classicComboDBPath, Launcher.powerPackComboDBPath);
     }
 
     public static String getOperatingSystem() {
@@ -71,8 +73,10 @@ public class FileUtil {
         Launcher.excelDBPath = Launcher.dataFileLocalPath + "Hidrolik.xlsx";
         Launcher.generalDBPath = Launcher.dataFileLocalPath + "general.json";
         Launcher.cabinetesDBPath = Launcher.dataFileLocalPath + "cabins.json";
-        Launcher.classicDBPath = Launcher.dataFileLocalPath + "classic_combo.yml";
-        Launcher.powerPackDBPath = Launcher.dataFileLocalPath + "powerpack_combo.yml";
+        Launcher.classicComboDBPath = Launcher.dataFileLocalPath + "classic_combo.yml";
+        Launcher.powerPackComboDBPath = Launcher.dataFileLocalPath + "powerpack_combo.yml";
+        Launcher.classicPartsDBPath = Launcher.dataFileLocalPath + "classic_parts.yml";
+        Launcher.powerPackPartsDBPath = Launcher.dataFileLocalPath + "powerpack_parts.yml";
     }
 
     public static void fileCopy(String resourcePath, String targetPath) {

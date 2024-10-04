@@ -481,30 +481,30 @@ public class HidrosController {
 
     private void initMotorTipi() {
         motorComboBox.getItems().clear();
-        motorComboBox.getItems().addAll("380 V (AC)", "220 V (AC)", "12 V (DC)", "24 V (DC)");
+        motorComboBox.getItems().addAll(Launcher.getDataManipulator().motorVoltajMap.get("0"));
     }
 
     private void initMotorGucu() {
         motorGucuComboBox.getItems().clear();
         if(uniteTipiDurumu.equals("Hidros")) {
             if(secilenMotorTipi.equals("380 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriHidros380);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("0"));
             } else if(secilenMotorTipi.equals("220 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriHidros220);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("2"));
             } else if(secilenMotorTipi.equals("24 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriHidros24);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("5"));
             } else if(secilenMotorTipi.equals("12 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriHidros12);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("4"));
             }
         } else {
             if(secilenMotorTipi.equals("380 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriIthal380);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("1"));
             } else if(secilenMotorTipi.equals("220 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriIthal220);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("3"));
             } else if(secilenMotorTipi.equals("24 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriIthal24);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("7"));
             } else if(secilenMotorTipi.equals("12 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorDegerleriIthal12);
+                motorGucuComboBox.getItems().addAll(Launcher.getDataManipulator().motorGucuMap.get("6"));
             }
         }
     }
@@ -512,45 +512,45 @@ public class HidrosController {
     private void initPompa() {
         pompaComboBox.getItems().clear();
         if(uniteTipiDurumu.equals("Hidros")) {
-            pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaKapasiteDegerleriHidros);
+            pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaPowerPackMap.get("0"));
         } else {
-            pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaKapasiteDegerleriIthal);
+            pompaComboBox.getItems().addAll(Launcher.getDataManipulator().pompaPowerPackMap.get("1"));
         }
     }
 
     private void initUniteTipi() {
         uniteTipiComboBox.getItems().clear();
-        uniteTipiComboBox.getItems().addAll("Hidros", "İthal");
+        uniteTipiComboBox.getItems().addAll(Launcher.getDataManipulator().uniteTipiMap.get("0"));
     }
 
     private void initTankTipi() {
         tankTipiComboBox.getItems().clear();
-        tankTipiComboBox.getItems().addAll("Dikey", "Yatay", "Özel - Dikey", "Özel - Yatay");
+        tankTipiComboBox.getItems().addAll(Launcher.getDataManipulator().tankTipiMap.get("0"));
     }
 
     private void initTankKapasitesi() {
         if(secilenTankTipi.equals("Dikey")) {
             if(uniteTipiDurumu.equals("Hidros")) {
                 tankKapasitesiComboBox.getItems().clear();
-                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiDegerleriHidrosDikey);
+                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiMap.get("0"));
             } else {
                 tankKapasitesiComboBox.getItems().clear();
-                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiDegerleriIthalDikey);
+                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiMap.get("1"));
             }
         } else if(secilenTankTipi.equals("Yatay")) {
             if(uniteTipiDurumu.equals("Hidros")) {
                 tankKapasitesiComboBox.getItems().clear();
-                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiDegerleriHidrosYatay);
+                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiMap.get("2"));
             } else {
                 tankKapasitesiComboBox.getItems().clear();
-                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiDegerleriIthalYatay);
+                tankKapasitesiComboBox.getItems().addAll(Launcher.getDataManipulator().tankKapasitesiMap.get("3"));
             }
         }
     }
 
     private void initPlatformTipi() {
         platformTipiComboBox.getItems().clear();
-        platformTipiComboBox.getItems().addAll(Launcher.getDataManipulator().platformDegerleriHidros);
+        platformTipiComboBox.getItems().addAll(Launcher.getDataManipulator().platformTipiMap.get("0"));
     }
 
     private void initValfTipi() {
@@ -565,7 +565,7 @@ public class HidrosController {
         } else {
             initCustomPlatform(0);
             birinciValfComboBox.getItems().clear();
-            birinciValfComboBox.getItems().addAll(Launcher.getDataManipulator().valfDegerleriHidros);
+            birinciValfComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiMap.get("0"));
         }
     }
 
@@ -617,7 +617,7 @@ public class HidrosController {
             }
         } else {
             ikinciValfComboBox.getItems().clear();
-            ikinciValfComboBox.getItems().addAll(Launcher.getDataManipulator().valfDegerleriHidros);
+            ikinciValfComboBox.getItems().addAll(Launcher.getDataManipulator().valfTipiMap.get("0"));
             ikinciValfComboBox.getItems().addAll("Yok");
         }
     }
