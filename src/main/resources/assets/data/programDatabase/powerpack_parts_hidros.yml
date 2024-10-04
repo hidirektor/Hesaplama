@@ -754,10 +754,237 @@ ozel_yatay:
         malzemeKodu: "Veri Yok"
         malzemeAdi: "M10 Pul"
         malzemeAdet: "2"
-acik_merkez:
+valf_types:
+  '0': # Açık Merkez
+    parts:
+      '0':
+        malzemeKodu: "150-51-05-058"
+        malzemeAdi: "POPETSİZ BLOK"
+        malzemeAdet: "1"
+      '1':
+        malzemeKodu: "150-51-06-699"
+        malzemeAdi: "AC KAPLİN KISA"
+        malzemeAdet: "1"
+      '2':
+        malzemeKodu: "150-51-07-050"
+        malzemeAdi: "3/8 EMİŞ FİLTRE"
+        malzemeAdet: "1"
+      '3':
+        malzemeKodu: "150-50-21-065"
+        malzemeAdi: "CIVATA  M6X30 MM İMBUS"
+        malzemeAdet: "4"
+      '4':
+        malzemeKodu: "150-51-05-060"
+        malzemeAdi: "A03 BLOK "
+        malzemeAdet: "1"
+      '5':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF AÇIK MERKEZ NG6 24V"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF AÇIK MERKEZ NG6 12V"
+        malzemeAdet: "1"
+      '7':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "CİVATA İMBUS M6 60 MM BEYAZ (DIN 912)"
+        malzemeAdet: "3"
+      '8':
+        malzemeKodu: "150-51-09-419"
+        malzemeAdi: "NİPEL 3/8 Ø10"
+        malzemeAdet: "2"
+      '9':
+        malzemeKodu: "150-53-08-501"
+        malzemeAdi: "3/8 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
+      '10':
+        malzemeKodu: "150-51-04-051"
+        malzemeAdi: "3/8 ÇEKLİ HIZ AYAR VALFİ"
+        malzemeAdet: "1"
+      '11':
+        malzemeKodu: "150-51-09-932"
+        malzemeAdi: "TERS REKOR PİMLİ Ø10 3/8"
+        malzemeAdet: "1"
+      '12':
+        malzemeKodu: "150-51-09-817"
+        malzemeAdi: "TERS DİRSEK PİMLİ Ø10"
+        malzemeAdet: "1"
+  '1': # J Merkez
+    parts:
+      '0':
+        malzemeKodu: "150-51-05-058"
+        malzemeAdi: "POPETSİZ BLOK "
+        malzemeAdet: "1"
+      '1':
+        malzemeKodu: "150-51-06-699"
+        malzemeAdi: "AC KAPLİN KISA"
+        malzemeAdet: "1"
+      '2':
+        malzemeKodu: "150-51-07-050"
+        malzemeAdi: "3/8 EMİŞ FİLTRE"
+        malzemeAdet: "1"
+      '3':
+        malzemeKodu: "150-50-21-065"
+        malzemeAdi: "CIVATA  M6X30 MM İMBUS"
+        malzemeAdet: "4"
+      '4':
+        malzemeKodu: "150-51-05-060"
+        malzemeAdi: "A03 BLOK "
+        malzemeAdet: "1"
+      '5':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF A.B.T MERKEZ NG6 24V"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF A.B.T MERKEZ NG6 12V"
+        malzemeAdet: "1"
+      '7':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "CİVATA İMBUS M6 90 MM BEYAZ (DIN 912)"
+        malzemeAdet: "3"
+      '8':
+        malzemeKodu: "150-51-09-419"
+        malzemeAdi: "NİPEL 3/8 Ø10"
+        malzemeAdet: "2"
+      '9':
+        malzemeKodu: "150-51-05-027"
+        malzemeAdi: "NG6 MODÜLER İKİZ YÜK TUTMA (LUEN) 001.226.0Y0"
+        malzemeAdet: "1"
+      '10':
+        malzemeKodu: "150-53-08-503"
+        malzemeAdi: "1/4 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "2"
+      '11':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "CİVATA İMBUS M5 120 MM BEYAZ"
+        malzemeAdet: "4"
+      '12':
+        malzemeKodu: "150-51-05-059"
+        malzemeAdi: "A01 BLOK"
+        malzemeAdet: "1"
+  '2': # H Merkez
+    parts:
+      '0':
+        malzemeKodu: "150-51-05-058"
+        malzemeAdi: "POPETSİZ BLOK "
+        malzemeAdet: "1"
+      '1':
+        malzemeKodu: "150-51-06-699"
+        malzemeAdi: "AC KAPLİN KISA"
+        malzemeAdet: "1"
+      '2':
+        malzemeKodu: "150-51-07-050"
+        malzemeAdi: "3/8 EMİŞ FİLTRE"
+        malzemeAdet: "1"
+      '3':
+        malzemeKodu: "150-50-21-065"
+        malzemeAdi: "CIVATA  M6X30 MM İMBUS"
+        malzemeAdet: "4"
+      '4':
+        malzemeKodu: "150-51-05-060"
+        malzemeAdi: "A03 BLOK "
+        malzemeAdet: "1"
+      '5':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF H MERKEZ NG6 24V"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF H MERKEZ NG6 12V"
+        malzemeAdet: "1"
+      '7':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "CİVATA İMBUS M6 90 MM BEYAZ (DIN 912)"
+        malzemeAdet: "3"
+      '8':
+        malzemeKodu: "150-51-09-419"
+        malzemeAdi: "NİPEL 3/8 Ø10"
+        malzemeAdet: "2"
+      '9':
+        malzemeKodu: "150-51-05-027"
+        malzemeAdi: "NG6 MODÜLER İKİZ YÜK TUTMA (LUEN) 001.226.0Y0"
+        malzemeAdet: "1"
+      '10':
+        malzemeKodu: "150-53-08-503"
+        malzemeAdi: "1/4 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "2"
+      '11':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "CİVATA İMBUS M5 120 MM BEYAZ"
+        malzemeAdet: "4"
+      '12':
+        malzemeKodu: "150-51-05-059"
+        malzemeAdi: "A01 BLOK"
+        malzemeAdet: "1"
+ozel_cift_valf:
   '0':
     parts:
       '0':
-        malzemeKodu: ""
-        malzemeAdi: ""
+        malzemeKodu: "150-51-05-058"
+        malzemeAdi: "POPETSİZ BLOK"
+        malzemeAdet: "1"
+      '1':
+        malzemeKodu: "150-51-06-699"
+        malzemeAdi: "AC KAPLİN KISA"
+        malzemeAdet: "1"
+      '2':
+        malzemeKodu: "150-51-07-050"
+        malzemeAdi: "3/8 EMİŞ FİLTRE"
+        malzemeAdet: "1"
+      '3':
+        malzemeKodu: "150-50-21-065"
+        malzemeAdi: "CIVATA  M6X30 MM İMBUS"
+        malzemeAdet: "4"
+      '4':
+        malzemeKodu: "150-51-05-060"
+        malzemeAdi: "A03 BLOK"
+        malzemeAdet: "2"
+      '5':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF A.B.T MERKEZ NG6 24V"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "VALF KAPALI MERKEZ NG6 24V"
+        malzemeAdet: "1"
+      '7':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "CİVATA İMBUS M6 130 MM BEYAZ (DIN 912)"
+        malzemeAdet: "3"
+      '8':
+        malzemeKodu: "150-51-09-419"
+        malzemeAdi: "NİPEL 3/8 Ø10"
+        malzemeAdet: "4"
+      '9':
+        malzemeKodu: "150-51-05-027"
+        malzemeAdi: "NG6 MODÜLER İKİZ YÜK TUTMA (LUEN) 001.226.0Y0"
+        malzemeAdet: "1"
+      '10':
+        malzemeKodu: "150-53-08-503"
+        malzemeAdi: "1/4 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "2"
+      '11':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "CİVATA İMBUS M5 120 MM BEYAZ"
+        malzemeAdet: "4"
+      '12':
+        malzemeKodu: "150-53-08-501"
+        malzemeAdi: "3/8 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
+      '13':
+        malzemeKodu: "150-51-04-051"
+        malzemeAdi: "3/8 ÇEKLİ HIZ AYAR VALFİ"
+        malzemeAdet: "1"
+      '14':
+        malzemeKodu: "150-51-09-932"
+        malzemeAdi: "TERS REKOR PİMLİ Ø10 3/8"
+        malzemeAdet: "1"
+      '15':
+        malzemeKodu: "150-51-09-817"
+        malzemeAdi: "TERS DİRSEK PİMLİ Ø10"
+        malzemeAdet: "1"
+      '16':
+        malzemeKodu: "150-51-05-059"
+        malzemeAdi: "A01 BLOK"
         malzemeAdet: "1"

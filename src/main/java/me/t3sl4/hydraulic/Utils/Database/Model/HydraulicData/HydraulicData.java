@@ -87,6 +87,8 @@ public class HydraulicData {
     public Map<String, LinkedList<String>> powerPackHidrosParcaDevirmeli = new HashMap<>();
     public Map<String, LinkedList<String>> powerPackHidrosParcaDefault = new HashMap<>();
     public Map<String, LinkedList<String>> powerPackHidrosParcaOzelYatayGenel = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaOzelCiftValf = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackHidrosParcaValf = new HashMap<>();
 
     //Bitişi
 
