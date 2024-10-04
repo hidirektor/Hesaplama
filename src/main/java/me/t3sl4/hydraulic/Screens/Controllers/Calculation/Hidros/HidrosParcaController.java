@@ -477,8 +477,6 @@ public class HidrosParcaController {
             String secilenMalzeme = veriParcalari[1];
             String adet = veriParcalari[2];
 
-            System.out.println("Yazılan Veri: " + veri);
-
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         }
