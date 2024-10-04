@@ -12,9 +12,12 @@ import java.util.Map;
 
 public class YamlUtil {
 
-    public YamlUtil(String classicComboPath, String powerPackComboPath) {
+    public YamlUtil(String classicComboPath, String powerPackComboPath, String classicPartPath, String powerpackPartPath) {
         loadClassicCombo(classicComboPath);
         loadPowerPackCombo(powerPackComboPath);
+        loadClassicPartList(classicPartPath);
+        loadPowerPackHidrosPartList(powerpackPartPath);
+        loadPowerPackIthalPartList(powerpackPartPath);
     }
 
     public void loadClassicCombo(String filePath) {
@@ -45,6 +48,31 @@ public class YamlUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void loadClassicPartList(String filePath) {
+        try {
+            loadClassicParcaMotor(filePath);
+            loadClassicParcaKampana(filePath);
+            loadClassicParcaPompa(filePath);
+            loadClassicParcaKaplin(filePath);
+            loadClassicParcaValfBloklari(filePath);
+            loadClassicParcaSogutma(filePath);
+            loadClassicParcaBasincSalteri(filePath);
+            loadClassicParcaDefault(filePath);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadPowerPackHidrosPartList(String filePath) {
+        //TODO
+        //Power pack parçaları eklenecek
+    }
+
+    public void loadPowerPackIthalPartList(String filePath) {
+        //TODO
+        //Power pack parçaları eklenecek
     }
 
     public void loadMotor(String filePath) throws FileNotFoundException {
@@ -398,6 +426,256 @@ public class YamlUtil {
                     }
                 }
                 Launcher.getDataManipulator().valfTipiMap.put(key, valuesList);
+            }
+        }
+    }
+
+    public void loadClassicParcaMotor(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> motorData = (Map<String, Object>) yamlData.get("motor");
+
+            for (Map.Entry<String, Object> entry : motorData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> motorDetails = (Map<String, String>) entry.getValue();
+
+                String malzemeKodu = motorDetails.get("malzemeKodu");
+                String malzemeAdi = motorDetails.get("malzemeAdi");
+                String malzemeAdet = motorDetails.get("malzemeAdet");
+
+                String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                LinkedList<String> motorList = new LinkedList<>();
+                motorList.add(combinedDetails);
+
+                Launcher.getDataManipulator().classicParcaMotor.put(key, motorList);
+            }
+        }
+    }
+
+    public void loadClassicParcaKampana(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> kampanaData = (Map<String, Object>) yamlData.get("kampana");
+
+            for (Map.Entry<String, Object> kampanaEntry : kampanaData.entrySet()) {
+                String kampanaKey = kampanaEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kampanaEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                Launcher.getDataManipulator().classicParcaKampana.put(kampanaKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadClassicParcaPompa(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> pompaData = (Map<String, Object>) yamlData.get("pompa");
+
+            for (Map.Entry<String, Object> pompaEntry : pompaData.entrySet()) {
+                String pompaKey = pompaEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) pompaEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                Launcher.getDataManipulator().classicParcaPompa.put(pompaKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadClassicParcaKaplin(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> kaplinData = (Map<String, Object>) yamlData.get("kaplin");
+
+            for (Map.Entry<String, Object> kaplinEntry : kaplinData.entrySet()) {
+                String kaplinKey = kaplinEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kaplinEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                Launcher.getDataManipulator().classicParcaKaplin.put(kaplinKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadClassicParcaValfBloklari(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> valfData = (Map<String, Object>) yamlData.get("valf_bloklari");
+
+            for (Map.Entry<String, Object> kaplinEntry : valfData.entrySet()) {
+                String kaplinKey = kaplinEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kaplinEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                Launcher.getDataManipulator().classicParcaValfBloklari.put(kaplinKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadClassicParcaSogutma(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> valfData = (Map<String, Object>) yamlData.get("sogutma");
+
+            for (Map.Entry<String, Object> kaplinEntry : valfData.entrySet()) {
+                String kaplinKey = kaplinEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kaplinEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                Launcher.getDataManipulator().classicParcaSogutma.put(kaplinKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadClassicParcaBasincSalteri(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> valfData = (Map<String, Object>) yamlData.get("basinc_salteri");
+
+            for (Map.Entry<String, Object> kaplinEntry : valfData.entrySet()) {
+                String kaplinKey = kaplinEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kaplinEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                Launcher.getDataManipulator().classicParcaBasincSalteri.put(kaplinKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadClassicParcaDefault(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> valfData = (Map<String, Object>) yamlData.get("standart_malzemeler");
+
+            for (Map.Entry<String, Object> kaplinEntry : valfData.entrySet()) {
+                String kaplinKey = kaplinEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kaplinEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                Launcher.getDataManipulator().classicParcaDefault.put(kaplinKey, partDetailsList);
             }
         }
     }

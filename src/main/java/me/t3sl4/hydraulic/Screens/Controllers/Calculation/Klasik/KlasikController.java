@@ -703,6 +703,7 @@ public class KlasikController {
             y = finalTank.getKabinY();
             h = finalTank.getKabinH();
             atananHacim = finalTank.getKabinHacim();
+            atananHT = finalTank.getTankName();
             if(finalTank.getGecisH() < (motorYukseklik + h)) {
                 for(Tank selectedTank : Launcher.getDataManipulator().inputTanks) {
                     int kabinYukseklik = selectedTank.getGecisH();

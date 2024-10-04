@@ -21,7 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class ParcaController {
@@ -168,7 +168,9 @@ public class ParcaController {
         loadMotorParca();
         loadKampanaParca();
         loadPompaParca();
-        loadKabinKodu();
+        if(KlasikController.secilenSogutmaDurumu.equals("Yok")) {
+            loadKabinKodu();
+        }
         loadKaplinParca();
         loadValfBlokParca();
         if(basincSalteriDurumu.equals("Var")) {
@@ -182,7 +184,7 @@ public class ParcaController {
             loadElPompasiParca();
         }
 
-        loadBasincStandart();
+        loadStandartParca();
         if(KlasikController.secilenSogutmaDurumu.contains("Var")) {
             loadSogutucuParca();
         }
@@ -203,344 +205,88 @@ public class ParcaController {
     }
 
     private void loadKampanaParca() {
-        ArrayList<String> loadingList = new ArrayList<>();
-
         if(KlasikController.secilenPompaVal >= 33.3) {
             if(KlasikController.secilenKampana == 250) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana2502k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("4"));
             } else if(KlasikController.secilenKampana == 300) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana3002k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("5"));
             } else if(KlasikController.secilenKampana == 350) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana3502k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("6"));
             } else if(KlasikController.secilenKampana == 400) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana4002k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("7"));
             }
         } else {
             if(KlasikController.secilenKampana == 250) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana2501k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("0"));
             } else if(KlasikController.secilenKampana == 300) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana3001k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("1"));
             } else if(KlasikController.secilenKampana == 350) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana3501k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("2"));
             } else if(KlasikController.secilenKampana == 400) {
-                loadingList = Launcher.getDataManipulator().parcaListesiKampana4001k;
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKampana.get("3"));
             }
-        }
-
-        for (String veri : loadingList) {
-            String[] veriParcalari = veri.split(";");
-
-            String malzemeKodu = veriParcalari[0];
-            String secilenMalzeme = veriParcalari[1];
-            String adet = veriParcalari[2];
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
         }
     }
 
     private void loadPompaParca() {
         if(Objects.equals(KlasikController.secilenPompa, "9.5 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa95) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("0"));
         } else if(Objects.equals(KlasikController.secilenPompa, "11.9 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa119) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("1"));
         } else if(Objects.equals(KlasikController.secilenPompa, "14 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa14) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("2"));
         } else if(Objects.equals(KlasikController.secilenPompa, "14.6 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa146) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("3"));
         } else if(Objects.equals(KlasikController.secilenPompa, "16.8 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa168) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("4"));
         } else if(Objects.equals(KlasikController.secilenPompa, "19.2 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa192) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("5"));
         } else if(Objects.equals(KlasikController.secilenPompa, "22.9 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa229) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("6"));
         } else if(Objects.equals(KlasikController.secilenPompa, "28.1 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa281) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("7"));
         } else if(Objects.equals(KlasikController.secilenPompa, "28.8 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa288) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("8"));
         } else if(Objects.equals(KlasikController.secilenPompa, "33.3 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa333) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("9"));
         } else if(Objects.equals(KlasikController.secilenPompa, "37.9 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa379) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("10"));
         } else if(Objects.equals(KlasikController.secilenPompa, "42.6 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa426) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("11"));
         } else if(Objects.equals(KlasikController.secilenPompa, "45.5 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa455) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("12"));
         } else if(Objects.equals(KlasikController.secilenPompa, "49.4 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa494) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("13"));
         } else if(Objects.equals(KlasikController.secilenPompa, "56.1 cc")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiPompa561) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaPompa.get("14"));
         }
     }
 
     private void loadMotorParca() {
         if(Objects.equals(KlasikController.secilenMotor, "2.2 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor202) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("0"));
         } else if(Objects.equals(KlasikController.secilenMotor, "3 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor3) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("1"));
         } else if(Objects.equals(KlasikController.secilenMotor, "4 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor4) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("2"));
         } else if(Objects.equals(KlasikController.secilenMotor, "5.5 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor55) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("3"));
         } else if(Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor55Kompakt) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("4"));
         } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor75Kompakt) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("5"));
         } else if(Objects.equals(KlasikController.secilenMotor, "11 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor11) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("6"));
         } else if(Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor11Kompakt) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("7"));
         } else if(Objects.equals(KlasikController.secilenMotor, "15 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor15) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("8"));
         } else if(Objects.equals(KlasikController.secilenMotor, "18.5 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor185) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("9"));
         } else if(Objects.equals(KlasikController.secilenMotor, "22 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor22) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("10"));
         } else if(Objects.equals(KlasikController.secilenMotor, "37 kW")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiMotor37) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaMotor.get("11"));
         }
     }
 
@@ -550,137 +296,38 @@ public class ParcaController {
 
         if(secilenPompaVal < 33.3) {
             if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
-                for (String veri : Launcher.getDataManipulator().parcaListesiKaplin1PN28) {
-                    String[] veriParcalari = veri.split(";");
-
-                    String malzemeKodu = veriParcalari[0];
-                    String secilenMalzeme = veriParcalari[1];
-                    String adet = veriParcalari[2];
-
-                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                    parcaListesiTablo.getItems().add(data);
-                }
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKaplin.get("0"));
             } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
-                for (String veri : Launcher.getDataManipulator().parcaListesiKaplin1PN38) {
-                    String[] veriParcalari = veri.split(";");
-
-                    String malzemeKodu = veriParcalari[0];
-                    String secilenMalzeme = veriParcalari[1];
-                    String adet = veriParcalari[2];
-
-                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                    parcaListesiTablo.getItems().add(data);
-                }
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKaplin.get("1"));
             } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37 kW")) {
-                for (String veri : Launcher.getDataManipulator().parcaListesiKaplin1PN42) {
-                    String[] veriParcalari = veri.split(";");
-
-                    String malzemeKodu = veriParcalari[0];
-                    String secilenMalzeme = veriParcalari[1];
-                    String adet = veriParcalari[2];
-
-                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                    parcaListesiTablo.getItems().add(data);
-                }
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKaplin.get("2"));
             }
         } else {
             if(Objects.equals(KlasikController.secilenMotor, "2.2 kW") || Objects.equals(KlasikController.secilenMotor, "3 kW") || Objects.equals(KlasikController.secilenMotor, "4 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW") || Objects.equals(KlasikController.secilenMotor, "5.5 kW (Kompakt)")) {
-                for (String veri : Launcher.getDataManipulator().parcaListesiKaplin2PN28) {
-                    String[] veriParcalari = veri.split(";");
-
-                    String malzemeKodu = veriParcalari[0];
-                    String secilenMalzeme = veriParcalari[1];
-                    String adet = veriParcalari[2];
-
-                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                    parcaListesiTablo.getItems().add(data);
-                }
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKaplin.get("3"));
             } else if(Objects.equals(KlasikController.secilenMotor, "7.5 kW (Kompakt)") || Objects.equals(KlasikController.secilenMotor, "11 kW") || Objects.equals(KlasikController.secilenMotor, "11 kW (Kompakt)")) {
-                for (String veri : Launcher.getDataManipulator().parcaListesiKaplin2PN38) {
-                    String[] veriParcalari = veri.split(";");
-
-                    String malzemeKodu = veriParcalari[0];
-                    String secilenMalzeme = veriParcalari[1];
-                    String adet = veriParcalari[2];
-
-                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                    parcaListesiTablo.getItems().add(data);
-                }
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKaplin.get("4"));
             } else if(Objects.equals(KlasikController.secilenMotor, "15 kW") || Objects.equals(KlasikController.secilenMotor, "18.5 kW") || Objects.equals(KlasikController.secilenMotor, "22 kW") || Objects.equals(KlasikController.secilenMotor, "37 kW")) {
-                for (String veri : Launcher.getDataManipulator().parcaListesiKaplin2PN42) {
-                    String[] veriParcalari = veri.split(";");
-
-                    String malzemeKodu = veriParcalari[0];
-                    String secilenMalzeme = veriParcalari[1];
-                    String adet = veriParcalari[2];
-
-                    ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                    parcaListesiTablo.getItems().add(data);
-                }
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaKaplin.get("5"));
             }
         }
     }
 
     private void loadValfBlokParca() {
         if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Tek Hız")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiValfBloklariTekHiz) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("0"));
         } else if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Çift Hız")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiValfBloklariCiftHiz) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("1"));
         } else if(Objects.equals(KlasikController.secilenValfTipi, "Kilitli Blok")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiValfBloklariKilitliBlok) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("2"));
         } else if(Objects.equals(KlasikController.secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiValfBloklariKompanzasyon) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("3"));
         }
     }
 
     private void loadBasincSalteriParca() {
         if(Objects.equals(basincSalteriDurumu, "Var")) {
-            for (String veri : Launcher.getDataManipulator().parcaListesiBasincSalteri) {
-                String[] veriParcalari = veri.split(";");
-
-                String malzemeKodu = veriParcalari[0];
-                String secilenMalzeme = veriParcalari[1];
-                String adet = veriParcalari[2];
-
-                ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-                parcaListesiTablo.getItems().add(data);
-            }
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaBasincSalteri.get("0"));
         }
     }
 
@@ -695,56 +342,32 @@ public class ParcaController {
         }
     }
 
-    private void loadBasincStandart() {
-        int index = 0;
-        int totalElements = Launcher.getDataManipulator().parcaListesiStandart.size();
-
-        for (String veri : Launcher.getDataManipulator().parcaListesiStandart) {
-            String[] veriParcalari = veri.split(";");
-
-            String malzemeKodu = veriParcalari[0];
-            String secilenMalzeme = veriParcalari[1];
-            String adet = veriParcalari[2];
-            index++;
-            if(index == totalElements) {
-                if(Objects.equals(KlasikController.atananHT, "HT 40")) {
-                    adet = String.valueOf(10);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 70")) {
-                    adet = String.valueOf(14);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 100")) {
-                    adet = String.valueOf(14);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 125")) {
-                    adet = String.valueOf(14);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 160")) {
-                    adet = String.valueOf(16);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 200")) {
-                    adet = String.valueOf(18);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 250")) {
-                    adet = String.valueOf(18);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 300")) {
-                    adet = String.valueOf(22);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 350")) {
-                    adet = String.valueOf(22);
-                } else if(Objects.equals(KlasikController.atananHT, "HT 400")) {
-                    adet = String.valueOf(22);
-                }
-            }
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
+    private void loadStandartParca() {
+        if(Objects.equals(KlasikController.atananHT, "HT 40")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("0"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 70")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("1"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 100")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("2"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 125")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("3"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 160")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("4"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 200")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("5"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 250")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("6"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 300")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("7"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 350")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("8"));
+        } else if(Objects.equals(KlasikController.atananHT, "HT 400")) {
+            generalLoadFunc(Launcher.getDataManipulator().classicParcaDefault.get("9"));
         }
     }
 
     private void loadSogutucuParca() {
-        for (String veri : Launcher.getDataManipulator().parcaListesiSogutucu) {
-            String[] veriParcalari = veri.split(";");
-
-            String malzemeKodu = veriParcalari[0];
-            String secilenMalzeme = veriParcalari[1];
-            String adet = veriParcalari[2];
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
-        }
+        generalLoadFunc(Launcher.getDataManipulator().classicParcaSogutma.get("0"));
     }
 
     private void loadManometre() {
@@ -765,5 +388,18 @@ public class ParcaController {
 
         ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
         parcaListesiTablo.getItems().add(data);
+    }
+
+    private void generalLoadFunc(LinkedList<String> parcaListesi) {
+        for (String veri : parcaListesi) {
+            String[] veriParcalari = veri.split(";");
+
+            String malzemeKodu = veriParcalari[0];
+            String secilenMalzeme = veriParcalari[1];
+            String adet = veriParcalari[2];
+
+            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
+            parcaListesiTablo.getItems().add(data);
+        }
     }
 }

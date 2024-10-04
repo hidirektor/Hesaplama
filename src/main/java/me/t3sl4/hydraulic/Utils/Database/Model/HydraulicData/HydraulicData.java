@@ -29,6 +29,7 @@ public class HydraulicData {
     //Yeni sistem değişkenleri
 
     public ArrayList<String> uniteTipiDegerleri = new ArrayList<>(); //Jsondan gelen değerler
+    public List<Tank> inputTanks = new ArrayList<>(); //Jsondan gelen tank verileri
 
     /*
     Classic Side
@@ -56,65 +57,29 @@ public class HydraulicData {
     public Map<String, LinkedList<String>> tankKapasitesiMap = new HashMap<>();
     public Map<String, LinkedList<String>> platformTipiMap = new HashMap<>();
     public Map<String, LinkedList<String>> valfTipiMap = new HashMap<>();
+
+    /*
+    Parça Listesi
+     */
+
+    /*
+    Classic Parça Listesi
+     */
+    public Map<String, LinkedList<String>> classicParcaMotor = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaKampana = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaPompa = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaKaplin = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaValfBloklari = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaSogutma = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaBasincSalteri = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaDefault = new HashMap<>();
+
+    /*
+    PowerPack Parça Listesi
+     */
+
+
     //Bitişi
-
-    public List<Tank> inputTanks = new ArrayList<>();
-
-    //Parça Listesi için değişkenler:
-    public ArrayList<String> parcaListesiKampana2501k = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana3001k = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana3501k = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana4001k = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana2502k = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana3002k = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana3502k = new ArrayList<>();
-    public ArrayList<String> parcaListesiKampana4002k = new ArrayList<>();
-
-    public ArrayList<String> parcaListesiPompa95 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa119 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa14 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa146 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa168 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa192 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa229 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa281 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa288 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa333 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa379 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa426 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa455 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa494 = new ArrayList<>();
-    public ArrayList<String> parcaListesiPompa561 = new ArrayList<>();
-
-    public ArrayList<String> parcaListesiMotor202 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor3 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor4 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor55 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor55Kompakt = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor75Kompakt = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor11 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor11Kompakt = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor15 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor185 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor22 = new ArrayList<>();
-    public ArrayList<String> parcaListesiMotor37 = new ArrayList<>();
-
-    public ArrayList<String> parcaListesiKaplin1PN28 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKaplin1PN38 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKaplin1PN42 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKaplin2PN28 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKaplin2PN38 = new ArrayList<>();
-    public ArrayList<String> parcaListesiKaplin2PN42 = new ArrayList<>();
-
-    public ArrayList<String> parcaListesiValfBloklariTekHiz = new ArrayList<>();
-    public ArrayList<String> parcaListesiValfBloklariCiftHiz = new ArrayList<>();
-    public ArrayList<String> parcaListesiValfBloklariKilitliBlok = new ArrayList<>();
-    public ArrayList<String> parcaListesiValfBloklariKompanzasyon = new ArrayList<>();
-    public ArrayList<String> parcaListesiSogutucu = new ArrayList<>();
-
-    public ArrayList<String> parcaListesiBasincSalteri = new ArrayList<>();
-
-    public ArrayList<String> parcaListesiStandart = new ArrayList<>();
 
     //PowerPack - Hidros Parça Listesi:
     public HashMap<String, HashMap<String, String>> hidros380Parca = new HashMap<>();

@@ -32,7 +32,7 @@ public class FileUtil {
         fileCopy("/assets/data/programDatabase/powerpack_parts.yml", Launcher.powerPackPartsDBPath);
         JSONUtil.loadJSONData();
         ExcelUtil.excelDataRead();
-        new YamlUtil(Launcher.classicComboDBPath, Launcher.powerPackComboDBPath);
+        new YamlUtil(Launcher.classicComboDBPath, Launcher.powerPackComboDBPath, Launcher.classicPartsDBPath, Launcher.powerPackPartsDBPath);
     }
 
     public static String getOperatingSystem() {
