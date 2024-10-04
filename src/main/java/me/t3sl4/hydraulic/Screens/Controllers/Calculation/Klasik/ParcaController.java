@@ -314,14 +314,28 @@ public class ParcaController {
     }
 
     private void loadValfBlokParca() {
-        if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Tek Hız")) {
-            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("0"));
-        } else if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Çift Hız")) {
-            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("1"));
-        } else if(Objects.equals(KlasikController.secilenValfTipi, "Kilitli Blok")) {
-            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("2"));
-        } else if(Objects.equals(KlasikController.secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
-            generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("3"));
+        if(KlasikController.secilenPompaVal < 33.3) {
+            //1 Grubu
+            if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Tek Hız")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("0"));
+            } else if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Çift Hız")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("1"));
+            } else if(Objects.equals(KlasikController.secilenValfTipi, "Kilitli Blok")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("2"));
+            } else if(Objects.equals(KlasikController.secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("3"));
+            }
+        } else {
+            //2 Grubu
+            if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Tek Hız")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("4"));
+            } else if(Objects.equals(KlasikController.secilenValfTipi, "İnişte Çift Hız")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("5"));
+            } else if(Objects.equals(KlasikController.secilenValfTipi, "Kilitli Blok")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("6"));
+            } else if(Objects.equals(KlasikController.secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
+                generalLoadFunc(Launcher.getDataManipulator().classicParcaValfBloklari.get("7"));
+            }
         }
     }
 

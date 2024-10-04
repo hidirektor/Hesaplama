@@ -805,7 +805,7 @@ kaplin:
         malzemeAdi: "2PN42 İşlenmiş Kaplin Takımı"
         malzemeAdet: "1"
 valf_bloklari:
-  '0': #Tek Hız Blok
+  '0': #Tek Hız Blok 1 Grubu
     parts:
       '0':
         malzemeKodu: "150-51-05-053"
@@ -816,30 +816,26 @@ valf_bloklari:
         malzemeAdi: "1/2 - M24 Nipel"
         malzemeAdet: "2"
       '2':
-        malzemeKodu: "150-51-09-423"
-        malzemeAdi: "1/2 - M30 Nipel"
-        malzemeAdet: "2"
-      '3':
         malzemeKodu: "Veri Yok"
         malzemeAdi: "3/4 x 20 Cm Boru"
         malzemeAdet: "1"
-      '4':
+      '3':
         malzemeKodu: "150-50-21-078"
         malzemeAdi: "M6 x 100 İmbus Civata"
         malzemeAdet: "2"
-      '5':
+      '4':
         malzemeKodu: "150-51-10-797"
         malzemeAdi: "1/4 Ø10 Manometre Nipeli"
         malzemeAdet: "2"
-      '6':
+      '5':
         malzemeKodu: "150-51-10-798"
         malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
         malzemeAdet: "1"
-      '7':
+      '6':
         malzemeKodu: "150-53-08-503"
         malzemeAdi: "1/4 Alyan Başlı Kör Tapa"
         malzemeAdet: "2"
-  '1': #Çift Hız Blok
+  '1': #Çift Hız Blok 1 Grubu
     parts:
       '0':
         malzemeKodu: "150-51-05-051"
@@ -850,26 +846,22 @@ valf_bloklari:
         malzemeAdi: "1/2 - M24 Nipel"
         malzemeAdet: "2"
       '2':
-        malzemeKodu: "150-51-09-423"
-        malzemeAdi: "1/2 - M30 Nipel"
-        malzemeAdet: "2"
-      '3':
         malzemeKodu: "Veri Yok"
         malzemeAdi: "3/4 x 20 Cm Boru"
         malzemeAdet: "1"
-      '4':
+      '3':
         malzemeKodu: "150-50-21-078"
         malzemeAdi: "M6 x 100 İmbus Civata"
         malzemeAdet: "4"
-      '5':
+      '4':
         malzemeKodu: "150-51-10-797"
         malzemeAdi: "1/4 Ø10 Manometre Nipeli"
         malzemeAdet: "2"
-      '6':
+      '5':
         malzemeKodu: "150-51-10-798"
         malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
         malzemeAdet: "1"
-  '2': #Kilitli Blok ve Çift Hız Blok
+  '2': #Kilitli Blok ve Çift Hız Blok 1 Grubu
     parts:
       '0':
         malzemeKodu: "150-51-05-069"
@@ -880,34 +872,26 @@ valf_bloklari:
         malzemeAdi: "3/4 - M24 Nipel"
         malzemeAdet: "1"
       '2':
-        malzemeKodu: "150-51-09-087"
-        malzemeAdi: "3/4 - M30 Nipel"
-        malzemeAdet: "1"
-      '3':
         malzemeKodu: "150-51-09-080"
         malzemeAdi: "1/2 - M24 Nipel"
         malzemeAdet: "1"
-      '4':
-        malzemeKodu: "150-51-09-423"
-        malzemeAdi: "1/2 - M30 Nipel"
-        malzemeAdet: "1"
-      '5':
+      '3':
         malzemeKodu: "Veri Yok"
         malzemeAdi: "3/4 x 20 Cm Boru"
         malzemeAdet: "1"
-      '6':
+      '4':
         malzemeKodu: "150-50-21-082"
         malzemeAdi: "M6 x 120 İmbus Civata"
         malzemeAdet: "4"
-      '7':
+      '5':
         malzemeKodu: "150-51-09-019"
         malzemeAdi: "1/2 Ø10 Nipel"
         malzemeAdet: "2"
-      '8':
+      '6':
         malzemeKodu: "150-51-09-016"
         malzemeAdi: "1/4 Ø10 Nipel"
         malzemeAdet: "8"
-  '3': #Kompanzasyon + Tek Hız
+  '3': #Kompanzasyon + Tek Hız 1 Grubu
     parts:
       '0':
         malzemeKodu: "150-51-05-100"
@@ -918,70 +902,226 @@ valf_bloklari:
         malzemeAdi: "1/2 - M24 Nipel"
         malzemeAdet: "2"
       '2':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "3/4 x 20 Cm Boru"
+        malzemeAdet: "1"
+      '3':
+        malzemeKodu: "150-50-21-078"
+        malzemeAdi: "M6 x 100 İmbus Civata"
+        malzemeAdet: "2"
+      '4':
+        malzemeKodu: "150-51-10-797"
+        malzemeAdi: "1/4 Ø10 Manometre Nipeli"
+        malzemeAdet: "2"
+      '5':
+        malzemeKodu: "150-51-10-798"
+        malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "150-53-08-503"
+        malzemeAdi: "1/4 Alyan Başlı Kör Tapa"
+        malzemeAdet: "2"
+      '7':
+        malzemeKodu: "150-51-05-054"
+        malzemeAdi: "Banjiyosuz Popet Blok"
+        malzemeAdet: "1"
+      '8':
+        malzemeKodu: "150-51-04-051"
+        malzemeAdi: "3/8 Çekli Hız Ayar Valfi"
+        malzemeAdet: "1"
+      '9':
+        malzemeKodu: "150-51-04-042"
+        malzemeAdi: "Normalde Kapalı 8/2 Popet Valf"
+        malzemeAdet: "1"
+      '10':
+        malzemeKodu: "150-51-04-408"
+        malzemeAdi: "24V DC Bobin"
+        malzemeAdet: "1"
+      '11':
+        malzemeKodu: "150-51-09-022"
+        malzemeAdi: "3/8 Ø12 Nipel"
+        malzemeAdet: "3"
+      '12':
+        malzemeKodu: "150-51-20-601"
+        malzemeAdi: "3/8 Ø12 Pimli Ters Nipel"
+        malzemeAdet: "2"
+      '13':
+        malzemeKodu: "150-51-09-812"
+        malzemeAdi: "Ø12 Pimli Ters Dirsek"
+        malzemeAdet: "1"
+      '14':
+        malzemeKodu: "150-51-04-068"
+        malzemeAdi: "1/2 Kompanzasyonlu Hız Ayar Valfi"
+        malzemeAdet: "1"
+      '15':
+        malzemeKodu: "150-51-09-940"
+        malzemeAdi: "1/2 Ø16 Pimli Ters Nipel"
+        malzemeAdet: "1"
+      '16':
+        malzemeKodu: "150-51-09-424"
+        malzemeAdi: "1/2 Ø12 Nipel"
+        malzemeAdet: "1"
+      '17':
+        malzemeKodu: "150-51-09-627"
+        malzemeAdi: "1/2 Erkek T"
+        malzemeAdet: "1"
+  '4': #Tek Hız Blok 2 Grubu
+    parts:
+      '0':
+        malzemeKodu: "150-51-05-053"
+        malzemeAdi: "Tek Hız Blok"
+        malzemeAdet: "1"
+      '1':
         malzemeKodu: "150-51-09-423"
         malzemeAdi: "1/2 - M30 Nipel"
         malzemeAdet: "2"
+      '2':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "3/4 x 20 Cm Boru"
+        malzemeAdet: "1"
+      '3':
+        malzemeKodu: "150-50-21-078"
+        malzemeAdi: "M6 x 100 İmbus Civata"
+        malzemeAdet: "2"
+      '4':
+        malzemeKodu: "150-51-10-797"
+        malzemeAdi: "1/4 Ø10 Manometre Nipeli"
+        malzemeAdet: "2"
+      '5':
+        malzemeKodu: "150-51-10-798"
+        malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "150-53-08-503"
+        malzemeAdi: "1/4 Alyan Başlı Kör Tapa"
+        malzemeAdet: "2"
+  '5': #Çift Hız Blok 2 Grubu
+    parts:
+      '0':
+        malzemeKodu: "150-51-05-051"
+        malzemeAdi: "Çift Hız Blok"
+        malzemeAdet: "1"
+      '1':
+        malzemeKodu: "150-51-09-423"
+        malzemeAdi: "1/2 - M30 Nipel"
+        malzemeAdet: "2"
+      '2':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "3/4 x 20 Cm Boru"
+        malzemeAdet: "1"
+      '3':
+        malzemeKodu: "150-50-21-078"
+        malzemeAdi: "M6 x 100 İmbus Civata"
+        malzemeAdet: "4"
+      '4':
+        malzemeKodu: "150-51-10-797"
+        malzemeAdi: "1/4 Ø10 Manometre Nipeli"
+        malzemeAdet: "2"
+      '5':
+        malzemeKodu: "150-51-10-798"
+        malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
+        malzemeAdet: "1"
+  '6': #Kilitli Blok ve Çift Hız Blok 2 Grubu
+    parts:
+      '0':
+        malzemeKodu: "150-51-05-069"
+        malzemeAdi: "Kilitli Blok Çift Hız"
+        malzemeAdet: "1"
+      '1':
+        malzemeKodu: "150-51-09-087"
+        malzemeAdi: "3/4 - M30 Nipel"
+        malzemeAdet: "1"
+      '2':
+        malzemeKodu: "150-51-09-423"
+        malzemeAdi: "1/2 - M30 Nipel"
+        malzemeAdet: "1"
       '3':
         malzemeKodu: "Veri Yok"
         malzemeAdi: "3/4 x 20 Cm Boru"
         malzemeAdet: "1"
       '4':
+        malzemeKodu: "150-50-21-082"
+        malzemeAdi: "M6 x 120 İmbus Civata"
+        malzemeAdet: "4"
+      '5':
+        malzemeKodu: "150-51-09-019"
+        malzemeAdi: "1/2 Ø10 Nipel"
+        malzemeAdet: "2"
+      '6':
+        malzemeKodu: "150-51-09-016"
+        malzemeAdi: "1/4 Ø10 Nipel"
+        malzemeAdet: "8"
+  '7': #Kompanzasyon + Tek Hız 2 Grubu
+    parts:
+      '0':
+        malzemeKodu: "150-51-05-100"
+        malzemeAdi: "Kompanzasyon + İnişte Tek Hız"
+        malzemeAdet: "1"
+      '1':
+        malzemeKodu: "150-51-09-423"
+        malzemeAdi: "1/2 - M30 Nipel"
+        malzemeAdet: "2"
+      '2':
+        malzemeKodu: "Veri Yok"
+        malzemeAdi: "3/4 x 20 Cm Boru"
+        malzemeAdet: "1"
+      '3':
         malzemeKodu: "150-50-21-078"
         malzemeAdi: "M6 x 100 İmbus Civata"
         malzemeAdet: "2"
-      '5':
+      '4':
         malzemeKodu: "150-51-10-797"
         malzemeAdi: "1/4 Ø10 Manometre Nipeli"
         malzemeAdet: "2"
-      '6':
+      '5':
         malzemeKodu: "150-51-10-798"
         malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
         malzemeAdet: "1"
-      '7':
+      '6':
         malzemeKodu: "150-53-08-503"
         malzemeAdi: "1/4 Alyan Başlı Kör Tapa"
         malzemeAdet: "2"
-      '8':
+      '7':
         malzemeKodu: "150-51-05-054"
         malzemeAdi: "Banjiyosuz Popet Blok"
         malzemeAdet: "1"
-      '9':
+      '8':
         malzemeKodu: "150-51-04-051"
         malzemeAdi: "3/8 Çekli Hız Ayar Valfi"
         malzemeAdet: "1"
-      '10':
+      '9':
         malzemeKodu: "150-51-04-042"
         malzemeAdi: "Normalde Kapalı 8/2 Popet Valf"
         malzemeAdet: "1"
-      '11':
+      '10':
         malzemeKodu: "150-51-04-408"
         malzemeAdi: "24V DC Bobin"
         malzemeAdet: "1"
-      '12':
+      '11':
         malzemeKodu: "150-51-09-022"
         malzemeAdi: "3/8 Ø12 Nipel"
         malzemeAdet: "3"
-      '13':
+      '12':
         malzemeKodu: "150-51-20-601"
         malzemeAdi: "3/8 Ø12 Pimli Ters Nipel"
         malzemeAdet: "2"
-      '14':
+      '13':
         malzemeKodu: "150-51-09-812"
         malzemeAdi: "Ø12 Pimli Ters Dirsek"
         malzemeAdet: "1"
-      '15':
+      '14':
         malzemeKodu: "150-51-04-068"
         malzemeAdi: "1/2 Kompanzasyonlu Hız Ayar Valfi"
         malzemeAdet: "1"
-      '16':
+      '15':
         malzemeKodu: "150-51-09-940"
         malzemeAdi: "1/2 Ø16 Pimli Ters Nipel"
         malzemeAdet: "1"
-      '17':
+      '16':
         malzemeKodu: "150-51-09-424"
         malzemeAdi: "1/2 Ø12 Nipel"
         malzemeAdet: "1"
-      '18':
+      '17':
         malzemeKodu: "150-51-09-627"
         malzemeAdi: "1/2 Erkek T"
         malzemeAdet: "1"
