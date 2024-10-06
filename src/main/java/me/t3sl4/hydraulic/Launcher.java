@@ -1,56 +1,10 @@
 package me.t3sl4.hydraulic;
 
-import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.Database.Model.HydraulicData.HydraulicData;
+import me.t3sl4.hydraulic.app.Main;
 
 import java.io.IOException;
 
 public class Launcher {
-    public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
-
-    public static String userName;
-    public static String userID;
-    public static String accessToken;
-    public static String refreshToken;
-
-    public static String otpSentTime;
-
-    public static String loginURLPrefix = "/auth/login";
-    public static String registerURLPrefix = "/auth/register";
-    public static String uploadProfilePhotoURLPrefix = "/user/uploadProfilePhoto";
-    public static String updatePassURLPrefix = "/auth/resetPass";
-
-    public static String profileInfoURLPrefix = "/user/getProfile";
-    public static String downloadPhotoURLPrefix = "/user/downloadProfilePhoto";
-    public static String updateProfileURLPrefix = "/user/updateProfile";
-
-    public static String otpURLPrefix = "/otp/sendMail";
-    public static String verifyOTPURLPrefix = "/otp/verifyOTP";
-
-    public static String createHydraulicURLPrefix = "/hydraulic/createHydraulicUnit";
-    public static String orderNumbersURLPrefix = "/hydraulic/getOrderNumber";
-    public static String getPartListURLPrefix = "/hydraulic/getPartList/";
-    public static String getSchematicURLPrefix = "/hydraulic/getSchematic/";
-    public static String hydraulicGetStatsURLPrefix = "/hydraulic/getHydraulicStats";
-    public static String hydraulicGetDetailsURLPrefix = "/hydraulic/getHydraulicDetails";
-
-    public static String mainPath;
-    public static String tokenPath;
-    public static String profilePhotoLocalPath;
-    public static String pdfFileLocalPath;
-    public static String excelFileLocalPath;
-    public static String dataFileLocalPath;
-    public static String generalDBPath;
-    public static String cabinetesDBPath;
-
-    public static String classicComboDBPath;
-    public static String powerPackComboDBPath;
-    public static String classicPartsDBPath;
-    public static String powerPackPartsHidrosDBPath;
-    public static String powerPackPartsIthalDBPath;
-
-    public static HydraulicData hydraulicData = new HydraulicData();
-
     public static void main(String[] args) throws IOException {
         System.setProperty("prism.allowhidpi", "false");
 
@@ -65,25 +19,5 @@ public class Launcher {
         System.setProperty("java.util.logging.level", "WARNING");
 
         Main.main(args);
-    }
-
-    public static String getUserID() {
-        return userID.replaceAll("userID: ", "");
-    }
-
-    public static String getAccessToken() {
-        return accessToken.replaceAll("AccessToken: ", "");
-    }
-
-    public static String getRefreshToken() {
-        return refreshToken.replaceAll("RefreshToken: ", "");
-    }
-
-    public static String getUserName() {
-        return userName.replaceAll("userName: ", "");
-    }
-
-    public static HydraulicData getDataManipulator() {
-        return hydraulicData;
     }
 }
