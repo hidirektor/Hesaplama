@@ -1,64 +1,60 @@
 package me.t3sl4.hydraulic.Utils.Database.File;
 
+import javafx.concurrent.Task;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Utils.Database.File.JSON.JSONUtil;
 import me.t3sl4.hydraulic.Utils.Database.File.Yaml.YamlUtil;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.stream.Stream;
 
 public class FileUtil {
+    public static void setupFileSystemInBackground() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                setupFileSystem();
+                return null;
+            }
 
-    public static void firstLaunch() {
-        changeDataStoragePath();
-        createDirectories();
-        initializeTokens();
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+
+                Throwable exception = getException();
+                exception.printStackTrace();
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true); // Uygulama kapandığında bu iş parçacığı da sonlandırılır
+        thread.start();
     }
 
-    public static void systemSetup() {
-        fileCopy("/assets/data/programDatabase/Hidrolik.xlsx", Launcher.excelDBPath);
-        fileCopy("/assets/data/programDatabase/general.json", Launcher.generalDBPath);
-        fileCopy("/assets/data/programDatabase/cabins.json", Launcher.cabinetesDBPath);
-        fileCopy("/assets/data/programDatabase/classic_combo.yml", Launcher.classicComboDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_combo.yml", Launcher.powerPackComboDBPath);
-        fileCopy("/assets/data/programDatabase/classic_parts.yml", Launcher.classicPartsDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", Launcher.powerPackPartsDBPath);
-        JSONUtil.loadJSONData();
-        new YamlUtil(Launcher.classicComboDBPath, Launcher.powerPackComboDBPath, Launcher.classicPartsDBPath, Launcher.powerPackPartsDBPath);
-    }
-
-    public static String getOperatingSystem() {
-        return System.getProperty("os.name");
-    }
-
-    public static void createDirectories() {
-        List<String> directories = Arrays.asList(
-                Launcher.mainPath,
-                Launcher.dataFileLocalPath,
-                Launcher.profilePhotoLocalPath,
-                Launcher.pdfFileLocalPath,
-                Launcher.excelFileLocalPath
-        );
-
-        directories.forEach(FileUtil::createDirectory);
-    }
-
-    private static void createDirectory(String path) {
-        File file = new File(path);
-        if (!file.exists() && file.mkdirs()) {
-            System.out.println("Directory created: " + path);
-        }
-    }
-
-    public static void changeDataStoragePath() {
+    public static void setupFileSystem() throws IOException {
+        // İşletim sistemine göre dosya yollarını ayarla
         String userHome = System.getProperty("user.name");
-        String basePath = getOperatingSystem().contains("Windows") ? "C:/Users/" + userHome + "/" : "/Users/" + userHome + "/";
+        String os = System.getProperty("os.name").toLowerCase();
+        String basePath;
+
+        if (os.contains("win")) {
+            basePath = "C:/Users/" + userHome + "/";
+        } else {
+            basePath = "/Users/" + userHome + "/";
+        }
+
+        // Dosya yollarını belirle
         Launcher.mainPath = basePath + "OnderGrup/";
         Launcher.profilePhotoLocalPath = Launcher.mainPath + "userData/";
         Launcher.dataFileLocalPath = Launcher.mainPath + "data/";
@@ -68,47 +64,84 @@ public class FileUtil {
         Launcher.pdfFileLocalPath = Launcher.dataFileLocalPath + "schematicFiles/";
         Launcher.excelFileLocalPath = Launcher.dataFileLocalPath + "excelFiles/";
 
-        Launcher.excelDBPath = Launcher.dataFileLocalPath + "Hidrolik.xlsx";
         Launcher.generalDBPath = Launcher.dataFileLocalPath + "general.json";
         Launcher.cabinetesDBPath = Launcher.dataFileLocalPath + "cabins.json";
         Launcher.classicComboDBPath = Launcher.dataFileLocalPath + "classic_combo.yml";
         Launcher.powerPackComboDBPath = Launcher.dataFileLocalPath + "powerpack_combo.yml";
         Launcher.classicPartsDBPath = Launcher.dataFileLocalPath + "classic_parts.yml";
-        Launcher.powerPackPartsDBPath = Launcher.dataFileLocalPath + "powerpack_parts_hidros.yml";
+        Launcher.powerPackPartsHidrosDBPath = Launcher.dataFileLocalPath + "powerpack_parts_hidros.yml";
+        Launcher.powerPackPartsIthalDBPath = Launcher.dataFileLocalPath + "powerpack_parts_ithal.yml";
+
+        // 1. OnderGrup klasörünü oluştur
+        createDirectory(Launcher.mainPath);
+
+        // 2. data ve userData klasörlerini oluştur
+        createDirectory(Launcher.dataFileLocalPath);
+        createDirectory(Launcher.profilePhotoLocalPath);
+
+        // 3. userData içine boş auth.txt dosyasını oluştur
+        createFile(Launcher.tokenPath);
+
+        // 4. Belirtilen dosyaları data klasörüne kopyala
+        fileCopy("/assets/data/programDatabase/general.json", Launcher.generalDBPath);
+        fileCopy("/assets/data/programDatabase/cabins.json", Launcher.cabinetesDBPath);
+        fileCopy("/assets/data/programDatabase/classic_combo.yml", Launcher.classicComboDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack_combo.yml", Launcher.powerPackComboDBPath);
+        fileCopy("/assets/data/programDatabase/classic_parts.yml", Launcher.classicPartsDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", Launcher.powerPackPartsHidrosDBPath);
+        fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", Launcher.powerPackPartsIthalDBPath);
+
+        // 5. data klasörünün içine excelFiles ve schematicFiles klasörlerini oluştur
+        createDirectory(Launcher.excelFileLocalPath);
+        createDirectory(Launcher.pdfFileLocalPath);
+
+        // 6. Fazlalık dosyaları sil
+        cleanDirectory(Launcher.excelFileLocalPath);
+        cleanDirectory(Launcher.pdfFileLocalPath);
+
+        // 7. Dataları yükle
+        JSONUtil.loadJSONData();
+        new YamlUtil(Launcher.classicComboDBPath, Launcher.powerPackComboDBPath, Launcher.classicPartsDBPath, Launcher.powerPackPartsHidrosDBPath, Launcher.powerPackPartsIthalDBPath);
     }
 
-    public static void fileCopy(String resourcePath, String targetPath) {
-        try (InputStream inputStream = Launcher.class.getResourceAsStream(resourcePath)) {
-            if (inputStream != null) {
-                Files.copy(inputStream, Paths.get(targetPath), StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("File copied to: " + targetPath);
-            } else {
-                System.err.println("Resource not found: " + resourcePath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    // Yardımcı metotlar
+    private static void createDirectory(String path) throws IOException {
+        Path dirPath = Paths.get(path);
+        if (Files.notExists(dirPath)) {
+            Files.createDirectories(dirPath);
         }
     }
 
-    public static void initializeTokens() {
-        File authFile = new File(Launcher.tokenPath);
-        if (!authFile.exists()) return;
+    private static void createFile(String path) throws IOException {
+        Path filePath = Paths.get(path);
+        if (Files.notExists(filePath)) {
+            Files.createFile(filePath);
+        }
+    }
 
-        try (Scanner scanner = new Scanner(authFile)) {
-            Map<String, String> tokenMap = new HashMap<>();
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (line.contains(": ")) {
-                    String[] parts = line.split(": ");
-                    tokenMap.put(parts[0].trim(), parts[1].trim());
-                }
+    private static void fileCopy(String sourcePath, String destPath) throws IOException {
+        InputStream resourceAsStream = FileUtil.class.getResourceAsStream(sourcePath);
+        if (resourceAsStream == null) {
+            throw new FileNotFoundException("Kaynak bulunamadı: " + sourcePath);
+        }
+
+        Path destination = Paths.get(destPath);
+        Files.copy(resourceAsStream, destination, StandardCopyOption.REPLACE_EXISTING);
+        resourceAsStream.close();
+    }
+
+    private static void cleanDirectory(String path) throws IOException {
+        Path dirPath = Paths.get(path);
+        if (Files.exists(dirPath)) {
+            try (Stream<Path> files = Files.list(dirPath)) {
+                files.forEach(file -> {
+                    try {
+                        Files.deleteIfExists(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
-            Launcher.userName = tokenMap.getOrDefault("userName", "");
-            Launcher.userID = tokenMap.getOrDefault("userID", "");
-            Launcher.accessToken = tokenMap.getOrDefault("AccessToken", "");
-            Launcher.refreshToken = tokenMap.getOrDefault("RefreshToken", "");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

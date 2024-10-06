@@ -17,6 +17,7 @@ module me.t3sl.hydraulic {
     requires org.yaml.snakeyaml;
     requires java.desktop;
     requires java.logging;
+    requires static lombok;
 
     opens me.t3sl4.hydraulic to javafx.fxml;
     exports me.t3sl4.hydraulic;

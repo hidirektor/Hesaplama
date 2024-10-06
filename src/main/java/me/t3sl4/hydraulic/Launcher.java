@@ -1,8 +1,9 @@
 package me.t3sl4.hydraulic;
 
 import me.t3sl4.hydraulic.Screens.Main;
-import me.t3sl4.hydraulic.Utils.Database.File.FileUtil;
 import me.t3sl4.hydraulic.Utils.Database.Model.HydraulicData.HydraulicData;
+
+import java.io.IOException;
 
 public class Launcher {
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
@@ -39,18 +40,18 @@ public class Launcher {
     public static String pdfFileLocalPath;
     public static String excelFileLocalPath;
     public static String dataFileLocalPath;
-    public static String excelDBPath;
     public static String generalDBPath;
     public static String cabinetesDBPath;
 
     public static String classicComboDBPath;
     public static String powerPackComboDBPath;
     public static String classicPartsDBPath;
-    public static String powerPackPartsDBPath;
+    public static String powerPackPartsHidrosDBPath;
+    public static String powerPackPartsIthalDBPath;
 
     public static HydraulicData hydraulicData = new HydraulicData();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.setProperty("prism.allowhidpi", "false");
 
         if(System.getProperty("os.name").contains("Windows")) {
@@ -63,7 +64,6 @@ public class Launcher {
         }
         System.setProperty("java.util.logging.level", "WARNING");
 
-        FileUtil.firstLaunch();
         Main.main(args);
     }
 

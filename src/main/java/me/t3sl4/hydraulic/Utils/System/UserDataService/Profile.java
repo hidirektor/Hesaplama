@@ -10,6 +10,10 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.Utils.API.HTTPRequest;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 import static me.t3sl4.hydraulic.Launcher.*;
 
@@ -48,6 +52,28 @@ public class Profile {
             secilenFoto.setVisible(true);
             profilePhotoImageView.setImage(image);
             profilePhotoImageView.setVisible(false);
+        }
+    }
+
+    public static void initializeTokens() {
+        File authFile = new File(Launcher.tokenPath);
+        if (!authFile.exists()) return;
+
+        try (Scanner scanner = new Scanner(authFile)) {
+            Map<String, String> tokenMap = new HashMap<>();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.contains(": ")) {
+                    String[] parts = line.split(": ");
+                    tokenMap.put(parts[0].trim(), parts[1].trim());
+                }
+            }
+            Launcher.userName = tokenMap.getOrDefault("userName", "");
+            Launcher.userID = tokenMap.getOrDefault("userID", "");
+            Launcher.accessToken = tokenMap.getOrDefault("AccessToken", "");
+            Launcher.refreshToken = tokenMap.getOrDefault("RefreshToken", "");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -12,12 +12,12 @@ import java.util.Map;
 
 public class YamlUtil {
 
-    public YamlUtil(String classicComboPath, String powerPackComboPath, String classicPartPath, String powerpackPartPath) {
+    public YamlUtil(String classicComboPath, String powerPackComboPath, String classicPartPath, String powerpackPartHidrosPath, String powerpackPartIthalPath) {
         loadClassicCombo(classicComboPath);
         loadPowerPackCombo(powerPackComboPath);
         loadClassicPartList(classicPartPath);
-        loadPowerPackHidrosPartList(powerpackPartPath);
-        loadPowerPackIthalPartList(powerpackPartPath);
+        loadPowerPackHidrosPartList(powerpackPartHidrosPath);
+        loadPowerPackIthalPartList(powerpackPartIthalPath);
     }
 
     public void loadClassicCombo(String filePath) {

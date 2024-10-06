@@ -10,13 +10,12 @@ public class Main extends Application {
     private double x, y;
     public static User loggedInUser;
 
+    @lombok.SneakyThrows
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         SceneUtil.openMainScreen();
 
-        Thread systemThread = new Thread(FileUtil::systemSetup);
-
-        systemThread.start();
+        FileUtil.setupFileSystemInBackground();
     }
 
     public static void main(String[] args) {

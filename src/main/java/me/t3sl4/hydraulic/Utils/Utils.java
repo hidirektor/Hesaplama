@@ -238,7 +238,7 @@ public class Utils {
         return null;
     }
 
-    public static void deleteLocalData() {
+    public static void deleteLocalData() throws IOException {
         deleteFile(Launcher.tokenPath);
 
         deleteDirectory(new File(Launcher.profilePhotoLocalPath));
@@ -255,8 +255,7 @@ public class Utils {
         Launcher.userID = null;
         Launcher.userName = null;
 
-        FileUtil.firstLaunch();
-        FileUtil.systemSetup();
+        FileUtil.setupFileSystem();
     }
 
     private static void deleteFile(String filePath) {

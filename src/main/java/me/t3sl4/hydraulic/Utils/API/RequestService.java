@@ -116,7 +116,11 @@ public class RequestService {
             }
             stage.close();
         }, () -> {
-            Utils.deleteLocalData();
+            try {
+                Utils.deleteLocalData();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 }
