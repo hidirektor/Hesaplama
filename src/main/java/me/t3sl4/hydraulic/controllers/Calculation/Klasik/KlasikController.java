@@ -462,6 +462,7 @@ public class KlasikController {
             PDFUtil.cropImage(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, "schematicImage.png");
 
             String pdfPath = hydraulicSchemaSelection(selectedCylinders, isPressureValf);
+            System.out.println("PDF Şema Yolu: " + pdfPath);
 
             PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString(), secilenMotor, secilenPompa);
         } else {
