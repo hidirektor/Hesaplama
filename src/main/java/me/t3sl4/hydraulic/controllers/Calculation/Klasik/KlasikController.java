@@ -465,7 +465,7 @@ public class KlasikController {
             //System.out.println("Şema Yolu: " + pdfPath);
             //pdfPath = null;
 
-            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString(), secilenMotor, secilenPompa);
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }

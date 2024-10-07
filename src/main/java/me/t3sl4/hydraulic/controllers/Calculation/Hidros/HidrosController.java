@@ -851,7 +851,7 @@ public class HidrosController {
                 pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosdevirmeli.pdf";
             }
             pdfPath = null;
-            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString());
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString(), secilenMotorTipi, secilenPompa);
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }

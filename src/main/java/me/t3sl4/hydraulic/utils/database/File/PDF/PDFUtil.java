@@ -28,7 +28,7 @@ public class PDFUtil {
 
     private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
-    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pngFilePath3, String pdfFilePath, String girilenSiparisNumarasi, String kullanilacakKabin) {
+    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pngFilePath3, String pdfFilePath, String girilenSiparisNumarasi, String kullanilacakKabin, String motorDegeri, String pompaDegeri) {
         try {
             String userHome = System.getProperty("user.home");
             String ExPDFFilePath = userHome + File.separator + "Desktop" + File.separator + girilenSiparisNumarasi + ".pdf";
@@ -108,6 +108,25 @@ public class PDFUtil {
 
                 // Sayfayı ekle (orijinal PDF'den alınan sayfa boyutlarını kullanarak)
                 cb.addTemplate(importedPage, 0, 0);
+
+                cb.beginText();
+                BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                cb.setFontAndSize(bf, 8);
+
+                // İlk metin için konum belirle
+                float xPosition = document.getPageSize().getWidth() - 110; // Sağ kenar boşluğu
+                float yPosition = document.getPageSize().getHeight() - 65; // Sayfanın üstünden 50 birim boşluk
+
+                // Halil metnini ekle
+                cb.setTextMatrix(xPosition, yPosition);
+                cb.showText(pompaDegeri);
+
+                // Direktör metni
+                yPosition -= 15; // Alt alta gelmesi için 15 birim aşağı kaydırın
+                cb.setTextMatrix(xPosition, yPosition);
+                cb.showText(motorDegeri);
+
+                cb.endText();
 
                 document.close();
                 writer.close();
