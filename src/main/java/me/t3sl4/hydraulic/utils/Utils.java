@@ -197,9 +197,9 @@ public class Utils {
         Utils.showErrorOnLabel(lblErrors, "Standart kullanıcı olarak giriş yapılıyor !");
 
         Timeline timeline = new Timeline();
-        timeline.setCycleCount(4);
+        timeline.setCycleCount(3);
 
-        final int[] countdown = {3};
+        final int[] countdown = {2};
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event1 -> {
             if (countdown[0] > 0) {
                 Utils.showErrorOnLabel(lblErrors, "Aktarıma Son: " + countdown[0]);

@@ -235,8 +235,9 @@ public class KlasikController {
 
                 sonucKapakImage.setImage(image);
                 parcaListesiButton.setDisable(false);
+                exportButton.setDisable(false);
                 if(Main.loggedInUser != null) {
-                    exportButton.setDisable(false);
+                    kaydetButton.setDisable(false);
                 }
 
                 hesaplamaBitti = true;
@@ -461,10 +462,10 @@ public class KlasikController {
             PDFUtil.cropImage(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, "schematicImage.png");
 
             String pdfPath = hydraulicSchemaSelection(selectedCylinders, isPressureValf);
-            System.out.println("Şema Yolu: " + pdfPath);
-            pdfPath = null;
+            //System.out.println("Şema Yolu: " + pdfPath);
+            //pdfPath = null;
 
-            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString());
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
         }
@@ -519,13 +520,13 @@ public class KlasikController {
         String suffix = isPressureValf.equals("Var") ? "B" : "";
         switch (selectedCylinders) {
             case 1:
-                return one + suffix + ".png";
+                return one + suffix + ".pdf";
             case 2:
-                return two + suffix + ".png";
+                return two + suffix + ".pdf";
             case 3:
-                return three + suffix + ".png";
+                return three + suffix + ".pdf";
             default:
-                return other + suffix + ".png";
+                return other + suffix + ".pdf";
         }
     }
 

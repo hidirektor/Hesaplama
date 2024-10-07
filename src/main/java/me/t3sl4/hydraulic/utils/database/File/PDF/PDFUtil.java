@@ -97,7 +97,7 @@ public class PDFUtil {
 
             if (pdfFilePath != null) {
                 // PdfReader ile PDF'yi yükle
-                PdfReader reader = new PdfReader(Launcher.class.getResource(pdfFilePath));
+                PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
 
                 // Sayfa eklemek için yeni bir sayfa açın
                 document.newPage();
@@ -109,11 +109,13 @@ public class PDFUtil {
                 // Sayfayı ekle (orijinal PDF'den alınan sayfa boyutlarını kullanarak)
                 cb.addTemplate(importedPage, 0, 0);
 
-                reader.close();  // PdfReader'ı kapatmayı unutmayın
+                document.close();
+                writer.close();
+                reader.close();
+            } else {
+                document.close();
+                writer.close();
             }
-
-            document.close();
-            writer.close();
 
             System.out.println("PDF oluşturuldu.");
 
