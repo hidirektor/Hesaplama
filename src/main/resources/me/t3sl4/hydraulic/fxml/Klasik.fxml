@@ -41,7 +41,7 @@
                         <TableColumn fx:id="sonucTabloSatir2" editable="false" prefWidth="700.0" sortable="false" />
                     </columns>
                 </TableView>
-                <Text fx:id="sonucAnaLabelTxt" fill="#B7C3D7" layoutX="131.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="x Numaralı Sipariş">
+                <Text fx:id="sonucAnaLabelTxt" fill="#B7C3D7" layoutX="131.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="x Numaralı Sipariş">
                     <font>
                         <Font size="18.0" />
                     </font>

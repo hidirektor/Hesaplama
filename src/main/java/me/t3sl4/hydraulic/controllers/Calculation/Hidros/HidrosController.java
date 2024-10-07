@@ -873,7 +873,7 @@ public class HidrosController {
     private void pdfShaper(int type) {
         if(type == 0) {
             //pdf oluşturma öncesi
-            klasikVBox.setStyle("-fx-background-color: #999999;"); //sarı: #F9F871
+            klasikVBox.setStyle("-fx-background-color: #FFFFFF;"); //sarı: #F9F871
             sonucAnaLabelTxt.setFill(Color.BLACK);
         } else {
             //pdf oluşturma sonrası
@@ -883,9 +883,9 @@ public class HidrosController {
     }
 
     private void sonucButtonEnable() {
-        kaydetButton.setDisable(false);
+        exportButton.setDisable(false);
         if(Main.loggedInUser != null) {
-            exportButton.setDisable(false);
+            kaydetButton.setDisable(false);
         }
         parcaListesiButton.setDisable(false);
     }

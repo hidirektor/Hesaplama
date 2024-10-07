@@ -38,7 +38,7 @@ public class PDFUtil {
             document.open();
 
             PdfContentByte contentByte = writer.getDirectContentUnder();
-            BaseColor backgroundColor = new BaseColor(153, 153, 153);
+            BaseColor backgroundColor = new BaseColor(255, 255, 255);
             contentByte.setColorFill(backgroundColor);
             contentByte.rectangle(0, 0, document.getPageSize().getWidth(), document.getPageSize().getHeight());
             contentByte.fill();
@@ -73,11 +73,11 @@ public class PDFUtil {
             if(pngFilePath3 != null) {
                 // Üçüncü resmi yükleyip beyaz alanlarını siyaha çevirelim
                 BufferedImage originalImage = ImageIO.read(new File(pngFilePath3));
-                BufferedImage processedImage = convertWhiteToBlack(originalImage);
+                //BufferedImage processedImage = convertWhiteToBlack(originalImage);
 
                 // İşlenmiş görüntüyü geçici bir dosyaya kaydet
                 File tempFile = new File("processed_image.png");
-                ImageIO.write(processedImage, "png", tempFile);
+                ImageIO.write(originalImage, "png", tempFile);
 
                 // Üçüncü resmi ekle ve boyutunu ayarla (yükseklik küçültüldü)
                 Image image3 = Image.getInstance(tempFile.getAbsolutePath());
@@ -110,8 +110,8 @@ public class PDFUtil {
                 cb.addTemplate(importedPage, 0, 0);
 
                 cb.beginText();
-                BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-                cb.setFontAndSize(bf, 8);
+                BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                cb.setFontAndSize(bf, 6);
 
                 // İlk metin için konum belirle
                 float xPosition = document.getPageSize().getWidth() - 110; // Sağ kenar boşluğu
@@ -122,7 +122,7 @@ public class PDFUtil {
                 cb.showText(pompaDegeri);
 
                 // Direktör metni
-                yPosition -= 15; // Alt alta gelmesi için 15 birim aşağı kaydırın
+                yPosition -= 13; // Alt alta gelmesi için 15 birim aşağı kaydırın
                 cb.setTextMatrix(xPosition, yPosition);
                 cb.showText(motorDegeri);
 

@@ -462,8 +462,6 @@ public class KlasikController {
             PDFUtil.cropImage(schematicImageStartX, schematicImageStartY, schematicImageWidth, schematicImageHeight, "schematicImage.png");
 
             String pdfPath = hydraulicSchemaSelection(selectedCylinders, isPressureValf);
-            //System.out.println("Şema Yolu: " + pdfPath);
-            //pdfPath = null;
 
             PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString(), secilenMotor, secilenPompa);
         } else {
@@ -1338,7 +1336,7 @@ public class KlasikController {
     private void pdfShaper(int type) {
         if(type == 0) {
             //pdf oluşturma öncesi
-            klasikVBox.setStyle("-fx-background-color: #999999;"); //sarı: #F9F871
+            klasikVBox.setStyle("-fx-background-color: #FFFFFF;"); //sarı: #F9F871
             sonucAnaLabelTxt.setFill(Color.BLACK);
             genislikSonucText.setTextFill(Color.BLACK);
             derinlikSonucText.setTextFill(Color.BLACK);
