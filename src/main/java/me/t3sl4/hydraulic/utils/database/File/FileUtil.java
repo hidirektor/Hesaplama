@@ -1,6 +1,5 @@
 package me.t3sl4.hydraulic.utils.database.File;
 
-import javafx.concurrent.Task;
 import me.t3sl4.hydraulic.utils.database.File.JSON.JSONUtil;
 import me.t3sl4.hydraulic.utils.database.File.Yaml.YamlUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
@@ -15,34 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 public class FileUtil {
-    public static void setupFileSystemInBackground() {
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                setupFileSystem();
-                return null;
-            }
-
-            @Override
-            protected void succeeded() {
-                super.succeeded();
-            }
-
-            @Override
-            protected void failed() {
-                super.failed();
-
-                Throwable exception = getException();
-                exception.printStackTrace();
-            }
-        };
-
-        Thread thread = new Thread(task);
-        thread.setDaemon(true); // Uygulama kapandığında bu iş parçacığı da sonlandırılır
-        thread.start();
-    }
-
-    public static void setupFileSystem() throws IOException {
+    public static void setupFileSystem() {
         // İşletim sistemine göre dosya yollarını ayarla
         String userHome = System.getProperty("user.name");
         String os = System.getProperty("os.name").toLowerCase();
@@ -72,32 +44,36 @@ public class FileUtil {
         SystemVariables.powerPackPartsHidrosDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_hidros.yml";
         SystemVariables.powerPackPartsIthalDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_ithal.yml";
 
-        // 1. OnderGrup klasörünü oluştur
-        createDirectory(SystemVariables.mainPath);
+        try {
+            // 1. OnderGrup klasörünü oluştur
+            createDirectory(SystemVariables.mainPath);
 
-        // 2. data ve userData klasörlerini oluştur
-        createDirectory(SystemVariables.dataFileLocalPath);
-        createDirectory(SystemVariables.profilePhotoLocalPath);
+            // 2. data ve userData klasörlerini oluştur
+            createDirectory(SystemVariables.dataFileLocalPath);
+            createDirectory(SystemVariables.profilePhotoLocalPath);
 
-        // 3. userData içine boş auth.txt dosyasını oluştur
-        createFile(SystemVariables.tokenPath);
+            // 3. userData içine boş auth.txt dosyasını oluştur
+            createFile(SystemVariables.tokenPath);
 
-        // 4. Belirtilen dosyaları data klasörüne kopyala
-        fileCopy("/assets/data/programDatabase/general.json", SystemVariables.generalDBPath);
-        fileCopy("/assets/data/programDatabase/cabins.json", SystemVariables.cabinsDBPath);
-        fileCopy("/assets/data/programDatabase/classic_combo.yml", SystemVariables.classicComboDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_combo.yml", SystemVariables.powerPackComboDBPath);
-        fileCopy("/assets/data/programDatabase/classic_parts.yml", SystemVariables.classicPartsDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath);
-        fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath);
+            // 4. Belirtilen dosyaları data klasörüne kopyala
+            fileCopy("/assets/data/programDatabase/general.json", SystemVariables.generalDBPath);
+            fileCopy("/assets/data/programDatabase/cabins.json", SystemVariables.cabinsDBPath);
+            fileCopy("/assets/data/programDatabase/classic_combo.yml", SystemVariables.classicComboDBPath);
+            fileCopy("/assets/data/programDatabase/powerpack_combo.yml", SystemVariables.powerPackComboDBPath);
+            fileCopy("/assets/data/programDatabase/classic_parts.yml", SystemVariables.classicPartsDBPath);
+            fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath);
+            fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath);
 
-        // 5. data klasörünün içine excelFiles ve schematicFiles klasörlerini oluştur
-        createDirectory(SystemVariables.excelFileLocalPath);
-        createDirectory(SystemVariables.pdfFileLocalPath);
+            // 5. data klasörünün içine excelFiles ve schematicFiles klasörlerini oluştur
+            createDirectory(SystemVariables.excelFileLocalPath);
+            createDirectory(SystemVariables.pdfFileLocalPath);
 
-        // 6. Fazlalık dosyaları sil
-        cleanDirectory(SystemVariables.excelFileLocalPath);
-        cleanDirectory(SystemVariables.pdfFileLocalPath);
+            // 6. Fazlalık dosyaları sil
+            cleanDirectory(SystemVariables.excelFileLocalPath);
+            cleanDirectory(SystemVariables.pdfFileLocalPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // 7. Dataları yükle
         JSONUtil.loadJSONData();

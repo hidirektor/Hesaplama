@@ -6,17 +6,18 @@ import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
-import java.io.IOException;
-
 public class Main extends Application {
     private double x, y;
     public static User loggedInUser;
 
+    @lombok.SneakyThrows
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
         SceneUtil.openMainScreen();
 
-        FileUtil.setupFileSystemInBackground();
+        Thread systemThread = new Thread(FileUtil::setupFileSystem);
+
+        systemThread.start();
     }
 
     public static void main(String[] args) {
