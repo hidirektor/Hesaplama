@@ -45,6 +45,28 @@
          <Text fill="#B7C3D7" layoutX="387.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kilitPlatformMotorBosluk" />
          <TextField fx:id="label19" editable="false" layoutX="551.0" layoutY="41.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
          <Text fill="#B7C3D7" layoutX="387.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="valfXBoslukSogutma" />
+         <TextField fx:id="label31" editable="false" layoutX="551.0" layoutY="70.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label41" editable="false" layoutX="551.0" layoutY="99.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label51" editable="false" layoutX="551.0" layoutY="128.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label61" editable="false" layoutX="551.0" layoutY="157.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label71" editable="false" layoutX="551.0" layoutY="186.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label81" editable="false" layoutX="551.0" layoutY="215.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label91" editable="false" layoutX="551.0" layoutY="244.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label101" editable="false" layoutX="551.0" layoutY="273.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label111" editable="false" layoutX="551.0" layoutY="302.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label121" editable="false" layoutX="551.0" layoutY="331.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
+         <TextField fx:id="label131" editable="false" layoutX="551.0" layoutY="360.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="110.0" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-text-fill: #FFFFFF; -fx-border-radius: 2em;" />
+         <Text fill="#B7C3D7" layoutX="387.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum" />
         </children>
     </AnchorPane>
 </VBox>

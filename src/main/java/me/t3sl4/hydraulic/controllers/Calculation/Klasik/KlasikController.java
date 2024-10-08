@@ -229,6 +229,34 @@ public class KlasikController {
                             imageTextEnable(calculatedX, calculatedY, "tekhizcifthiz");
                         }
                     }
+
+                    //Yeni Sistem:
+                    if(secilenHidrolikKilitDurumu.equals("Var")) {
+                        //Hidrolik Kilit Var
+                        if(kompanzasyonDurumu.equals("Yok")) {
+                            //Kompanzasyon Var
+                            if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                                //Kilit Ayrı Çift Hız.pdf
+                            } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                                //Kilit Ayrı Tek Hız.pdf
+                            } else if(secilenValfTipi.equals("Kilitli Blok")) {
+                                //Kilitli Blok.pdf
+                            }
+                        }
+                    } else {
+                        //Hidrolik Kilit Yok
+                        if(kompanzasyonDurumu.equals("Var")) {
+                            //Kompanzasyon Var
+                            if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                                //Tek Hız_Kompanzasyon + Tek Hız.pdf
+                            }
+                        } else {
+                            //Kompanzasyon Yok
+                            if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                                //Çift Hız.pdf
+                            }
+                        }
+                    }
                 }
 
                 tankGorselLoad();
