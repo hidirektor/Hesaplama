@@ -254,9 +254,13 @@ public class KlasikController {
                                 //Çift Hız.pdf
                             } else if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
+                            } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                                //Tek Hız_Kompanzasyon + Tek Hız.pdf
                             }
                         } else {
                             if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                                //Tek Hız_Kompanzasyon + Tek Hız.pdf
+                            } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
                             }
                         }
