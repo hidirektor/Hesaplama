@@ -436,31 +436,67 @@ public class HidrosParcaController {
         if(HidrosController.secilenPlatformTipi.contains("Özel")) {
             if(HidrosController.secilenBirinciValf.equals("1")) {
                 if(HidrosController.secilenIkinciValf.equals("Açık Merkez")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"));
+                    if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"));
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"));
+                    }
                 } else if(HidrosController.secilenIkinciValf.equals("J Merkez")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"));
+                    if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"));
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"));
+                    }
                 } else if(HidrosController.secilenIkinciValf.equals("H Merkez")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"));
+                    if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"));
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"));
+                    }
                 }
             } else {
                 loadOzelCiftValf();
             }
         } else {
             if(HidrosController.secilenBirinciValf.equals("Açık Merkez")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"));
+                if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"));
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"));
+                }
             } else if(HidrosController.secilenBirinciValf.equals("J Merkez")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"));
+                if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"));
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"));
+                }
             } else if(HidrosController.secilenBirinciValf.equals("H Merkez")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"));
+                if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"));
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"));
+                }
             }
 
             if(HidrosController.secilenIkinciValf != null) {
                 if(HidrosController.secilenIkinciValf.equals("Açık Merkez")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"));
+                    if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"));
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"));
+                    }
                 } else if(HidrosController.secilenIkinciValf.equals("J Merkez")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"));
+                    if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"));
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"));
+                    }
                 } else if(HidrosController.secilenIkinciValf.equals("H Merkez")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"));
+                    if(!HidrosController.secilenMotorTipi.contains("12 V")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"));
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"));
+                    }
                 }
             }
         }

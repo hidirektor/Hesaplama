@@ -894,8 +894,8 @@ valf_bloklari:
   '3': #Kompanzasyon + Tek Hız 1 Grubu
     parts:
       '0':
-        malzemeKodu: "150-51-05-100"
-        malzemeAdi: "Kompanzasyon + İnişte Tek Hız"
+        malzemeKodu: "150-51-05-048"
+        malzemeAdi: "İNİŞTE TEK HIZ BLOK ALTTAN BAĞLANTILI 24V POPETLİ 10/2"
         malzemeAdet: "1"
       '1':
         malzemeKodu: "150-51-09-080"
@@ -1054,8 +1054,8 @@ valf_bloklari:
   '7': #Kompanzasyon + Tek Hız 2 Grubu
     parts:
       '0':
-        malzemeKodu: "150-51-05-100"
-        malzemeAdi: "Kompanzasyon + İnişte Tek Hız"
+        malzemeKodu: "150-51-05-048"
+        malzemeAdi: "İNİŞTE TEK HIZ BLOK ALTTAN BAĞLANTILI 24V POPETLİ 10/2"
         malzemeAdet: "1"
       '1':
         malzemeKodu: "150-51-09-423"
