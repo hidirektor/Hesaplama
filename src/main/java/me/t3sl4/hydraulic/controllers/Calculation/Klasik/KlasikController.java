@@ -236,6 +236,8 @@ public class KlasikController {
                         if(kompanzasyonDurumu.equals("Yok")) {
                             if(secilenValfTipi.equals("İnişte Çift Hız")) {
                                 //Kilit Ayrı Çift Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz.png")));
+                                imageTextEnable(calculatedX, calculatedY, "kompanzasyon");
                             } else if(secilenValfTipi.equals("Kilitli Blok")) {
                                 //Kilitli Blok.pdf
                             } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
