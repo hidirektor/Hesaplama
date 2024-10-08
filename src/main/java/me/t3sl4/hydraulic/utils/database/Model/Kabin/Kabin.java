@@ -1,6 +1,6 @@
-package me.t3sl4.hydraulic.utils.database.Model.Tank;
+package me.t3sl4.hydraulic.utils.database.Model.Kabin;
 
-public class Tank {
+public class Kabin {
 
     public String tankName;
     public String kabinName;
@@ -21,7 +21,7 @@ public class Tank {
     public String malzemeKodu;
     public String malzemeAdi;
 
-    public Tank(String tankName, String kabinName, int kabinHacim, int gecisX, int gecisY, int gecisH, int kabinX, int kabinY, int kabinH, String malzemeKodu, String malzemeAdi) {
+    public Kabin(String tankName, String kabinName, int kabinHacim, int gecisX, int gecisY, int gecisH, int kabinX, int kabinY, int kabinH, String malzemeKodu, String malzemeAdi) {
         this.tankName = tankName;
         this.kabinName = kabinName;
         this.kabinHacim = kabinHacim;

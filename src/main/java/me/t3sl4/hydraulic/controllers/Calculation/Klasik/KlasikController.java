@@ -24,8 +24,8 @@ import me.t3sl4.hydraulic.controllers.Calculation.Klasik.PartList.KlasikParcaCon
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
-import me.t3sl4.hydraulic.utils.database.Model.Tank.Tank;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTPRequest;
 import org.jetbrains.annotations.Nullable;
@@ -677,8 +677,8 @@ public class KlasikController {
             eskiH = h;
         }
 
-        Tank finalTank = null;
-        for(Tank selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
+        Kabin finalTank = null;
+        for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
             int litre = selectedTank.getKabinHacim();
             int tempX = selectedTank.getKabinX();
             int tempY = selectedTank.getKabinY();
@@ -708,7 +708,7 @@ public class KlasikController {
             atananHacim = finalTank.getKabinHacim();
             atananHT = finalTank.getTankName();
             if(finalTank.getGecisH() < (motorYukseklik + h)) {
-                for(Tank selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
+                for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
                     int kabinYukseklik = selectedTank.getGecisH();
                     //System.out.println("Kabin Yükseklik: " + kabinYukseklik + "\nÖnceden Seçilen Kabin Yükseklik: " + finalTank.getKabinH());
 

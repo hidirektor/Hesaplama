@@ -10,7 +10,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
-import me.t3sl4.hydraulic.utils.database.Model.Tank.Tank;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
@@ -221,8 +221,8 @@ public class Utils {
         timeline.playFromStart();
     }
 
-    public static Tank findTankByTankName(String tankName) {
-        for (Tank tank : SystemVariables.getLocalHydraulicData().inputTanks) {
+    public static Kabin findTankByTankName(String tankName) {
+        for (Kabin tank : SystemVariables.getLocalHydraulicData().inputTanks) {
             if (tank.getTankName().equals(tankName)) {
                 return tank;
             }
@@ -230,8 +230,8 @@ public class Utils {
         return null;
     }
 
-    public static Tank findTankByKabinName(String kabinName) {
-        for (Tank tank : SystemVariables.getLocalHydraulicData().inputTanks) {
+    public static Kabin findTankByKabinName(String kabinName) {
+        for (Kabin tank : SystemVariables.getLocalHydraulicData().inputTanks) {
             if (tank.getKabinName().equals(kabinName)) {
                 return tank;
             }

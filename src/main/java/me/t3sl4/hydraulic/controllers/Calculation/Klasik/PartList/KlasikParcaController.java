@@ -11,8 +11,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.controllers.Calculation.Klasik.KlasikController;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.ParcaTableData;
-import me.t3sl4.hydraulic.utils.database.Model.Tank.Tank;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -197,7 +197,7 @@ public class KlasikParcaController {
         String malzemeAdi = null;
         String adet = "1";
 
-        Tank foundedTank = Utils.findTankByKabinName(KlasikController.atananKabinFinal);
+        Kabin foundedTank = Utils.findTankByKabinName(KlasikController.atananKabinFinal);
         malzemeKodu = foundedTank.getMalzemeKodu();
         malzemeAdi = foundedTank.getMalzemeAdi();
 

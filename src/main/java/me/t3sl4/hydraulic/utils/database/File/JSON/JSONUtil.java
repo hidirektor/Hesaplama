@@ -1,7 +1,7 @@
 package me.t3sl4.hydraulic.utils.database.File.JSON;
 
 import me.t3sl4.hydraulic.utils.database.Model.HydraulicData.HydraulicData;
-import me.t3sl4.hydraulic.utils.database.Model.Tank.Tank;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,7 +46,7 @@ public class JSONUtil {
                 String malzemeKodu = cabinet.getString("malzemeKodu");
                 String malzemeAdi = cabinet.getString("malzemeAdi");
 
-                Tank tank = new Tank(tankName, kabinName, kabinHacim, gecisX, gecisY, gecisH, kabinX, kabinY, kabinH, malzemeKodu, malzemeAdi);
+                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, gecisX, gecisY, gecisH, kabinX, kabinY, kabinH, malzemeKodu, malzemeAdi);
                 hydraulicData.inputTanks.add(tank);
             }
 

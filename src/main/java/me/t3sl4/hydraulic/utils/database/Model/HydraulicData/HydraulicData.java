@@ -1,6 +1,6 @@
 package me.t3sl4.hydraulic.utils.database.Model.HydraulicData;
 
-import me.t3sl4.hydraulic.utils.database.Model.Tank.Tank;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public class HydraulicData {
     //Yeni sistem değişkenleri
 
     public ArrayList<String> uniteTipiDegerleri = new ArrayList<>(); //Jsondan gelen değerler
-    public List<Tank> inputTanks = new ArrayList<>(); //Jsondan gelen tank verileri
+    public List<Kabin> inputTanks = new ArrayList<>(); //Jsondan gelen tank verileri
 
     /*
     Classic Side
