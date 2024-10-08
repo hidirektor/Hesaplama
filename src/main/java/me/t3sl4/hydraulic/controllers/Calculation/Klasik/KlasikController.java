@@ -157,6 +157,8 @@ public class KlasikController {
 
     public static String atananKabinFinal = "";
     public static String gecisOlculeriFinal = "";
+    private String imagePath = "";
+    private String reverseImagePath = "";
 
     int motorYukseklik = 0;
 
@@ -207,46 +209,34 @@ public class KlasikController {
                         imageTextEnable(calculatedX, calculatedY, "sogutmaKilitsiz");
                     }
                 } else {
-                    if(secilenHidrolikKilitDurumu.equals("Var")) {
-                        if(kompanzasyonDurumu.equals("Var")) {
-                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/normal.png")));
-                            imageTextEnable(calculatedX, calculatedY, "standartUnite");
-                        } else {
-                            if(secilenPompaVal > 28.1) {
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/normal.png")));
-                                imageTextEnable(calculatedX, calculatedY, "standartUnite");
-                            } else {
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilitMotor.png")));
-                                imageTextEnable(calculatedX, calculatedY, "kilitMotor");
-                            }
-                        }
-                    } else {
-                        if(kompanzasyonDurumu.equals("Var")) {
-                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kompanzasyon.png")));
-                            imageTextEnable(calculatedX, calculatedY, "kompanzasyon");
-                        } else {
-                            image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/tekhizcifthiz.png")));
-                            imageTextEnable(calculatedX, calculatedY, "tekhizcifthiz");
-                        }
-                    }
-
                     //Yeni Sistem:
                     if(secilenHidrolikKilitDurumu.equals("Var")) {
                         //Hidrolik Kilit Var
                         if(kompanzasyonDurumu.equals("Yok")) {
                             if(secilenValfTipi.equals("İnişte Çift Hız")) {
                                 //Kilit Ayrı Çift Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz.png")));
-                                imageTextEnable(calculatedX, calculatedY, "kompanzasyon");
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_cift_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_cift_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_cift_hiz_black.png";
+                                //imageTextEnable(calculatedX, calculatedY, "kompanzasyon");
                             } else if(secilenValfTipi.equals("Kilitli Blok")) {
                                 //Kilitli Blok.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilitli_blok_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilitli_blok_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilitli_blok_black.png";
                             } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
                                 //Kilit Ayrı Tek Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_black.png";
                             }
                         } else {
                             //Kompanzasyon Farketmez
                             if(secilenValfTipi.equals("İnişte Tek Hız")) {
                                 //Kilit Ayrı Tek Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_black.png";
                             }
                         }
                     } else {
@@ -254,16 +244,31 @@ public class KlasikController {
                         if(kompanzasyonDurumu.equals("Yok")) {
                             if(secilenValfTipi.equals("İnişte Çift Hız")) {
                                 //Çift Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/cift_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/cift_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/cift_hiz_black.png";
                             } else if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
                             } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
                             }
                         } else {
                             if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
                             } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
                             }
                         }
                     }
@@ -1375,6 +1380,7 @@ public class KlasikController {
     private void pdfShaper(int type) {
         if(type == 0) {
             //pdf oluşturma öncesi
+            sonucKapakImage.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream(reverseImagePath))));
             klasikVBox.setStyle("-fx-background-color: #FFFFFF;"); //sarı: #F9F871
             sonucAnaLabelTxt.setFill(Color.BLACK);
             genislikSonucText.setTextFill(Color.BLACK);
@@ -1385,6 +1391,7 @@ public class KlasikController {
             textColorChange(0);
         } else {
             //pdf oluşturma sonrası
+            sonucKapakImage.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream(imagePath))));
             klasikVBox.setStyle("-fx-background-color: #353a46;");
             genislikSonucText.setTextFill(Color.WHITE);
             derinlikSonucText.setTextFill(Color.WHITE);
