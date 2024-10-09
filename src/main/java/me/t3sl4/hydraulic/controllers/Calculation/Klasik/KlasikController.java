@@ -215,28 +215,31 @@ public class KlasikController {
                         if(kompanzasyonDurumu.equals("Yok")) {
                             if(secilenValfTipi.equals("İnişte Çift Hız")) {
                                 //Kilit Ayrı Çift Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_cift_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_cift_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_cift_hiz_black.png";
-                                //imageTextEnable(calculatedX, calculatedY, "kompanzasyon");
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_black.png";
+                                imageTextEnable(calculatedX, calculatedY, "kilit_ayri_cift_hiz");
                             } else if(secilenValfTipi.equals("Kilitli Blok")) {
                                 //Kilitli Blok.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilitli_blok_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilitli_blok_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilitli_blok_black.png";
-                            } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_black.png";
+                                imageTextEnable(calculatedX, calculatedY, "kilitli_blok");
+                            } else if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                                 //Kilit Ayrı Tek Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_black.png";
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_tek_hiz_black.png";
+                                imageTextEnable(calculatedX, calculatedY, "kilit_ayri_tek_hiz");
                             }
                         } else {
                             //Kompanzasyon Farketmez
-                            if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                            if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                                 //Kilit Ayrı Tek Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/kilit_ayri_tek_hiz_black.png";
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_tek_hiz_black.png";
+                                imageTextEnable(calculatedX, calculatedY, "kilit_ayri_tek_hiz");
                             }
                         }
                     } else {
@@ -244,31 +247,24 @@ public class KlasikController {
                         if(kompanzasyonDurumu.equals("Yok")) {
                             if(secilenValfTipi.equals("İnişte Çift Hız")) {
                                 //Çift Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/cift_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/cift_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/cift_hiz_black.png";
-                            } else if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/cift_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/cift_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/cift_hiz_black.png";
+                                imageTextEnable(calculatedX, calculatedY, "cift_hiz");
+                            } else if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız") || secilenValfTipi.equals("İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
-                            } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
-                                //Tek Hız_Kompanzasyon + Tek Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
+                                imageTextEnable(calculatedX, calculatedY, "tek_hiz_kompanzasyon_arti_tek_hiz");
                             }
                         } else {
-                            if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                            if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız") || secilenValfTipi.equals("İnişte Tek Hız")) {
                                 //Tek Hız_Kompanzasyon + Tek Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
-                            } else if(secilenValfTipi.equals("İnişte Tek Hız")) {
-                                //Tek Hız_Kompanzasyon + Tek Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/yeni/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
+                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/tek_hiz_kompanzasyon_arti_tek_hiz_white.png")));
+                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/tek_hiz_kompanzasyon_arti_tek_hiz_white.png";
+                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/tek_hiz_kompanzasyon_arti_tek_hiz_black.png";
+                                imageTextEnable(calculatedX, calculatedY, "tek_hiz_kompanzasyon_arti_tek_hiz");
                             }
                         }
                     }
@@ -1100,126 +1096,103 @@ public class KlasikController {
     }
 
     private void imageTextEnable(int x, int y, String calculatedImage) {
-        if(calculatedImage.equals("sogutmaKilit")) {
-            addTextToList("X: " + x + " mm", 662, 443, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 472, 318, 90, 14, Color.WHITE);
+        if(calculatedImage.equals("cift_hiz")) {
+            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE);
 
-            addTextToList("40 mm", 502, 238, 90, 10, Color.WHITE);
-            addTextToList("100 mm", 542, 228, 0, 10, Color.WHITE);
-            addTextToList("230 mm", 532, 298, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 607, 228, 0, 9, Color.WHITE);
-            addTextToList("100 mm", 607, 278, 0, 9, Color.WHITE);
-            addTextToList("40 mm", 607, 320, 0, 9, Color.WHITE);
-            addTextToList("50 mm", 517, 383, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 529, 423, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 822, 231, 90, 9, Color.WHITE);
-            addTextToList("60 mm", 847, 273, 90, 10, Color.WHITE);
-            addTextToList("70 mm", 655, 413, 90, 5, Color.WHITE);
-            addTextToList("50 mm", 732, 418, 0, 9, Color.WHITE);
-            addTextToList("230 mm", 717, 363, 0, 10, Color.WHITE);
-            addTextToList("70 mm", 810, 418, 0, 9, Color.WHITE);
-            addTextToList("70 mm", 845, 343, 90, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 770, 353, 0, 10, Color.WHITE);
-            addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 637, 368, 0, 8, Color.WHITE);
-            if(secilenValfTipi.contains("Kompanzasyon")) {
-                String text = "Kompanzasyon\nİnişte Tek Hız";
-                addTextToList(text, 547, 343, 0, 10, Color.WHITE);
-            } else {
-                addTextToList(secilenValfTipi, 537, 358, 0, 10, Color.WHITE);
-            }
-        } else if(calculatedImage.equals("sogutmaKilitsiz")) {
-            addTextToList("X: " + x + " mm", 672, 433, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
+            addTextToList("50 mm", 560, 225, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 520, 290, 90, 10, Color.WHITE);
+            addTextToList("50 mm", 510, 405, 90, 10, Color.WHITE);
+            addTextToList("50 mm", 575, 395, 0, 11, Color.WHITE);
+            addTextToList("Ø25", 550, 370, -45, 10, Color.WHITE);
+            addTextToList("Ø30", 650, 370, -45, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 570, 312, 0, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 720, 300, 0, 12, Color.WHITE);
+            addTextToList("70 mm", 775, 228, 0, 11, Color.WHITE);
+            addTextToList("70 mm", 830, 290, 90, 11, Color.WHITE);
+            addTextToList("Ø30", 810, 390, 30, 10, Color.WHITE);
+            addTextToList("35 mm", 795, 420, 0, 11, Color.WHITE);
+            addTextToList("35 mm", 840, 383, 90, 11, Color.WHITE);
+        } else if (calculatedImage.equals("kilit_ayri_cift_hiz")) {
+            addTextToList("X: " + x + " mm", 672, 448, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE);
 
-            addTextToList("230 mm", 547, 298, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 615, 243, 0, 9, Color.WHITE);
-            addTextToList("100 mm", 615, 281, 0, 9, Color.WHITE);
-            addTextToList("40 mm", 615, 320, 0, 9, Color.WHITE);
-            addTextToList("50 mm", 537, 378, 0, 9, Color.WHITE);
-            addTextToList("50 mm", 542, 413, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 804, 240, 90, 9, Color.WHITE);
-            addTextToList("60 mm", 830, 281, 90, 10, Color.WHITE);
-            addTextToList("70 mm", 657, 405, 90, 6, Color.WHITE);
-            addTextToList("50 mm", 730, 408, 0, 9, Color.WHITE);
-            addTextToList("230 mm", 712, 361, 0, 10, Color.WHITE);
-            addTextToList("70 mm", 802, 408, 0, 9, Color.WHITE);
-            addTextToList("70 mm", 830, 341, 90, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 762, 353, 0, 9, Color.WHITE);
-            addTextToList("Kampana: " + 250 + "\nKesim: Ø" + 173, 639, 363, 0, 8, Color.WHITE);
-            if(secilenValfTipi.contains("Kompanzasyon")) {
-                String text = "Kompanzasyon\nİnişte Tek Hız";
-                addTextToList(text, 547, 343, 0, 10, Color.WHITE);
-            } else {
-                addTextToList(secilenValfTipi, 537, 358, 0, 10, Color.WHITE);
-            }
-        } else if(calculatedImage.equals("standartUnite")) {
-            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
+            addTextToList("40 mm", 565, 215, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 530, 255, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 595, 245, 0, 10, Color.WHITE);
+            addTextToList("200 mm", 660, 263, 0, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 745, 260, 0, 10.5, Color.WHITE);
+            addTextToList("70 mm", 785, 220, 0, 10, Color.WHITE);
+            addTextToList("70 mm", 830, 263, 0, 10, Color.WHITE);
+            addTextToList("260 mm", 590, 315, -90, 10, Color.WHITE);
+            addTextToList("270 mm", 540, 355, 0, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 570, 395, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 520, 415, 90, 10, Color.WHITE);
+            addTextToList("Ø30", 675, 385, -30, 10, Color.WHITE);
+            addTextToList("Ø25", 740, 385, -30, 10, Color.WHITE);
+            addTextToList("50 mm", 595, 427, 0, 10, Color.WHITE);
+            addTextToList("70 mm", 675, 427, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 685, 408, 0, 10, Color.WHITE);
+            addTextToList("Ø52", 795, 390, 30, 10, Color.WHITE);
+            addTextToList("50 mm", 785, 425, 0, 11, Color.WHITE);
+            addTextToList("50 mm", 835, 383, 90, 11, Color.WHITE);
+        } else if(calculatedImage.equals("kilit_ayri_tek_hiz")) {
+            addTextToList("X: " + x + " mm", 672, 448, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE);
 
-            addTextToList("50 mm", 570, 215, 0, 10, Color.WHITE);
-            addTextToList("100 mm", 547, 238, 0, 9, Color.WHITE);
-            addTextToList("Boğaz: Ø200\nKesim: Ø115", 587, 241, 0, 7.5, Color.WHITE);
-            addTextToList("Kilit Motor: " + secilenKilitMotor + "\nKilit Pompa: " + secilenKilitPompa, 577, 273, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 617, 373, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 537, 393, 90, 8, Color.WHITE);
-            addTextToList("50 mm", 559, 408, 0, 8, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 268, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 767, 220, 0, 10, Color.WHITE);
-            addTextToList("70 mm", 817, 295, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 734, 402, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 759, 381, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 787, 402, 0, 8, Color.WHITE);
-            addTextToList("Ø30", 805, 373, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 822, 375, 90, 8, Color.WHITE);
-        } else if(calculatedImage.equals("kilitMotor")) {
-            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
+            addTextToList("40 mm", 565, 215, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 530, 255, 0, 10, Color.WHITE);
+            addTextToList("Ø110", 595, 245, 0, 10, Color.WHITE);
+            addTextToList("200 mm", 660, 263, 0, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 745, 260, 0, 10.5, Color.WHITE);
+            addTextToList("70 mm", 785, 220, 0, 10, Color.WHITE);
+            addTextToList("70 mm", 830, 263, 0, 10, Color.WHITE);
+            addTextToList("230 mm", 580, 315, -90, 10, Color.WHITE);
+            addTextToList("100 mm", 525, 395, 0, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 615, 370, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 555, 427, 0, 10, Color.WHITE);
+            addTextToList("70 mm", 675, 427, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 620, 410, 0, 10, Color.WHITE);
+            addTextToList("100 mm", 690, 410, 0, 10, Color.WHITE);
+            addTextToList("Ø30", 675, 385, -30, 10, Color.WHITE);
+            addTextToList("Ø25", 740, 385, -30, 10, Color.WHITE);
+            addTextToList("Ø52", 795, 390, 30, 10, Color.WHITE);
+            addTextToList("50 mm", 785, 425, 0, 11, Color.WHITE);
+            addTextToList("50 mm", 835, 383, 90, 11, Color.WHITE);
+        } else if(calculatedImage.equals("kilitli_blok")) {
+            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE);
 
-            addTextToList("50 mm", 562, 218, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 534, 266, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 532, 398, 0, 7, Color.WHITE);
-            addTextToList("50 mm", 564, 408, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 637, 408, 0, 10, Color.WHITE);
-            addTextToList("Ø30", 552, 378, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 632, 380, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 557, 348, 0, 12, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 283, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 764, 228, 0, 11, Color.WHITE);
-            addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
-        } else if(calculatedImage.equals("kompanzasyon")) {
-            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
+            addTextToList("50 mm", 550, 225, 0, 10, Color.WHITE);
+            addTextToList("50 mm", 520, 285, 90, 10, Color.WHITE);
+            addTextToList("200 mm", 560, 403, 0, 11, Color.WHITE);
+            addTextToList("50 mm", 655, 420, 0, 11, Color.WHITE);
+            addTextToList("Ø25", 661, 385, -45, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 565, 305, 0, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 725, 300, 0, 12, Color.WHITE);
+            addTextToList("70 mm", 775, 228, 0, 11, Color.WHITE);
+            addTextToList("70 mm", 830, 290, 90, 11, Color.WHITE);
+            addTextToList("Ø30", 810, 390, 30, 10, Color.WHITE);
+            addTextToList("35 mm", 795, 420, 0, 11, Color.WHITE);
+            addTextToList("35 mm", 840, 383, 90, 11, Color.WHITE);
+        } else if(calculatedImage.equals("tek_hiz_kompanzasyon_arti_tek_hiz")) {
+            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE);
 
-            addTextToList("50 mm", 547, 218, 0, 10, Color.WHITE);
-            if(secilenSogutmaDurumu.equals("Yok") && secilenHidrolikKilitDurumu.equals("Yok")) {
-                addTextToList("120 mm", 532, 276, 90, 10, Color.WHITE);
-            } else {
-                addTextToList("50 mm", 532, 276, 90, 10, Color.WHITE);
-            }
-            addTextToList("50 mm", 532, 378, 0, 8, Color.WHITE);
-            addTextToList("50 mm", 579, 408, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 652, 408, 0, 10, Color.WHITE);
-            addTextToList("Ø30", 567, 378, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 637, 373, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 542, 301, 0, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 275, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 764, 228, 0, 11, Color.WHITE);
-            addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
-        } else if(calculatedImage.equals("tekhizcifthiz")) {
-            addTextToList("X: " + x + " mm", 672, 428, 0, 14, Color.WHITE);
-            addTextToList("Y: " + y + " mm", 482, 318, 90, 14, Color.WHITE);
-
-            addTextToList("50 mm", 547, 218, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 532, 276, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 532, 383, 0, 8, Color.WHITE);
-            addTextToList("50 mm", 579, 408, 0, 10, Color.WHITE);
-            addTextToList("50 mm", 652, 408, 0, 10, Color.WHITE);
-            addTextToList("Ø30", 567, 378, 0, 10, Color.WHITE);
-            addTextToList("Ø20", 637, 373, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 552, 301, 0, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 712, 275, 0, 12, Color.WHITE);
-            addTextToList("70 mm", 764, 228, 0, 11, Color.WHITE);
-            addTextToList("70 mm", 817, 308, 90, 11, Color.WHITE);
+            addTextToList("70 mm", 565, 225, 0, 11, Color.WHITE);
+            addTextToList("100 mm", 520, 300, 0, 11, Color.WHITE);
+            addTextToList("35 mm", 510, 405, 90, 10, Color.WHITE);
+            addTextToList("150 mm", 580, 395, 0, 11, Color.WHITE);
+            addTextToList("65 mm", 545, 415, 0, 11, Color.WHITE);
+            addTextToList("Ø25", 550, 370, -45, 10, Color.WHITE);
+            addTextToList("Ø30", 660, 366, -45, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 570, 340, 0, 10, Color.WHITE);
+            addTextToList(getKampanaText(), 720, 300, 0, 12, Color.WHITE);
+            addTextToList("70 mm", 775, 228, 0, 11, Color.WHITE);
+            addTextToList("70 mm", 830, 290, 90, 11, Color.WHITE);
+            addTextToList("Ø30", 810, 390, 30, 10, Color.WHITE);
+            addTextToList("35 mm", 795, 420, 0, 11, Color.WHITE);
+            addTextToList("35 mm", 840, 383, 90, 11, Color.WHITE);
         }
 
         for (Text text : sonucTexts) {
