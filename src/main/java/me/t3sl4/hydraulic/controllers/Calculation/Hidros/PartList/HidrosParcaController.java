@@ -180,6 +180,18 @@ public class HidrosParcaController {
             }
         } else {
             //İthal Parçalar buraya
+            loadKabinKodu();
+
+            if(secilenPlatform.equals("Özel - Yatay")) {
+                loadOzelYatayGenel();
+            }
+
+            loadManometre();
+            loadBasincSalteri();
+            loadElPompasiParca();
+            if(!secilenPlatform.contains("Özel")) {
+                loadYagMiktari();
+            }
         }
     }
 
