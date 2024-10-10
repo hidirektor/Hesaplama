@@ -68,26 +68,39 @@ public class JSONUtil {
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONObject voidValues = jsonObject.getJSONObject("void_values");
 
-            hydraulicData.kampanaBoslukX = Integer.parseInt(voidValues.getString("kampanaBoslukX"));
-            hydraulicData.kampanaBoslukY = Integer.parseInt(voidValues.getString("kampanaBoslukY"));
-            hydraulicData.valfBoslukX = Integer.parseInt(voidValues.getString("valfBoslukX"));
-            hydraulicData.valfBoslukYArka = Integer.parseInt(voidValues.getString("valfBoslukYArka"));
-            hydraulicData.valfBoslukYOn = Integer.parseInt(voidValues.getString("valfBoslukYOn"));
-            hydraulicData.kilitliBlokAraBoslukX = Integer.parseInt(voidValues.getString("kilitliBlokAraBoslukX"));
+            hydraulicData.kampanaTankArasiBoslukX = Integer.parseInt(voidValues.getString("kampanaTankArasiBoslukX"));
+            hydraulicData.kampanaTankArasiBoslukY = Integer.parseInt(voidValues.getString("kampanaTankArasiBoslukY"));
+            hydraulicData.kampanaBoslukYOn = Integer.parseInt(voidValues.getString("kampanaBoslukYOn"));
+            hydraulicData.tekHizTankArasiBoslukX = Integer.parseInt(voidValues.getString("tekHizTankArasiBoslukX"));
+            hydraulicData.tekHizTankArasiBoslukY = Integer.parseInt(voidValues.getString("tekHizTankArasiBoslukY"));
             hydraulicData.tekHizAraBoslukX = Integer.parseInt(voidValues.getString("tekHizAraBoslukX"));
+            hydraulicData.tekHizYOn = Integer.parseInt(voidValues.getString("tekHizYOn"));
+            hydraulicData.tekHizBlokX = Integer.parseInt(voidValues.getString("tekHizBlokX"));
+            hydraulicData.tekHizBlokY = Integer.parseInt(voidValues.getString("tekHizBlokY"));
+            hydraulicData.ciftHizTankArasiBoslukX = Integer.parseInt(voidValues.getString("ciftHizTankArasiBoslukX"));
+            hydraulicData.ciftHizTankArasiBoslukY = Integer.parseInt(voidValues.getString("ciftHizTankArasiBoslukY"));
             hydraulicData.ciftHizAraBoslukX = Integer.parseInt(voidValues.getString("ciftHizAraBoslukX"));
-            hydraulicData.kompanzasyonTekHizAraBoslukX = Integer.parseInt(voidValues.getString("kompanzasyonTekHizAraBoslukX"));
-            hydraulicData.sogutmaAraBoslukX = Integer.parseInt(voidValues.getString("sogutmaAraBoslukX"));
-            hydraulicData.sogutmaAraBoslukYkOn = Integer.parseInt(voidValues.getString("sogutmaAraBoslukYkOn"));
-            hydraulicData.sogutmaAraBoslukYkArka = Integer.parseInt(voidValues.getString("sogutmaAraBoslukYkArka"));
-            hydraulicData.kilitMotorKampanaBosluk = Integer.parseInt(voidValues.getString("kilitMotorKampanaBosluk"));
-            hydraulicData.kilitMotorMotorBoslukX = Integer.parseInt(voidValues.getString("kilitMotorMotorBoslukX"));
-            hydraulicData.kilitMotorBoslukYOn = Integer.parseInt(voidValues.getString("kilitMotorBoslukYOn"));
-            hydraulicData.kilitMotorBoslukYArka = Integer.parseInt(voidValues.getString("kilitMotorBoslukYArka"));
+            hydraulicData.ciftHizYOn = Integer.parseInt(voidValues.getString("ciftHizYOn"));
+            hydraulicData.ciftHizBlokX = Integer.parseInt(voidValues.getString("ciftHizBlokX"));
+            hydraulicData.ciftHizBlokY = Integer.parseInt(voidValues.getString("ciftHizBlokY"));
+            hydraulicData.kilitliBlokTankArasiBoslukX = Integer.parseInt(voidValues.getString("kilitliBlokTankArasiBoslukX"));
+            hydraulicData.kilitliBlokTankArasiBoslukY = Integer.parseInt(voidValues.getString("kilitliBlokTankArasiBoslukY"));
+            hydraulicData.kilitliBlokAraBoslukX = Integer.parseInt(voidValues.getString("kilitliBlokAraBoslukX"));
+            hydraulicData.kilitliBlokYOn = Integer.parseInt(voidValues.getString("kilitliBlokYOn"));
+            hydraulicData.kilitliBlokX = Integer.parseInt(voidValues.getString("kilitliBlokX"));
+            hydraulicData.kilitliBlokY = Integer.parseInt(voidValues.getString("kilitliBlokY"));
+            hydraulicData.kilitMotorTankArasiBoslukX = Integer.parseInt(voidValues.getString("kilitMotorTankArasiBoslukX"));
+            hydraulicData.kilitMotorTankArasiBoslukY = Integer.parseInt(voidValues.getString("kilitMotorTankArasiBoslukY"));
+            hydraulicData.kilitMotorAraBoslukX = Integer.parseInt(voidValues.getString("kilitMotorAraBoslukX"));
+            hydraulicData.kilitMotorYOn = Integer.parseInt(voidValues.getString("kilitMotorYOn"));
+            hydraulicData.tekHizKilitAyriY = Integer.parseInt(voidValues.getString("tekHizKilitAyriY"));
+            hydraulicData.tekHizKilitAyriYOn = Integer.parseInt(voidValues.getString("tekHizKilitAyriYOn"));
+            hydraulicData.ciftHizKilitAyriY = Integer.parseInt(voidValues.getString("ciftHizKilitAyriY"));
+            hydraulicData.ciftHizKilitAyriYOn = Integer.parseInt(voidValues.getString("ciftHizKilitAyriYOn"));
+            hydraulicData.kilitMotorX = Integer.parseInt(voidValues.getString("kilitMotorX"));
+            hydraulicData.kilitMotorY = Integer.parseInt(voidValues.getString("kilitMotorY"));
             hydraulicData.kayipLitre = Integer.parseInt(voidValues.getString("kayipLitre"));
-            hydraulicData.kilitPlatformMotorBosluk = Integer.parseInt(voidValues.getString("kilitPlatformMotorBosluk"));
-            hydraulicData.valfXBoslukSogutma = Integer.parseInt(voidValues.getString("valfXBoslukSogutma"));
-
+            hydraulicData.defaultHeight = Integer.parseInt(voidValues.getString("defaultHeight"));
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }

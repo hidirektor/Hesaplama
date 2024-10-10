@@ -5,25 +5,39 @@ import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import java.util.*;
 
 public class HydraulicData {
-    public int kampanaBoslukX;
-    public int kilitPlatformMotorBosluk;
-    public int kampanaBoslukY;
-    public int valfBoslukX;
-    public int valfBoslukYArka;
-    public int valfBoslukYOn;
-    public int kilitliBlokAraBoslukX;
+    public int kampanaTankArasiBoslukX;
+    public int kampanaTankArasiBoslukY;
+    public int kampanaBoslukYOn;
+    public int tekHizTankArasiBoslukX;
+    public int tekHizTankArasiBoslukY;
     public int tekHizAraBoslukX;
+    public int tekHizYOn;
+    public int tekHizBlokX;
+    public int tekHizBlokY;
+    public int ciftHizTankArasiBoslukX;
+    public int ciftHizTankArasiBoslukY;
     public int ciftHizAraBoslukX;
-    public int kompanzasyonTekHizAraBoslukX;
-    public int sogutmaAraBoslukX;
-    public int sogutmaAraBoslukYkOn;
-    public int sogutmaAraBoslukYkArka;
-    public int kilitMotorKampanaBosluk;
-    public int kilitMotorMotorBoslukX; //hidros kilit motor kampana ile tank dış ölçüsü ara boşluğu
-    public int kilitMotorBoslukYOn;
-    public int kilitMotorBoslukYArka;
+    public int ciftHizYOn;
+    public int ciftHizBlokX;
+    public int ciftHizBlokY;
+    public int kilitliBlokTankArasiBoslukX;
+    public int kilitliBlokTankArasiBoslukY;
+    public int kilitliBlokAraBoslukX;
+    public int kilitliBlokYOn;
+    public int kilitliBlokX;
+    public int kilitliBlokY;
+    public int kilitMotorTankArasiBoslukX;
+    public int kilitMotorTankArasiBoslukY;
+    public int kilitMotorAraBoslukX;
+    public int kilitMotorYOn;
+    public int tekHizKilitAyriY;
+    public int tekHizKilitAyriYOn;
+    public int ciftHizKilitAyriY;
+    public int ciftHizKilitAyriYOn;
+    public int kilitMotorX;
+    public int kilitMotorY;
     public int kayipLitre;
-    public int valfXBoslukSogutma;
+    public int defaultHeight;
 
     //TODO
     //Yeni sistem değişkenleri

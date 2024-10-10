@@ -34,8 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static me.t3sl4.hydraulic.utils.general.SystemVariables.BASE_URL;
-import static me.t3sl4.hydraulic.utils.general.SystemVariables.createHydraulicURLPrefix;
+import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
 public class KlasikController {
 
@@ -201,6 +200,11 @@ public class KlasikController {
                 Image image = null;
 
                 if(secilenSogutmaDurumu.equals("Var")) {
+                    if (secilenHidrolikKilitDurumu.equals("Var")) {
+                        //Hidrolik Kilit Var
+                    } else {
+                        //Hidrolik Kilit Yok
+                    }
                     if(secilenHidrolikKilitDurumu.equals("Var")) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/sogutmaKilit.png")));
                         imageTextEnable(calculatedX, calculatedY, "sogutmaKilit");
@@ -589,15 +593,6 @@ public class KlasikController {
         secilenKampana = Integer.parseInt(SystemVariables.getLocalHydraulicData().motorKampanaMap.get(motorComboBox.getSelectionModel().getSelectedItem().toString()).replace(" mm", ""));
         secilenPompaVal = Utils.string2Double(secilenPompa);
 
-        //Standart Boşluk Değerleri:
-        int kampanaBoslukX = SystemVariables.getLocalHydraulicData().kampanaBoslukX;
-        int kampanaBoslukY = SystemVariables.getLocalHydraulicData().kampanaBoslukY;
-        int kilitAraBoslukX = SystemVariables.getLocalHydraulicData().kilitliBlokAraBoslukX;
-        int valfBoslukX = SystemVariables.getLocalHydraulicData().valfBoslukX;
-        int valfBoslukYArka = SystemVariables.getLocalHydraulicData().valfBoslukYArka;
-        int valfBoslukYOn = SystemVariables.getLocalHydraulicData().valfBoslukYOn;
-        int defaultHeight = 350; //standart yükseklik ölçüsü
-
         //Hesaplama Standartları
         ArrayList<Integer> finalValues = new ArrayList<>();
         int yV = 0;
@@ -621,80 +616,64 @@ public class KlasikController {
 
             return finalValues;
         } else {
-            x +=  kampanaDegeri + kampanaBoslukX;
-            yK += kampanaDegeri + kampanaBoslukY + kampanaBoslukY;
+            x +=  kampanaDegeri;
+            yK += kampanaDegeri;
+            System.out.println("Başlangıç:");
+            System.out.println("X: " + x + " yK: " + yK + " yV: " + yV);
             System.out.println("Motor + Kampana için:");
-            System.out.println("X += " + kampanaDegeri + " (Kampana) " + kampanaBoslukX + " (Kampana Boşluk)");
+            System.out.println("X += " + kampanaDegeri + " (Kampana)");
+            System.out.println("yK += " + kampanaDegeri + " (Kampana)");
 
-            //hidrolik kilit seçiliyse: valf tipi = kilitli blok olarak gelicek
-            //kilitli blok ölçüsü olarak: X'e +100 olacak
-            if(Objects.equals(secilenHidrolikKilitDurumu, "Var")) {
-                if(Objects.equals(secilenValfTipi, "Kilitli Blok")) {
-                    x += 120 + kilitAraBoslukX + valfBoslukX;
-                    yV += 190 + valfBoslukYArka + valfBoslukYOn;
-                    System.out.println("Kilitli Blok için:");
-                    System.out.println("X += " + kilitAraBoslukX + " (Ara Boşluk) + " + valfBoslukX + " (Valf Boşluk)");
-                    System.out.println("yV += " + valfBoslukYArka + " (Valf Boşluk Arka) + " + valfBoslukYOn + " (Valf Boşluk Ön)");
-                } else {
-                    if(secilenPompaVal >= 28.1 || kompanzasyonDurumu.equals("Var")) {
-                        float secilenKilitMotorVal = 0;
-                        if(secilenKilitMotor != null) {
-                            String[] secKilitMotor = secilenKilitMotor.split(" kW");
-                            secilenKilitMotorVal = Float.parseFloat(secKilitMotor[0]);
-                        }
-
-                        if(Objects.equals(secilenValfTipi, "Kompanzasyon || İnişte Tek Hız")) {
-                            yV += 180 + SystemVariables.getLocalHydraulicData().valfBoslukYArka + SystemVariables.getLocalHydraulicData().valfBoslukYOn;
-                            System.out.println("Kompanzasyon + İnişte Tek Hız (Kilitli Blok) (Pompa > 28.1) için:");
-                            System.out.println("yV += " + SystemVariables.getLocalHydraulicData().valfBoslukYOn + " (Valf Boşluk Ön) + " + SystemVariables.getLocalHydraulicData().valfBoslukYArka + " (Valf Boşluk Arka)");
-                        } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                            System.out.println("İnişte Çift Hız (Kilitli Blok) için:");
-                            if(secilenPompaVal >= 28.1) {
-                                yV += 90 + SystemVariables.getLocalHydraulicData().valfBoslukYOn;
-                                System.out.println("(Pompa > 28.1) için:");
-                                System.out.println("yV += " + SystemVariables.getLocalHydraulicData().valfBoslukYOn + " (Valf Boşluk Ön)");
-                            } else {
-                                yV += 90 + SystemVariables.getLocalHydraulicData().valfBoslukYOn + SystemVariables.getLocalHydraulicData().valfBoslukYArka;
-                                System.out.println("(Pompa <= 28.1) için:");
-                                System.out.println("yV += " + SystemVariables.getLocalHydraulicData().valfBoslukYOn + " (Valf Boşluk Ön) + " + SystemVariables.getLocalHydraulicData().valfBoslukYArka + " (Valf Boşluk Arka)");
-                            }
-                        } else if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                            yV += 180 + SystemVariables.getLocalHydraulicData().valfBoslukYOn + SystemVariables.getLocalHydraulicData().valfBoslukYArka;
-                            System.out.println("İnişte Tek Hız (Kilitli Blok) için:");
-                            System.out.println("yV += " + SystemVariables.getLocalHydraulicData().valfBoslukYOn + " (Valf Boşluk Ön) + " + SystemVariables.getLocalHydraulicData().valfBoslukYArka + " (Valf Boşluk Arka)");
-                        }
-
-                        if(secilenKilitMotorVal != 0) {
-                            x += 200 + SystemVariables.getLocalHydraulicData().kilitMotorKampanaBosluk + SystemVariables.getLocalHydraulicData().kilitMotorMotorBoslukX;
-                            yV += 200 + SystemVariables.getLocalHydraulicData().kilitMotorBoslukYOn + SystemVariables.getLocalHydraulicData().kilitMotorBoslukYArka;
-                            System.out.println("Kilit Motor için:");
-                            System.out.println("X += " + SystemVariables.getLocalHydraulicData().kilitMotorKampanaBosluk + " (Kampana Boşluk) + " + SystemVariables.getLocalHydraulicData().kilitMotorMotorBoslukX + " (Kilit Motor Boşluk)");
-                            System.out.println("yV += " + SystemVariables.getLocalHydraulicData().kilitMotorBoslukYOn + " (Kilit Motor Ön) + " + SystemVariables.getLocalHydraulicData().kilitMotorBoslukYArka + " (Kilit Motor Arka)");
+            //TODO
+            //Yeni verilere göre ekleme yapılacak
+            if(secilenKilitMotor != null) {
+                //Kilit Motor Var
+                if(kompanzasyonDurumu.equals("Yok")) {
+                    //Kompanzasyon Yok
+                    if(secilenHidrolikKilitDurumu.equals("Yok")) {
+                        if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                            x += getLocalHydraulicData().kilitMotorTankArasiBoslukX + getLocalHydraulicData().kilitMotorX + getLocalHydraulicData().kilitMotorAraBoslukX + getLocalHydraulicData().kampanaTankArasiBoslukX;
+                            yV += getLocalHydraulicData().kilitMotorTankArasiBoslukY + getLocalHydraulicData().kilitMotorY + getLocalHydraulicData().kilitMotorYOn + getLocalHydraulicData().tekHizKilitAyriY + getLocalHydraulicData().tekHizBlokY + getLocalHydraulicData().tekHizKilitAyriYOn;
+                            yK += getLocalHydraulicData().kampanaTankArasiBoslukY + getLocalHydraulicData().kampanaBoslukYOn;
+                        } else if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                            x += getLocalHydraulicData().kilitMotorTankArasiBoslukX + getLocalHydraulicData().kilitMotorX + getLocalHydraulicData().kilitMotorAraBoslukX + getLocalHydraulicData().kampanaTankArasiBoslukX;
+                            yV += getLocalHydraulicData().kilitMotorTankArasiBoslukY + getLocalHydraulicData().kilitMotorY + getLocalHydraulicData().kilitMotorYOn + getLocalHydraulicData().ciftHizKilitAyriY + getLocalHydraulicData().ciftHizBlokY + getLocalHydraulicData().ciftHizKilitAyriYOn;
+                            yK += getLocalHydraulicData().kampanaTankArasiBoslukY + getLocalHydraulicData().kampanaBoslukYOn;
                         }
                     }
-                }
-            } else { //hidrolik kilit olmadığı durumlarda valf tipleri için
-                if(kompanzasyonDurumu.equals("Var")) {
-                    x += 140 + SystemVariables.getLocalHydraulicData().kompanzasyonTekHizAraBoslukX;
-                    yV += 180 + SystemVariables.getLocalHydraulicData().valfBoslukYOn + SystemVariables.getLocalHydraulicData().valfBoslukYArka;
-                    System.out.println("Kompanzasyon + Tek Hız İçin: (Hidrolik Kilit Yok)");
-                    System.out.println("X += " + SystemVariables.getLocalHydraulicData().kompanzasyonTekHizAraBoslukX + " (Kompanzasyon Ara Boşluk)");
-                    System.out.println("yV += " + SystemVariables.getLocalHydraulicData().valfBoslukYOn + " (Valf Boşluk Ön) + " + SystemVariables.getLocalHydraulicData().valfBoslukYArka + " (Valf Boşluk Arka)");
                 } else {
-                    if(Objects.equals(secilenValfTipi, "İnişte Tek Hız")) {
-                        // X yönünde +120 olacak Y yönünde 180 mm eklenecek
-                        x += 70 + SystemVariables.getLocalHydraulicData().valfBoslukX + SystemVariables.getLocalHydraulicData().tekHizAraBoslukX;
-                        yV += 180 + SystemVariables.getLocalHydraulicData().valfBoslukYOn + SystemVariables.getLocalHydraulicData().valfBoslukYArka;
-                        System.out.println("İnişte Tek Hız İçin: (Hidrolik Kilit Yok)");
-                        System.out.println("X += " + SystemVariables.getLocalHydraulicData().valfBoslukX + " (Valf Boşluk) + " + SystemVariables.getLocalHydraulicData().tekHizAraBoslukX + " (Tek Hız Boşluk)");
-                        System.out.println("yV += " + SystemVariables.getLocalHydraulicData().valfBoslukYOn + " (Valf Boşluk Ön) + " + SystemVariables.getLocalHydraulicData().valfBoslukYArka + " (Valf Boşluk Arka)");
-                    } else if(Objects.equals(secilenValfTipi, "İnişte Çift Hız")) {
-                        //X yönünde 190 Y yönünde 90
-                        x += 140 + SystemVariables.getLocalHydraulicData().ciftHizAraBoslukX + SystemVariables.getLocalHydraulicData().valfBoslukX;
-                        yV += 90 + SystemVariables.getLocalHydraulicData().valfBoslukYOn + SystemVariables.getLocalHydraulicData().valfBoslukYArka;
-                        System.out.println("İnişte Çift Hız İçin: (Hidrolik Kilit Yok)");
-                        System.out.println("X += " + SystemVariables.getLocalHydraulicData().valfBoslukX + " (Valf Boşluk) + " + SystemVariables.getLocalHydraulicData().ciftHizAraBoslukX + " (Tek Hız Boşluk)");
-                        System.out.println("yV += " + SystemVariables.getLocalHydraulicData().valfBoslukYOn + " (Valf Boşluk Ön) + " + SystemVariables.getLocalHydraulicData().valfBoslukYArka + " (Valf Boşluk Arka)");
+                    //Kompanzasyon Var
+                    if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                        x += getLocalHydraulicData().kilitMotorTankArasiBoslukX + getLocalHydraulicData().kilitMotorX + getLocalHydraulicData().kilitMotorAraBoslukX + getLocalHydraulicData().kampanaTankArasiBoslukX;
+                        yV += getLocalHydraulicData().kilitMotorTankArasiBoslukY + getLocalHydraulicData().kilitMotorY + getLocalHydraulicData().kilitMotorYOn + getLocalHydraulicData().tekHizKilitAyriY + getLocalHydraulicData().tekHizBlokY + getLocalHydraulicData().tekHizKilitAyriYOn;
+                        yK += getLocalHydraulicData().kampanaTankArasiBoslukY + getLocalHydraulicData().kampanaBoslukYOn;
+                    }
+                }
+            } else {
+                //Kilit Motor Yok
+                if(kompanzasyonDurumu.equals("Var")) {
+                    //Kompanzasyon Var
+                    if(secilenHidrolikKilitDurumu.equals("Yok")) {
+                        if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                            x += getLocalHydraulicData().tekHizTankArasiBoslukX + getLocalHydraulicData().tekHizBlokX + getLocalHydraulicData().tekHizAraBoslukX + getLocalHydraulicData().kampanaTankArasiBoslukX;
+                            yV += getLocalHydraulicData().tekHizTankArasiBoslukY + getLocalHydraulicData().tekHizBlokY + getLocalHydraulicData().tekHizYOn;
+                            yK += getLocalHydraulicData().kampanaTankArasiBoslukY + getLocalHydraulicData().kampanaBoslukYOn;
+                        }
+                    }
+                } else {
+                    //Kompanzasyon Yok
+                    if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                        x += getLocalHydraulicData().tekHizTankArasiBoslukX + getLocalHydraulicData().tekHizBlokX + getLocalHydraulicData().tekHizAraBoslukX + getLocalHydraulicData().kampanaTankArasiBoslukX;
+                        yV += getLocalHydraulicData().tekHizTankArasiBoslukY + getLocalHydraulicData().tekHizBlokY + getLocalHydraulicData().tekHizYOn;
+                        yK += getLocalHydraulicData().kampanaTankArasiBoslukY + getLocalHydraulicData().kampanaBoslukYOn;
+                    } else if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                        x += getLocalHydraulicData().ciftHizTankArasiBoslukX + getLocalHydraulicData().ciftHizBlokX + getLocalHydraulicData().ciftHizAraBoslukX + getLocalHydraulicData().kampanaTankArasiBoslukX;
+                        yV += getLocalHydraulicData().ciftHizTankArasiBoslukY + getLocalHydraulicData().ciftHizBlokY + getLocalHydraulicData().ciftHizYOn;
+                        yK += getLocalHydraulicData().kampanaTankArasiBoslukY + getLocalHydraulicData().kampanaBoslukYOn;
+                    } else if(secilenValfTipi.equals("Kilitli Blok")) {
+                        x += getLocalHydraulicData().kilitliBlokTankArasiBoslukX + getLocalHydraulicData().kilitliBlokX + getLocalHydraulicData().kilitliBlokAraBoslukX + getLocalHydraulicData().kampanaTankArasiBoslukX;
+                        yV += getLocalHydraulicData().kilitliBlokTankArasiBoslukY + getLocalHydraulicData().kilitliBlokY + getLocalHydraulicData().kilitliBlokYOn;
+                        yK += getLocalHydraulicData().kampanaTankArasiBoslukY + getLocalHydraulicData().kampanaBoslukYOn;
                     }
                 }
             }
@@ -706,7 +685,7 @@ public class KlasikController {
             if(x <= 550) {
                 x = 550;
             }
-            h = defaultHeight;
+            h = getLocalHydraulicData().defaultHeight;
 
             String veri = SystemVariables.getLocalHydraulicData().motorYukseklikMap.get(motorComboBox.getSelectionModel().getSelectedItem());
             String sayiKismi = veri.replaceAll("[^0-9]", "");
@@ -1194,6 +1173,12 @@ public class KlasikController {
             addTextToList("Ø30", 810, 390, 30, 10, Color.WHITE);
             addTextToList("35 mm", 795, 420, 0, 11, Color.WHITE);
             addTextToList("35 mm", 840, 383, 90, 11, Color.WHITE);
+        } else if(calculatedImage.equals("sogutma_kilitsiz")) {
+
+        } else if(calculatedImage.equals("sogutma_kilitli")) {
+
+        } else if(calculatedImage.equals("sogutma_tek_hiz")) {
+
         }
 
         for (Text text : sonucTexts) {

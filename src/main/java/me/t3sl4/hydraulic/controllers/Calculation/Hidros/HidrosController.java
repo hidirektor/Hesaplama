@@ -368,7 +368,7 @@ public class HidrosController {
                 secilenPlatformTipi = newValue.toString();
                 if(secilenPlatformTipi.equals("ESP")) {
                     initValfTipi();
-                } else if(secilenPlatformTipi.equals("Devirmeli") || secilenPlatformTipi.equals("Yürüyüş")) {
+                } else if(secilenPlatformTipi.equals("Devirmeli + Yürüyüş")) {
                     hesaplamaBitti = true;
                     enableSonucSection();
                 } else {
@@ -710,7 +710,7 @@ public class HidrosController {
                 birinciValfComboBox.setDisable(true);
                 ikinciValfComboBox.setDisable(true);
                 initInisMetodu();
-            } else if(secilenPlatformTipi.equals("Devirmeli") || secilenPlatformTipi.equals("Yürüyüş")) {
+            } else if(secilenPlatformTipi.equals("Devirmeli + Yürüyüş")) {
                 inisTipiComboBox.setDisable(true);
                 birinciValfComboBox.setDisable(true);
                 ikinciValfComboBox.setDisable(true);

@@ -520,12 +520,19 @@ public class MainController implements Initializable {
                 parametrePane.setLayoutY(centerY);
 
                 PopupController popupController = loader.getController();
-                popupController.setValues(SystemVariables.getLocalHydraulicData().kampanaBoslukX, SystemVariables.getLocalHydraulicData().kampanaBoslukY,
-                        SystemVariables.getLocalHydraulicData().valfBoslukX, SystemVariables.getLocalHydraulicData().valfBoslukYArka, SystemVariables.getLocalHydraulicData().valfBoslukYOn,
-                        SystemVariables.getLocalHydraulicData().kilitliBlokAraBoslukX, SystemVariables.getLocalHydraulicData().tekHizAraBoslukX, SystemVariables.getLocalHydraulicData().ciftHizAraBoslukX,
-                        SystemVariables.getLocalHydraulicData().kompanzasyonTekHizAraBoslukX, SystemVariables.getLocalHydraulicData().sogutmaAraBoslukX, SystemVariables.getLocalHydraulicData().sogutmaAraBoslukYkOn,
-                        SystemVariables.getLocalHydraulicData().sogutmaAraBoslukYkArka, SystemVariables.getLocalHydraulicData().kilitMotorKampanaBosluk, SystemVariables.getLocalHydraulicData().kilitMotorMotorBoslukX,
-                        SystemVariables.getLocalHydraulicData().kilitMotorBoslukYOn, SystemVariables.getLocalHydraulicData().kilitMotorBoslukYArka, SystemVariables.getLocalHydraulicData().kayipLitre, SystemVariables.getLocalHydraulicData().kilitPlatformMotorBosluk, SystemVariables.getLocalHydraulicData().valfXBoslukSogutma);
+                popupController.setValues(
+                getLocalHydraulicData().kampanaTankArasiBoslukX, getLocalHydraulicData().kampanaTankArasiBoslukY, getLocalHydraulicData().kampanaBoslukYOn,
+                getLocalHydraulicData().tekHizTankArasiBoslukX, getLocalHydraulicData().tekHizTankArasiBoslukY, getLocalHydraulicData().tekHizAraBoslukX,
+                getLocalHydraulicData().tekHizYOn, getLocalHydraulicData().tekHizBlokX, getLocalHydraulicData().tekHizBlokY,
+                getLocalHydraulicData().ciftHizTankArasiBoslukX, getLocalHydraulicData().ciftHizTankArasiBoslukY, getLocalHydraulicData().ciftHizAraBoslukX,
+                getLocalHydraulicData().ciftHizYOn, getLocalHydraulicData().ciftHizBlokX, getLocalHydraulicData().ciftHizBlokY,
+                getLocalHydraulicData().kilitliBlokTankArasiBoslukX, getLocalHydraulicData().kilitliBlokTankArasiBoslukY, getLocalHydraulicData().kilitliBlokAraBoslukX,
+                getLocalHydraulicData().kilitliBlokYOn, getLocalHydraulicData().kilitliBlokX, getLocalHydraulicData().kilitliBlokY,
+                getLocalHydraulicData().kilitMotorTankArasiBoslukX, getLocalHydraulicData().kilitMotorTankArasiBoslukY, getLocalHydraulicData().kilitMotorAraBoslukX,
+                getLocalHydraulicData().kilitMotorYOn, getLocalHydraulicData().tekHizKilitAyriY, getLocalHydraulicData().tekHizKilitAyriYOn,
+                getLocalHydraulicData().ciftHizKilitAyriY, getLocalHydraulicData().ciftHizKilitAyriYOn, getLocalHydraulicData().kilitMotorX,
+                getLocalHydraulicData().kilitMotorY, getLocalHydraulicData().kayipLitre, getLocalHydraulicData().defaultHeight
+                );
                 popupController.showValues();
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);

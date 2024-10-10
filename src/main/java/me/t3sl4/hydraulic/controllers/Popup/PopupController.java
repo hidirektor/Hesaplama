@@ -47,73 +47,145 @@ public class PopupController implements Initializable {
     private TextField label18;
     @FXML
     private TextField label19;
+    @FXML
+    private TextField label20;
+    @FXML
+    private TextField label21;
+    @FXML
+    private TextField label22;
+    @FXML
+    private TextField label23;
+    @FXML
+    private TextField label24;
+    @FXML
+    private TextField label25;
+    @FXML
+    private TextField label26;
+    @FXML
+    private TextField label27;
+    @FXML
+    private TextField label28;
+    @FXML
+    private TextField label29;
+    @FXML
+    private TextField label30;
+    @FXML
+    private TextField label31;
+    @FXML
+    private TextField label32;
+    @FXML
+    private TextField label33;
 
-    private int kampanaBoslukX;
-    private int kampanaBoslukY;
-    private int valfBoslukX;
-    private int valfBoslukYArka;
-    private int valfBoslukYOn;
-    private int kilitliBlokAraBoslukX;
+    private int kampanaTankArasiBoslukX;
+    private int kampanaTankArasiBoslukY;
+    private int kampanaBoslukYOn;
+
+    private int tekHizTankArasiBoslukX;
+    private int tekHizTankArasiBoslukY;
     private int tekHizAraBoslukX;
-    private int ciftHizAraBoslukX;
-    private int kompanzasyonTekHizAraBoslukX;
-    private int sogutmaAraBoslukX;
-    private int sogutmaAraBoslukYkOn;
-    private int sogutmaAraBoslukYkArka;
-    private int kilitMotorKampanaBosluk;
-    private int kilitMotorMotorBoslukX;
-    private int kilitMotorBoslukYOn;
-    private int kilitMotorBoslukYArka;
-    private int kayipLitre;
-    private int kilitPlatformMotorBosluk;
-    private int valfXBoslukSogutma;
+    private int tekHizYOn;
+    private int tekHizBlokX;
+    private int tekHizBlokY;
 
-    public void setValues(int kampanaBoslukX, int kampanaBoslukY, int valfBoslukX, int valfBoslukYArka, int valfBoslukYOn,
-                          int kilitliBlokAraBoslukX, int tekHizAraBoslukX, int ciftHizAraBoslukX, int kompanzasyonTekHizAraBoslukX,
-                          int sogutmaAraBoslukX, int sogutmaAraBoslukYkOn, int sogutmaAraBoslukYkArka, int kilitMotorKampanaBosluk,
-                          int kilitMotorMotorBoslukX, int kilitMotorBoslukYOn, int kilitMotorBoslukYArka, int kayipLitre, int kilitPlatformMotorBosluk, int valfXBoslukSogutma) {
-        this.kampanaBoslukX = kampanaBoslukX;
-        this.kampanaBoslukY = kampanaBoslukY;
-        this.valfBoslukX = valfBoslukX;
-        this.valfBoslukYArka = valfBoslukYArka;
-        this.valfBoslukYOn = valfBoslukYOn;
-        this.kilitliBlokAraBoslukX = kilitliBlokAraBoslukX;
+    private int ciftHizTankArasiBoslukX;
+    private int ciftHizTankArasiBoslukY;
+    private int ciftHizAraBoslukX;
+    private int ciftHizYOn;
+    private int ciftHizBlokX;
+    private int ciftHizBlokY;
+
+    private int kilitliBlokTankArasiBoslukX;
+    private int kilitliBlokTankArasiBoslukY;
+    private int kilitliBlokAraBoslukX;
+    private int kilitliBlokYOn;
+    private int kilitliBlokX;
+    private int kilitliBlokY;
+
+    private int kilitMotorTankArasiBoslukX;
+    private int kilitMotorTankArasiBoslukY;
+    private int kilitMotorAraBoslukX;
+    private int kilitMotorYOn;
+    private int tekHizKilitAyriY;
+    private int tekHizKilitAyriYOn;
+    private int ciftHizKilitAyriY;
+    private int ciftHizKilitAyriYOn;
+    private int kilitMotorX;
+    private int kilitMotorY;
+
+    private int kayipLitre;
+    private int defaultHeight;
+
+    public void setValues(int kampanaTankArasiBoslukX, int kampanaTankArasiBoslukY, int kampanaBoslukYOn, int tekHizTankArasiBoslukX, int tekHizTankArasiBoslukY, int tekHizAraBoslukX, int tekHizYOn, int tekHizBlokX, int tekHizBlokY, int ciftHizTankArasiBoslukX, int ciftHizTankArasiBoslukY, int ciftHizAraBoslukX, int ciftHizYOn, int ciftHizBlokX, int ciftHizBlokY, int kilitliBlokTankArasiBoslukX, int kilitliBlokTankArasiBoslukY, int kilitliBlokAraBoslukX, int kilitliBlokYOn, int kilitliBlokX, int kilitliBlokY, int kilitMotorTankArasiBoslukX, int kilitMotorTankArasiBoslukY, int kilitMotorAraBoslukX, int kilitMotorYOn, int tekHizKilitAyriY, int tekHizKilitAyriYOn, int ciftHizKilitAyriY, int ciftHizKilitAyriYOn, int kilitMotorX, int kilitMotorY, int kayipLitre, int defaultHeight) {
+        this.kampanaTankArasiBoslukX = kampanaTankArasiBoslukX;
+        this.kampanaTankArasiBoslukY = kampanaTankArasiBoslukY;
+        this.kampanaBoslukYOn = kampanaBoslukYOn;
+        this.tekHizTankArasiBoslukX = tekHizTankArasiBoslukX;
+        this.tekHizTankArasiBoslukY = tekHizTankArasiBoslukY;
         this.tekHizAraBoslukX = tekHizAraBoslukX;
+        this.tekHizYOn = tekHizYOn;
+        this.tekHizBlokX = tekHizBlokX;
+        this.tekHizBlokY = tekHizBlokY;
+        this.ciftHizTankArasiBoslukX = ciftHizTankArasiBoslukX;
+        this.ciftHizTankArasiBoslukY = ciftHizTankArasiBoslukY;
         this.ciftHizAraBoslukX = ciftHizAraBoslukX;
-        this.kompanzasyonTekHizAraBoslukX = kompanzasyonTekHizAraBoslukX;
-        this.sogutmaAraBoslukX = sogutmaAraBoslukX;
-        this.sogutmaAraBoslukYkOn = sogutmaAraBoslukYkOn;
-        this.sogutmaAraBoslukYkArka = sogutmaAraBoslukYkArka;
-        this.kilitMotorKampanaBosluk = kilitMotorKampanaBosluk;
-        this.kilitMotorMotorBoslukX = kilitMotorMotorBoslukX;
-        this.kilitMotorBoslukYOn = kilitMotorBoslukYOn;
-        this.kilitMotorBoslukYArka = kilitMotorBoslukYArka;
+        this.ciftHizYOn = ciftHizYOn;
+        this.ciftHizBlokX = ciftHizBlokX;
+        this.ciftHizBlokY = ciftHizBlokY;
+        this.kilitliBlokTankArasiBoslukX = kilitliBlokTankArasiBoslukX;
+        this.kilitliBlokTankArasiBoslukY = kilitliBlokTankArasiBoslukY;
+        this.kilitliBlokAraBoslukX = kilitliBlokAraBoslukX;
+        this.kilitliBlokYOn = kilitliBlokYOn;
+        this.kilitliBlokX = kilitliBlokX;
+        this.kilitliBlokY = kilitliBlokY;
+        this.kilitMotorTankArasiBoslukX = kilitMotorTankArasiBoslukX;
+        this.kilitMotorTankArasiBoslukY = kilitMotorTankArasiBoslukY;
+        this.kilitMotorAraBoslukX = kilitMotorAraBoslukX;
+        this.kilitMotorYOn = kilitMotorYOn;
+        this.tekHizKilitAyriY = tekHizKilitAyriY;
+        this.tekHizKilitAyriYOn = tekHizKilitAyriYOn;
+        this.ciftHizKilitAyriY = ciftHizKilitAyriY;
+        this.ciftHizKilitAyriYOn = ciftHizKilitAyriYOn;
+        this.kilitMotorX = kilitMotorX;
+        this.kilitMotorY = kilitMotorY;
         this.kayipLitre = kayipLitre;
-        this.kilitPlatformMotorBosluk = kilitPlatformMotorBosluk;
-        this.valfXBoslukSogutma = valfXBoslukSogutma;
+        this.defaultHeight = defaultHeight;
     }
 
     public void showValues() {
         //Tabloya dönüştür
-        label1.setText(String.valueOf(this.kampanaBoslukX));
-        label2.setText(String.valueOf(this.kampanaBoslukY));
-        label3.setText(String.valueOf(this.valfBoslukX));
-        label4.setText(String.valueOf(this.valfBoslukYArka));
-        label5.setText(String.valueOf(this.valfBoslukYOn));
-        label6.setText(String.valueOf(this.kilitliBlokAraBoslukX));
-        label7.setText(String.valueOf(this.tekHizAraBoslukX));
-        label8.setText(String.valueOf(this.ciftHizAraBoslukX));
-        label9.setText(String.valueOf(this.kompanzasyonTekHizAraBoslukX));
-        label10.setText(String.valueOf(this.sogutmaAraBoslukX));
-        label11.setText(String.valueOf(this.sogutmaAraBoslukYkOn));
-        label12.setText(String.valueOf(this.sogutmaAraBoslukYkArka));
-        label13.setText(String.valueOf(this.kilitMotorKampanaBosluk));
-        label14.setText(String.valueOf(this.kilitMotorMotorBoslukX));
-        label15.setText(String.valueOf(this.kilitMotorBoslukYOn));
-        label16.setText(String.valueOf(this.kilitMotorBoslukYArka));
-        label17.setText(String.valueOf(this.kayipLitre));
-        label18.setText(String.valueOf(this.kilitPlatformMotorBosluk));
-        label19.setText(String.valueOf(this.valfXBoslukSogutma));
+        label1.setText(String.valueOf(this.kampanaTankArasiBoslukX));
+        label2.setText(String.valueOf(this.kampanaTankArasiBoslukY));
+        label3.setText(String.valueOf(this.kampanaBoslukYOn));
+        label4.setText(String.valueOf(this.tekHizTankArasiBoslukX));
+        label5.setText(String.valueOf(this.tekHizTankArasiBoslukY));
+        label6.setText(String.valueOf(this.tekHizAraBoslukX));
+        label7.setText(String.valueOf(this.tekHizYOn));
+        label8.setText(String.valueOf(this.tekHizBlokX));
+        label9.setText(String.valueOf(this.tekHizBlokY));
+        label10.setText(String.valueOf(this.ciftHizTankArasiBoslukX));
+        label11.setText(String.valueOf(this.ciftHizTankArasiBoslukY));
+        label12.setText(String.valueOf(this.ciftHizAraBoslukX));
+        label13.setText(String.valueOf(this.ciftHizYOn));
+        label14.setText(String.valueOf(this.ciftHizBlokX));
+        label15.setText(String.valueOf(this.ciftHizBlokY));
+        label16.setText(String.valueOf(this.kilitliBlokTankArasiBoslukX));
+        label17.setText(String.valueOf(this.kilitliBlokTankArasiBoslukY));
+        label18.setText(String.valueOf(this.kilitliBlokAraBoslukX));
+        label19.setText(String.valueOf(this.kilitliBlokYOn));
+        label20.setText(String.valueOf(this.kilitliBlokX));
+        label21.setText(String.valueOf(this.kilitliBlokY));
+        label22.setText(String.valueOf(this.kilitMotorTankArasiBoslukX));
+        label23.setText(String.valueOf(this.kilitMotorTankArasiBoslukY));
+        label24.setText(String.valueOf(this.kilitMotorAraBoslukX));
+        label25.setText(String.valueOf(this.kilitMotorYOn));
+        label26.setText(String.valueOf(this.tekHizKilitAyriY));
+        label27.setText(String.valueOf(this.tekHizKilitAyriYOn));
+        label28.setText(String.valueOf(this.ciftHizKilitAyriY));
+        label29.setText(String.valueOf(this.ciftHizKilitAyriYOn));
+        label30.setText(String.valueOf(this.kilitMotorX));
+        label31.setText(String.valueOf(this.kilitMotorY));
+        label32.setText(String.valueOf(this.kayipLitre));
+        label33.setText(String.valueOf(this.defaultHeight));
     }
 
     @Override
