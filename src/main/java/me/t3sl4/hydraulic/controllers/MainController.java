@@ -64,6 +64,9 @@ public class MainController implements Initializable {
     private Button btnHome;
 
     @FXML
+    private Button btnOnlineMode;
+
+    @FXML
     private Button btnKlasik;
 
     @FXML
@@ -202,7 +205,7 @@ public class MainController implements Initializable {
         Utils.openURL(SystemVariables.WEB_URL);
     }
 
-    public void handleClicks(ActionEvent actionEvent) {
+    public void handleClicks(ActionEvent actionEvent) throws IOException {
         if (actionEvent.getSource() == btnHidros) {
             paneSwitch(2);
         }
@@ -221,6 +224,11 @@ public class MainController implements Initializable {
            } else {
                btnKlasik.fire();
            }
+        }
+        if(actionEvent.getSource() == btnOnlineMode) {
+            Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
+            currentStage.close();
+            Utils.openLoginScreen(currentStage);
         }
         if(actionEvent.getSource()==btnKlasik) {
             paneSwitch(1);
@@ -264,10 +272,10 @@ public class MainController implements Initializable {
             Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
             updateHydraulicText();
             hydraulicUnitInit(1);
+            buttonsVBox.getChildren().remove(btnOnlineMode);
         } else {
             kullaniciAdiIsimText.setText("Standart Kullanıcı");
 
-            buttonsVBox.getChildren().remove(leftSubLogo);
             buttonsVBox.getChildren().remove(btnHome);
             buttonsVBox.getChildren().remove(btnProfil);
             buttonsVBox.getChildren().remove(btnSignout);

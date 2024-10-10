@@ -189,6 +189,10 @@ public class Utils {
         SceneUtil.changeScreen("fxml/Register.fxml");
     }
 
+    public static void openLoginScreen(Stage stage) throws IOException {
+        SceneUtil.changeScreen("fxml/Login.fxml");
+    }
+
     public static void openResetPasswordScreen() throws IOException {
         SceneUtil.changeScreen("fxml/ResetPassword.fxml");
     }
