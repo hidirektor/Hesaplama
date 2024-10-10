@@ -213,18 +213,20 @@ public class KlasikController {
                     if(secilenHidrolikKilitDurumu.equals("Var")) {
                         //Hidrolik Kilit Var
                         if(kompanzasyonDurumu.equals("Yok")) {
-                            if(secilenValfTipi.equals("İnişte Çift Hız")) {
-                                //Kilit Ayrı Çift Hız.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_black.png";
-                                imageTextEnable(calculatedX, calculatedY, "kilit_ayri_cift_hiz");
-                            } else if(secilenValfTipi.equals("Kilitli Blok")) {
-                                //Kilitli Blok.pdf
-                                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_white.png")));
-                                imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_white.png";
-                                reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_black.png";
-                                imageTextEnable(calculatedX, calculatedY, "kilitli_blok");
+                            if(secilenValfTipi.equals("İnişte Çift Hız") || secilenValfTipi.equals("Kilitli Blok")) {
+                                if(secilenPompaVal > 28.1) {
+                                    //Kilit Ayrı Çift Hız.pdf
+                                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_white.png")));
+                                    imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_white.png";
+                                    reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_cift_hiz_black.png";
+                                    imageTextEnable(calculatedX, calculatedY, "kilit_ayri_cift_hiz");
+                                } else {
+                                    //Kilitli Blok.pdf
+                                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_white.png")));
+                                    imagePath = "/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_white.png";
+                                    reverseImagePath = "/assets/data/hydraulicUnitData/schematicImages/kilitli_blok_black.png";
+                                    imageTextEnable(calculatedX, calculatedY, "kilitli_blok");
+                                }
                             } else if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                                 //Kilit Ayrı Tek Hız.pdf
                                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/kilit_ayri_tek_hiz_white.png")));
@@ -1102,8 +1104,9 @@ public class KlasikController {
 
             addTextToList("50 mm", 560, 225, 0, 10, Color.WHITE);
             addTextToList("50 mm", 520, 290, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 510, 405, 90, 10, Color.WHITE);
-            addTextToList("50 mm", 575, 395, 0, 11, Color.WHITE);
+            addTextToList("30 mm", 510, 405, 90, 10, Color.WHITE);
+            addTextToList("65 mm", 550, 420, 0, 10, Color.WHITE);
+            addTextToList("125 mm", 575, 395, 0, 11, Color.WHITE);
             addTextToList("Ø25", 550, 370, -45, 10, Color.WHITE);
             addTextToList("Ø30", 650, 370, -45, 10, Color.WHITE);
             addTextToList(secilenValfTipi, 570, 312, 0, 10, Color.WHITE);
@@ -1119,15 +1122,14 @@ public class KlasikController {
 
             addTextToList("40 mm", 565, 215, 0, 10, Color.WHITE);
             addTextToList("100 mm", 530, 255, 0, 10, Color.WHITE);
-            addTextToList("Ø30", 595, 245, 0, 10, Color.WHITE);
-            addTextToList("200 mm", 660, 263, 0, 10, Color.WHITE);
+            addTextToList("Ø110", 595, 245, 0, 10, Color.WHITE);
             addTextToList(getKampanaText(), 745, 260, 0, 10.5, Color.WHITE);
             addTextToList("70 mm", 785, 220, 0, 10, Color.WHITE);
             addTextToList("70 mm", 830, 263, 0, 10, Color.WHITE);
-            addTextToList("260 mm", 590, 315, -90, 10, Color.WHITE);
-            addTextToList("270 mm", 540, 355, 0, 10, Color.WHITE);
+            addTextToList("210 mm", 595, 315, -90, 10, Color.WHITE);
             addTextToList(secilenValfTipi, 570, 395, 0, 10, Color.WHITE);
             addTextToList("50 mm", 520, 415, 90, 10, Color.WHITE);
+            addTextToList("60 mm", 640, 415, 90, 10, Color.WHITE);
             addTextToList("Ø30", 675, 385, -30, 10, Color.WHITE);
             addTextToList("Ø25", 740, 385, -30, 10, Color.WHITE);
             addTextToList("50 mm", 595, 427, 0, 10, Color.WHITE);
@@ -1143,13 +1145,12 @@ public class KlasikController {
             addTextToList("40 mm", 565, 215, 0, 10, Color.WHITE);
             addTextToList("100 mm", 530, 255, 0, 10, Color.WHITE);
             addTextToList("Ø110", 595, 245, 0, 10, Color.WHITE);
-            addTextToList("200 mm", 660, 263, 0, 10, Color.WHITE);
-            addTextToList(getKampanaText(), 745, 260, 0, 10.5, Color.WHITE);
+            addTextToList(getKampanaText(), 745, 275, 0, 10.5, Color.WHITE);
             addTextToList("70 mm", 785, 220, 0, 10, Color.WHITE);
             addTextToList("70 mm", 830, 263, 0, 10, Color.WHITE);
-            addTextToList("230 mm", 580, 315, -90, 10, Color.WHITE);
-            addTextToList("100 mm", 525, 395, 0, 10, Color.WHITE);
-            addTextToList(secilenValfTipi, 615, 370, 0, 10, Color.WHITE);
+            addTextToList("180 mm", 580, 315, -90, 10, Color.WHITE);
+            addTextToList("150 mm", 525, 390, 0, 10, Color.WHITE);
+            addTextToList(secilenValfTipi, 615, 365, 0, 10, Color.WHITE);
             addTextToList("50 mm", 555, 427, 0, 10, Color.WHITE);
             addTextToList("70 mm", 675, 427, 0, 10, Color.WHITE);
             addTextToList("100 mm", 620, 410, 0, 10, Color.WHITE);
