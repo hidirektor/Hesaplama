@@ -127,7 +127,7 @@ public class RegisterController implements Initializable {
     }
 
     @FXML
-    private void kayitOlma() throws IOException {
+    private void kayitOlma() {
         Stage stage = (Stage) kullaniciAdiText.getScene().getWindow();
         String userRole = "NORMAL";
         String userName = kullaniciAdiText.getText();
