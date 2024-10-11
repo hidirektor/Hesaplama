@@ -200,7 +200,7 @@ public class KlasikController {
                 Image image = null;
 
                 if(secilenSogutmaDurumu.equals("Var")) {
-                    if (secilenHidrolikKilitDurumu.equals("Var")) {
+                    if (secilenKilitMotor != null) {
                         //Hidrolik Kilit Var
                         if(secilenValfTipi.equals("İnişte Tek Hız") || secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                             image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/schematicImages/sogutma_kilitli_tek_hiz_white.png")));
@@ -229,7 +229,7 @@ public class KlasikController {
                     }
                 } else {
                     //Yeni Sistem:
-                    if(secilenHidrolikKilitDurumu.equals("Var")) {
+                    if(secilenKilitMotor != null) {
                         //Hidrolik Kilit Var
                         if(kompanzasyonDurumu.equals("Yok")) {
                             if(secilenValfTipi.equals("İnişte Çift Hız") || secilenValfTipi.equals("Kilitli Blok")) {
@@ -712,22 +712,26 @@ public class KlasikController {
             eskiH = h;
         }
 
+        System.out.println("X: " + x + " Y: " + y + " H: " + h);
+
         Kabin finalTank = null;
         for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
-            int litre = selectedTank.getKabinHacim();
-            int tempX = selectedTank.getKabinX();
-            int tempY = selectedTank.getKabinY();
-            int kabinYukseklik = selectedTank.getKabinH();
+            int selectedTankKabinHacim = selectedTank.getKabinHacim();
+            int selectedTankKabinX = selectedTank.getGecisX();
+            int selectedTankKabinY = selectedTank.getGecisY();
+            int selectedTankKabinH = selectedTank.getGecisH();
+
+            System.out.println("L: " + selectedTankKabinHacim + "\nX: " + selectedTankKabinX + "\nY: " + selectedTankKabinY + "\nH: " + selectedTankKabinH);
 
             if(hesaplananHacim > girilenTankKapasitesiMiktari) {
-                if(x <= tempX && y <= tempY) {
+                if(x <= selectedTankKabinX && y <= selectedTankKabinY) {
                     finalTank = selectedTank;
                     break;
                 }
             } else {
-                if (litre >= girilenTankKapasitesiMiktari) {
-                    if(hesaplananHacim != litre) {
-                        if(x < tempX && y < tempY) {
+                if (selectedTankKabinHacim >= girilenTankKapasitesiMiktari) {
+                    if(hesaplananHacim != selectedTankKabinHacim) {
+                        if(x < selectedTankKabinX && y < selectedTankKabinY) {
                             finalTank = selectedTank;
                             break;
                         }
