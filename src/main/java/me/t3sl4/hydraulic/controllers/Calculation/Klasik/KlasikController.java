@@ -1176,7 +1176,7 @@ public class KlasikController {
 
             addTextToList("70 mm", 565, 225, 0, 11, Color.WHITE);
             addTextToList("100 mm", 520, 300, 0, 11, Color.WHITE);
-            addTextToList("35 mm", 510, 405, 90, 10, Color.WHITE);
+            addTextToList("30 mm", 510, 405, 90, 10, Color.WHITE);
             addTextToList("150 mm", 580, 395, 0, 11, Color.WHITE);
             addTextToList("65 mm", 545, 415, 0, 11, Color.WHITE);
             addTextToList("Ø25", 550, 370, -45, 10, Color.WHITE);

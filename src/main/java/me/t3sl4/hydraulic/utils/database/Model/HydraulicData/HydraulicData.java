@@ -2,7 +2,10 @@ package me.t3sl4.hydraulic.utils.database.Model.HydraulicData;
 
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class HydraulicData {
     public int kampanaTankArasiBoslukX;
@@ -43,7 +46,7 @@ public class HydraulicData {
     //Yeni sistem değişkenleri
 
     public ArrayList<String> uniteTipiDegerleri = new ArrayList<>(); //Jsondan gelen değerler
-    public List<Kabin> inputTanks = new ArrayList<>(); //Jsondan gelen tank verileri
+    public LinkedList<Kabin> inputTanks = new LinkedList<>(); //Jsondan gelen tank verileri
 
     /*
     Classic Side
