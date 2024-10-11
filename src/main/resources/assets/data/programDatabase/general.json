@@ -31,11 +31,11 @@
     "kilitMotorYOn": "60",
     "tekHizKilitAyriY": "10",
     "tekHizKilitAyriYOn": "50",
-    "ciftHizKilitAyriY": "50",
-    "ciftHizKilitAyriYOn": "40",
+    "ciftHizKilitAyriY": "40",
+    "ciftHizKilitAyriYOn": "50",
     "kilitMotorX": "110",
     "kilitMotorY": "220",
     "kayipLitre": "11",
-    "defaultHeight": "350"
+    "defaultHeight": "300"
   }
 }

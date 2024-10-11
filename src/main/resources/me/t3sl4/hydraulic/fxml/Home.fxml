@@ -248,6 +248,11 @@
                                 </VBox>
                             </content>
                         </ScrollPane>
+                      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="900.0" layoutY="13.0" onMouseClicked="#minimizeProgram" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../../../../assets/images/icons/ikon_minimize.png" />
+                          </image>
+                      </ImageView>
                     </children>
                 </Pane>
             </children>

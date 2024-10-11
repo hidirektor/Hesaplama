@@ -10,32 +10,32 @@ public class Kabin {
 
     public int kabinHacim;
 
-    public int gecisX;
-    public int gecisY;
-    public int gecisH;
-
     public int kabinX;
     public int kabinY;
     public int kabinH;
 
+    public int tankX;
+    public int tankY;
+    public int tankH;
+
     public String malzemeKodu;
     public String malzemeAdi;
 
-    public Kabin(String tankName, String kabinName, int kabinHacim, int gecisX, int gecisY, int gecisH, int kabinX, int kabinY, int kabinH, String malzemeKodu, String malzemeAdi) {
+    public Kabin(String tankName, String kabinName, int kabinHacim, int kabinX, int kabinY, int kabinH, int tankX, int tankY, int tankH, String malzemeKodu, String malzemeAdi) {
         this.tankName = tankName;
         this.kabinName = kabinName;
         this.kabinHacim = kabinHacim;
-        this.gecisX = gecisX;
-        this.gecisY = gecisY;
-        this.gecisH = gecisH;
         this.kabinX = kabinX;
         this.kabinY = kabinY;
         this.kabinH = kabinH;
+        this.tankX = tankX;
+        this.tankY = tankY;
+        this.tankH = tankH;
         this.malzemeKodu = malzemeKodu;
         this.malzemeAdi = malzemeAdi;
 
-        this.gecisOlculeri = gecisX + "x" + gecisY + "x" + gecisH;
-        this.kabinOlculeri = kabinX + "x" + kabinY + "x" + kabinH;
+        this.gecisOlculeri = kabinX + "x" + kabinY + "x" + kabinH;
+        this.kabinOlculeri = tankX + "x" + tankY + "x" + tankH;
     }
 
     public String getTankName() {
@@ -78,30 +78,6 @@ public class Kabin {
         this.kabinHacim = kabinHacim;
     }
 
-    public int getGecisX() {
-        return gecisX;
-    }
-
-    public void setGecisX(int gecisX) {
-        this.gecisX = gecisX;
-    }
-
-    public int getGecisY() {
-        return gecisY;
-    }
-
-    public void setGecisY(int gecisY) {
-        this.gecisY = gecisY;
-    }
-
-    public int getGecisH() {
-        return gecisH;
-    }
-
-    public void setGecisH(int gecisH) {
-        this.gecisH = gecisH;
-    }
-
     public int getKabinX() {
         return kabinX;
     }
@@ -114,7 +90,7 @@ public class Kabin {
         return kabinY;
     }
 
-    public void setKabinY(int kabinY) {
+    public void setKabinY(int gecisY) {
         this.kabinY = kabinY;
     }
 
@@ -124,6 +100,30 @@ public class Kabin {
 
     public void setKabinH(int kabinH) {
         this.kabinH = kabinH;
+    }
+
+    public int getTankX() {
+        return tankX;
+    }
+
+    public void setTankX(int tankX) {
+        this.tankX = tankX;
+    }
+
+    public int getTankY() {
+        return tankY;
+    }
+
+    public void setTankY(int tankY) {
+        this.tankY = tankY;
+    }
+
+    public int getTankH() {
+        return tankH;
+    }
+
+    public void setTankH(int tankH) {
+        this.tankH = tankH;
     }
 
     public String getMalzemeKodu() {

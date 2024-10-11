@@ -2,6 +2,7 @@ package me.t3sl4.hydraulic.controllers.Calculation.Hidros;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,6 +17,7 @@ import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.controllers.Calculation.Hidros.PartList.HidrosParcaController;
+import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
@@ -833,6 +835,17 @@ public class HidrosController {
         int height = 430;
 
         if(hesaplamaBitti) {
+            String generalCyclinderString = showCyclinderPopup();
+            String numberPart = generalCyclinderString.replaceAll("[^0-9]", "");
+            String stringPart = generalCyclinderString.replaceAll("[0-9]", "");
+
+            int selectedCylinders = Integer.parseInt(numberPart);
+            String isPressureValf = stringPart;
+            if (selectedCylinders == -1 && isPressureValf.isEmpty()) {
+                Utils.showErrorMessage("Silindir sayısı seçilmedi. İşlem iptal edildi.");
+                return;
+            }
+
             pdfShaper(0);
             PDFUtil.coords2Png(startX, startY, width, height, exportButton);
             pdfShaper(1);
@@ -966,6 +979,42 @@ public class HidrosController {
                     kabinKodu = "KDB-20 (BALİNA)";
                 }
             }
+        }
+    }
+
+    private String showCyclinderPopup() {
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
+        try {
+            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CylinderCount.fxml"));
+            Parent root = loader.load();
+
+            CylinderController controller = loader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Silindir Seçimi");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.getIcons().add(icon);
+            stage.showAndWait();
+
+            if (controller.isConfirmed()) {
+                return controller.getFinalResult();
+            } else {
+                return null;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Utils.showErrorMessage("Silindir seçimi sırasında bir hata oluştu.");
+            return null;
+        }
+    }
+
+    public void minimizeProgram() {
+        if (exportButton != null) {
+            Stage stage = (Stage) exportButton.getScene().getWindow();
+            stage.setIconified(true);
         }
     }
 

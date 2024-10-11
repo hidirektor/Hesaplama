@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -10,6 +11,11 @@
     <children>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="700.0" prefWidth="944.0" VBox.vgrow="ALWAYS">
             <children>
+                <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="907.0" layoutY="10.0" onMouseClicked="#minimizeProgram" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../assets/images/icons/ikon_minimize.png" />
+                    </image>
+                </ImageView>
                 <Text fill="#B7C3D7" layoutX="43.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sipariş Numarası" />
                 <TextField fx:id="siparisNumarasi" layoutX="14.0" layoutY="88.0" onKeyPressed="#tankKapasitesiBackSpacePressed" onKeyTyped="#tankKapasitesiEntered" prefWidth="150.0" promptText="Sipariş Numarası" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
                 <Text fill="#B7C3D7" layoutX="242.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor" />
@@ -30,11 +36,11 @@
                 <ComboBox fx:id="kilitMotorComboBox" disable="true" layoutX="353.0" layoutY="153.0" onAction="#kilitMotorPressed" prefWidth="150.0" promptText="Kilit Motor" />
                 <Text fx:id="kilitPompaText" fill="#B7C3D7" layoutX="560.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Pompa" />
                 <ComboBox fx:id="kilitPompaComboBox" disable="true" layoutX="515.0" layoutY="153.0" onAction="#kilitPompaPressed" prefWidth="150.0" promptText="Kilit Pompa" />
-                <Button fx:id="hesaplaButton" layoutX="753.0" layoutY="31.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
-                <Button fx:id="temizleButton" layoutX="838.0" layoutY="31.0" mnemonicParsing="false" onAction="#temizlemeIslemi" style="-fx-background-color: #1761ab;" text="Temizle" />
-                <Button fx:id="exportButton" disable="true" layoutX="721.0" layoutY="91.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
-                <Button fx:id="parcaListesiButton" disable="true" layoutX="832.0" layoutY="91.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
-            <Button fx:id="kaydetButton" layoutX="770.0" layoutY="150.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Sunucuya Aktar" />
+                <Button fx:id="hesaplaButton" layoutX="733.0" layoutY="62.0" mnemonicParsing="false" onAction="#hesaplaFunc" style="-fx-background-color: #1761ab;" text="Hesapla" />
+                <Button fx:id="temizleButton" layoutX="845.0" layoutY="62.0" mnemonicParsing="false" onAction="#temizlemeIslemi" style="-fx-background-color: #1761ab;" text="Temizle" />
+                <Button fx:id="exportButton" disable="true" layoutX="723.0" layoutY="107.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
+                <Button fx:id="parcaListesiButton" disable="true" layoutX="832.0" layoutY="107.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
+            <Button fx:id="kaydetButton" layoutX="764.0" layoutY="153.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Sunucuya Aktar" />
                 <TableView fx:id="sonucTablo" layoutY="505.0" prefHeight="195.0" prefWidth="944.0">
                     <columns>
                         <TableColumn fx:id="sonucTabloSatir1" editable="false" prefWidth="246.0" sortable="false" />

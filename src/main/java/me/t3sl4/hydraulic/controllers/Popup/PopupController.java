@@ -3,6 +3,7 @@ package me.t3sl4.hydraulic.controllers.Popup;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -191,5 +192,12 @@ public class PopupController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Gerekli popup işlemleri...
+    }
+
+    public void minimizeProgram() {
+        if (label31 != null) {
+            Stage stage = (Stage) label31.getScene().getWindow();
+            stage.setIconified(true);
+        }
     }
 }

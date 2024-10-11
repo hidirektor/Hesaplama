@@ -486,17 +486,6 @@ public class MainController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
-
-                double paneWidth = pnlMenus.getWidth();
-                double paneHeight = pnlMenus.getHeight();
-
-                double parametreWidth = parametrePane.getPrefWidth();
-                double parametreHeight = parametrePane.getPrefHeight();
-
-                double centerX = (paneWidth - parametreWidth) / 2;
-                double centerY = (paneHeight - parametreHeight) / 2;
-                parametrePane.setLayoutX(centerX-100);
-                parametrePane.setLayoutY(centerY+20);
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);
             }
@@ -537,6 +526,13 @@ public class MainController implements Initializable {
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getMessage(), e);
             }
+        }
+    }
+
+    public void minimizeProgram() {
+        if (pnlMenus != null) {
+            Stage stage = (Stage) pnlMenus.getScene().getWindow();
+            stage.setIconified(true);
         }
     }
 }

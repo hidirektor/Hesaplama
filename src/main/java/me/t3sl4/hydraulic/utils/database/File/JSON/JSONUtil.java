@@ -37,16 +37,16 @@ public class JSONUtil {
                 String tankName = cabinet.getString("tankName");
                 String kabinName = cabinet.getString("kabinName");
                 int kabinHacim = cabinet.getInt("kabinHacim");
-                int gecisX = cabinet.getInt("gecisX (G)");
-                int gecisY = cabinet.getInt("gecisY (D)");
-                int gecisH = cabinet.getInt("gecisH (Y)");
                 int kabinX = cabinet.getInt("kabinX (G)");
                 int kabinY = cabinet.getInt("kabinY (D)");
                 int kabinH = cabinet.getInt("kabinH (Y)");
+                int tankX = cabinet.getInt("tankX (G)");
+                int tankY = cabinet.getInt("tankY (D)");
+                int tankH = cabinet.getInt("tankH (Y)");
                 String malzemeKodu = cabinet.getString("malzemeKodu");
                 String malzemeAdi = cabinet.getString("malzemeAdi");
 
-                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, gecisX, gecisY, gecisH, kabinX, kabinY, kabinH, malzemeKodu, malzemeAdi);
+                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinX, kabinY, kabinH, tankX, tankY, tankH, malzemeKodu, malzemeAdi);
                 hydraulicData.inputTanks.add(tank);
             }
 
