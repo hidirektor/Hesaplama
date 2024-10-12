@@ -12,12 +12,13 @@ import java.util.Map;
 
 public class YamlUtil {
 
-    public YamlUtil(String classicComboPath, String powerPackComboPath, String classicPartPath, String powerpackPartHidrosPath, String powerpackPartIthalPath) {
+    public YamlUtil(String classicComboPath, String powerPackComboPath, String classicPartPath, String powerpackPartHidrosPath, String powerpackPartIthalPath, String schematicTextsPath) {
         loadClassicCombo(classicComboPath);
         loadPowerPackCombo(powerPackComboPath);
         loadClassicPartList(classicPartPath);
         loadPowerPackHidrosPartList(powerpackPartHidrosPath);
         loadPowerPackIthalPartList(powerpackPartIthalPath);
+        loadSchematicTexts(schematicTextsPath);
     }
 
     public void loadClassicCombo(String filePath) {
@@ -87,6 +88,22 @@ public class YamlUtil {
     public void loadPowerPackIthalPartList(String filePath) {
         //TODO
         //Power pack parçaları eklenecek
+    }
+
+    public void loadSchematicTexts(String filePath) {
+        try {
+            loadCiftHizTexts(filePath);
+            loadKilitAyriCiftHizTexts(filePath);
+            loadKilitAyriTekHizTexts(filePath);
+            loadKilitliBlokTexts(filePath);
+            loadTekHizKompanzasyonArtiTekHizTexts(filePath);
+            loadSogutmaKilitsizCiftHizTexts(filePath);
+            loadSogutmaKilitliCiftHizTexts(filePath);
+            loadSogutmaKilitsizTekHizTexts(filePath);
+            loadSogutmaKilitliTekHizTexts(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadMotor(String filePath) throws FileNotFoundException {
@@ -1074,6 +1091,195 @@ public class YamlUtil {
                 }
 
                 SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelCiftValf.put(kaplinKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadCiftHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("cift_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicCiftHizTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadKilitAyriCiftHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("kilit_ayri_cift_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicKilitAyriCiftHizTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadKilitAyriTekHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("kilit_ayri_tek_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicKilitAyriTekHizTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadKilitliBlokTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("kilitli_blok");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicKilitliBlokTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadTekHizKompanzasyonArtiTekHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("tek_hiz_kompanzasyon_arti_tek_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadSogutmaKilitsizCiftHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitsiz_cift_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadSogutmaKilitliCiftHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitsiz_cift_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadSogutmaKilitsizTekHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitsiz_tek_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.put(key, combinedValue);
+            }
+        }
+    }
+
+    public void loadSogutmaKilitliTekHizTexts(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitsiz_tek_hiz");
+
+            for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> details = (Map<String, String>) entry.getValue();
+
+                String ciftHizKey = details.get("key");
+                String ciftHizValue = details.get("value");
+
+                String combinedValue = ciftHizKey + ";" + ciftHizValue;
+                SystemVariables.getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.put(key, combinedValue);
             }
         }
     }

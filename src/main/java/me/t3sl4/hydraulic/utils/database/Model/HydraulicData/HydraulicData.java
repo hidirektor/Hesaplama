@@ -119,8 +119,33 @@ public class HydraulicData {
     public HashMap<String, HashMap<String, String>> hidrosIthalParcaTankDikey = new HashMap<>();
     public HashMap<String, HashMap<String, String>> hidrosIthalParcaTankYatay = new HashMap<>();
 
+    //2D Texts
+    public HashMap<String, String> schematicCiftHizTexts = new HashMap<>();
+    public HashMap<String, String> schematicKilitAyriCiftHizTexts = new HashMap<>();
+    public HashMap<String, String> schematicKilitAyriTekHizTexts = new HashMap<>();
+    public HashMap<String, String> schematicKilitliBlokTexts = new HashMap<>();
+    public HashMap<String, String> schematicTekHizKompanzasyonArtiTekHizTexts = new HashMap<>();
+    public HashMap<String, String> schematicSogutmaKilitsizCiftHizTexts = new HashMap<>();
+    public HashMap<String, String> schematicSogutmaKilitliCiftHizTexts = new HashMap<>();
+    public HashMap<String, String> schematicSogutmaKilitsizTekHizTexts = new HashMap<>();
+    public HashMap<String, String> schematicSogutmaKilitliTekHizTexts = new HashMap<>();
+
     public HydraulicData() {
         //TODO
         //data update
+    }
+
+    public String getKey(String combinedValue) {
+        if (combinedValue != null && combinedValue.contains(";")) {
+            return combinedValue.split(";")[0]; // ";" ile ayırıp ilk kısmı döndür
+        }
+        return null;
+    }
+
+    public String getValue(String combinedValue) {
+        if (combinedValue != null && combinedValue.contains(";")) {
+            return combinedValue.split(";")[1]; // ";" ile ayırıp ikinci kısmı döndür
+        }
+        return null;
     }
 }

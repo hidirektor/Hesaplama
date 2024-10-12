@@ -43,6 +43,7 @@ public class FileUtil {
         SystemVariables.classicPartsDBPath = SystemVariables.dataFileLocalPath + "classic_parts.yml";
         SystemVariables.powerPackPartsHidrosDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_hidros.yml";
         SystemVariables.powerPackPartsIthalDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_ithal.yml";
+        SystemVariables.schematicTextsDBPath = SystemVariables.dataFileLocalPath + "schematic_texts.yml";
 
         try {
             // 1. OnderGrup klasörünü oluştur
@@ -63,6 +64,7 @@ public class FileUtil {
             fileCopy("/assets/data/programDatabase/classic_parts.yml", SystemVariables.classicPartsDBPath);
             fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath);
             fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath);
+            fileCopy("/assets/data/programDatabase/schematic_texts.yml", SystemVariables.schematicTextsDBPath);
 
             // 5. data klasörünün içine excelFiles ve schematicFiles klasörlerini oluştur
             createDirectory(SystemVariables.excelFileLocalPath);
@@ -77,7 +79,7 @@ public class FileUtil {
 
         // 7. Dataları yükle
         JSONUtil.loadJSONData();
-        new YamlUtil(SystemVariables.classicComboDBPath, SystemVariables.powerPackComboDBPath, SystemVariables.classicPartsDBPath, SystemVariables.powerPackPartsHidrosDBPath, SystemVariables.powerPackPartsIthalDBPath);
+        new YamlUtil(SystemVariables.classicComboDBPath, SystemVariables.powerPackComboDBPath, SystemVariables.classicPartsDBPath, SystemVariables.powerPackPartsHidrosDBPath, SystemVariables.powerPackPartsIthalDBPath, SystemVariables.schematicTextsDBPath);
     }
 
     // Yardımcı metotlar
