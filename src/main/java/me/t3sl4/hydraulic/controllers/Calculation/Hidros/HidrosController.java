@@ -1,8 +1,6 @@
 package me.t3sl4.hydraulic.controllers.Calculation.Hidros;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -10,12 +8,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
-import me.t3sl4.hydraulic.controllers.Calculation.Hidros.PartList.HidrosParcaController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
@@ -24,7 +19,6 @@ import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTPRequest;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -138,8 +132,6 @@ public class HidrosController {
 
     public boolean hesaplamaBitti = false;
 
-    private double x, y;
-
     public String secilenUniteTipi = "Hidros";
 
     public void initialize() {
@@ -197,30 +189,7 @@ public class HidrosController {
     public void parcaListesiGoster() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         if(hesaplamaBitti) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("fxml/HidrosParcaListesi.fxml"));
-                VBox root = fxmlLoader.load();
-                HidrosParcaController hidrosParcaController = fxmlLoader.getController();
-                Stage popupStage = new Stage();
-                popupStage.initModality(Modality.APPLICATION_MODAL);
-                popupStage.initStyle(StageStyle.UNDECORATED);
-                popupStage.setScene(new Scene(root));
-                popupStage.getIcons().add(icon);
-
-                root.setOnMousePressed(event -> {
-                    x = event.getSceneX();
-                    y = event.getSceneY();
-                });
-                root.setOnMouseDragged(event -> {
-
-                    popupStage.setX(event.getScreenX() - x);
-                    popupStage.setY(event.getScreenY() - y);
-
-                });
-                popupStage.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Utils.showParcaListesiPopup(icon, SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/HidrosParcaListesi.fxml");
         } else {
             Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }

@@ -10,10 +10,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
+import me.t3sl4.hydraulic.controllers.Calculation.Klasik.PartList.KlasikParcaController;
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -26,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
 
 public class Utils {
@@ -202,6 +205,49 @@ public class Utils {
             e.printStackTrace();
             Utils.showErrorMessage("Silindir seçimi sırasında bir hata oluştu.", currentScreen, currentStage);
             return null;
+        }
+    }
+
+    public static void showParcaListesiPopup(Image icon, Screen currentScreen, String fxmlPath) {
+        AtomicReference<Double> screenX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> screenY = new AtomicReference<>((double) 0);
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource(fxmlPath));
+            VBox root = fxmlLoader.load();
+            KlasikParcaController parcaController = fxmlLoader.getController();
+
+            Stage popupStage = new Stage();
+            Rectangle2D bounds = currentScreen.getVisualBounds();
+            popupStage.setOnShown(event -> {
+                double stageWidth = popupStage.getWidth();
+                double stageHeight = popupStage.getHeight();
+
+                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+                popupStage.setX(centerX);
+                popupStage.setY(centerY);
+            });
+
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.initStyle(StageStyle.UNDECORATED);
+            popupStage.setScene(new Scene(root));
+            popupStage.getIcons().add(icon);
+
+            root.setOnMousePressed(event -> {
+                screenX.set(event.getSceneX());
+                screenY.set(event.getSceneY());
+            });
+            root.setOnMouseDragged(event -> {
+
+                popupStage.setX(event.getScreenX() - screenX.get());
+                popupStage.setY(event.getScreenY() - screenY.get());
+
+            });
+            popupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

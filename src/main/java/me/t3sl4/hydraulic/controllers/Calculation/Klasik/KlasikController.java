@@ -1,8 +1,6 @@
 package me.t3sl4.hydraulic.controllers.Calculation.Klasik;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -15,13 +13,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
-import me.t3sl4.hydraulic.controllers.Calculation.Klasik.PartList.KlasikParcaController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -32,7 +27,6 @@ import me.t3sl4.hydraulic.utils.service.HTTPRequest;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
@@ -146,8 +140,6 @@ public class KlasikController {
     public static String atananHT;
 
     private ArrayList<Text> sonucTexts = new ArrayList<>();
-
-    double screenX, screenY;
 
     public static String atananKabinFinal = "";
     public static String gecisOlculeriFinal = "";
@@ -435,30 +427,7 @@ public class KlasikController {
     public void parcaListesiGoster() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         if(hesaplamaBitti) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("fxml/ParcaListesi.fxml"));
-                VBox root = fxmlLoader.load();
-                KlasikParcaController parcaController = fxmlLoader.getController();
-                Stage popupStage = new Stage();
-                popupStage.initModality(Modality.APPLICATION_MODAL);
-                popupStage.initStyle(StageStyle.UNDECORATED);
-                popupStage.setScene(new Scene(root));
-                popupStage.getIcons().add(icon);
-
-                root.setOnMousePressed(event -> {
-                    screenX = event.getSceneX();
-                    screenY = event.getSceneY();
-                });
-                root.setOnMouseDragged(event -> {
-
-                    popupStage.setX(event.getScreenX() - screenX);
-                    popupStage.setY(event.getScreenY() - screenY);
-
-                });
-                popupStage.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Utils.showParcaListesiPopup(icon, SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/ParcaListesi.fxml");
         } else {
             Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }
@@ -606,8 +575,6 @@ public class KlasikController {
         int x=0, y=0, h=0;
 
         int atananHacim=0;
-
-        girilenTankKapasitesiMiktari = Math.max(girilenTankKapasitesiMiktari, 40);
 
         System.out.println("--------Hesaplama Başladı--------");
         if(Objects.equals(secilenSogutmaDurumu, "Var")) {
