@@ -2,8 +2,10 @@ package me.t3sl4.hydraulic.controllers.Popup;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.general.SceneUtil;
 
 public class CylinderController {
 
@@ -12,6 +14,9 @@ public class CylinderController {
 
     @FXML
     private ComboBox<String> basincSalteriComboBox;
+
+    @FXML
+    private Label screenDetectorLabel;
 
     private int selectedCylinders = -1;
     private String pressureValfStatus = "";
@@ -48,10 +53,10 @@ public class CylinderController {
                 isConfirmed = true;
                 closePopup();
             } catch (NumberFormatException e) {
-                Utils.showErrorMessage("Geçerli bir silindir sayısı seçin.");
+                Utils.showErrorMessage("Geçerli bir silindir sayısı seçin.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
             }
         } else {
-            Utils.showErrorMessage("Lütfen bir silindir sayısı seçin.");
+            Utils.showErrorMessage("Lütfen bir silindir sayısı seçin.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }
     }
 

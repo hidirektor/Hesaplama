@@ -2,13 +2,19 @@ package me.t3sl4.hydraulic.utils;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.scene.image.Image;
+import javafx.stage.*;
 import javafx.util.Duration;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
+import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
@@ -19,48 +25,34 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
-import java.util.logging.Logger;
 
 public class Utils {
 
-    private static final Logger logger = Logger.getLogger(Utils.class.getName());
-    
-    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
-        for (Map.Entry<T, E> entry : map.entrySet()) {
-            if (Objects.equals(value, entry.getValue())) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    public static String getCurrentDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
-
-    public static void showErrorMessage(String hataMesaji) {
+    public static void showErrorMessage(String hataMesaji, Screen targetScreen, Stage currentStage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initStyle(StageStyle.UNDECORATED);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(currentStage);
         alert.setTitle("Hata");
         alert.setHeaderText(null);
         alert.setContentText(hataMesaji);
+
+        centerAlertOnScreen(alert, targetScreen);
         alert.showAndWait();
     }
 
-    public static void showSuccessMessage(String basariMesaji) {
+    public static void showSuccessMessage(String basariMesaji, Screen targetScreen, Stage currentStage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initStyle(StageStyle.UNDECORATED);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(currentStage);
         alert.setTitle("Başarılı !");
         alert.setHeaderText(null);
         alert.setContentText(basariMesaji);
+
+        centerAlertOnScreen(alert, targetScreen);
         alert.showAndWait();
     }
 
@@ -75,6 +67,22 @@ public class Utils {
 
         Timeline timeline = new Timeline(keyFrame);
         timeline.play();
+    }
+
+    private static void centerAlertOnScreen(Alert alert, Screen targetScreen) {
+        alert.setOnShown(event -> {
+            Window alertWindow = alert.getDialogPane().getScene().getWindow();
+
+            Rectangle2D bounds = targetScreen.getVisualBounds();
+            double stageWidth = alertWindow.getWidth();
+            double stageHeight = alertWindow.getHeight();
+
+            double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+            double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+            alertWindow.setX(centerX);
+            alertWindow.setY(centerY);
+        });
     }
 
     public static boolean netIsAvailable() {
@@ -97,57 +105,6 @@ public class Utils {
         } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public static String getStockCodeFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
-        String stockCode = null;
-        HashMap<String, String> innerMap = new HashMap<>();
-
-        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
-            String key = entry.getKey().trim();
-            if(searchKey.trim().equals(key)) {
-                innerMap = entry.getValue();
-
-                stockCode = innerMap.get("B");
-                break;
-            }
-        }
-
-        return stockCode;
-    }
-
-    public static String getMaterialFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
-        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
-            String key = entry.getKey().trim();
-            if(searchKey.trim().equals(key)) {
-                return key;
-            }
-        }
-        return null;
-    }
-
-    public static String getAmountFromDoubleHashMap(HashMap<String, HashMap<String, String>> inputHash, String searchKey) {
-        String stockCode = null;
-        HashMap<String, String> innerMap;
-
-        for (Map.Entry<String, HashMap<String, String>> entry : inputHash.entrySet()) {
-            String key = entry.getKey().trim();
-            if(searchKey.trim().equals(key)) {
-                innerMap = entry.getValue();
-
-                stockCode = innerMap.get("C");
-                break;
-            }
-        }
-
-        return stockCode;
-    }
-
-    public static String float2String(String inputStr) {
-        float floatAdet = Float.parseFloat(inputStr);
-        int tamSayi = (int) floatAdet;
-
-        return String.valueOf(tamSayi);
     }
 
     public static double string2Double(String inputVal) {
@@ -180,21 +137,72 @@ public class Utils {
 
     public static void openMainScreen(Label sceneLabel) throws IOException {
         Stage stage = (Stage) sceneLabel.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(sceneLabel);
         stage.close();
 
-        SceneUtil.changeScreen("fxml/Home.fxml");
+        SceneUtil.changeScreen("fxml/Home.fxml", currentScreen);
     }
 
-    public static void openRegisterScreen(Stage stage) throws IOException {
-        SceneUtil.changeScreen("fxml/Register.fxml");
+    public static void openRegisterScreen(Label sceneLabel) throws IOException {
+        Screen currentScreen = SceneUtil.getScreenOfNode(sceneLabel);
+
+        SceneUtil.changeScreen("fxml/Register.fxml", currentScreen);
     }
 
-    public static void openLoginScreen(Stage stage) throws IOException {
-        SceneUtil.changeScreen("fxml/Login.fxml");
+    public static void openLoginScreen(Label sceneLabel) throws IOException {
+        Screen currentScreen = SceneUtil.getScreenOfNode(sceneLabel);
+
+        SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
 
-    public static void openResetPasswordScreen() throws IOException {
-        SceneUtil.changeScreen("fxml/ResetPassword.fxml");
+    public static void openResetPasswordScreen(Label sceneLabel) throws IOException {
+        Screen currentScreen = SceneUtil.getScreenOfNode(sceneLabel);
+
+        SceneUtil.changeScreen("fxml/ResetPassword.fxml", currentScreen);
+    }
+
+    public static String showCyclinderPopup(Screen currentScreen, Stage currentStage) {
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
+        try {
+            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CylinderCount.fxml"));
+            Parent root = loader.load();
+
+            CylinderController controller = loader.getController();
+
+            Stage stage = new Stage();
+
+            Rectangle2D bounds = currentScreen.getVisualBounds();
+            stage.setOnShown(event -> {
+                double stageWidth = stage.getWidth();
+                double stageHeight = stage.getHeight();
+
+                // Calculate the center position
+                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+                // Set the stage position
+                stage.setX(centerX);
+                stage.setY(centerY);
+            });
+
+            stage.setTitle("Silindir Seçimi");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.getIcons().add(icon);
+            stage.showAndWait();
+
+            if (controller.isConfirmed()) {
+                return controller.getFinalResult();
+            } else {
+                return null;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Utils.showErrorMessage("Silindir seçimi sırasında bir hata oluştu.", currentScreen, currentStage);
+            return null;
+        }
     }
 
     public static void offlineMod(Label lblErrors, Runnable onComplete) {
@@ -223,15 +231,6 @@ public class Utils {
 
         timeline.getKeyFrames().add(keyFrame);
         timeline.playFromStart();
-    }
-
-    public static Kabin findTankByTankName(String tankName) {
-        for (Kabin tank : SystemVariables.getLocalHydraulicData().inputTanks) {
-            if (tank.getTankName().equals(tankName)) {
-                return tank;
-            }
-        }
-        return null;
     }
 
     public static Kabin findTankByKabinName(String kabinName) {

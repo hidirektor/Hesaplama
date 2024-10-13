@@ -2,7 +2,6 @@ package me.t3sl4.hydraulic.controllers.Calculation.Klasik;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,11 +22,11 @@ import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.controllers.Calculation.Klasik.PartList.KlasikParcaController;
-import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
+import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTPRequest;
 import org.jetbrains.annotations.Nullable;
@@ -121,6 +120,9 @@ public class KlasikController {
     @FXML
     private VBox klasikVBox;
 
+    @FXML
+    private Label screenDetectorLabel;
+
     /*
     Seçilen Değerler:
      */
@@ -172,7 +174,7 @@ public class KlasikController {
         int calculatedX, calculatedY, calculatedH, calculatedHacim;
 
         if (checkComboBox()) {
-            Utils.showErrorMessage("Lütfen tüm girdileri kontrol edin.");
+            Utils.showErrorMessage("Lütfen tüm girdileri kontrol edin.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         } else {
             sonucEkraniTemizle();
             imageTextDisable();
@@ -280,7 +282,7 @@ public class KlasikController {
 
                 hesaplamaBitti = true;
             } else {
-                Utils.showErrorMessage("Hesaplama sonucu beklenmeyen bir hata oluştu.");
+                Utils.showErrorMessage("Hesaplama sonucu beklenmeyen bir hata oluştu.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
             }
         }
     }
@@ -303,16 +305,16 @@ public class KlasikController {
             HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.getAccessToken(), Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
-                    Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.");
+                    Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
                 }
 
                 @Override
                 public void onFailure() {
-                    Utils.showErrorMessage("Hidrolik ünitesi kaydedilemedi !");
+                    Utils.showErrorMessage("Hidrolik ünitesi kaydedilemedi !", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
                 }
             });
         } else {
-            Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin");
+            Utils.showErrorMessage("Lütfen PDF ve parça listesi oluşturduktan sonra kaydedin", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }
     }
 
@@ -458,7 +460,7 @@ public class KlasikController {
                 e.printStackTrace();
             }
         } else {
-            Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !");
+            Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }
     }
 
@@ -481,14 +483,21 @@ public class KlasikController {
         int schematicImageHeight = 246;
 
         if(hesaplamaBitti) {
-            String generalCyclinderString = showCyclinderPopup();
-            String numberPart = generalCyclinderString.replaceAll("[^0-9]", "");
-            String stringPart = generalCyclinderString.replaceAll("[0-9]", "");
+            String generalCyclinderString = Utils.showCyclinderPopup(SceneUtil.getScreenOfNode(derinlikSonucText), (Stage)screenDetectorLabel.getScene().getWindow());
+            String numberPart = "";
+            String stringPart = "";
+            if(generalCyclinderString != null) {
+                numberPart = generalCyclinderString.replaceAll("[^0-9]", "");
+                stringPart = generalCyclinderString.replaceAll("[0-9]", "");
+            } else {
+                Utils.showErrorMessage("Silindir sayısı seçilmedi. İşlem iptal edildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
+                return;
+            }
 
             int selectedCylinders = Integer.parseInt(numberPart);
             String isPressureValf = stringPart;
             if (selectedCylinders == -1 && isPressureValf.isEmpty()) {
-                Utils.showErrorMessage("Silindir sayısı seçilmedi. İşlem iptal edildi.");
+                Utils.showErrorMessage("Silindir sayısı seçilmedi. İşlem iptal edildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
                 return;
             }
 
@@ -507,7 +516,7 @@ public class KlasikController {
 
             PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString(), secilenMotor, secilenPompa);
         } else {
-            Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.");
+            Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }
     }
 
@@ -1545,7 +1554,6 @@ public class KlasikController {
                 if(kompanzasyonDurumu.equals("Var")) {
                     dataInit("valfTipi", 0);
                 } else {
-                    System.out.println("Secilen Pompa Val" + secilenPompaVal);
                     if(secilenPompaVal <= 28.1) {
                         valfTipiComboBox.getItems().clear();
                         valfTipiComboBox.getItems().addAll("Kilitli Blok");
@@ -1633,35 +1641,6 @@ public class KlasikController {
         if(secilenKilitPompa != null) {
             kilitPompaComboBox.getSelectionModel().clearSelection();
             secilenKilitPompa = null;
-        }
-    }
-
-    private String showCyclinderPopup() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
-        try {
-            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CylinderCount.fxml"));
-            Parent root = loader.load();
-
-            CylinderController controller = loader.getController();
-
-            Stage stage = new Stage();
-            stage.setTitle("Silindir Seçimi");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setScene(new Scene(root));
-            stage.getIcons().add(icon);
-            stage.showAndWait();
-
-            if (controller.isConfirmed()) {
-                return controller.getFinalResult();
-            } else {
-                return null;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Utils.showErrorMessage("Silindir seçimi sırasında bir hata oluştu.");
-            return null;
         }
     }
 

@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
@@ -171,6 +172,7 @@ public class MainController implements Initializable {
     @FXML
     public void anaEkranaDon() throws IOException {
         Stage stage = (Stage) parametreCount.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(kullaniciAdiIsimText);
 
         if(loggedInUser != null) {
             loggedInUser = null;
@@ -197,7 +199,7 @@ public class MainController implements Initializable {
         SystemVariables.refreshToken = null;
 
         stage.close();
-        SceneUtil.changeScreen("fxml/Login.fxml");
+        SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
 
     @FXML
@@ -228,7 +230,7 @@ public class MainController implements Initializable {
         if(actionEvent.getSource() == btnOnlineMode) {
             Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
             currentStage.close();
-            Utils.openLoginScreen(currentStage);
+            Utils.openLoginScreen(kullaniciAdiIsimText);
         }
         if(actionEvent.getSource()==btnKlasik) {
             paneSwitch(1);

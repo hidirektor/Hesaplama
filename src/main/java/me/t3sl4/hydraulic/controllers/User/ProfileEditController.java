@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTPRequest;
 import me.t3sl4.hydraulic.utils.service.UserDataService.Profile;
@@ -57,8 +58,6 @@ public class ProfileEditController {
     private TextField sifrePassword;
     @FXML
     private ImageView passwordVisibilityIcon;
-
-    private double x, y;
 
     String secilenPhotoPath = null;
     private String girilenSifre = "";
@@ -176,7 +175,7 @@ public class ProfileEditController {
                     deleteOldPhoto(username);
                     uploadProfilePhoto2Server(stage);
                 }
-                Utils.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !");
+                Utils.showSuccessMessage("Profilin başarılı bir şekilde güncellendi !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
                 JSONObject userCred = new JSONObject(jsonBody);
                 JSONObject dataCred = userCred.getJSONObject("userData");
 
@@ -191,7 +190,7 @@ public class ProfileEditController {
             @Override
             public void onFailure() {
                 System.out.println(registerUrl + jsonBody);
-                Utils.showErrorMessage("Profil güncellenirken hata meydana geldi !");
+                Utils.showErrorMessage("Profil güncellenirken hata meydana geldi !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
             }
         });
     }
@@ -202,19 +201,19 @@ public class ProfileEditController {
 
         File profilePhotoFile = new File(secilenPhotoPath);
         if (!profilePhotoFile.exists()) {
-            Utils.showErrorMessage("Profil fotoğrafı bulunamadı!");
+            Utils.showErrorMessage("Profil fotoğrafı bulunamadı!", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
             return;
         }
 
         HTTPRequest.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) {
-                Utils.showSuccessMessage("Profil fotoğrafı güncellendi!");
+                Utils.showSuccessMessage("Profil fotoğrafı güncellendi!", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
             }
 
             @Override
             public void onFailure() {
-                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi!");
+                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi!", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
             }
         });
     }

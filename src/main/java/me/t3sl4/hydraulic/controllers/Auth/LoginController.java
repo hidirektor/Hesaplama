@@ -86,7 +86,7 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) btnSignup.getScene().getWindow();
 
         try {
-            Utils.openRegisterScreen(stage);
+            Utils.openRegisterScreen(lblErrors);
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -129,7 +129,7 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
         stage.close();
 
-        Utils.openResetPasswordScreen();
+        Utils.openResetPasswordScreen(lblErrors);
     }
 
     @Override

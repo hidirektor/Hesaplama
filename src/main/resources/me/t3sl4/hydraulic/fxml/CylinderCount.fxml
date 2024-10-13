@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -26,7 +27,8 @@
          </Text>
             <ComboBox fx:id="silindirSayisiComboBox" layoutX="283.0" layoutY="85.0" prefHeight="26.0" prefWidth="168.0" />
          <ComboBox fx:id="basincSalteriComboBox" layoutX="56.0" layoutY="85.0" prefHeight="26.0" prefWidth="168.0" />
-         <Text fill="#B7C3D7" layoutX="240.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Silindir Sayısı" textAlignment="CENTER" wrappingWidth="254.44534301757812">
+            <Label fx:id="screenDetectorLabel" visible="false" layoutX="829.0" layoutY="125.0" mnemonicParsing="false" text="Parça Listesi"></Label>
+            <Text fill="#B7C3D7" layoutX="240.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Silindir Sayısı" textAlignment="CENTER" wrappingWidth="254.44534301757812">
             <font>
                <Font size="13.0" />
             </font>

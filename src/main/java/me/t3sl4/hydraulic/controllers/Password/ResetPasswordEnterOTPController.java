@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
@@ -79,9 +80,11 @@ public class ResetPasswordEnterOTPController implements Initializable {
     @FXML
     public void goBackAction() throws IOException {
         Stage stage = (Stage) btnCheckOtp.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(lblErrors);
+
         stage.close();
 
-        SceneUtil.changeScreen("fxml/Login.fxml");
+        SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
 
     @FXML
@@ -117,15 +120,19 @@ public class ResetPasswordEnterOTPController implements Initializable {
 
     private void changeOTPScreen() throws IOException {
         Stage stage = (Stage) btnCheckOtp.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(lblErrors);
+
         stage.close();
 
-        SceneUtil.changeScreen("fxml/ResetPasswordEnterNewPassword.fxml");
+        SceneUtil.changeScreen("fxml/ResetPasswordEnterNewPassword.fxml", currentScreen);
     }
 
     private void backMainScreen() throws IOException {
         Stage stage = (Stage) btnCheckOtp.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(lblErrors);
+
         stage.close();
 
-        SceneUtil.changeScreen("fxml/Login.fxml");
+        SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
 }

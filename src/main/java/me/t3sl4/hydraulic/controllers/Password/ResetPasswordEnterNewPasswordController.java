@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
@@ -56,9 +57,11 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
     @FXML
     public void goBackAction() throws IOException {
         Stage stage = (Stage) btnChangePass.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(lblErrors);
+
         stage.close();
 
-        SceneUtil.changeScreen("fxml/Login.fxml");
+        SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
 
     @FXML
@@ -111,8 +114,10 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
 
     private void backMainScreen() throws IOException {
         Stage stage = (Stage) btnChangePass.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(lblErrors);
+
         stage.close();
 
-        SceneUtil.changeScreen("fxml/Login.fxml");
+        SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
 }

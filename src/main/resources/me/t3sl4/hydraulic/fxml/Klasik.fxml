@@ -28,8 +28,8 @@
                 <ComboBox fx:id="pompaComboBox" disable="true" layoutX="185.0" layoutY="91.0" onAction="#pompaPressed" prefWidth="150.0" promptText="Pompa" />
                 <Text fill="#B7C3D7" layoutX="379.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gerekli Yağ Miktarı" />
                 <TextField fx:id="tankKapasitesiTextField" disable="true" layoutX="352.0" layoutY="90.0" onKeyPressed="#tankKapasitesiBackSpacePressed" onKeyTyped="#tankKapasitesiEntered" prefWidth="150.0" promptText="Gerekli Yağ Miktarı (L)" style="-fx-background-color: #353a46; -fx-border-color: #B7C3D7; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
-            <Text fill="#B7C3D7" layoutX="548.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kompanzasyon" />
-            <ComboBox fx:id="kompanzasyonComboBox" disable="true" layoutX="515.0" layoutY="91.0" onAction="#kompanzasyonPressed" prefWidth="150.0" promptText="Kompanzasyon" />
+                <Text fill="#B7C3D7" layoutX="548.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kompanzasyon" />
+                <ComboBox fx:id="kompanzasyonComboBox" disable="true" layoutX="515.0" layoutY="91.0" onAction="#kompanzasyonPressed" prefWidth="150.0" promptText="Kompanzasyon" />
                 <Text fill="#B7C3D7" layoutX="242.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valf Tipi" />
                 <ComboBox fx:id="valfTipiComboBox" disable="true" layoutX="185.0" layoutY="153.0" onAction="#valfTipiPressed" prefWidth="150.0" promptText="Valf Tipi" />
                 <Text fx:id="kilitMotorText" fill="#B7C3D7" layoutX="403.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilit Motor" />
@@ -40,7 +40,7 @@
                 <Button fx:id="temizleButton" layoutX="845.0" layoutY="62.0" mnemonicParsing="false" onAction="#temizlemeIslemi" style="-fx-background-color: #1761ab;" text="Temizle" />
                 <Button fx:id="exportButton" disable="true" layoutX="723.0" layoutY="107.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
                 <Button fx:id="parcaListesiButton" disable="true" layoutX="832.0" layoutY="107.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
-            <Button fx:id="kaydetButton" layoutX="764.0" layoutY="153.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Sunucuya Aktar" />
+                <Button fx:id="kaydetButton" layoutX="764.0" layoutY="153.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Sunucuya Aktar" />
                 <TableView fx:id="sonucTablo" layoutY="505.0" prefHeight="195.0" prefWidth="944.0">
                     <columns>
                         <TableColumn fx:id="sonucTabloSatir1" editable="false" prefWidth="246.0" sortable="false" />
@@ -52,34 +52,35 @@
                         <Font size="18.0" />
                     </font>
                 </Text>
-            <StackPane layoutX="25.0" layoutY="207.0" prefHeight="150.0" prefWidth="200.0">
-               <children>
-                      <ImageView fx:id="sonucTankGorsel" fitHeight="252.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </StackPane>
-            <Label fx:id="genislikSonucText" layoutX="73.0" layoutY="412.0" rotate="30.5" text="X: 120 mm" textFill="WHITE" visible="false">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="hacimText" layoutX="253.0" layoutY="232.0" text="Tank: 60L" textFill="WHITE" visible="false">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="derinlikSonucText" layoutX="193.0" layoutY="417.0" rotate="-30.5" text="Y: 120 mm" textFill="WHITE" visible="false">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="yukseklikSonucText" layoutX="8.0" layoutY="337.0" rotate="270.0" text="h: 120 mm" textFill="WHITE" visible="false">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
+                <StackPane layoutX="25.0" layoutY="207.0" prefHeight="150.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="sonucTankGorsel" fitHeight="252.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true" />
+                    </children>
+                </StackPane>
+                <Label fx:id="screenDetectorLabel" visible="false" layoutX="829.0" layoutY="125.0" mnemonicParsing="false" text="Parça Listesi"></Label>
+                <Label fx:id="genislikSonucText" layoutX="73.0" layoutY="412.0" rotate="30.5" text="X: 120 mm" textFill="WHITE" visible="false">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="hacimText" layoutX="253.0" layoutY="232.0" text="Tank: 60L" textFill="WHITE" visible="false">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="derinlikSonucText" layoutX="193.0" layoutY="417.0" rotate="-30.5" text="Y: 120 mm" textFill="WHITE" visible="false">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="yukseklikSonucText" layoutX="8.0" layoutY="337.0" rotate="270.0" text="h: 120 mm" textFill="WHITE" visible="false">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
                 <ImageView fx:id="sonucKapakImage" fitHeight="252.0" fitWidth="365.0" layoutX="510.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
                 <Text fx:id="kullanilacakKabin" fill="#B7C3D7" layoutX="610.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
-            <Text fx:id="kullanilacakKabinMainText" disable="true" fill="#B7C3D7" layoutX="510.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
+                <Text fx:id="kullanilacakKabinMainText" disable="true" fill="#B7C3D7" layoutX="510.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kullanmanız Gereken Kabin: " visible="false" />
             </children>
         </AnchorPane>
     </children>

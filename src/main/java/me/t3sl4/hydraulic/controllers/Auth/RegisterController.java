@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
@@ -63,8 +64,6 @@ public class RegisterController implements Initializable {
     @FXML
     private ImageView goBack;
 
-    private double x, y;
-
     String secilenPhotoPath = "";
     private String girilenSifre = "";
 
@@ -84,9 +83,11 @@ public class RegisterController implements Initializable {
     @FXML
     private void goBackAction() throws IOException {
         Stage stage = (Stage) goBack.getScene().getWindow();
+        Screen currentScreen = SceneUtil.getScreenOfNode(btn_exit);
+
         stage.close();
 
-        SceneUtil.changeScreen("fxml/Login.fxml");
+        SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
 
     private void togglePasswordVisibility() {
@@ -141,12 +142,12 @@ public class RegisterController implements Initializable {
         if (checkFields()) {
             if(kullaniciAdiText.getText().contains(" ") || Utils.checkUpperCase(kullaniciAdiText.getText())) {
                 if(kullaniciAdiText.getText().contains(" ")) {
-                    Utils.showErrorMessage("Kullanıcı adında boşluk karakteri olamaz !");
+                    Utils.showErrorMessage("Kullanıcı adında boşluk karakteri olamaz !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
                     kullaniciAdiText.clear();
                 }
 
                 if(Utils.checkUpperCase(kullaniciAdiText.getText())) {
-                    Utils.showErrorMessage("Kullanıcı adında büyük harf kullanılamaz !");
+                    Utils.showErrorMessage("Kullanıcı adında büyük harf kullanılamaz !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
                     kullaniciAdiText.clear();
                 }
             } else {
@@ -164,7 +165,7 @@ public class RegisterController implements Initializable {
                 sendRegisterRequest(registerJsonBody, stage);
             }
         } else {
-            Utils.showErrorMessage("Lütfen gerekli tüm alanları doldurun !");
+            Utils.showErrorMessage("Lütfen gerekli tüm alanları doldurun !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
         }
     }
 
@@ -178,7 +179,7 @@ public class RegisterController implements Initializable {
 
             @Override
             public void onFailure() {
-                Utils.showErrorMessage("Kayıt olurken hata meydana geldi !");
+                Utils.showErrorMessage("Kayıt olurken hata meydana geldi !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
             }
         });
     }
@@ -191,7 +192,7 @@ public class RegisterController implements Initializable {
 
         File profilePhotoFile = new File(secilenPhotoPath);
         if (!profilePhotoFile.exists()) {
-            Utils.showErrorMessage("Profil fotoğrafı bulunamadı !");
+            Utils.showErrorMessage("Profil fotoğrafı bulunamadı !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
             return;
         }
 
@@ -210,7 +211,7 @@ public class RegisterController implements Initializable {
 
             @Override
             public void onFailure() {
-                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !");
+                Utils.showErrorMessage("Profil fotoğrafı yüklenirken hata meydana geldi !", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
             }
         });
     }
