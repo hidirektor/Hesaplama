@@ -2,15 +2,20 @@ package me.t3sl4.hydraulic.utils;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Window;
 import javafx.stage.*;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
@@ -22,16 +27,22 @@ import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
+import java.util.prefs.Preferences;
 
 public class Utils {
+
+    public static final String PREFERENCE_KEY = "defaultMonitor";
+    public static Preferences prefs;
 
     public static void showErrorMessage(String hataMesaji, Screen targetScreen, Stage currentStage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -249,6 +260,90 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void showMonitorSelectionScreen(List<Screen> screens, Screen currentScreen, boolean redirectStatus) {
+        Stage selectionStage = new Stage();
+        VBox layout = new VBox(10);
+        layout.setStyle("-fx-background-color: #353a46;");
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 300, 200);
+
+        Label label = new Label("Lütfen programın standart olarak\naçılmasını istediğiniz monitörünüzü seçin :))");
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setStyle("-fx-text-fill: white;");
+
+        ObservableList<String> monitorOptions = FXCollections.observableArrayList();
+        for (int i = 0; i < screens.size(); i++) {
+            String deviceName = screens.get(i).getBounds().getWidth() + "x" + screens.get(i).getBounds().getHeight();
+            monitorOptions.add("Monitor " + (i + 1) + " - " + deviceName + " - " + getMonitorBrand(i));
+        }
+
+        ComboBox<String> monitorComboBox = new ComboBox<>(monitorOptions);
+        monitorComboBox.getSelectionModel().selectFirst();
+
+        Button selectButton = new Button("Seç");
+        selectButton.setStyle("-fx-background-color: #1761ab; -fx-text-fill: white;");
+        selectButton.setOnAction(event -> {
+            String selectedMonitor = monitorComboBox.getSelectionModel().getSelectedItem();
+            saveSelectedMonitor(selectedMonitor);
+
+            try {
+                int monitorIndex = Integer.parseInt(selectedMonitor.split(" ")[1]) - 1;
+                if(redirectStatus) {
+                    SceneUtil.openMainScreen(screens.get(monitorIndex));
+                }
+                selectionStage.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        layout.getChildren().addAll(label, monitorComboBox, selectButton);
+
+        selectionStage.setScene(scene);
+        selectionStage.initStyle(StageStyle.TRANSPARENT);
+        selectionStage.initStyle(StageStyle.UNDECORATED);
+        selectionStage.setResizable(false);
+        selectionStage.centerOnScreen();
+
+        if(currentScreen != null) {
+            Rectangle2D bounds = currentScreen.getVisualBounds();
+            selectionStage.setOnShown(event -> {
+                double stageWidth = selectionStage.getWidth();
+                double stageHeight = selectionStage.getHeight();
+
+                // Calculate the center position
+                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+                // Set the stage position
+                selectionStage.setX(centerX);
+                selectionStage.setY(centerY);
+            });
+        }
+
+        selectionStage.show();
+    }
+
+    private static String getMonitorBrand(int index) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] devices = ge.getScreenDevices();
+
+        if (index < devices.length) {
+            return devices[index].getIDstring();
+        }
+
+        return "Unknown Monitor";
+    }
+
+    private static void saveSelectedMonitor(String monitor) {
+        prefs.put(PREFERENCE_KEY, monitor);
+    }
+
+    public static String checkDefaultMonitor() {
+        return Utils.prefs.get(PREFERENCE_KEY, null);
     }
 
     public static void offlineMod(Label lblErrors, Runnable onComplete) {

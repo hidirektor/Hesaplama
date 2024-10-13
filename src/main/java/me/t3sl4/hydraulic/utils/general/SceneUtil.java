@@ -55,7 +55,7 @@ public class SceneUtil {
         primaryStage.show();
     }
 
-    public static void openMainScreen() throws IOException {
+    public static void openMainScreen(Screen currentScreen) throws IOException {
         Stage primaryStage = new Stage();
         Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Login.fxml")));
         primaryStage.setScene(new Scene(root));
@@ -63,6 +63,18 @@ public class SceneUtil {
 
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         primaryStage.getIcons().add(icon);
+
+        Rectangle2D bounds = currentScreen.getVisualBounds();
+        primaryStage.setOnShown(event -> {
+            double stageWidth = primaryStage.getWidth();
+            double stageHeight = primaryStage.getHeight();
+
+            double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+            double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+            primaryStage.setX(centerX);
+            primaryStage.setY(centerY);
+        });
 
         root.setOnMousePressed(event -> {
             x = event.getSceneX();

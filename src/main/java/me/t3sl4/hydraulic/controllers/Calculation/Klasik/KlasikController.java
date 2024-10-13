@@ -1058,9 +1058,11 @@ public class KlasikController {
     }
 
     private void imageTextEnable(int x, int y, String calculatedImage) {
+        sonucTexts.clear();
+
         if(calculatedImage.equals("cift_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("0")), 560, 225, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("1")), 520, 290, 90, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("1")));
@@ -1069,25 +1071,25 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("4")), 575, 395, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("4")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("5")), 550, 370, -45, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("6")), 650, 370, -45, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("6")));
-            addTextToList(secilenValfTipi, 570, 312, 0, 10, Color.WHITE, "");
-            addTextToList(getKampanaText(), 720, 300, 0, 12, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 570, 312, 0, 10, Color.WHITE, null);
+            addTextToList(getKampanaText(), 720, 300, 0, 12, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("7")), 775, 228, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("8")), 830, 290, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("8")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("9")), 810, 390, 30, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("9")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("10")), 795, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("10")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicCiftHizTexts.get("11")), 840, 383, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicCiftHizTexts.get("11")));
         } else if (calculatedImage.equals("kilit_ayri_cift_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 448, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 448, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("0")), 565, 215, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("1")), 530, 255, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("1")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("2")), 595, 245, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("2")));
-            addTextToList(getKampanaText(), 745, 260, 0, 10.5, Color.WHITE, "");
+            addTextToList(getKampanaText(), 745, 260, 0, 10.5, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("3")), 785, 220, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("3")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("4")), 830, 263, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("4")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("5")), 595, 315, -90, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("5")));
-            addTextToList(secilenValfTipi, 570, 395, 0, 10, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 570, 395, 0, 10, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("6")), 520, 415, 90, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("6")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("7")), 640, 415, 90, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("8")), 675, 385, -30, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("8")));
@@ -1099,18 +1101,18 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("14")), 785, 425, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("14")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("15")), 835, 383, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriCiftHizTexts.get("15")));
         } else if(calculatedImage.equals("kilit_ayri_tek_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 448, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 448, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("0")), 565, 215, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("1")), 530, 255, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("1")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("2")), 595, 245, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("2")));
-            addTextToList(getKampanaText(), 745, 275, 0, 10.5, Color.WHITE, "");
+            addTextToList(getKampanaText(), 745, 275, 0, 10.5, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("3")), 785, 220, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("3")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("4")), 830, 263, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("4")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("5")), 580, 315, -90, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("6")), 525, 390, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("6")));
-            addTextToList(secilenValfTipi, 615, 365, 0, 10, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 615, 365, 0, 10, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("7")), 555, 427, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("8")), 675, 427, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("8")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("9")), 620, 410, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("9")));
@@ -1121,24 +1123,24 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("14")), 785, 425, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("14")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("15")), 835, 383, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitAyriTekHizTexts.get("15")));
         } else if(calculatedImage.equals("kilitli_blok")) {
-            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("0")), 550, 225, 0, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("1")), 520, 285, 90, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("1")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("2")), 560, 403, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("2")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("3")), 655, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("3")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("4")), 661, 385, -45, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("4")));
-            addTextToList(secilenValfTipi, 565, 305, 0, 10, Color.WHITE, "");
-            addTextToList(getKampanaText(), 725, 300, 0, 12, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 565, 305, 0, 10, Color.WHITE, null);
+            addTextToList(getKampanaText(), 725, 300, 0, 12, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("5")), 775, 228, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("6")), 830, 290, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("6")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("7")), 810, 390, 30, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("8")), 795, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("8")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicKilitliBlokTexts.get("9")), 840, 383, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicKilitliBlokTexts.get("9")));
         } else if(calculatedImage.equals("tek_hiz_kompanzasyon_arti_tek_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 445, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 475, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("0")), 565, 225, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("1")), 520, 300, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("1")));
@@ -1147,23 +1149,23 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("4")), 545, 415, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("4")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("5")), 550, 370, -45, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("6")), 660, 366, -45, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("6")));
-            addTextToList(secilenValfTipi, 570, 340, 0, 10, Color.WHITE, "");
-            addTextToList(getKampanaText(), 720, 300, 0, 12, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 570, 340, 0, 10, Color.WHITE, null);
+            addTextToList(getKampanaText(), 720, 300, 0, 12, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("7")), 775, 228, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("8")), 830, 290, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("8")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("9")), 810, 390, 30, 10, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("9")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("10")), 795, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("10")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("11")), 840, 383, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.get("11")));
         } else if(calculatedImage.equals("sogutma_kilitsiz_cift_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("0")), 530, 330, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("1")), 507, 372, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("1")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("2")), 565, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("2")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("3")), 590, 377, -90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("3")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("4")), 605, 323, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("4")));
-            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("5")), 605, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("5")));
+            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("5")), 560, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("6")), 612, 340, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("6")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("7")), 615, 305, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("8")), 615, 255, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("8")));
@@ -1183,12 +1185,12 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("22")), 815, 230, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("22")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("23")), 845, 240, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("23")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("24")), 815, 263, 0, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("24")));
-            addTextToList(secilenValfTipi, 535, 370, 0, 10, Color.WHITE, "");
-            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 535, 370, 0, 10, Color.WHITE, null);
+            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("25")), 630, 365, 0, 8, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.get("25")));
         } else if(calculatedImage.equals("sogutma_kilitli_cift_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("0")), 548, 230, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("1")), 507, 290, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("1")));
@@ -1197,7 +1199,7 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("4")), 565, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("4")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("5")), 590, 377, -90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("6")), 605, 323, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("6")));
-            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("7")), 605, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("7")));
+            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("7")), 560, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("8")), 612, 340, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("8")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("9")), 615, 305, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("9")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("10")), 615, 255, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("10")));
@@ -1217,19 +1219,19 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("24")), 815, 230, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("24")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("25")), 845, 240, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("25")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("26")), 815, 263, 0, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("26")));
-            addTextToList(secilenValfTipi, 535, 370, 0, 10, Color.WHITE, "");
-            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 535, 370, 0, 10, Color.WHITE, null);
+            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("27")), 630, 365, 0, 8, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.get("27")));
         } else if(calculatedImage.equals("sogutma_kilitsiz_tek_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, null);
             
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("0")), 530, 330, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("1")), 507, 372, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("1")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("2")), 565, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("2")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("3")), 590, 377, -90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("3")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("4")), 605, 323, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("4")));
-            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("5")), 605, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("5")));
+            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("5")), 560, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("6")), 612, 340, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("6")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("7")), 615, 305, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("8")), 615, 255, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("8")));
@@ -1249,12 +1251,12 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("22")), 815, 230, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("22")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("23")), 845, 240, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("23")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("24")), 815, 263, 0, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("24")));
-            addTextToList(secilenValfTipi, 535, 355, 0, 10, Color.WHITE, "");
-            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 535, 355, 0, 10, Color.WHITE, null);
+            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("25")), 630, 365, 0, 8, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.get("25")));
         } else if (calculatedImage.equals("sogutma_kilitli_tek_hiz")) {
-            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, "");
-            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, "");
+            addTextToList("X: " + x + " mm", 672, 442, 0, 14, Color.WHITE, null);
+            addTextToList("Y: " + y + " mm", 470, 318, 90, 14, Color.WHITE, null);
 
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("0")), 548, 230, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("0")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("1")), 507, 290, 90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("1")));
@@ -1263,7 +1265,7 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("4")), 565, 420, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("4")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("5")), 590, 377, -90, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("5")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("6")), 605, 323, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("6")));
-            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("7")), 605, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("7")));
+            addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("7")), 560, 280, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("7")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("8")), 612, 340, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("8")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("9")), 615, 305, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("9")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("10")), 615, 255, 0, 11, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("10")));
@@ -1283,8 +1285,8 @@ public class KlasikController {
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("24")), 815, 230, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("24")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("25")), 845, 240, 90, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("25")));
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("26")), 815, 263, 0, 9, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("26")));
-            addTextToList(secilenValfTipi, 535, 355, 0, 10, Color.WHITE, "");
-            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, "");
+            addTextToList(secilenValfTipi, 535, 355, 0, 10, Color.WHITE, null);
+            addTextToList(getKampanaText(), 770, 355, 0, 9, Color.WHITE, null);
             addTextToList(getLocalHydraulicData().getValue(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("27")), 630, 365, 0, 8, Color.WHITE, getLocalHydraulicData().getKey(getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.get("27")));
         }
 
@@ -1302,13 +1304,13 @@ public class KlasikController {
         text.setFont(new Font(fontSize));
         text.setTextAlignment(TextAlignment.CENTER);
 
-        String finalTooltipText = "Hesaplama sonucu üretilen değerdir.";
-
-        if(tooltipText != null || !tooltipText.isEmpty() || !tooltipText.isBlank()) {
-            finalTooltipText = "Key: " + tooltipText + "\n \nÜstteki anahtarı schematic_texts.yml'de aratarak değeri güncelleyebilirsiniz.";
+        if(tooltipText != null) {
+            tooltipText = "Key: " + tooltipText + "\n \nÜstteki anahtarı schematic_texts.yml'de aratarak değeri güncelleyebilirsiniz.";
+        } else {
+            tooltipText = "Hesaplama sonucu üretilen değerdir.";
         }
 
-        Tooltip tooltip = new Tooltip(finalTooltipText);
+        Tooltip tooltip = new Tooltip(tooltipText);
         tooltip.setShowDelay(Duration.seconds(0.1));
         tooltip.setStyle("-fx-font-size: 14px;");
         Tooltip.install(text, tooltip);

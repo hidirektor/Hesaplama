@@ -68,6 +68,9 @@ public class MainController implements Initializable {
     private Button btnOnlineMode;
 
     @FXML
+    private Button btnMonitorAdapter;
+
+    @FXML
     private Button btnKlasik;
 
     @FXML
@@ -231,6 +234,9 @@ public class MainController implements Initializable {
             Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
             currentStage.close();
             Utils.openLoginScreen(kullaniciAdiIsimText);
+        }
+        if(actionEvent.getSource() == btnMonitorAdapter) {
+            Utils.showMonitorSelectionScreen(Screen.getScreens(), SceneUtil.getScreenOfNode(kullaniciAdiIsimText), false);
         }
         if(actionEvent.getSource()==btnKlasik) {
             paneSwitch(1);

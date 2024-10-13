@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.service.HTTPRequest;
@@ -202,7 +203,7 @@ public class RegisterController implements Initializable {
                 Platform.runLater(() -> {
                     try {
                         stage.close();
-                        SceneUtil.openMainScreen();
+                        SceneUtil.openMainScreen(Main.defaultScreen);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

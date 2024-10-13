@@ -1227,7 +1227,7 @@ public class YamlUtil {
         Map<String, Object> yamlData = yaml.load(input);
 
         if (yamlData != null) {
-            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitsiz_cift_hiz");
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitli_cift_hiz");
 
             for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
                 String key = entry.getKey();
@@ -1269,7 +1269,7 @@ public class YamlUtil {
         Map<String, Object> yamlData = yaml.load(input);
 
         if (yamlData != null) {
-            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitsiz_tek_hiz");
+            Map<String, Object> ciftHizData = (Map<String, Object>) yamlData.get("sogutma_kilitli_tek_hiz");
 
             for (Map.Entry<String, Object> entry : ciftHizData.entrySet()) {
                 String key = entry.getKey();

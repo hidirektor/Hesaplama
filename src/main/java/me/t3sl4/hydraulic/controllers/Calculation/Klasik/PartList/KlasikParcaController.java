@@ -52,16 +52,9 @@ public class KlasikParcaController {
     private String elPompasiDurumu = null;
 
     public void initialize() {
-        if(KlasikController.secilenSogutmaDurumu.equals("Var")) {
-            manometreComboBox.setDisable(true);
-            basincSalteriComboBox.setDisable(false);
-            basincSalteriComboBox.getItems().clear();
-            basincSalteriComboBox.getItems().addAll("Var", "Yok");
-        } else {
-            manometreComboBox.setDisable(false);
-            manometreComboBox.getItems().clear();
-            manometreComboBox.getItems().addAll("Var", "Yok");
-        }
+        manometreComboBox.setDisable(false);
+        manometreComboBox.getItems().clear();
+        manometreComboBox.getItems().addAll("Var", "Yok");
 
         malzemeKodu.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         secilenMalzeme.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
