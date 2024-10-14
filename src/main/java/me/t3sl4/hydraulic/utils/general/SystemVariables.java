@@ -1,6 +1,7 @@
 package me.t3sl4.hydraulic.utils.general;
 
 import me.t3sl4.hydraulic.utils.database.Model.HydraulicData.HydraulicData;
+import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
 public class SystemVariables {
     public static boolean offlineMode = false;
@@ -12,10 +13,7 @@ public class SystemVariables {
     public static String developedBy = "Designed and Coded by\nHalil İbrahim Direktör";
 
     // Logged in User
-    public static String userName;
-    public static String userID;
-    public static String accessToken;
-    public static String refreshToken;
+    public static User loggedInUser;
 
     //Local Data Paths
     public static String mainPath;
@@ -63,38 +61,6 @@ public class SystemVariables {
 
     public static void setOfflineMode(boolean offlineMode) {
         SystemVariables.offlineMode = offlineMode;
-    }
-
-    public static String getUserName() {
-        return userName;
-    }
-
-    public static void setUserName(String userName) {
-        SystemVariables.userName = userName;
-    }
-
-    public static String getUserID() {
-        return userID;
-    }
-
-    public static void setUserID(String userID) {
-        SystemVariables.userID = userID;
-    }
-
-    public static String getAccessToken() {
-        return accessToken;
-    }
-
-    public static void setAccessToken(String accessToken) {
-        SystemVariables.accessToken = accessToken;
-    }
-
-    public static String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public static void setRefreshToken(String refreshToken) {
-        SystemVariables.refreshToken = refreshToken;
     }
 
     public static HydraulicData getLocalHydraulicData() {

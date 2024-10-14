@@ -188,7 +188,7 @@ public class HTTPRequest {
                     multipartBuilder.addFormDataPart("orderID", orderID);
                     multipartBuilder.addFormDataPart("hydraulicType", hydraulicType);
                     multipartBuilder.addFormDataPart("operationPlatform", "Desktop -- JavaFX");
-                    multipartBuilder.addFormDataPart("sourceUserID", SystemVariables.userID);
+                    multipartBuilder.addFormDataPart("sourceUserID", SystemVariables.loggedInUser.getUserID());
                     multipartBuilder.addFormDataPart("affectedUserID", null);
                     multipartBuilder.addFormDataPart("affectedUserName", null);
                     multipartBuilder.addFormDataPart("affectedMachineID", null);

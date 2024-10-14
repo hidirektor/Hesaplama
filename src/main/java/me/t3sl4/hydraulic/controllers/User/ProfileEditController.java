@@ -11,7 +11,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
@@ -23,7 +22,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import static me.t3sl4.hydraulic.app.Main.loggedInUser;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
 public class ProfileEditController {
@@ -65,7 +63,7 @@ public class ProfileEditController {
     @FXML
     public void initialize() {
         initializeUser();
-        Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
+        Profile.downloadAndSetProfilePhoto(SystemVariables.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
         togglePasswordButton.setOnMouseClicked(event -> togglePasswordVisibility());
         sifreText.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
@@ -139,7 +137,7 @@ public class ProfileEditController {
         if (password != null) {
             registerJsonBody =
                     "{" +
-                            "\"userID\": \"" + SystemVariables.getUserID() + "\"," +
+                            "\"userID\": \"" + SystemVariables.loggedInUser.getUserID() + "\"," +
                             "\"userData\": {" +
                             "  \"userName\": \"" + userName + "\"," +
                             "  \"nameSurname\": \"" + nameSurname + "\"," +
@@ -152,7 +150,7 @@ public class ProfileEditController {
         } else {
             registerJsonBody =
                     "{" +
-                            "\"userID\": \"" + SystemVariables.getUserID() + "\"," +
+                            "\"userID\": \"" + SystemVariables.loggedInUser.getUserID() + "\"," +
                             "\"userData\": {" +
                             "  \"userName\": \"" + userName + "\"," +
                             "  \"nameSurname\": \"" + nameSurname + "\"," +
@@ -168,7 +166,7 @@ public class ProfileEditController {
 
     private void sendUpdateRequest(String jsonBody, String username, Stage stage) {
         String registerUrl = BASE_URL + updateProfileURLPrefix;
-        HTTPRequest.sendAuthorizedJsonRequest(registerUrl, "POST", jsonBody, SystemVariables.getAccessToken(), new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendAuthorizedJsonRequest(registerUrl, "POST", jsonBody, SystemVariables.loggedInUser.getAccessToken(), new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
                 if(secilenPhotoPath != null) {
@@ -236,7 +234,7 @@ public class ProfileEditController {
 
     private void refreshScreen() {
         initializeUser();
-        Profile.downloadAndSetProfilePhoto(Main.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
+        Profile.downloadAndSetProfilePhoto(SystemVariables.loggedInUser.getUsername(), secilenFoto, profilePhotoImageView);
         sifreText.clear();
     }
 

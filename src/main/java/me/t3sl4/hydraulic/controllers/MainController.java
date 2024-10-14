@@ -47,7 +47,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static me.t3sl4.hydraulic.app.Main.loggedInUser;
 import static me.t3sl4.hydraulic.utils.Utils.openURL;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
@@ -197,10 +196,6 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
-        SystemVariables.userID = null;
-        SystemVariables.accessToken = null;
-        SystemVariables.refreshToken = null;
-
         stage.close();
         SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
@@ -221,7 +216,7 @@ public class MainController implements Initializable {
             paneSwitch(4);
         }
         if (actionEvent.getSource() == btnHome) {
-           if(!SystemVariables.offlineMode) {
+           if(loggedInUser != null) {
                pnlOverview.setStyle("-fx-background-color : #02030A");
                pnlOverview.toFront();
                updateHydraulicText();

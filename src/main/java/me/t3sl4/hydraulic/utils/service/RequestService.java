@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static me.t3sl4.hydraulic.app.Main.loggedInUser;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
 public class RequestService {
@@ -32,10 +31,6 @@ public class RequestService {
                 writer.write("RefreshToken: " + refreshToken + "\n");
                 writer.close();
 
-                SystemVariables.userID = userID;
-                SystemVariables.accessToken = accessToken;
-                SystemVariables.refreshToken = refreshToken;
-
                 String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
                 String jsonProfileInfoBody = "{\"userID\": \"" + userID + "\"}";
                 HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", jsonProfileInfoBody, accessToken, new HTTPRequest.RequestCallback() {
@@ -50,6 +45,10 @@ public class RequestService {
                         String roleValue = userObject.getString("userType");
                         if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {
                             loggedInUser = new User(userName);
+
+                            SystemVariables.loggedInUser.setUserID(userID);
+                            SystemVariables.loggedInUser.setAccessToken(accessToken);
+                            SystemVariables.loggedInUser.setRefreshToken(refreshToken);
 
                             updateUserAndOpenMainScreen(stage, lblErrors);
                         } else {
@@ -73,9 +72,9 @@ public class RequestService {
 
     public static void updateUserReq(Runnable onUserUpdateComplete, Runnable onFailure) {
         String profileInfoUrl = BASE_URL + profileInfoURLPrefix;
-        String profileInfoBody = "{\"userID\": \"" + SystemVariables.getUserID() + "\"}";
+        String profileInfoBody = "{\"userID\": \"" + loggedInUser.getUserID() + "\"}";
 
-        HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", profileInfoBody, SystemVariables.getAccessToken(), new HTTPRequest.RequestCallback() {
+        HTTPRequest.sendAuthorizedJsonRequest(profileInfoUrl, "POST", profileInfoBody, SystemVariables.loggedInUser.getAccessToken(), new HTTPRequest.RequestCallback() {
             @Override
             public void onSuccess(String profileInfoResponse) {
                 JSONObject responseJson = new JSONObject(profileInfoResponse);
@@ -115,11 +114,11 @@ public class RequestService {
             }
             stage.close();
         }, () -> {
-            try {
+            /*try {
                 Utils.deleteLocalData();
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            }
+            }*/
         });
     }
 }

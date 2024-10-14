@@ -11,12 +11,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.controllers.MainController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.RequestService;
-import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -96,9 +94,15 @@ public class LoginController implements Initializable {
     public void onlineMod() {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
         if (Utils.netIsAvailable()) {
-            if(SystemVariables.userID != null && SystemVariables.accessToken != null && SystemVariables.refreshToken!= null) {
-                Main.loggedInUser = new User(SystemVariables.getUserName());
-                updateUserAndOpenMainScreen(stage, lblErrors);
+            Utils.checkLocalUserData(() -> {});
+            if(SystemVariables.loggedInUser != null) {
+                if(SystemVariables.loggedInUser.getUserID() != null || SystemVariables.loggedInUser.getAccessToken() != null || SystemVariables.loggedInUser.getRefreshToken() != null) {
+                    updateUserAndOpenMainScreen(stage, lblErrors);
+                } else {
+                    loginPane.setVisible(true);
+                    offlineMod.setVisible(false);
+                    onlineMod.setVisible(false);
+                }
             } else {
                 loginPane.setVisible(true);
                 offlineMod.setVisible(false);

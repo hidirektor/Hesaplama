@@ -68,10 +68,11 @@ public class Profile {
                     tokenMap.put(parts[0].trim(), parts[1].trim());
                 }
             }
-            SystemVariables.userName = tokenMap.getOrDefault("userName", "");
-            SystemVariables.userID = tokenMap.getOrDefault("userID", "");
-            SystemVariables.accessToken = tokenMap.getOrDefault("AccessToken", "");
-            SystemVariables.refreshToken = tokenMap.getOrDefault("RefreshToken", "");
+
+            loggedInUser.setUsername(tokenMap.get("username"));
+            loggedInUser.setUserID(tokenMap.get("userID"));
+            loggedInUser.setAccessToken(tokenMap.get("AccessToken"));
+            loggedInUser.setRefreshToken(tokenMap.get("RefreshToken"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

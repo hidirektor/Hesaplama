@@ -19,15 +19,17 @@ import javafx.stage.Window;
 import javafx.stage.*;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -112,6 +114,58 @@ public class Utils {
         }
     }
 
+    public static void checkLocalUserData(Runnable onFailure) {
+        String userHome = System.getProperty("user.name");
+        String os = System.getProperty("os.name").toLowerCase();
+        String basePath;
+
+        if (os.contains("win")) {
+            basePath = "C:/Users/" + userHome + "/";
+        } else {
+            basePath = "/Users/" + userHome + "/";
+        }
+        String tokenPath = basePath + "/OnderGrup/" + "userData/auth.txt";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(tokenPath));
+            if(reader != null) {
+                String line;
+                String userName = null, userID = null, accessToken = null, refreshToken = null;
+
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("userName: ")) {
+                        userName = line.substring("userName: ".length());
+                    } else if (line.startsWith("userID: ")) {
+                        userID = line.substring("userID: ".length());
+                    } else if (line.startsWith("AccessToken: ")) {
+                        accessToken = line.substring("AccessToken: ".length());
+                    } else if (line.startsWith("RefreshToken: ")) {
+                        refreshToken = line.substring("RefreshToken: ".length());
+                    }
+                }
+                reader.close();
+
+                if (userName != null && userID != null && accessToken != null && refreshToken != null) {
+                    SystemVariables.loggedInUser = new User(userName);
+
+                    SystemVariables.loggedInUser.setUserID(userID);
+                    SystemVariables.loggedInUser.setAccessToken(accessToken);
+                    SystemVariables.loggedInUser.setRefreshToken(refreshToken);
+                } else {
+                    if(onFailure != null) {
+                        onFailure.run();
+                    }
+                }
+            } else {
+                if(onFailure != null) {
+                    onFailure.run();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void openURL(String url) {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
@@ -153,6 +207,10 @@ public class Utils {
         Screen currentScreen = SceneUtil.getScreenOfNode(sceneLabel);
         stage.close();
 
+        SceneUtil.changeScreen("fxml/Home.fxml", currentScreen);
+    }
+
+    public static void openMainScreenOnTargetScreen(Screen currentScreen) throws IOException {
         SceneUtil.changeScreen("fxml/Home.fxml", currentScreen);
     }
 
@@ -392,11 +450,7 @@ public class Utils {
 
         deleteDirectory(new File(SystemVariables.dataFileLocalPath));
 
-        Main.loggedInUser = null;
-        SystemVariables.accessToken = null;
-        SystemVariables.refreshToken = null;
-        SystemVariables.userID = null;
-        SystemVariables.userName = null;
+        SystemVariables.loggedInUser = null;
 
         FileUtil.setupFileSystem();
     }

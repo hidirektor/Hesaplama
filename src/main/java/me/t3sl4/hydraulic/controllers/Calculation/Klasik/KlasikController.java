@@ -16,7 +16,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -155,7 +154,7 @@ public class KlasikController {
         comboBoxListener();
         sonucTabloSatir1.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         sonucTabloSatir2.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
-        if(Main.loggedInUser == null) {
+        if(SystemVariables.loggedInUser == null) {
             kaydetButton.setDisable(true);
         }
     }
@@ -268,7 +267,7 @@ public class KlasikController {
                 sonucKapakImage.setImage(image);
                 parcaListesiButton.setDisable(false);
                 exportButton.setDisable(false);
-                if(Main.loggedInUser != null) {
+                if(SystemVariables.loggedInUser != null) {
                     kaydetButton.setDisable(false);
                 }
 
@@ -294,7 +293,7 @@ public class KlasikController {
             files.put("partListFile", partListFile);
             files.put("schematicFile", schematicFile);
 
-            HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.getAccessToken(), Main.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPRequest.RequestCallback() {
+            HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());

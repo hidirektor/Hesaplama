@@ -6,14 +6,11 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
-import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
 import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
-    public static User loggedInUser;
-
     List<Screen> screens = Screen.getScreens();
 
     public static Screen defaultScreen;
