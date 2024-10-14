@@ -174,7 +174,7 @@ public class HidrosParcaController {
             loadPompaParca();
             loadTankTipi();
             loadPlatformTipi();
-            loadGenelParcalar();
+            //loadGenelParcalar();
             if(HidrosController.secilenBirinciValf != null) {
                 loadValfParcalar();
             }
@@ -187,7 +187,6 @@ public class HidrosParcaController {
             loadBasincSalteri();
             loadElPompasiParca();
             if(HidrosController.secilenTankKapasitesi != null) {
-                System.out.println("Test21321");
                 loadYagMiktari();
             }
         } else {

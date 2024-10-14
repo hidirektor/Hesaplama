@@ -153,6 +153,10 @@ valf_tipi:
     options:
       '0':
         value: "Kompanzasyon || İnişte Tek Hız"
+  '2': # Soğutma Var, Kilit Yok, Kompanzasyon Yok
+    options:
+      '0':
+        value: "İnişte Çift Hız"
 kilit_motor:
   '0':
     options:

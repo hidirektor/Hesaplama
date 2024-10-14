@@ -819,8 +819,10 @@ public class KlasikController {
             valfTipiComboBox.getItems().clear();
             if(valfTipiStat == 1) {
                 valfTipiComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().valveTypeMap.get("0")); //İnişte Tek Hız, İnişte Çift Hız
-            } else {
+            } else if(valfTipiStat == 0) {
                 valfTipiComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().valveTypeMap.get("1")); //Kompanzasyon || İnişte Tek Hız
+            } else {
+                valfTipiComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().valveTypeMap.get("2")); //İnişte Çift Hız
             }
         } else if(componentName.equals("hidrolikKilit")) {
             hidrolikKilitComboBox.setDisable(false);
@@ -1509,13 +1511,13 @@ public class KlasikController {
                 if(kompanzasyonDurumu.equals("Var")) {
                     dataInit("valfTipi", 0); //Komp + Tek
                 } else {
-                    dataInit("valfTipi", 1); //Tek + Çift
+                    dataInit("valfTipi", 2); //Sadece Çift
                 }
             } else {
                 if(kompanzasyonDurumu.equals("Var")) {
                     dataInit("valfTipi", 0); //Komp + Tek
                 } else {
-                    dataInit("valfTipi", 1); //Tek + Çift
+                    dataInit("valfTipi", 2); //Sadece Çift
                 }
             }
         } else {
