@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
@@ -22,6 +23,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Objects;
+
+import static me.t3sl4.hydraulic.controllers.Calculation.Hidros.HidrosController.secilenTankTipi;
 
 public class HidrosParcaController {
     @FXML
@@ -172,7 +175,9 @@ public class HidrosParcaController {
             loadTankTipi();
             loadPlatformTipi();
             loadGenelParcalar();
-            loadValfParcalar();
+            if(HidrosController.secilenBirinciValf != null) {
+                loadValfParcalar();
+            }
 
             if(secilenPlatform.equals("Özel - Yatay")) {
                 loadOzelYatayGenel();
@@ -181,7 +186,8 @@ public class HidrosParcaController {
             loadManometre();
             loadBasincSalteri();
             loadElPompasiParca();
-            if(!secilenPlatform.contains("Özel")) {
+            if(HidrosController.secilenTankKapasitesi != null) {
+                System.out.println("Test21321");
                 loadYagMiktari();
             }
         } else {
@@ -195,7 +201,7 @@ public class HidrosParcaController {
             loadManometre();
             loadBasincSalteri();
             loadElPompasiParca();
-            if(!secilenPlatform.contains("Özel")) {
+            if(HidrosController.secilenTankKapasitesi != null) {
                 loadYagMiktari();
             }
         }
@@ -276,9 +282,9 @@ public class HidrosParcaController {
     }
 
     private void loadTankTipi() {
-        String kontrolTankTipi = HidrosController.secilenTankTipi.trim();
+        String kontrolTankTipi = secilenTankTipi.trim();
 
-        if(HidrosController.secilenTankTipi.contains("Özel")) {
+        if(secilenTankTipi.contains("Özel")) {
             String malzemeKodu = "Özel Tank";
             String malzemeAdi = "Genişlik: " + HidrosController.secilenOzelTankGenislik + "mm" + " Yükseklik: " + HidrosController.secilenOzelTankYukseklik + "mm" + " Derinlik: " + HidrosController.secilenOzelTankDerinlik + "mm";
             String adet = "1";
@@ -326,7 +332,7 @@ public class HidrosParcaController {
         String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
 
         if(Objects.equals(secilenPlatform, "ESP")) {
-            String secilenTank = HidrosController.secilenTankTipi.trim();
+            String secilenTank = secilenTankTipi.trim();
 
             if(Objects.equals(secilenTank, "Dikey")) {
                 String secilenInis = HidrosController.secilenInisTipi.trim();
@@ -553,5 +559,21 @@ public class HidrosParcaController {
             ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
             parcaListesiTablo.getItems().add(data);
         }
+
+        parcaListesiTablo.setRowFactory(tv -> new TableRow<ParcaTableData>() {
+            @Override
+            protected void updateItem(ParcaTableData item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setStyle("");
+                } else {
+                    if (item.getSatir1Property().equals("----") && item.getSatir3Property().equals("----")) {
+                        setStyle("-fx-background-color: #F9F871; -fx-text-fill: black;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
     }
 }

@@ -159,6 +159,16 @@ public class KlasikParcaController {
         }
         loadKaplinParca();
         loadValfBlokParca();
+
+        if(KlasikController.secilenKilitMotor != null) {
+            loadKilitMotorParca();
+        }
+
+        loadStandartParca();
+        if(KlasikController.secilenSogutmaDurumu.contains("Var")) {
+            loadSogutucuParca();
+        }
+
         if(basincSalteriDurumu.equals("Var")) {
             loadBasincSalteriParca();
         }
@@ -167,10 +177,6 @@ public class KlasikParcaController {
             loadElPompasiParca();
         }
 
-        loadStandartParca();
-        if(KlasikController.secilenSogutmaDurumu.contains("Var")) {
-            loadSogutucuParca();
-        }
         loadYagMiktari();
     }
 
@@ -368,6 +374,40 @@ public class KlasikParcaController {
 
     private void loadSogutucuParca() {
         generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaSogutma.get("0"), "Soğutucu Parçaları");
+    }
+
+    private void loadKilitMotorParca() {
+        String kilitMotorVal = KlasikController.secilenKilitMotor;
+        String kilitPompaVal = KlasikController.secilenKilitPompa;
+        generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaKilitMotor.get("0"), "Kilit Motor Parçaları");
+
+        if(kilitMotorVal.equals("1.5 kW")) {
+            ParcaTableData data1 = new ParcaTableData("Veri Yok", kilitMotorVal + " Kilit Motor", "1");
+            parcaListesiTablo.getItems().add(data1);
+        } else if(kilitMotorVal.equals("2.2 kW")) {
+            ParcaTableData data1 = new ParcaTableData("Veri Yok", kilitMotorVal + " Kilit Motor", "1");
+            parcaListesiTablo.getItems().add(data1);
+        }
+
+        if(kilitPompaVal.equals("4.2 cc")) {
+            ParcaTableData data1 = new ParcaTableData("Veri Yok", kilitPompaVal + " Pompa", "1");
+            parcaListesiTablo.getItems().add(data1);
+
+            ParcaTableData data = new ParcaTableData("150-50-21-107", "CİVATA İMBUS M8 90 MM BEYAZ (DIN 912)", "2");
+            parcaListesiTablo.getItems().add(data);
+        } else if(kilitPompaVal.equals("4.8 cc")) {
+            ParcaTableData data1 = new ParcaTableData("Veri Yok", kilitPompaVal + " Pompa", "1");
+            parcaListesiTablo.getItems().add(data1);
+
+            ParcaTableData data = new ParcaTableData("150-50-21-107", "CİVATA İMBUS M8 90 MM BEYAZ (DIN 912)", "2");
+            parcaListesiTablo.getItems().add(data);
+        } else if(kilitPompaVal.equals("5.8 cc")) {
+            ParcaTableData data1 = new ParcaTableData("Veri Yok", kilitPompaVal + " Pompa", "1");
+            parcaListesiTablo.getItems().add(data1);
+
+            ParcaTableData data = new ParcaTableData("150-50-21-109", "CİVATA İMBUS M8 100 MM BEYAZ (DIN 912)", "2");
+            parcaListesiTablo.getItems().add(data);
+        }
     }
 
     private void loadYagMiktari() {

@@ -61,6 +61,7 @@ public class YamlUtil {
             loadClassicParcaSogutma(filePath);
             loadClassicParcaBasincSalteri(filePath);
             loadClassicParcaDefault(filePath);
+            loadClassicParcaKilitMotor(filePath);
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -707,6 +708,38 @@ public class YamlUtil {
                 }
 
                 SystemVariables.getLocalHydraulicData().classicParcaDefault.put(kaplinKey, partDetailsList);
+            }
+        }
+    }
+
+    public void loadClassicParcaKilitMotor(String filePath) throws FileNotFoundException {
+        InputStream input = new FileInputStream(filePath);
+        Yaml yaml = new Yaml();
+        Map<String, Object> yamlData = yaml.load(input);
+
+        if (yamlData != null) {
+            Map<String, Object> valfData = (Map<String, Object>) yamlData.get("kilit_motor");
+
+            for (Map.Entry<String, Object> kaplinEntry : valfData.entrySet()) {
+                String kaplinKey = kaplinEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kaplinEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
+
+                LinkedList<String> partDetailsList = new LinkedList<>();
+
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
+
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
+
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                SystemVariables.getLocalHydraulicData().classicParcaKilitMotor.put(kaplinKey, partDetailsList);
             }
         }
     }

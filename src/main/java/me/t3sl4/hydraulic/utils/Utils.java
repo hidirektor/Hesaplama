@@ -20,7 +20,6 @@ import javafx.stage.*;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
-import me.t3sl4.hydraulic.controllers.Calculation.Klasik.PartList.KlasikParcaController;
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -226,7 +225,6 @@ public class Utils {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource(fxmlPath));
             VBox root = fxmlLoader.load();
-            KlasikParcaController parcaController = fxmlLoader.getController();
 
             Stage popupStage = new Stage();
             Rectangle2D bounds = currentScreen.getVisualBounds();

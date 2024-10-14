@@ -90,6 +90,7 @@ public class HydraulicData {
     public Map<String, LinkedList<String>> classicParcaSogutma = new HashMap<>();
     public Map<String, LinkedList<String>> classicParcaBasincSalteri = new HashMap<>();
     public Map<String, LinkedList<String>> classicParcaDefault = new HashMap<>();
+    public Map<String, LinkedList<String>> classicParcaKilitMotor = new HashMap<>();
 
     /*
     PowerPack Parça Listesi

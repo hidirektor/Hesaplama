@@ -130,8 +130,8 @@ public class KlasikController {
     public static int girilenTankKapasitesiMiktari = 0;
     public String secilenHidrolikKilitDurumu = null;
     public static String secilenValfTipi = null;
-    public String secilenKilitMotor = null;
-    public String secilenKilitPompa = null;
+    public static String secilenKilitMotor = null;
+    public static String secilenKilitPompa = null;
     public static String secilenSogutmaDurumu = null;
 
     public boolean hidrolikKilitStat = false;
@@ -443,7 +443,7 @@ public class KlasikController {
     public void exportProcess() {
         int tankImageStartX = 258;
         int tankImageStartY = 213;
-        int tankImageWidth = 340;
+        int tankImageWidth = 450;
         int tankImageHeight = 262;
 
         int schematicImageStartX = 740;
