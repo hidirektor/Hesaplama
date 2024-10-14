@@ -30,9 +30,6 @@ public class KlasikParcaController {
     private ComboBox<String> basincSalteriComboBox;
 
     @FXML
-    private ComboBox<String> manometreComboBox;
-
-    @FXML
     private ComboBox<String> elPompasiComboBox;
 
     @FXML
@@ -48,13 +45,12 @@ public class KlasikParcaController {
     private TableColumn<ParcaTableData, String> adet;
 
     private String basincSalteriDurumu = null;
-    private String manometreDurumu = null;
     private String elPompasiDurumu = null;
 
     public void initialize() {
-        manometreComboBox.setDisable(false);
-        manometreComboBox.getItems().clear();
-        manometreComboBox.getItems().addAll("Var", "Yok");
+        basincSalteriComboBox.setDisable(false);
+        basincSalteriComboBox.getItems().clear();
+        basincSalteriComboBox.getItems().addAll("Var", "Yok");
 
         malzemeKodu.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
         secilenMalzeme.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
@@ -123,17 +119,6 @@ public class KlasikParcaController {
     }
 
     @FXML
-    public void manometrePressed() {
-        basincSalteriComboBox.getItems().clear();
-        basincSalteriComboBox.getItems().addAll("Var", "Yok");
-
-        if(manometreComboBox.getValue() != null) {
-            manometreDurumu = manometreComboBox.getValue();
-        }
-        basincSalteriComboBox.setDisable(false);
-    }
-
-    @FXML
     public void basincSalteriPressed() {
         elPompasiComboBox.getItems().clear();
         elPompasiComboBox.getItems().addAll("Var", "Yok");
@@ -169,9 +154,6 @@ public class KlasikParcaController {
         loadValfBlokParca();
         if(basincSalteriDurumu.equals("Var")) {
             loadBasincSalteriParca();
-        }
-        if(KlasikController.secilenSogutmaDurumu.contains("Yok") && manometreDurumu.equals("Var")) {
-            loadManometre();
         }
 
         if(elPompasiDurumu.equals("Var")) {
@@ -376,17 +358,6 @@ public class KlasikParcaController {
 
     private void loadSogutucuParca() {
         generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaSogutma.get("0"));
-    }
-
-    private void loadManometre() {
-        if(Objects.equals(manometreDurumu, "Var")) {
-            String malzemeKodu = "150-51-10-802";
-            String secilenMalzeme = "Manometre";
-            String adet = "1";
-
-            ParcaTableData data = new ParcaTableData(malzemeKodu, secilenMalzeme, adet);
-            parcaListesiTablo.getItems().add(data);
-        }
     }
 
     private void loadYagMiktari() {

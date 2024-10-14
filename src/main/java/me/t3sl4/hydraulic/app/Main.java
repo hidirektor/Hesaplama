@@ -31,9 +31,14 @@ public class Main extends Application {
                 SceneUtil.openMainScreen(screens.get(0));
             }
         } else {
-            int monitorIndex = Integer.parseInt(defaultMonitor.split(" ")[1]) - 1;
-            defaultScreen = screens.get(monitorIndex);
-            SceneUtil.openMainScreen(screens.get(monitorIndex));
+            if(screens.size() > 1) {
+                int monitorIndex = Integer.parseInt(defaultMonitor.split(" ")[1]) - 1;
+                defaultScreen = screens.get(monitorIndex);
+                SceneUtil.openMainScreen(screens.get(monitorIndex));
+            } else {
+                defaultScreen = screens.get(0);
+                SceneUtil.openMainScreen(screens.get(0));
+            }
         }
 
         Thread systemThread = new Thread(FileUtil::setupFileSystem);

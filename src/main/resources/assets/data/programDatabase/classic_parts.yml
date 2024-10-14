@@ -835,6 +835,14 @@ valf_bloklari:
         malzemeKodu: "150-53-08-503"
         malzemeAdi: "1/4 Alyan Başlı Kör Tapa"
         malzemeAdet: "2"
+      '7':
+        malzemeKodu: "150-51-09-016"
+        malzemeAdi: "1/4 Ø10 Nipel"
+        malzemeAdet: "1"
+      '8':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
+        malzemeAdet: "1"
   '1': #Çift Hız Blok 1 Grubu
     parts:
       '0':
@@ -860,6 +868,14 @@ valf_bloklari:
       '5':
         malzemeKodu: "150-51-10-798"
         malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "150-51-09-016"
+        malzemeAdi: "1/4 Ø10 Nipel"
+        malzemeAdet: "1"
+      '7':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
         malzemeAdet: "1"
   '2': #Kilitli Blok ve Çift Hız Blok 1 Grubu
     parts:
@@ -890,7 +906,11 @@ valf_bloklari:
       '6':
         malzemeKodu: "150-51-09-016"
         malzemeAdi: "1/4 Ø10 Nipel"
-        malzemeAdet: "8"
+        malzemeAdet: "2"
+      '7':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
+        malzemeAdet: "2"
   '3': #Kompanzasyon + Tek Hız 1 Grubu
     parts:
       '0':
@@ -965,6 +985,14 @@ valf_bloklari:
         malzemeKodu: "150-51-09-627"
         malzemeAdi: "1/2 Erkek T"
         malzemeAdet: "1"
+      '18':
+        malzemeKodu: "150-51-09-016"
+        malzemeAdi: "1/4 Ø10 Nipel"
+        malzemeAdet: "1"
+      '19':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
+        malzemeAdet: "1"
   '4': #Tek Hız Blok 2 Grubu
     parts:
       '0':
@@ -995,6 +1023,14 @@ valf_bloklari:
         malzemeKodu: "150-53-08-503"
         malzemeAdi: "1/4 Alyan Başlı Kör Tapa"
         malzemeAdet: "2"
+      '7':
+        malzemeKodu: "150-51-09-016"
+        malzemeAdi: "1/4 Ø10 Nipel"
+        malzemeAdet: "1"
+      '8':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
+        malzemeAdet: "1"
   '5': #Çift Hız Blok 2 Grubu
     parts:
       '0':
@@ -1020,6 +1056,14 @@ valf_bloklari:
       '5':
         malzemeKodu: "150-51-10-798"
         malzemeAdi: "1/4 Ø10 Pimli Ters Dirsek"
+        malzemeAdet: "1"
+      '6':
+        malzemeKodu: "150-51-09-016"
+        malzemeAdi: "1/4 Ø10 Nipel"
+        malzemeAdet: "1"
+      '7':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
         malzemeAdet: "1"
   '6': #Kilitli Blok ve Çift Hız Blok 2 Grubu
     parts:
@@ -1050,7 +1094,11 @@ valf_bloklari:
       '6':
         malzemeKodu: "150-51-09-016"
         malzemeAdi: "1/4 Ø10 Nipel"
-        malzemeAdet: "8"
+        malzemeAdet: "2"
+      '7':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
+        malzemeAdet: "2"
   '7': #Kompanzasyon + Tek Hız 2 Grubu
     parts:
       '0':
@@ -1124,6 +1172,14 @@ valf_bloklari:
       '17':
         malzemeKodu: "150-51-09-627"
         malzemeAdi: "1/2 Erkek T"
+        malzemeAdet: "1"
+      '18':
+        malzemeKodu: "150-51-09-016"
+        malzemeAdi: "1/4 Ø10 Nipel"
+        malzemeAdet: "1"
+      '19':
+        malzemeKodu: "150-51-10-802"
+        malzemeAdi: "Manometre"
         malzemeAdet: "1"
 sogutma:
   '0': #Soğutma parçaları
