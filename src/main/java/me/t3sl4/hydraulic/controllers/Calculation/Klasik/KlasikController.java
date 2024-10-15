@@ -127,7 +127,7 @@ public class KlasikController {
     public static String secilenPompa = null;
     public static double secilenPompaVal;
     public static int girilenTankKapasitesiMiktari = 0;
-    public String secilenHidrolikKilitDurumu = null;
+    public static String secilenHidrolikKilitDurumu = null;
     public static String secilenValfTipi = null;
     public static String secilenKilitMotor = null;
     public static String secilenKilitPompa = null;

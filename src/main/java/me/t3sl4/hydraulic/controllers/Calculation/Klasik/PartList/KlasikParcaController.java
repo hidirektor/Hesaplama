@@ -399,7 +399,21 @@ public class KlasikParcaController {
     }
 
     private void loadSogutucuParca() {
-        generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaSogutma.get("0"), "Soğutucu Parçaları");
+        if(KlasikController.secilenHidrolikKilitDurumu.equals("Var")) {
+            //Hidrolik Kilit Var
+            if(KlasikController.secilenValfTipi.equals("İnişte Tek Hız") || KlasikController.secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaSogutma.get("2"), "Soğutucu Parçaları");
+            } else if(KlasikController.secilenValfTipi.equals("İnişte Çift Hız") || KlasikController.secilenValfTipi.equals("Kilitli Blok")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaSogutma.get("3"), "Soğutucu Parçaları");
+            }
+        } else {
+            //Hidrolik Kilit Yok
+            if(KlasikController.secilenValfTipi.equals("İnişte Tek Hız") || KlasikController.secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaSogutma.get("0"), "Soğutucu Parçaları");
+            } else if(KlasikController.secilenValfTipi.equals("İnişte Çift Hız") || KlasikController.secilenValfTipi.equals("Kilitli Blok")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaSogutma.get("1"), "Soğutucu Parçaları");
+            }
+        }
     }
 
     private void loadKilitMotorParca() {
