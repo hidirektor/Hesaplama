@@ -96,33 +96,26 @@ public class PDFUtil {
             document.add(halilParagraph);
 
             if (pdfFilePath != null) {
-                // PdfReader ile PDF'yi yükle
                 PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
 
-                // Sayfa eklemek için yeni bir sayfa açın
                 document.newPage();
 
-                // PdfWriter üzerinden sayfayı al ve yeni PDF'ye ekle
                 PdfImportedPage importedPage = writer.getImportedPage(reader, 1);
                 PdfContentByte cb = writer.getDirectContent();
 
-                // Sayfayı ekle (orijinal PDF'den alınan sayfa boyutlarını kullanarak)
                 cb.addTemplate(importedPage, 0, 0);
 
                 cb.beginText();
                 BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
                 cb.setFontAndSize(bf, 6);
 
-                // İlk metin için konum belirle
                 float xPosition = document.getPageSize().getWidth() - 110; // Sağ kenar boşluğu
                 float yPosition = document.getPageSize().getHeight() - 65; // Sayfanın üstünden 50 birim boşluk
 
-                // Halil metnini ekle
                 cb.setTextMatrix(xPosition, yPosition);
                 cb.showText(pompaDegeri);
 
-                // Direktör metni
-                yPosition -= 13; // Alt alta gelmesi için 15 birim aşağı kaydırın
+                yPosition -= 13;
                 cb.setTextMatrix(xPosition, yPosition);
                 cb.showText(motorDegeri);
 
