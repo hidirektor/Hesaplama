@@ -23,7 +23,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Objects;
 
 public class KlasikParcaController {
@@ -86,6 +88,30 @@ public class KlasikParcaController {
         String desktopPath = Paths.get(System.getProperty("user.home"), "Desktop").toString();
         excelFileName = Paths.get(desktopPath, excelFileName).toString();
 
+        Map<String, ParcaTableData> malzemeMap = new HashMap<>();
+
+        for (ParcaTableData rowData : veriler) {
+            // "----" separator satırlarını atla
+            if (!(rowData.getSatir1Property().equals("----") && rowData.getSatir3Property().equals("----"))) {
+                String malzemeKodu = rowData.getSatir1Property();
+
+                // Eğer malzeme zaten haritada varsa, adetini güncelle
+                if (malzemeMap.containsKey(malzemeKodu)) {
+                    ParcaTableData existingData = malzemeMap.get(malzemeKodu);
+                    int existingAdet = Integer.parseInt(existingData.getSatir3Property());
+                    int yeniAdet = Integer.parseInt(rowData.getSatir3Property());
+                    // Adetleri topluyoruz
+                    existingData.setSatir3Property(String.valueOf(existingAdet + yeniAdet));
+                } else {
+                    malzemeMap.put(malzemeKodu, new ParcaTableData(
+                            rowData.getSatir1Property(),
+                            rowData.getSatir2Property(),
+                            rowData.getSatir3Property()
+                    ));
+                }
+            }
+        }
+
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Malzeme Listesi");
 
@@ -95,7 +121,7 @@ public class KlasikParcaController {
             headerRow.createCell(2).setCellValue("Adet");
 
             int excelRowIndex = 1;
-            for (ParcaTableData rowData : veriler) {
+            for (ParcaTableData rowData : malzemeMap.values()) {
                 // "----" separator satırlarını atla
                 if (!(rowData.getSatir1Property()
                         .equals("----")
