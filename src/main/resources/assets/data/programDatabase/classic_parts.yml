@@ -1354,23 +1354,23 @@ sogutma:
       '21':
         malzemeKodu: "150-51-09-099"
         malzemeAdi: "3/8 KAYNAKLI MANŞON"
-        malzemeAdet: "2"
+        malzemeAdet: "1"
       '22':
         malzemeKodu: "150-51-09-100"
         malzemeAdi: "1/2 KAYNAKLI MANŞON"
-        malzemeAdet: "2"
+        malzemeAdet: "3"
       '23':
-        malzemeKodu: "150-53-08-005"
-        malzemeAdi: "1/2 REDÜKSİYON"
-        malzemeAdet: "2"
-      '24':
         malzemeKodu: "150-53-08-502"
-        malzemeAdi: "1/2 KÖR TAPA"
-        malzemeAdet: "2"
+        malzemeAdi: "1/2 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
+      '24':
+        malzemeKodu: "150-53-08-501"
+        malzemeAdi: "3/8 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
       '25':
-        malzemeKodu: "150-53-08-651"
-        malzemeAdi: "KUYRUKLU DİRSEK"
-        malzemeAdet: "4"
+        malzemeKodu: "150-51-09-102"
+        malzemeAdi: "3/4 KAYNAKLI MAŞON"
+        malzemeAdet: "3"
   '1': #Soğutma Kilit Yok + Çift Hız
     parts:
       '0':
@@ -1459,24 +1459,24 @@ sogutma:
         malzemeAdet: "1"
       '21':
         malzemeKodu: "150-51-09-099"
-        malzemeAdi: "3/8 KAYNAKLI MANŞON "
-        malzemeAdet: "2"
+        malzemeAdi: "3/8 KAYNAKLI MANŞON"
+        malzemeAdet: "1"
       '22':
         malzemeKodu: "150-51-09-100"
-        malzemeAdi: "1/2 KAYNAKLI MANŞON "
-        malzemeAdet: "2"
+        malzemeAdi: "1/2 KAYNAKLI MANŞON"
+        malzemeAdet: "3"
       '23':
-        malzemeKodu: "150-53-08-005"
-        malzemeAdi: "1/2 REDÜKSİYON"
-        malzemeAdet: "2"
-      '24':
         malzemeKodu: "150-53-08-502"
-        malzemeAdi: "1/2 KÖR TAPA "
-        malzemeAdet: "2"
+        malzemeAdi: "1/2 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
+      '24':
+        malzemeKodu: "150-53-08-501"
+        malzemeAdi: "3/8 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
       '25':
-        malzemeKodu: "150-53-08-651"
-        malzemeAdi: "KUYRUKLU DİRSEK"
-        malzemeAdet: "4"
+        malzemeKodu: "150-51-09-102"
+        malzemeAdi: "3/4 KAYNAKLI MAŞON"
+        malzemeAdet: "3"
   '2': #Soğutma Kilit Var + Tek Hız
     parts:
       '0':
@@ -1485,7 +1485,7 @@ sogutma:
         malzemeAdet: "1"
       '1':
         malzemeKodu: "150-51-06-506"
-        malzemeAdi: "1-K 250 KAMPANA "
+        malzemeAdi: "1-K 250 KAMPANA"
         malzemeAdet: "1"
       '2':
         malzemeKodu: "150-51-06-579"
@@ -1566,23 +1566,23 @@ sogutma:
       '21':
         malzemeKodu: "150-51-09-099"
         malzemeAdi: '3/8 KAYNAKLI MANŞON'
-        malzemeAdet: "2"
+        malzemeAdet: "1"
       '22':
         malzemeKodu: "150-51-09-100"
         malzemeAdi: "1/2 KAYNAKLI MANŞON"
-        malzemeAdet: "2"
+        malzemeAdet: "3"
       '23':
-        malzemeKodu: "150-53-08-005"
-        malzemeAdi: "1/2 REDÜKSİYON"
-        malzemeAdet: "2"
-      '24':
         malzemeKodu: "150-53-08-502"
-        malzemeAdi: "1/2 KÖR TAPA "
-        malzemeAdet: "2"
+        malzemeAdi: "1/2 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
+      '24':
+        malzemeKodu: "150-53-08-501"
+        malzemeAdi: "3/8 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
       '25':
-        malzemeKodu: "150-53-08-651"
-        malzemeAdi: "KUYRUKLU DİRSEK"
-        malzemeAdet: "4"
+        malzemeKodu: "150-51-09-102"
+        malzemeAdi: "3/4 KAYNAKLI MAŞON"
+        malzemeAdet: "3"
       '26':
         malzemeKodu: "150-51-04-025"
         malzemeAdi: "VALF AÇIK MERKEZ NG6 24V RH06021-24V"
@@ -1704,23 +1704,23 @@ sogutma:
       '21':
         malzemeKodu: "150-51-09-099"
         malzemeAdi: "3/8 KAYNAKLI MANŞON "
-        malzemeAdet: "2"
+        malzemeAdet: "1"
       '22':
         malzemeKodu: "150-51-09-100"
         malzemeAdi: "1/2 KAYNAKLI MANŞON "
-        malzemeAdet: "2"
+        malzemeAdet: "3"
       '23':
-        malzemeKodu: "150-53-08-005"
-        malzemeAdi: "1/2 REDÜKSİYON"
-        malzemeAdet: "2"
-      '24':
         malzemeKodu: "150-53-08-502"
-        malzemeAdi: "1/2 KÖR TAPA "
-        malzemeAdet: "2"
+        malzemeAdi: "1/2 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
+      '24':
+        malzemeKodu: "150-53-08-501"
+        malzemeAdi: "3/8 KÖR TAPA ALLEN BAŞLI"
+        malzemeAdet: "1"
       '25':
-        malzemeKodu: "150-53-08-651"
-        malzemeAdi: "KUYRUKLU DİRSEK"
-        malzemeAdet: "4"
+        malzemeKodu: "150-51-09-102"
+        malzemeAdi: "3/4 KAYNAKLI MAŞON"
+        malzemeAdet: "3"
       '26':
         malzemeKodu: "150-51-04-025"
         malzemeAdi: "VALF AÇIK MERKEZ NG6 24V RH06021-24V"
