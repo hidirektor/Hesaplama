@@ -19,6 +19,7 @@ import javafx.stage.Window;
 import javafx.stage.*;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -491,18 +492,30 @@ public class Utils {
         }
     }
 
-    public static boolean checkUpdateAndCancelEvent() {
+    public static boolean checkUpdateAndCancelEvent(Stage currentStage) {
         if(VersionUtility.isUpdateAvailable()) {
-            showUpdateAlert();
+            showUpdateAlert(currentStage);
         }
         return false;
     }
 
-    private static void showUpdateAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Yeni bir sürüm mevcut. Lütfen güncelleyin!", ButtonType.OK);
-        alert.setHeaderText("Güncelleme Mevcut");
-        alert.showAndWait();
+    private static void showUpdateAlert(Stage currentStage) {
+        ButtonType updateButton = new ButtonType("Şimdi Güncelle");
+        ButtonType okButton = ButtonType.OK;
 
-        System.exit(0);
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Yeni bir sürüm mevcut. Lütfen güncelleyin!", updateButton, okButton);
+        alert.setHeaderText("Güncelleme Mevcut");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(currentStage);
+
+        centerAlertOnScreen(alert, Main.defaultScreen);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == updateButton) {
+                openURL(SystemVariables.NEW_VERSION_URL);
+            }
+        });
+
+        System.exit(0); // Programı kapat
     }
 }

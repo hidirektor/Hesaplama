@@ -94,7 +94,7 @@ public class LoginController implements Initializable {
     public void onlineMod() {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
         if (Utils.netIsAvailable()) {
-            if(!Utils.checkUpdateAndCancelEvent()) {
+            if(!Utils.checkUpdateAndCancelEvent((Stage)offlineMod.getScene().getWindow())) {
                 Utils.checkLocalUserData(() -> {});
                 if(SystemVariables.loggedInUser != null) {
                     if(SystemVariables.loggedInUser.getUserID() != null || SystemVariables.loggedInUser.getAccessToken() != null || SystemVariables.loggedInUser.getRefreshToken() != null) {
@@ -118,7 +118,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void offlineMod() {
-        if(!Utils.checkUpdateAndCancelEvent()) {
+        if(!Utils.checkUpdateAndCancelEvent((Stage)offlineMod.getScene().getWindow())) {
             offlineMod.setDisable(true);
 
             SystemVariables.offlineMode = true;
