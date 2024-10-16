@@ -160,7 +160,7 @@
                         <Insets bottom="10.0" top="70.0" />
                     </VBox.margin>
                 </ImageView>
-                  <Label fx:id="versionCode" text="Build Number:">
+                  <Label fx:id="versionCodePre" text="Build Number:">
                       <font>
                           <Font size="15.0" />
                       </font>
@@ -168,7 +168,7 @@
                   <Insets top="60.0" />
                </VBox.margin>
                   </Label>
-            <Label fx:id="versionCode1" text="v16.10.24">
+            <Label fx:id="versionCode" text="v16.10.24">
                <font>
                   <Font size="15.0" />
                </font>

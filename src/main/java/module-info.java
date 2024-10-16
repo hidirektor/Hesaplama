@@ -19,6 +19,7 @@ module me.t3sl.hydraulic {
     requires java.logging;
     requires static lombok;
     requires java.prefs;
+    requires java.net.http;
 
     exports me.t3sl4.hydraulic.utils;
     opens me.t3sl4.hydraulic.controllers to javafx.fxml;

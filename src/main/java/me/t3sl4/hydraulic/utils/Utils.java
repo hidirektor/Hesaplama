@@ -24,6 +24,7 @@ import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import me.t3sl4.hydraulic.utils.general.VersionUtility;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
 import java.awt.*;
@@ -488,5 +489,20 @@ public class Utils {
         } else {
             System.out.println("Dizin bulunamadı: " + directory.getAbsolutePath());
         }
+    }
+
+    public static boolean checkUpdateAndCancelEvent() {
+        if(VersionUtility.isUpdateAvailable()) {
+            showUpdateAlert();
+        }
+        return false;
+    }
+
+    private static void showUpdateAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Yeni bir sürüm mevcut. Lütfen güncelleyin!", ButtonType.OK);
+        alert.setHeaderText("Güncelleme Mevcut");
+        alert.showAndWait();
+
+        System.exit(0);
     }
 }

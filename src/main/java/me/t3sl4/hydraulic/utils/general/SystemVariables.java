@@ -1,13 +1,18 @@
 package me.t3sl4.hydraulic.utils.general;
 
+import lombok.Getter;
 import me.t3sl4.hydraulic.utils.database.Model.HydraulicData.HydraulicData;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
 public class SystemVariables {
+    @Getter
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
+    private static final String CURRENT_VERSION = "1.0.0";
+
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
+    public static String RELEASE_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases";
 
     public static String WEB_URL = "https://ondergrup.com";
     public static String developedBy = "Designed and Coded by\nHalil İbrahim Direktör";
@@ -53,21 +58,18 @@ public class SystemVariables {
     public static String hydraulicGetDetailsURLPrefix = "/hydraulic/getHydraulicDetails";
 
     // Local Data
+    @Getter
     public static HydraulicData localHydraulicData = new HydraulicData();
-
-    public static boolean isOfflineMode() {
-        return offlineMode;
-    }
 
     public static void setOfflineMode(boolean offlineMode) {
         SystemVariables.offlineMode = offlineMode;
     }
 
-    public static HydraulicData getLocalHydraulicData() {
-        return localHydraulicData;
-    }
-
     public static void setLocalHydraulicData(HydraulicData localHydraulicData) {
         SystemVariables.localHydraulicData = localHydraulicData;
+    }
+
+    public static String getVersion() {
+        return CURRENT_VERSION;
     }
 }

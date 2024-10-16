@@ -94,19 +94,21 @@ public class LoginController implements Initializable {
     public void onlineMod() {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
         if (Utils.netIsAvailable()) {
-            Utils.checkLocalUserData(() -> {});
-            if(SystemVariables.loggedInUser != null) {
-                if(SystemVariables.loggedInUser.getUserID() != null || SystemVariables.loggedInUser.getAccessToken() != null || SystemVariables.loggedInUser.getRefreshToken() != null) {
-                    updateUserAndOpenMainScreen(stage, lblErrors);
+            if(!Utils.checkUpdateAndCancelEvent()) {
+                Utils.checkLocalUserData(() -> {});
+                if(SystemVariables.loggedInUser != null) {
+                    if(SystemVariables.loggedInUser.getUserID() != null || SystemVariables.loggedInUser.getAccessToken() != null || SystemVariables.loggedInUser.getRefreshToken() != null) {
+                        updateUserAndOpenMainScreen(stage, lblErrors);
+                    } else {
+                        loginPane.setVisible(true);
+                        offlineMod.setVisible(false);
+                        onlineMod.setVisible(false);
+                    }
                 } else {
                     loginPane.setVisible(true);
                     offlineMod.setVisible(false);
                     onlineMod.setVisible(false);
                 }
-            } else {
-                loginPane.setVisible(true);
-                offlineMod.setVisible(false);
-                onlineMod.setVisible(false);
             }
         } else {
             SystemVariables.offlineMode = false;
@@ -116,16 +118,18 @@ public class LoginController implements Initializable {
 
     @FXML
     public void offlineMod() {
-        offlineMod.setDisable(true);
+        if(!Utils.checkUpdateAndCancelEvent()) {
+            offlineMod.setDisable(true);
 
-        SystemVariables.offlineMode = true;
-        loginPane.setVisible(false);
-        offlineMod.setVisible(true);
-        onlineMod.setVisible(true);
+            SystemVariables.offlineMode = true;
+            loginPane.setVisible(false);
+            offlineMod.setVisible(true);
+            onlineMod.setVisible(true);
 
-        Utils.offlineMod(lblErrors, () -> {
-            offlineMod.setDisable(false);
-        });
+            Utils.offlineMod(lblErrors, () -> {
+                offlineMod.setDisable(false);
+            });
+        }
     }
 
     @FXML

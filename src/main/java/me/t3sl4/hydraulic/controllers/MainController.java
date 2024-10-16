@@ -112,6 +112,9 @@ public class MainController implements Initializable {
     @FXML
     private Label parametreCount;
 
+    @FXML
+    private Label versionCode;
+
     private List<HydraulicInfo> cachedHydraulicInfos = new ArrayList<>();
     int siparisSayisi;
     int klasik;
@@ -132,6 +135,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         userInfo();
         initializeSwitchs();
+        versionCode.setText(SystemVariables.getVersion());
     }
 
     private void initializeSwitchs() {
