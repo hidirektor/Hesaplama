@@ -191,13 +191,13 @@
                             </font>
                         </Label>
                         <VBox fx:id="klasikSwitchVBox" layoutX="750.0" layoutY="47.0" prefHeight="15.0" prefWidth="50.0" />
-                        <Label fx:id="justHidros" layoutX="855.0" layoutY="38.0" text="Hidros" textFill="#e7e5e5">
+                        <Label fx:id="justHidros" layoutX="845.0" layoutY="38.0" text="PowerPack" textFill="#e7e5e5">
                             <font>
                                 <Font size="15.0" />
                             </font>
                         </Label>
                         <VBox fx:id="hidrosSwitchVBox" layoutX="850.0" layoutY="47.0" prefHeight="15.0" prefWidth="50.0" />
-                        <Label layoutX="57.0" layoutY="25.0" text="Hydraulic Calculation" textFill="#e7e5e5">
+                        <Label layoutX="57.0" layoutY="25.0" text="Hydraulic Calculation Tool" textFill="#e7e5e5">
                             <font>
                                 <Font size="24.0" />
                             </font>

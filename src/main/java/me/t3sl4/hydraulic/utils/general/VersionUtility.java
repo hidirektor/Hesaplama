@@ -38,8 +38,6 @@ public class VersionUtility {
                 return false;
             }
 
-            System.out.println("Latest version found: " + latestVersion);
-
             if (!CURRENT_VERSION.equals(latestVersion)) {
                 System.out.println("Güncelleme mevcut: " + latestVersion);
                 return true;
@@ -49,7 +47,6 @@ public class VersionUtility {
             e.printStackTrace();
         }
 
-        System.out.println("Program güncel.");
         return false;
     }
 

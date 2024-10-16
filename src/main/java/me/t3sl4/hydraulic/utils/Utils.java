@@ -502,7 +502,7 @@ public class Utils {
     private static void showUpdateAlert(Stage currentStage) {
         ButtonType updateButton = new ButtonType("Şimdi Güncelle");
 
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Yeni bir sürüm mevcut. Lütfen güncelleyin!", updateButton);
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Hesaplama aracına erişebilmek için lütfen son sürümü kullanın.", updateButton);
         alert.setHeaderText("Güncelleme Mevcut");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(currentStage);
