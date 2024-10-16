@@ -490,47 +490,61 @@ public class KlasikController {
 
     private String hydraulicSchemaSelection(int selectedCylinders, String isPressureValf) {
         boolean isSogutmaVar = secilenSogutmaDurumu.equals("Var");
-        boolean isKilitMotorVar = secilenKilitMotor != null;
+        boolean isKilitVar = secilenHidrolikKilitDurumu != null;
         boolean isKompanzasyonVar = kompanzasyonDurumu.equals("Var");
-        boolean isInisteCiftHiz = secilenValfTipi.equals("İnişte Çift Hız");
-        boolean isInisteTekHiz = secilenValfTipi.equals("İnişte Tek Hız");
-        boolean isKilitliBlok = secilenValfTipi.equals("Kilitli Blok");
 
-        if (isSogutmaVar) {
-            if (isKilitMotorVar) {
-                if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 13, 14, 15, 16);
+        if(isSogutmaVar) {
+            if(isKilitVar) {
+                if(isKompanzasyonVar) {
+                    if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 13, 14, 15, 16);
+                    }
                 } else {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 5, 6, 7, 8);
+                    if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 5, 6, 7, 8);
+                    }
                 }
             } else {
-                if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 9, 10, 11, 12);
+                if(isKompanzasyonVar) {
+                    if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 9, 10, 11, 12);
+                    }
                 } else {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 1, 2, 3, 4);
+                    if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 1, 2, 3, 4);
+                    }
                 }
             }
         } else {
-            if (isKilitMotorVar) {
-                if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 33, 34, 35, 36);
-                } else if (isInisteTekHiz) {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 17, 18, 19, 20);
+            if(isKilitVar) {
+                if(isKompanzasyonVar) {
+                    if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 33, 34, 35, 36);
+                    }
                 } else {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 21, 22, 23, 24);
+                    if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 17, 18, 19, 20);
+                    } else if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 21, 22, 23, 24);
+                    }
                 }
             } else {
-                if (isKompanzasyonVar) {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 29, 30, 31, 32);
-                } else if (isKilitliBlok) {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 25, 26, 27, 28);
-                } else if (isInisteCiftHiz) {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 37, 38, 39, 40);
+                if(isKompanzasyonVar) {
+                    if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 29, 30, 31, 32);
+                    }
                 } else {
-                    return getCylinderImage(selectedCylinders, isPressureValf, 41, 42, 43, 44);
+                    if(secilenValfTipi.equals("İnişte Tek Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 41, 42, 43, 44);
+                    } else if(secilenValfTipi.equals("İnişte Çift Hız")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 37, 38, 39, 40);
+                    } else if(secilenValfTipi.equals("Kilitli Blok")) {
+                        return getCylinderImage(selectedCylinders, isPressureValf, 25, 26, 27, 28);
+                    }
                 }
             }
         }
+        return null;
     }
 
     private String getCylinderImage(int selectedCylinders, String isPressureValf, int one, int two, int three, int other) {
