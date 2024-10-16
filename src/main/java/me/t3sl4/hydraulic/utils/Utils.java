@@ -501,9 +501,8 @@ public class Utils {
 
     private static void showUpdateAlert(Stage currentStage) {
         ButtonType updateButton = new ButtonType("Şimdi Güncelle");
-        ButtonType okButton = ButtonType.OK;
 
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Yeni bir sürüm mevcut. Lütfen güncelleyin!", updateButton, okButton);
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Yeni bir sürüm mevcut. Lütfen güncelleyin!", updateButton);
         alert.setHeaderText("Güncelleme Mevcut");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(currentStage);
