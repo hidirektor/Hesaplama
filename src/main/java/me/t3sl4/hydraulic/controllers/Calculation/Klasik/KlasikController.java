@@ -492,9 +492,10 @@ public class KlasikController {
         boolean isSogutmaVar = secilenSogutmaDurumu.equals("Var");
         boolean isKilitVar = secilenHidrolikKilitDurumu != null;
         boolean isKompanzasyonVar = kompanzasyonDurumu.equals("Var");
+        boolean isKilitMotorVar = secilenKilitMotor != null;
 
         if(isSogutmaVar) {
-            if(isKilitVar) {
+            if(isKilitVar && isKilitMotorVar) {
                 if(isKompanzasyonVar) {
                     if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                         return getCylinderImage(selectedCylinders, isPressureValf, 13, 14, 15, 16);
@@ -516,7 +517,7 @@ public class KlasikController {
                 }
             }
         } else {
-            if(isKilitVar) {
+            if(isKilitVar && isKilitMotorVar) {
                 if(isKompanzasyonVar) {
                     if(secilenValfTipi.equals("Kompanzasyon || İnişte Tek Hız")) {
                         return getCylinderImage(selectedCylinders, isPressureValf, 33, 34, 35, 36);
