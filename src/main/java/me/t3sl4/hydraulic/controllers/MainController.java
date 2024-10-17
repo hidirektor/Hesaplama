@@ -395,7 +395,6 @@ public class MainController implements Initializable {
 
                 orderNumberLabel.setText(info.getOrderID());
                 orderDateLabel.setText(Utils.formatDateTimeMultiLine(String.valueOf(info.getCreatedDate())));
-                System.out.println(Utils.formatDateTimeMultiLine(String.valueOf(info.getCreatedDate())));
                 typeLabel.setText(info.getHydraulicType());
                 InChargeLabel.setText(info.getUserName());
 

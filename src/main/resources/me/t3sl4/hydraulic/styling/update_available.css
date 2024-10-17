@@ -1,0 +1,15 @@
+.root {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fx-background-color: #7d00bc;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-font-size: 12px;
+    -fx-background-radius: 20;
+}
+
+.progress-bar {
+    -fx-accent: #9b59b6;
+}

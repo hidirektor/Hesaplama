@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Window;
@@ -22,21 +23,18 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.controllers.MainController;
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
+import me.t3sl4.hydraulic.controllers.Popup.UpdateAlertController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.general.VersionUtility;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
-import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -507,39 +505,52 @@ public class Utils {
     }
 
     public static boolean checkUpdateAndCancelEvent(Stage currentStage) {
-        if(VersionUtility.isUpdateAvailable()) {
-            showUpdateAlert(currentStage);
+        String[] updateInfo = VersionUtility.checkForUpdate();
+        if (updateInfo != null) {
+            showUpdateAlert(currentStage, updateInfo[0], updateInfo[1]); // Version and details
         }
         return false;
     }
 
-    private static void showUpdateAlert(Stage currentStage) {
-        ButtonType updateButton = new ButtonType("Yeni Versiyon");
-        ButtonType downloadButton = new ButtonType("Şimdi İndir");
+    private static void showUpdateAlert(Stage currentStage, String version, String details) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/UpdateAlert.fxml"));
+            AnchorPane root = loader.load();
 
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Hesaplama aracına erişebilmek için lütfen son sürümü kullanın.", updateButton, downloadButton);
-        alert.setHeaderText("Güncelleme Mevcut");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(currentStage);
+            UpdateAlertController controller = loader.getController();
+            controller.setCurrentStage(currentStage);
+            controller.setUpdateDetails(version, details);
 
-        centerAlertOnScreen(alert, Main.defaultScreen);
+            Stage alertStage = new Stage();
+            alertStage.setTitle("Güncelleme Mevcut");
+            alertStage.initModality(Modality.APPLICATION_MODAL);
+            alertStage.initStyle(StageStyle.UNDECORATED);
+            alertStage.initOwner(currentStage);
 
-        alert.showAndWait().ifPresent(response -> {
-            if (response == updateButton) {
-                openURL(SystemVariables.NEW_VERSION_URL);
-            } else if(response == downloadButton) {
-                try {
-                    downloadLatestVersion(currentStage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+            Rectangle2D bounds = Main.defaultScreen.getVisualBounds();
+            alertStage.setOnShown(event -> {
+                double stageWidth = alertStage.getWidth();
+                double stageHeight = alertStage.getHeight();
 
-        System.exit(0); // Programı kapat
+                // Calculate the center position
+                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+                // Set the stage position
+                alertStage.setX(centerX);
+                alertStage.setY(centerY);
+            });
+
+            Scene scene = new Scene(root);
+            alertStage.setScene(scene);
+            alertStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void downloadLatestVersion(Stage stage) throws IOException {
+
+    public static void downloadLatestVersion(File selectedDirectory, ProgressUpdater progressUpdater) throws IOException {
         String os = System.getProperty("os.name").toLowerCase();
         String downloadURL = getDownloadURLForOS(os);
 
@@ -548,16 +559,27 @@ public class Utils {
             return;
         }
 
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("İndirme Konumunu Seçin");
-        File selectedDirectory = directoryChooser.showDialog(stage);
+        File downloadFile = new File(selectedDirectory.getAbsolutePath() + "/" + getFileNameFromURL(downloadURL));
+        try (BufferedInputStream in = new BufferedInputStream(new URL(downloadURL).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(downloadFile)) {
 
-        if (selectedDirectory != null) {
-            File downloadFile = new File(selectedDirectory.getAbsolutePath() + "/" + getFileNameFromURL(downloadURL));
-            FileUtils.copyURLToFile(new URL(downloadURL), downloadFile);
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+            long totalBytesRead = 0;
+            long fileSize = new URL(downloadURL).openConnection().getContentLengthLong();
+
+            while ((bytesRead = in.read(dataBuffer, 0, dataBuffer.length)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+                totalBytesRead += bytesRead;
+
+                // İlerlemeyi güncelle
+                progressUpdater.updateProgress(totalBytesRead, fileSize);
+            }
+
             System.out.println("Dosya başarıyla indirildi: " + downloadFile.getAbsolutePath());
-        } else {
-            System.out.println("İndirme işlemi iptal edildi.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -622,5 +644,10 @@ public class Utils {
             logger.log(Level.SEVERE, e.getMessage(), e);
             return "";
         }
+    }
+
+    @FunctionalInterface
+    public interface ProgressUpdater {
+        void updateProgress(long bytesRead, long totalBytes);
     }
 }

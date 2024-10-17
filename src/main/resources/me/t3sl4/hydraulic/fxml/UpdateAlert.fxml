@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="300.0" prefWidth="450.0" stylesheets="@../styling/update_available.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.Popup.UpdateAlertController">
+   <ImageView fitHeight="300.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../../assets/images/general/new_update.jpeg" />
+      </image>
+   </ImageView>
+     <Button fx:id="downloadButton" layoutX="307.0" layoutY="172.0" onAction="#handleDownload" prefHeight="20.0" prefWidth="131.0" text="Şimdi İndir" />
+   <ProgressBar fx:id="downloadBar" layoutX="302.0" layoutY="279.0" prefHeight="15.0" prefWidth="138.0" progress="0.0" visible="false" />
+     <Button fx:id="updateButton" layoutX="263.0" layoutY="203.0" onAction="#handleUpdate" prefHeight="20.0" prefWidth="175.0" text="Github'da Görüntüle" />
+   <ImageView fx:id="scissorLiftView" fitHeight="75.0" fitWidth="100.0" layoutX="320.0" layoutY="220.0" visible="false">
+      <image>
+         <Image url="@../../../../assets/images/general/scissor_lift_animation.gif" />
+      </image>
+   </ImageView>
+   <Label layoutX="254.0" layoutY="9.0" text="Güncelleme Var" textFill="#315463">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font>
+   </Label>
+   <Label fx:id="versionLabel" layoutX="203.0" layoutY="48.0" text="Güncelleme Hakkında:" textFill="#d05d75">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="updateDetails" layoutX="225.0" layoutY="74.0" text="Güncelleme Hakkında" textFill="#315463">
+      <font>
+         <Font size="12.0" />
+      </font>
+      <maxWidth>200.0</maxWidth>
+      <wrapText>true</wrapText>
+   </Label>
+
+   <ImageView fx:id="closeButton" fitHeight="24.0" fitWidth="24.0" visible="false" layoutX="5.0" layoutY="5.0" onMouseClicked="#ekraniKapat" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../../assets/images/icons/ikon_close.png" />
+      </image>
+   </ImageView>
+</AnchorPane>
