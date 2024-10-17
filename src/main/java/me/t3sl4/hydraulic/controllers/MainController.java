@@ -1,7 +1,5 @@
 package me.t3sl4.hydraulic.controllers;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -38,7 +36,10 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import static me.t3sl4.hydraulic.utils.Utils.openURL;
@@ -109,8 +110,8 @@ public class MainController implements Initializable {
     @FXML
     private Label versionCode;
 
-    private List<HydraulicInfo> cachedHydraulicInfos = new ArrayList<>();
-    private List<HydraulicInfo> localHydraulicInfos = new ArrayList<>();
+    private List<HydraulicInfo> finalHydraulicUnitList = new ArrayList<>();
+
     int siparisSayisi;
     int klasik;
     int hidros;
@@ -128,12 +129,12 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Utils.readLocalHydraulicUnits(localHydraulicStatsPath, localHydraulicInfos);
         userInfo();
         initializeSwitchs();
+        initializeThreeState();
         versionCode.setText(SystemVariables.getVersion());
 
-        initializeThreeState();
+        initializeHydraulicTable();
     }
 
     private void initializeSwitchs() {
@@ -144,29 +145,11 @@ public class MainController implements Initializable {
         hidrosSwitchVBox.getChildren().addAll(hidrosSwitch);
 
         klasikSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                if(!isHidros.getValue()) {
-                    hydraulicUnitInit(2);
-                } else {
-                    hidrosSwitch.setIsToggled(false);
-                    hydraulicUnitInit(2);
-                }
-            } else {
-                hydraulicUnitInit(1);
-            }
+            initializeHydraulicTable();
         });
 
         hidrosSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                if(!isKlasik.getValue()) {
-                    hydraulicUnitInit(3);
-                } else {
-                    klasikSwitch.setIsToggled(false);
-                    hydraulicUnitInit(3);
-                }
-            } else {
-                hydraulicUnitInit(1);
-            }
+            initializeHydraulicTable();
         });
 
         klasikSwitch.isToggledProperty().bindBidirectional(isKlasik);
@@ -177,34 +160,61 @@ public class MainController implements Initializable {
         threeStateSwitch.setLayoutX(780.0);
         threeStateSwitch.setLayoutY(120.0);
 
-        pnlOverview.getChildren().add(threeStateSwitch);
+        threeStateSwitch.setStateChangeListener(() -> {
+            ThreeStateSwitch.SwitchState newState = threeStateSwitch.getState();
 
-        if(loggedInUser == null) {
+            initializeHydraulicTable();
+        });
+
+        pnlOverview.getChildren().add(threeStateSwitch);
+    }
+
+    private void initializeHydraulicTable() {
+        finalHydraulicUnitList.clear();
+
+        if(loggedInUser != null) {
+            if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.LOCAL)) {
+                if(isKlasik.getValue()) {
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Klasik");
+                } else if(isHidros.getValue()) {
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Hidros");
+                } else {
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, null);
+                }
+            } else if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.LOCALWEB)) {
+                if(isKlasik.getValue()) {
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Klasik");
+                    hydraulicUnitInit(2, finalHydraulicUnitList);
+                } else if(isHidros.getValue()) {
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Hidros");
+                    hydraulicUnitInit(3, finalHydraulicUnitList);
+                } else {
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, null);
+                    hydraulicUnitInit(1, finalHydraulicUnitList);
+                }
+            } else if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.WEB)) {
+                if(isKlasik.getValue()) {
+                    hydraulicUnitInit(2, finalHydraulicUnitList);
+                } else if(isHidros.getValue()) {
+                    hydraulicUnitInit(3, finalHydraulicUnitList);
+                } else {
+                    hydraulicUnitInit(1, finalHydraulicUnitList);
+                }
+            }
+        } else {
             threeStateSwitch.setDefaultState(ThreeStateSwitch.SwitchState.LOCAL);
             threeStateSwitch.setCancel(true);
-            populateUIWithCachedData();
-        } else {
-            threeStateSwitch.setCancel(false);
-            threeStateSwitch.setStateChangeListener(() -> {
-                switch (threeStateSwitch.getState()) {
-                    case LOCAL:
-                        populateUIWithCachedData();
-                        break;
-                    case LOCALWEB:
-                        System.out.println("Durum değişti: LOCALWEB");
-                        break;
-                    case WEB:
-                        if(isHidros.getValue()) {
-                            hydraulicUnitInit(3);
-                        } else if(isKlasik.getValue()) {
-                            hydraulicUnitInit(2);
-                        } else {
-                            hydraulicUnitInit(1);
-                        }
-                        break;
-                }
-            });
+
+            if(isKlasik.getValue()) {
+                Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Klasik");
+            } else if(isHidros.getValue()) {
+                Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Hidros");
+            } else {
+                Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, null);
+            }
         }
+
+        populateUIWithCachedData(finalHydraulicUnitList);
     }
 
     @FXML
@@ -255,7 +265,6 @@ public class MainController implements Initializable {
             pnlOverview.setStyle("-fx-background-color : #02030A");
             pnlOverview.toFront();
             updateHydraulicText();
-            hydraulicUnitInit(1);
         }
         if(actionEvent.getSource() == btnOnlineMode) {
             Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
@@ -306,10 +315,8 @@ public class MainController implements Initializable {
             kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName() + "\n ");
             Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
             updateHydraulicText();
-            hydraulicUnitInit(1);
             buttonsVBox.getChildren().remove(btnOnlineMode);
         } else {
-            populateUIWithCachedData();
             kullaniciAdiIsimText.setText("Standart Kullanıcı");
             toplamSiparisCount.setText("NaN");
             klasikUniteCount.setText("NaN");
@@ -354,11 +361,9 @@ public class MainController implements Initializable {
         });
     }
 
-    public void hydraulicUnitInit(int type) {
+    public void hydraulicUnitInit(int type, List<HydraulicInfo> finalHydraulicUnitList) {
         String reqURL = BASE_URL + hydraulicGetDetailsURLPrefix;
         String jsonHydraulicBody;
-
-        populateUIWithCachedData();
 
         if(type == 1) {
             //Tümü
@@ -367,8 +372,8 @@ public class MainController implements Initializable {
                 @Override
                 public void onSuccess(String response) {
                     JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
-                    cachedHydraulicInfos = parseJsonResponse(String.valueOf(responseJson));
-                    populateUIWithCachedData();
+                    Utils.parseHydraulicJsonResponse(String.valueOf(responseJson), finalHydraulicUnitList);
+                    populateUIWithCachedData(finalHydraulicUnitList);
                 }
 
                 @Override
@@ -384,8 +389,8 @@ public class MainController implements Initializable {
                 @Override
                 public void onSuccess(String response) {
                     JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
-                    cachedHydraulicInfos = parseJsonResponse(String.valueOf(responseJson));
-                    populateUIWithCachedData();
+                    Utils.parseHydraulicJsonResponse(String.valueOf(responseJson), finalHydraulicUnitList);
+                    populateUIWithCachedData(finalHydraulicUnitList);
                 }
 
                 @Override
@@ -400,8 +405,8 @@ public class MainController implements Initializable {
                 @Override
                 public void onSuccess(String response) {
                     JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
-                    cachedHydraulicInfos = parseJsonResponse(String.valueOf(responseJson));
-                    populateUIWithCachedData();
+                    Utils.parseHydraulicJsonResponse(String.valueOf(responseJson), finalHydraulicUnitList);
+                    populateUIWithCachedData(finalHydraulicUnitList);
                 }
 
                 @Override
@@ -412,24 +417,8 @@ public class MainController implements Initializable {
         }
     }
 
-    private void populateUIWithCachedData() {
+    private void populateUIWithCachedData(List<HydraulicInfo> activeHydraulicList) {
         pnItems.getChildren().clear();
-
-        List<HydraulicInfo> activeHydraulicList;
-
-        if(loggedInUser != null) {
-            activeHydraulicList = cachedHydraulicInfos;
-        } else {
-            activeHydraulicList = localHydraulicInfos;
-        }
-
-        if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.LOCAL)) {
-
-        } else if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.LOCALWEB)) {
-
-        } else if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.WEB)) {
-
-        }
 
         for (HydraulicInfo info : activeHydraulicList) {
             try {
@@ -444,8 +433,9 @@ public class MainController implements Initializable {
                 Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
                 ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
 
-                if(loggedInUser == null) {
+                if(info.isLocal()) {
                     pdfViewButton.setText("Aç");
+                    itemC.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-background-insets: 0;");
                 }
 
                 orderNumberLabel.setText(info.getOrderID());
@@ -469,7 +459,11 @@ public class MainController implements Initializable {
                     }
                 });
 
-                node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #0A0E3F"));
+                if (info.isLocal()) {
+                    node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #FF6961"));
+                } else {
+                    node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #BCECE6"));
+                }
                 node.setOnMouseExited(event -> itemC.setStyle("-fx-background-color : #02030A"));
 
                 pnItems.getChildren().add(node);
@@ -477,21 +471,6 @@ public class MainController implements Initializable {
                 Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
         }
-    }
-
-    public List<HydraulicInfo> parseJsonResponse(String response) {
-        List<HydraulicInfo> hydraulicInfos = new ArrayList<>();
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            HydraulicInfo[] infoArray = objectMapper.readValue(response, HydraulicInfo[].class);
-            hydraulicInfos.addAll(Arrays.asList(infoArray));
-        } catch (IOException e) {
-            Utils.logger.log(Level.SEVERE, e.getMessage(), e);
-        }
-
-        return hydraulicInfos;
     }
 
     private void excelVoidCount() {

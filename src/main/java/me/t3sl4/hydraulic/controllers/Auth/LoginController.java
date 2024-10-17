@@ -98,7 +98,16 @@ public class LoginController implements Initializable {
                 Utils.checkLocalUserData(() -> {});
                 if(SystemVariables.loggedInUser != null) {
                     if(SystemVariables.loggedInUser.getUserID() != null || SystemVariables.loggedInUser.getAccessToken() != null || SystemVariables.loggedInUser.getRefreshToken() != null) {
-                        updateUserAndOpenMainScreen(stage, lblErrors);
+                        updateUserAndOpenMainScreen(stage, lblErrors, () -> {
+                            try {
+                                Utils.deleteLocalData();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            loginPane.setVisible(true);
+                            offlineMod.setVisible(false);
+                            onlineMod.setVisible(false);
+                        });
                     } else {
                         loginPane.setVisible(true);
                         offlineMod.setVisible(false);

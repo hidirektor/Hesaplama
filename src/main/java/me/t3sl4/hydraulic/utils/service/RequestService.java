@@ -50,7 +50,7 @@ public class RequestService {
                             SystemVariables.loggedInUser.setAccessToken(accessToken);
                             SystemVariables.loggedInUser.setRefreshToken(refreshToken);
 
-                            updateUserAndOpenMainScreen(stage, lblErrors);
+                            updateUserAndOpenMainScreen(stage, lblErrors, null);
                         } else {
                             Utils.showErrorOnLabel(lblErrors, "Hidrolik aracını normal kullanıcılar kullanamaz.");
                         }
@@ -105,7 +105,7 @@ public class RequestService {
         });
     }
 
-    public static void updateUserAndOpenMainScreen(Stage stage, Label inLabel) {
+    public static void updateUserAndOpenMainScreen(Stage stage, Label inLabel, Runnable onFailure) {
         RequestService.updateUserReq(() -> {
             try {
                 Utils.openMainScreen(inLabel);
@@ -114,10 +114,8 @@ public class RequestService {
             }
             stage.close();
         }, () -> {
-            try {
-                Utils.deleteLocalData();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if(onFailure != null) {
+                onFailure.run();
             }
         });
     }

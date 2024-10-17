@@ -49,8 +49,8 @@ public class ThreeStateSwitch extends Region {
 
     private void initializeParts() {
         background = new Rectangle(WIDTH, HEIGHT);
-        background.setArcWidth(15);
-        background.setArcHeight(15);
+        background.setArcWidth(40);
+        background.setArcHeight(40);
         background.setFill(Color.LIGHTGRAY);
 
         toggleCircle = new Circle(CIRCLE_RADIUS);
@@ -93,7 +93,7 @@ public class ThreeStateSwitch extends Region {
             case LOCAL:
                 toggleCircle.setCenterX(CIRCLE_RADIUS);
                 stateText.setText("Local");
-                background.setFill(Color.RED);
+                background.setFill(Color.valueOf("#FF6961"));
                 break;
             case LOCALWEB:
                 toggleCircle.setCenterX(WIDTH / 2);
@@ -103,7 +103,7 @@ public class ThreeStateSwitch extends Region {
             case WEB:
                 toggleCircle.setCenterX(WIDTH - CIRCLE_RADIUS);
                 stateText.setText("Online");
-                background.setFill(Color.GREEN);
+                background.setFill(Color.valueOf("#BCECE6"));
                 break;
         }
     }

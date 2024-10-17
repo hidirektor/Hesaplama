@@ -1,5 +1,7 @@
 package me.t3sl4.hydraulic.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -461,10 +463,6 @@ public class Utils {
 
         deleteDirectory(new File(SystemVariables.profilePhotoLocalPath));
 
-        deleteDirectory(new File(SystemVariables.pdfFileLocalPath));
-
-        deleteDirectory(new File(SystemVariables.excelFileLocalPath));
-
         deleteDirectory(new File(SystemVariables.dataFileLocalPath));
 
         SystemVariables.loggedInUser = null;
@@ -719,7 +717,7 @@ public class Utils {
     }
 
     @SuppressWarnings("unchecked")
-    public static void readLocalHydraulicUnits(String yamlFilePath, List<HydraulicInfo> localHydraulicInfos) {
+    public static void readLocalHydraulicUnits(String yamlFilePath, List<HydraulicInfo> localHydraulicInfos, String unitType) {
         File yamlFile = new File(yamlFilePath);
         if (!yamlFile.exists()) {
             System.out.println("YAML dosyası bulunamadı.");
@@ -747,31 +745,35 @@ public class Utils {
         }
 
         int totalUnits = localUnits.size();
-        System.out.println("Toplam Hydraulic Unit Sayısı: " + totalUnits);
+        //System.out.println("Toplam Hydraulic Unit Sayısı: " + totalUnits);
 
         int hidrosCount = 0;
         int klasikCount = 0;
         for (Map<String, Object> unit : localUnits.values()) {
-            String unitType = (String) unit.get("unit_type");
-            if ("Hidros".equalsIgnoreCase(unitType)) {
+            String unitTypeFromData = (String) unit.get("unit_type");
+            if ("Hidros".equalsIgnoreCase(unitTypeFromData)) {
                 hidrosCount++;
-            } else if ("Klasik".equalsIgnoreCase(unitType)) {
+            } else if ("Klasik".equalsIgnoreCase(unitTypeFromData)) {
                 klasikCount++;
             }
         }
 
-        System.out.println("Hidros Unit Sayısı: " + hidrosCount);
-        System.out.println("Klasik Unit Sayısı: " + klasikCount);
+        //System.out.println("Hidros Unit Sayısı: " + hidrosCount);
+        //System.out.println("Klasik Unit Sayısı: " + klasikCount);
 
         for (Map.Entry<String, Map<String, Object>> entry : localUnits.entrySet()) {
             Map<String, Object> unitData = entry.getValue();
+            String currentUnitType = (String) unitData.get("unit_type");
+
+            if (unitType != null && !unitType.equalsIgnoreCase(currentUnitType)) {
+                continue;
+            }
+
             HydraulicInfo hydraulicInfo = new HydraulicInfo();
-
             hydraulicInfo.setId(Integer.parseInt(entry.getKey()));
-
             hydraulicInfo.setLocal(true);
             hydraulicInfo.setOrderID((String) unitData.get("order_number"));
-            hydraulicInfo.setHydraulicType((String) unitData.get("unit_type"));
+            hydraulicInfo.setHydraulicType(currentUnitType);
             hydraulicInfo.setSchematicID((String) unitData.get("pdf_path"));
             hydraulicInfo.setPartListID((String) unitData.get("excel_path"));
             hydraulicInfo.setCreatedDate(Long.parseLong((String) unitData.get("created_date")));
@@ -785,7 +787,7 @@ public class Utils {
             localHydraulicInfos.add(hydraulicInfo);
         }
 
-        System.out.println("\nYAML'deki tüm datalar listeye eklendi:");
+        /*System.out.println("\nYAML'deki filtrelenmiş datalar listeye eklendi:");
         for (HydraulicInfo info : localHydraulicInfos) {
             System.out.println("ID: " + info.getId());
             System.out.println("Order ID: " + info.getOrderID());
@@ -795,7 +797,7 @@ public class Utils {
             System.out.println("User ID: " + info.getUserID());
             System.out.println("User Name: " + info.getUserName());
             System.out.println("-----------------------");
-        }
+        }*/
     }
 
     public static String getCurrentUnixTime() {
@@ -821,6 +823,17 @@ public class Utils {
             }
         } else {
             System.out.println("Bu platform masaüstü fonksiyonlarını desteklemiyor.");
+        }
+    }
+
+    public static void parseHydraulicJsonResponse(String response, List<HydraulicInfo> finalHydraulicUnitList) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            HydraulicInfo[] infoArray = objectMapper.readValue(response, HydraulicInfo[].class);
+            finalHydraulicUnitList.addAll(Arrays.asList(infoArray));
+        } catch (IOException e) {
+            Utils.logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 }
