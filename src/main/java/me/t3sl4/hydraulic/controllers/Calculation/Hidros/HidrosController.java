@@ -131,7 +131,7 @@ public class HidrosController {
 
     public boolean hesaplamaBitti = false;
 
-    public String secilenUniteTipi = "Hidros";
+    public static String secilenUniteTipi = "Hidros";
 
     public void initialize() {
         comboBoxListener();
@@ -838,7 +838,7 @@ public class HidrosController {
                 pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosdevirmeli.pdf";
             }
             pdfPath = null;
-            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString(), secilenMotorTipi, secilenPompa);
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString(), secilenMotorTipi, secilenPompa, secilenUniteTipi);
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }

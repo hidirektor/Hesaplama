@@ -119,7 +119,7 @@ public class KlasikController {
     /*
     Seçilen Değerler:
      */
-    public String secilenUniteTipi = "Klasik";
+    public static String secilenUniteTipi = "Klasik";
     public static String girilenSiparisNumarasi = null;
     public static String secilenMotor = null;
     public static String kompanzasyonDurumu = null;
@@ -482,7 +482,7 @@ public class KlasikController {
             String pdfPath = hydraulicSchemaSelection(selectedCylinders, isPressureValf);
             System.out.println("PDF Şema Yolu: " + pdfPath);
 
-            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/classic/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString(), secilenMotor, secilenPompa);
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "tankImage.png", "schematicImage.png", "/assets/data/hydraulicUnitData/schematicPDF/classic/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabin.getText().toString(), secilenMotor, secilenPompa, secilenUniteTipi);
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }

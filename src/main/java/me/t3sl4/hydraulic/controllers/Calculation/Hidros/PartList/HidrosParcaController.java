@@ -11,6 +11,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.controllers.Calculation.Hidros.HidrosController;
+import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.ParcaTableData;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,7 +21,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -86,10 +86,7 @@ public class HidrosParcaController {
     @FXML
     public void exportExcelProcess() {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
-        String excelFileName = HidrosController.girilenSiparisNumarasi + ".xlsx";
-
-        String desktopPath = Paths.get(System.getProperty("user.home"), "Desktop").toString();
-        excelFileName = Paths.get(desktopPath, excelFileName).toString();
+        String excelFileName = SystemVariables.excelFileLocalPath + HidrosController.girilenSiparisNumarasi + ".xlsx";
 
         Map<String, ParcaTableData> malzemeMap = new HashMap<>();
 
@@ -140,6 +137,26 @@ public class HidrosParcaController {
             try (FileOutputStream fileOut = new FileOutputStream(excelFileName)) {
                 workbook.write(fileOut);
                 System.out.println("Excel dosyası başarıyla oluşturuldu: " + excelFileName);
+
+                if(SystemVariables.loggedInUser != null) {
+                    Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
+                            HidrosController.girilenSiparisNumarasi,
+                            Utils.getCurrentUnixTime(),
+                            HidrosController.secilenUniteTipi,
+                            null,
+                            excelFileName,
+                            "no",
+                            SystemVariables.loggedInUser.getUserID());
+                } else {
+                    Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
+                            HidrosController.girilenSiparisNumarasi,
+                            Utils.getCurrentUnixTime(),
+                            HidrosController.secilenUniteTipi,
+                            null,
+                            excelFileName,
+                            "yes",
+                            System.getProperty("user.name"));
+                }
             }
 
         } catch (IOException e) {

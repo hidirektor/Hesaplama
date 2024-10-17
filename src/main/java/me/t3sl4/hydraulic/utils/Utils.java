@@ -32,6 +32,9 @@ import me.t3sl4.hydraulic.utils.general.VersionUtility;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
+import org.yaml.snakeyaml.Yaml;
 
 import java.awt.*;
 import java.io.*;
@@ -44,8 +47,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
 import java.util.logging.Level;
@@ -649,5 +651,131 @@ public class Utils {
     @FunctionalInterface
     public interface ProgressUpdater {
         void updateProgress(long bytesRead, long totalBytes);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void createLocalUnitData(String yamlFilePath, String orderNumber, String createdDate, String unitType,
+                                           String pdfPath, String excelPath, String isOffline, String createdBy) {
+        LoaderOptions loaderOptions = new LoaderOptions();
+        Yaml yaml = new Yaml(loaderOptions);
+        Map<String, Object> data;
+
+        File yamlFile = new File(yamlFilePath);
+        if (!yamlFile.exists()) {
+            data = new HashMap<>();
+            data.put("local_units", new HashMap<>());
+        } else {
+            try (FileReader reader = new FileReader(yamlFile)) {
+                data = yaml.load(reader);
+                if (data == null) {
+                    data = new HashMap<>();
+                    data.put("local_units", new HashMap<>());
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("YAML dosyası okunurken bir hata oluştu", e);
+            }
+        }
+
+        Map<String, Map<String, Object>> localUnits = (Map<String, Map<String, Object>>) data.get("local_units");
+
+        boolean found = false;
+        for (Map.Entry<String, Map<String, Object>> entry : localUnits.entrySet()) {
+            if (entry.getValue().get("order_number").equals(orderNumber)) {
+                if (pdfPath != null) entry.getValue().put("pdf_path", pdfPath);
+                if (excelPath != null) entry.getValue().put("excel_path", excelPath);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            int nextIndex = localUnits.size();
+            Map<String, Object> newEntry = new HashMap<>();
+            newEntry.put("order_number", orderNumber);
+            newEntry.put("created_date", createdDate);
+            newEntry.put("unit_type", unitType);
+            newEntry.put("pdf_path", pdfPath == null ? "" : pdfPath);
+            newEntry.put("excel_path", excelPath == null ? "" : excelPath);
+
+            Map<String, String> creationData = new HashMap<>();
+            creationData.put("isOffline", isOffline);
+            creationData.put("created_by", createdBy);
+
+            newEntry.put("creation_data", creationData);
+
+            localUnits.put(String.valueOf(nextIndex), newEntry);
+        }
+
+        try (FileWriter writer = new FileWriter(yamlFile)) {
+            DumperOptions options = new DumperOptions();
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+            options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED); // Değişiklik burada
+            yaml = new Yaml(options);
+            yaml.dump(data, writer);
+        } catch (IOException e) {
+            throw new RuntimeException("YAML dosyasına yazılırken bir hata oluştu", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void readLocalHydraulicUnits(String yamlFilePath) {
+        File yamlFile = new File(yamlFilePath);
+        if (!yamlFile.exists()) {
+            System.out.println("YAML dosyası bulunamadı.");
+            return;
+        }
+
+        LoaderOptions loaderOptions = new LoaderOptions();
+        Yaml yaml = new Yaml(loaderOptions);
+        Map<String, Object> data;
+
+        try (FileReader reader = new FileReader(yamlFile)) {
+            data = yaml.load(reader);
+            if (data == null) {
+                System.out.println("YAML dosyası boş.");
+                return;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("YAML dosyası okunurken bir hata oluştu", e);
+        }
+
+        Map<String, Map<String, Object>> localUnits = (Map<String, Map<String, Object>>) data.get("local_units");
+        if (localUnits == null || localUnits.isEmpty()) {
+            System.out.println("Hydraulic unit bulunamadı.");
+            return;
+        }
+
+        int totalUnits = localUnits.size();
+        System.out.println("Toplam Hydraulic Unit Sayısı: " + totalUnits);
+
+        int hidrosCount = 0;
+        int klasikCount = 0;
+        for (Map<String, Object> unit : localUnits.values()) {
+            String unitType = (String) unit.get("unit_type");
+            if ("Hidros".equalsIgnoreCase(unitType)) {
+                hidrosCount++;
+            } else if ("Klasik".equalsIgnoreCase(unitType)) {
+                klasikCount++;
+            }
+        }
+
+        System.out.println("Hidros Unit Sayısı: " + hidrosCount);
+        System.out.println("Klasik Unit Sayısı: " + klasikCount);
+
+        System.out.println("\nTüm YAML verisi:");
+        for (Map.Entry<String, Map<String, Object>> entry : localUnits.entrySet()) {
+            System.out.println("Unit ID: " + entry.getKey());
+            Map<String, Object> unitData = entry.getValue();
+            for (Map.Entry<String, Object> unitEntry : unitData.entrySet()) {
+                System.out.println(unitEntry.getKey() + ": " + unitEntry.getValue());
+            }
+            System.out.println("-----------------------");
+        }
+    }
+
+
+    public static String getCurrentUnixTime() {
+        long unixTime = Instant.now().getEpochSecond();
+        return String.valueOf(unixTime);
     }
 }

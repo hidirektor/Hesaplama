@@ -12,6 +12,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -28,10 +29,9 @@ public class PDFUtil {
 
     private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
-    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pngFilePath3, String pdfFilePath, String girilenSiparisNumarasi, String kullanilacakKabin, String motorDegeri, String pompaDegeri) {
+    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pngFilePath3, String pdfFilePath, String girilenSiparisNumarasi, String kullanilacakKabin, String motorDegeri, String pompaDegeri, String unitType) {
         try {
-            String userHome = System.getProperty("user.home");
-            String ExPDFFilePath = userHome + File.separator + "Desktop" + File.separator + girilenSiparisNumarasi + ".pdf";
+            String ExPDFFilePath = SystemVariables.pdfFileLocalPath + girilenSiparisNumarasi + ".pdf";
 
             Document document = new Document();
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(ExPDFFilePath));
@@ -130,6 +130,25 @@ public class PDFUtil {
             }
 
             System.out.println("PDF oluşturuldu.");
+            if(SystemVariables.loggedInUser != null) {
+                Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
+                        girilenSiparisNumarasi,
+                        Utils.getCurrentUnixTime(),
+                        unitType,
+                        ExPDFFilePath,
+                        null,
+                        "no",
+                        SystemVariables.loggedInUser.getUserID());
+            } else {
+                Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
+                        girilenSiparisNumarasi,
+                        Utils.getCurrentUnixTime(),
+                        unitType,
+                        ExPDFFilePath,
+                        null,
+                        "yes",
+                        System.getProperty("user.name"));
+            }
 
             File pngFile2 = new File(pngFilePath2);
             if(pngFilePath3 != null) {

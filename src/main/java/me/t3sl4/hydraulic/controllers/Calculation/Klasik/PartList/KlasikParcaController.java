@@ -22,7 +22,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -83,10 +82,7 @@ public class KlasikParcaController {
     @FXML
     public void exportExcelProcess() {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
-        String excelFileName = KlasikController.girilenSiparisNumarasi + ".xlsx";
-
-        String desktopPath = Paths.get(System.getProperty("user.home"), "Desktop").toString();
-        excelFileName = Paths.get(desktopPath, excelFileName).toString();
+        String excelFileName = SystemVariables.excelFileLocalPath + KlasikController.girilenSiparisNumarasi + ".xlsx";
 
         Map<String, ParcaTableData> malzemeMap = new HashMap<>();
 
@@ -137,6 +133,25 @@ public class KlasikParcaController {
             try (FileOutputStream fileOut = new FileOutputStream(excelFileName)) {
                 workbook.write(fileOut);
                 System.out.println("Excel dosyası başarıyla oluşturuldu: " + excelFileName);
+                if(SystemVariables.loggedInUser != null) {
+                    Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
+                            KlasikController.girilenSiparisNumarasi,
+                            Utils.getCurrentUnixTime(),
+                            KlasikController.secilenUniteTipi,
+                            null,
+                            excelFileName,
+                            "no",
+                            SystemVariables.loggedInUser.getUserID());
+                } else {
+                    Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
+                            KlasikController.girilenSiparisNumarasi,
+                            Utils.getCurrentUnixTime(),
+                            KlasikController.secilenUniteTipi,
+                            null,
+                            excelFileName,
+                            "yes",
+                            System.getProperty("user.name"));
+                }
             }
 
         } catch (IOException e) {

@@ -28,6 +28,7 @@ public class SystemVariables {
     public static String profilePhotoLocalPath;
     public static String pdfFileLocalPath;
     public static String excelFileLocalPath;
+    public static String localHydraulicStatsPath;
     public static String dataFileLocalPath;
     public static String generalDBPath;
     public static String cabinsDBPath;

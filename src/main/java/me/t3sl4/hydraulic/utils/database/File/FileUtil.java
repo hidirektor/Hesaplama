@@ -33,8 +33,9 @@ public class FileUtil {
 
         SystemVariables.tokenPath = SystemVariables.profilePhotoLocalPath + "auth.txt";
 
-        SystemVariables.pdfFileLocalPath = SystemVariables.dataFileLocalPath + "schematicFiles/";
-        SystemVariables.excelFileLocalPath = SystemVariables.dataFileLocalPath + "excelFiles/";
+        SystemVariables.pdfFileLocalPath = SystemVariables.profilePhotoLocalPath + "HydraulicUnits/schematicFiles/";
+        SystemVariables.excelFileLocalPath = SystemVariables.profilePhotoLocalPath + "HydraulicUnits/excelFiles/";
+        SystemVariables.localHydraulicStatsPath = SystemVariables.profilePhotoLocalPath + "HydraulicUnits/local_units.yml";
 
         SystemVariables.generalDBPath = SystemVariables.dataFileLocalPath + "general.json";
         SystemVariables.cabinsDBPath = SystemVariables.dataFileLocalPath + "cabins.json";
@@ -69,10 +70,7 @@ public class FileUtil {
             // 5. data klasörünün içine excelFiles ve schematicFiles klasörlerini oluştur
             createDirectory(SystemVariables.excelFileLocalPath);
             createDirectory(SystemVariables.pdfFileLocalPath);
-
-            // 6. Fazlalık dosyaları sil
-            cleanDirectory(SystemVariables.excelFileLocalPath);
-            cleanDirectory(SystemVariables.pdfFileLocalPath);
+            createFile(SystemVariables.localHydraulicStatsPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
