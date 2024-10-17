@@ -25,6 +25,7 @@ public class Main extends Application {
             if (screens.size() > 1) {
                 Utils.showMonitorSelectionScreen(screens, null, true);
             } else {
+                defaultScreen = screens.get(0);
                 SceneUtil.openMainScreen(screens.get(0));
             }
         } else {
