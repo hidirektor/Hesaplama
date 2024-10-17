@@ -17,7 +17,7 @@
             </HBox.margin>
         </ImageView>
         <Label fx:id="orderNumberLabel" prefHeight="17.0" prefWidth="70.0" text="Sipariş No" textFill="#b7c3d7" HBox.hgrow="ALWAYS" />
-        <Label fx:id="orderDateLabel" prefHeight="17.0" prefWidth="90.0" text="Sipariş Tarihi" textFill="#b7c3d7" HBox.hgrow="ALWAYS">
+        <Label fx:id="orderDateLabel" prefHeight="40.0" prefWidth="90.0" text="Sipariş Tarihi" textFill="#b7c3d7" HBox.hgrow="ALWAYS" textAlignment="CENTER">
             <HBox.margin>
                 <Insets />
             </HBox.margin>

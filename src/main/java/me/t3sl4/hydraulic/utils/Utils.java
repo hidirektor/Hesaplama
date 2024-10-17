@@ -20,6 +20,7 @@ import javafx.stage.*;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
+import me.t3sl4.hydraulic.controllers.MainController;
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -36,13 +37,21 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 public class Utils {
+
+    public static final Logger logger = Logger.getLogger(MainController.class.getName());
 
     public static final String PREFERENCE_KEY = "defaultMonitor";
     public static Preferences prefs;
@@ -516,5 +525,36 @@ public class Utils {
         });
 
         System.exit(0); // Programı kapat
+    }
+
+    public static String formatDateTime(String unixTimestamp) {
+        try {
+            Instant instant = Instant.ofEpochSecond(Long.valueOf(unixTimestamp));
+            OffsetDateTime dateTime = instant.atOffset(ZoneId.of("Europe/Istanbul").getRules().getOffset(instant));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            return dateTime.format(formatter);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return "";
+        }
+    }
+
+    public static String formatDateTimeMultiLine(String unixTimestamp) {
+        try {
+            Instant instant = Instant.ofEpochSecond(Long.valueOf(unixTimestamp));
+
+            OffsetDateTime dateTime = instant.atOffset(ZoneId.of("Europe/Istanbul").getRules().getOffset(instant));
+
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            String formattedTime = dateTime.format(timeFormatter);
+            String formattedDate = dateTime.format(dateFormatter);
+
+            return formattedTime + "\n" + formattedDate;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return "";
+        }
     }
 }

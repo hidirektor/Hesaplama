@@ -39,13 +39,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.utils.Utils.openURL;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
@@ -128,8 +123,6 @@ public class MainController implements Initializable {
     private VBox klasikSwitchVBox;
     @FXML
     private VBox hidrosSwitchVBox;
-
-    private static final Logger logger = Logger.getLogger(MainController.class.getName());
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -263,7 +256,7 @@ public class MainController implements Initializable {
                 profilPane.setLayoutX(centerX);
                 profilPane.setLayoutY(centerY+20);
             } catch(IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
         }
     }
@@ -401,7 +394,8 @@ public class MainController implements Initializable {
                 ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
 
                 orderNumberLabel.setText(info.getOrderID());
-                orderDateLabel.setText(formatDateTime(String.valueOf(info.getCreatedDate())));
+                orderDateLabel.setText(Utils.formatDateTimeMultiLine(String.valueOf(info.getCreatedDate())));
+                System.out.println(Utils.formatDateTimeMultiLine(String.valueOf(info.getCreatedDate())));
                 typeLabel.setText(info.getHydraulicType());
                 InChargeLabel.setText(info.getUserName());
 
@@ -414,20 +408,8 @@ public class MainController implements Initializable {
 
                 pnItems.getChildren().add(node);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
-        }
-    }
-
-    public static String formatDateTime(String unixTimestamp) {
-        try {
-            Instant instant = Instant.ofEpochSecond(Long.valueOf(unixTimestamp));
-            OffsetDateTime dateTime = instant.atOffset(ZoneId.of("Europe/Istanbul").getRules().getOffset(instant));
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            return dateTime.format(formatter);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            return "";
         }
     }
 
@@ -440,7 +422,7 @@ public class MainController implements Initializable {
             HydraulicInfo[] infoArray = objectMapper.readValue(response, HydraulicInfo[].class);
             hydraulicInfos.addAll(Arrays.asList(infoArray));
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            Utils.logger.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return hydraulicInfos;
@@ -461,7 +443,7 @@ public class MainController implements Initializable {
 
             parametreCount.setText(String.valueOf(voidValues.length()));
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            Utils.logger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -474,7 +456,7 @@ public class MainController implements Initializable {
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
         } else if(state == 2) {
             pnlMenus.setStyle("-fx-background-color : #353a46");
@@ -484,7 +466,7 @@ public class MainController implements Initializable {
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
         } else if(state == 3) {
             pnlMenus.setStyle("-fx-background-color : #353a46");
@@ -494,7 +476,7 @@ public class MainController implements Initializable {
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
         } else if(state == 4) {
             pnlMenus.setStyle("-fx-background-color : #02030A");
@@ -531,7 +513,7 @@ public class MainController implements Initializable {
                 );
                 popupController.showValues();
             } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
         }
     }
