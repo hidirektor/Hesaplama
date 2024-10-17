@@ -28,12 +28,16 @@ import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.general.VersionUtility;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -43,6 +47,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
 import java.util.logging.Level;
@@ -509,9 +514,10 @@ public class Utils {
     }
 
     private static void showUpdateAlert(Stage currentStage) {
-        ButtonType updateButton = new ButtonType("Şimdi Güncelle");
+        ButtonType updateButton = new ButtonType("Yeni Versiyon");
+        ButtonType downloadButton = new ButtonType("Şimdi İndir");
 
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Hesaplama aracına erişebilmek için lütfen son sürümü kullanın.", updateButton);
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Hesaplama aracına erişebilmek için lütfen son sürümü kullanın.", updateButton, downloadButton);
         alert.setHeaderText("Güncelleme Mevcut");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(currentStage);
@@ -521,10 +527,70 @@ public class Utils {
         alert.showAndWait().ifPresent(response -> {
             if (response == updateButton) {
                 openURL(SystemVariables.NEW_VERSION_URL);
+            } else if(response == downloadButton) {
+                try {
+                    downloadLatestVersion(currentStage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         System.exit(0); // Programı kapat
+    }
+
+    public static void downloadLatestVersion(Stage stage) throws IOException {
+        String os = System.getProperty("os.name").toLowerCase();
+        String downloadURL = getDownloadURLForOS(os);
+
+        if (downloadURL == null) {
+            System.out.println("Uygun sürüm bulunamadı.");
+            return;
+        }
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("İndirme Konumunu Seçin");
+        File selectedDirectory = directoryChooser.showDialog(stage);
+
+        if (selectedDirectory != null) {
+            File downloadFile = new File(selectedDirectory.getAbsolutePath() + "/" + getFileNameFromURL(downloadURL));
+            FileUtils.copyURLToFile(new URL(downloadURL), downloadFile);
+            System.out.println("Dosya başarıyla indirildi: " + downloadFile.getAbsolutePath());
+        } else {
+            System.out.println("İndirme işlemi iptal edildi.");
+        }
+    }
+
+    private static String getDownloadURLForOS(String os) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(SystemVariables.ASSET_URL).openConnection();
+        connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+
+        if (connection.getResponseCode() == 200) {
+            String jsonResponse = new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
+            JSONObject releaseData = new JSONObject(jsonResponse);
+            JSONArray assets = releaseData.getJSONArray("assets");
+
+            for (int i = 0; i < assets.length(); i++) {
+                JSONObject asset = assets.getJSONObject(i);
+                String assetName = asset.getString("name");
+
+                if (os.contains("win") && assetName.contains("windows")) {
+                    return asset.getString("browser_download_url");
+                } else if (os.contains("mac") && assetName.contains("macOS")) {
+                    return asset.getString("browser_download_url");
+                } else if ((os.contains("nix") || os.contains("nux")) && assetName.contains("linux")) {
+                    return asset.getString("browser_download_url");
+                }
+            }
+        } else {
+            System.out.println("GitHub API'ye erişilemedi: " + connection.getResponseMessage());
+        }
+
+        return null;
+    }
+
+    private static String getFileNameFromURL(String url) {
+        return url.substring(url.lastIndexOf('/') + 1);
     }
 
     public static String formatDateTime(String unixTimestamp) {
