@@ -2,7 +2,6 @@ package me.t3sl4.hydraulic.controllers;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -19,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.controllers.Popup.PopupController;
 import me.t3sl4.hydraulic.utils.Utils;
@@ -111,6 +109,7 @@ public class MainController implements Initializable {
     private Label versionCode;
 
     private List<HydraulicInfo> cachedHydraulicInfos = new ArrayList<>();
+    private List<HydraulicInfo> localHydraulicInfos = new ArrayList<>();
     int siparisSayisi;
     int klasik;
     int hidros;
@@ -126,6 +125,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Utils.readLocalHydraulicUnits(localHydraulicStatsPath, localHydraulicInfos);
         userInfo();
         initializeSwitchs();
         versionCode.setText(SystemVariables.getVersion());
@@ -213,14 +213,10 @@ public class MainController implements Initializable {
             paneSwitch(4);
         }
         if (actionEvent.getSource() == btnHome) {
-           if(loggedInUser != null) {
-               pnlOverview.setStyle("-fx-background-color : #02030A");
-               pnlOverview.toFront();
-               updateHydraulicText();
-               hydraulicUnitInit(1);
-           } else {
-               btnKlasik.fire();
-           }
+            pnlOverview.setStyle("-fx-background-color : #02030A");
+            pnlOverview.toFront();
+            updateHydraulicText();
+            hydraulicUnitInit(1);
         }
         if(actionEvent.getSource() == btnOnlineMode) {
             Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
@@ -274,17 +270,17 @@ public class MainController implements Initializable {
             hydraulicUnitInit(1);
             buttonsVBox.getChildren().remove(btnOnlineMode);
         } else {
+            populateUIWithCachedData();
             kullaniciAdiIsimText.setText("Standart Kullanıcı");
+            toplamSiparisCount.setText("NaN");
+            klasikUniteCount.setText("NaN");
+            hidrosUntiteCount.setText("NaN");
+            excelVoidCount();
 
-            buttonsVBox.getChildren().remove(btnHome);
             buttonsVBox.getChildren().remove(btnProfil);
             buttonsVBox.getChildren().remove(btnSignout);
 
             buttonsVBox.toFront();
-
-            PauseTransition delay = new PauseTransition(Duration.millis(50));
-            delay.setOnFinished(event -> btnKlasik.fire());
-            delay.play();
         }
     }
 
@@ -380,7 +376,15 @@ public class MainController implements Initializable {
     private void populateUIWithCachedData() {
         pnItems.getChildren().clear();
 
-        for (HydraulicInfo info : cachedHydraulicInfos) {
+        List<HydraulicInfo> activeHydraulicList;
+
+        if(loggedInUser != null) {
+            activeHydraulicList = cachedHydraulicInfos;
+        } else {
+            activeHydraulicList = localHydraulicInfos;
+        }
+
+        for (HydraulicInfo info : activeHydraulicList) {
             try {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Launcher.class.getResource("fxml/Item.fxml")));
                 Node node = loader.load();
@@ -393,14 +397,30 @@ public class MainController implements Initializable {
                 Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
                 ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
 
+                if(loggedInUser == null) {
+                    pdfViewButton.setText("Aç");
+                }
+
                 orderNumberLabel.setText(info.getOrderID());
                 orderDateLabel.setText(Utils.formatDateTimeMultiLine(String.valueOf(info.getCreatedDate())));
                 typeLabel.setText(info.getHydraulicType());
                 InChargeLabel.setText(info.getUserName());
 
-                pdfViewButton.setOnAction(event -> openURL(BASE_URL + getSchematicURLPrefix + info.getOrderID()));
+                pdfViewButton.setOnAction(event -> {
+                    if(info.isLocal()) {
+                        Utils.openFile(info.getSchematicID());
+                    } else {
+                        openURL(BASE_URL + getSchematicURLPrefix + info.getOrderID());
+                    }
+                });
 
-                excelViewButton.setOnMouseClicked(event -> openURL(BASE_URL + getPartListURLPrefix + info.getOrderID()));
+                excelViewButton.setOnMouseClicked(event -> {
+                    if(info.isLocal()) {
+                        Utils.openFile(info.getPartListID());
+                    } else {
+                        openURL(BASE_URL + getPartListURLPrefix + info.getOrderID());
+                    }
+                });
 
                 node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #0A0E3F"));
                 node.setOnMouseExited(event -> itemC.setStyle("-fx-background-color : #02030A"));

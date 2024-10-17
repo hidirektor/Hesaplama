@@ -8,6 +8,7 @@ public class HydraulicInfo {
     private String partListID;
     private String schematicID;
     private String hydraulicType;
+    private boolean isLocal;
     private long createdDate;
 
     // Getter ve Setter metodları
@@ -73,5 +74,13 @@ public class HydraulicInfo {
 
     public void setCreatedDate(long createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public boolean isLocal() {
+        return isLocal;
+    }
+
+    public void setLocal(boolean local) {
+        isLocal = local;
     }
 }

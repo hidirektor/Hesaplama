@@ -26,6 +26,7 @@ import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.controllers.Popup.UpdateAlertController;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
+import me.t3sl4.hydraulic.utils.database.Model.Table.HydraulicUnitList.HydraulicInfo;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.general.VersionUtility;
@@ -718,7 +719,7 @@ public class Utils {
     }
 
     @SuppressWarnings("unchecked")
-    public static void readLocalHydraulicUnits(String yamlFilePath) {
+    public static void readLocalHydraulicUnits(String yamlFilePath, List<HydraulicInfo> localHydraulicInfos) {
         File yamlFile = new File(yamlFilePath);
         if (!yamlFile.exists()) {
             System.out.println("YAML dosyası bulunamadı.");
@@ -762,20 +763,64 @@ public class Utils {
         System.out.println("Hidros Unit Sayısı: " + hidrosCount);
         System.out.println("Klasik Unit Sayısı: " + klasikCount);
 
-        System.out.println("\nTüm YAML verisi:");
         for (Map.Entry<String, Map<String, Object>> entry : localUnits.entrySet()) {
-            System.out.println("Unit ID: " + entry.getKey());
             Map<String, Object> unitData = entry.getValue();
-            for (Map.Entry<String, Object> unitEntry : unitData.entrySet()) {
-                System.out.println(unitEntry.getKey() + ": " + unitEntry.getValue());
+            HydraulicInfo hydraulicInfo = new HydraulicInfo();
+
+            hydraulicInfo.setId(Integer.parseInt(entry.getKey()));
+
+            hydraulicInfo.setLocal(true);
+            hydraulicInfo.setOrderID((String) unitData.get("order_number"));
+            hydraulicInfo.setHydraulicType((String) unitData.get("unit_type"));
+            hydraulicInfo.setSchematicID((String) unitData.get("pdf_path"));
+            hydraulicInfo.setPartListID((String) unitData.get("excel_path"));
+            hydraulicInfo.setCreatedDate(Long.parseLong((String) unitData.get("created_date")));
+
+            Map<String, String> creationData = (Map<String, String>) unitData.get("creation_data");
+            if (creationData != null) {
+                hydraulicInfo.setUserID(creationData.get("created_by"));
+                hydraulicInfo.setUserName(creationData.get("created_by"));
             }
+
+            localHydraulicInfos.add(hydraulicInfo);
+        }
+
+        System.out.println("\nYAML'deki tüm datalar listeye eklendi:");
+        for (HydraulicInfo info : localHydraulicInfos) {
+            System.out.println("ID: " + info.getId());
+            System.out.println("Order ID: " + info.getOrderID());
+            System.out.println("Hydraulic Type: " + info.getHydraulicType());
+            System.out.println("Schematic ID (PDF Path): " + info.getSchematicID());
+            System.out.println("Created Date: " + info.getCreatedDate());
+            System.out.println("User ID: " + info.getUserID());
+            System.out.println("User Name: " + info.getUserName());
             System.out.println("-----------------------");
         }
     }
 
-
     public static String getCurrentUnixTime() {
         long unixTime = Instant.now().getEpochSecond();
         return String.valueOf(unixTime);
+    }
+
+    public static void openFile(String filePath) {
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            System.out.println("Dosya bulunamadı: " + filePath);
+            return;
+        }
+
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.open(file);
+                System.out.println("Dosya başarıyla açıldı: " + filePath);
+            } catch (IOException e) {
+                System.out.println("Dosya açılamadı: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Bu platform masaüstü fonksiyonlarını desteklemiyor.");
+        }
     }
 }
