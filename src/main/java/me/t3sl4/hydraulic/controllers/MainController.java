@@ -160,9 +160,9 @@ public class MainController implements Initializable {
         threeStateSwitch.setLayoutX(780.0);
         threeStateSwitch.setLayoutY(120.0);
 
-        threeStateSwitch.setStateChangeListener(() -> {
-            ThreeStateSwitch.SwitchState newState = threeStateSwitch.getState();
+        threeStateSwitch.setDefaultState(ThreeStateSwitch.SwitchState.LOCAL);
 
+        threeStateSwitch.setStateChangeListener(() -> {
             initializeHydraulicTable();
         });
 
@@ -171,13 +171,14 @@ public class MainController implements Initializable {
 
     private void initializeHydraulicTable() {
         finalHydraulicUnitList.clear();
+        pnItems.getChildren().clear();
 
         if(loggedInUser != null) {
             if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.LOCAL)) {
                 if(isKlasik.getValue()) {
                     Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Klasik");
                 } else if(isHidros.getValue()) {
-                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Hidros");
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "PowerPack");
                 } else {
                     Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, null);
                 }
@@ -186,7 +187,7 @@ public class MainController implements Initializable {
                     Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Klasik");
                     hydraulicUnitInit(2, finalHydraulicUnitList);
                 } else if(isHidros.getValue()) {
-                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Hidros");
+                    Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "PowerPack");
                     hydraulicUnitInit(3, finalHydraulicUnitList);
                 } else {
                     Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, null);
@@ -202,13 +203,12 @@ public class MainController implements Initializable {
                 }
             }
         } else {
-            threeStateSwitch.setDefaultState(ThreeStateSwitch.SwitchState.LOCAL);
             threeStateSwitch.setCancel(true);
 
             if(isKlasik.getValue()) {
                 Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Klasik");
             } else if(isHidros.getValue()) {
-                Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "Hidros");
+                Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, "PowerPack");
             } else {
                 Utils.readLocalHydraulicUnits(localHydraulicStatsPath, finalHydraulicUnitList, null);
             }
@@ -265,6 +265,7 @@ public class MainController implements Initializable {
             pnlOverview.setStyle("-fx-background-color : #02030A");
             pnlOverview.toFront();
             updateHydraulicText();
+            initializeHydraulicTable();
         }
         if(actionEvent.getSource() == btnOnlineMode) {
             Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
@@ -318,24 +319,26 @@ public class MainController implements Initializable {
             buttonsVBox.getChildren().remove(btnOnlineMode);
         } else {
             kullaniciAdiIsimText.setText("Standart Kullanıcı");
-            toplamSiparisCount.setText("NaN");
-            klasikUniteCount.setText("NaN");
-            hidrosUntiteCount.setText("NaN");
-            excelVoidCount();
+            updateHydraulicText();
 
             buttonsVBox.getChildren().remove(btnProfil);
             buttonsVBox.getChildren().remove(btnSignout);
-
             buttonsVBox.toFront();
         }
     }
 
     public void updateHydraulicText() {
-        hidrolikUnitStats(() -> {
-            toplamSiparisCount.setText(String.valueOf(siparisSayisi));
-            klasikUniteCount.setText(String.valueOf(klasik));
-            hidrosUntiteCount.setText(String.valueOf(hidros));
-        });
+        if(loggedInUser != null) {
+            hidrolikUnitStats(() -> {
+                toplamSiparisCount.setText(String.valueOf(siparisSayisi));
+                klasikUniteCount.setText(String.valueOf(klasik));
+                hidrosUntiteCount.setText(String.valueOf(hidros));
+            });
+        } else {
+            toplamSiparisCount.setText("NaN");
+            klasikUniteCount.setText("NaN");
+            hidrosUntiteCount.setText("NaN");
+        }
         excelVoidCount();
     }
 
@@ -350,7 +353,7 @@ public class MainController implements Initializable {
 
                 siparisSayisi = mainObject.getInt("Sipariş Sayısı");
                 klasik = mainObject.getInt("Klasik");
-                hidros = mainObject.getInt("Hidros");
+                hidros = mainObject.getInt("PowerPack");
                 updateHydraulicText.run();
             }
 
@@ -400,7 +403,7 @@ public class MainController implements Initializable {
             });
         } else if(type == 3) {
             //Hidros
-            jsonHydraulicBody = "{\"UnitType\": \"" + "Hidros" + "\"}";
+            jsonHydraulicBody = "{\"UnitType\": \"" + "PowerPack" + "\"}";
             HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
@@ -411,7 +414,7 @@ public class MainController implements Initializable {
 
                 @Override
                 public void onFailure() {
-                    System.out.println("hydraulicGetDetailsURLPrefix Hidros Error.");
+                    System.out.println("hydraulicGetDetailsURLPrefix PowerPack Error.");
                 }
             });
         }

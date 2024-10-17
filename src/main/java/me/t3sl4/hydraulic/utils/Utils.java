@@ -708,7 +708,7 @@ public class Utils {
         try (FileWriter writer = new FileWriter(yamlFile)) {
             DumperOptions options = new DumperOptions();
             options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED); // Değişiklik burada
+            options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED);
             yaml = new Yaml(options);
             yaml.dump(data, writer);
         } catch (IOException e) {
@@ -751,7 +751,7 @@ public class Utils {
         int klasikCount = 0;
         for (Map<String, Object> unit : localUnits.values()) {
             String unitTypeFromData = (String) unit.get("unit_type");
-            if ("Hidros".equalsIgnoreCase(unitTypeFromData)) {
+            if ("PowerPack".equalsIgnoreCase(unitTypeFromData)) {
                 hidrosCount++;
             } else if ("Klasik".equalsIgnoreCase(unitTypeFromData)) {
                 klasikCount++;

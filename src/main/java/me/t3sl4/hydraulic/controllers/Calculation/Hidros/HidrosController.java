@@ -131,7 +131,7 @@ public class HidrosController {
 
     public boolean hesaplamaBitti = false;
 
-    public static String secilenUniteTipi = "Hidros";
+    public static String secilenUniteTipi = "PowerPack";
 
     public void initialize() {
         comboBoxListener();
