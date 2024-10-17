@@ -22,6 +22,7 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.controllers.Popup.PopupController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.component.FilterSwitch;
+import me.t3sl4.hydraulic.utils.component.ThreeStateSwitch;
 import me.t3sl4.hydraulic.utils.database.Model.Table.HydraulicUnitList.HydraulicInfo;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
@@ -123,12 +124,16 @@ public class MainController implements Initializable {
     @FXML
     private VBox hidrosSwitchVBox;
 
+    private ThreeStateSwitch threeStateSwitch = new ThreeStateSwitch();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Utils.readLocalHydraulicUnits(localHydraulicStatsPath, localHydraulicInfos);
         userInfo();
         initializeSwitchs();
         versionCode.setText(SystemVariables.getVersion());
+
+        initializeThreeState();
     }
 
     private void initializeSwitchs() {
@@ -166,6 +171,40 @@ public class MainController implements Initializable {
 
         klasikSwitch.isToggledProperty().bindBidirectional(isKlasik);
         hidrosSwitch.isToggledProperty().bindBidirectional(isHidros);
+    }
+
+    private void initializeThreeState() {
+        threeStateSwitch.setLayoutX(780.0);
+        threeStateSwitch.setLayoutY(120.0);
+
+        pnlOverview.getChildren().add(threeStateSwitch);
+
+        if(loggedInUser == null) {
+            threeStateSwitch.setDefaultState(ThreeStateSwitch.SwitchState.LOCAL);
+            threeStateSwitch.setCancel(true);
+            populateUIWithCachedData();
+        } else {
+            threeStateSwitch.setCancel(false);
+            threeStateSwitch.setStateChangeListener(() -> {
+                switch (threeStateSwitch.getState()) {
+                    case LOCAL:
+                        populateUIWithCachedData();
+                        break;
+                    case LOCALWEB:
+                        System.out.println("Durum değişti: LOCALWEB");
+                        break;
+                    case WEB:
+                        if(isHidros.getValue()) {
+                            hydraulicUnitInit(3);
+                        } else if(isKlasik.getValue()) {
+                            hydraulicUnitInit(2);
+                        } else {
+                            hydraulicUnitInit(1);
+                        }
+                        break;
+                }
+            });
+        }
     }
 
     @FXML
@@ -382,6 +421,14 @@ public class MainController implements Initializable {
             activeHydraulicList = cachedHydraulicInfos;
         } else {
             activeHydraulicList = localHydraulicInfos;
+        }
+
+        if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.LOCAL)) {
+
+        } else if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.LOCALWEB)) {
+
+        } else if(threeStateSwitch.getState().equals(ThreeStateSwitch.SwitchState.WEB)) {
+
         }
 
         for (HydraulicInfo info : activeHydraulicList) {
