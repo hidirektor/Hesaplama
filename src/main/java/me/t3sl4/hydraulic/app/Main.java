@@ -21,11 +21,12 @@ public class Main extends Application {
         Utils.prefs = Preferences.userRoot().node(this.getClass().getName());
         String defaultMonitor = Utils.checkDefaultMonitor();
 
+        defaultScreen = screens.get(0);
+
         if (defaultMonitor == null) {
             if (screens.size() > 1) {
                 Utils.showMonitorSelectionScreen(screens, null, true);
             } else {
-                defaultScreen = screens.get(0);
                 SceneUtil.openMainScreen(screens.get(0));
             }
         } else {
@@ -34,7 +35,6 @@ public class Main extends Application {
                 defaultScreen = screens.get(monitorIndex);
                 SceneUtil.openMainScreen(screens.get(monitorIndex));
             } else {
-                defaultScreen = screens.get(0);
                 SceneUtil.openMainScreen(screens.get(0));
             }
         }
