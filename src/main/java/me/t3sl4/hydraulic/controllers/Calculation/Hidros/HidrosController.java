@@ -825,20 +825,9 @@ public class HidrosController {
             pdfShaper(1);
             PDFUtil.cropImage(startX, startY, width, height, "cropped_screenshot.png");
 
-            String pdfPath = "";
-            if(Objects.equals(secilenPlatformTipi, "Özel")) {
-                pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosozel.pdf";
-            } else if(Objects.equals(secilenPlatformTipi, "ESP")) {
-                if(Objects.equals(secilenInisTipi, "İnişte Tek Hız")) {
-                    pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosinistetek.pdf";
-                } else if(Objects.equals(secilenInisTipi, "İnişte Çift Hız")) {
-                    pdfPath = "/assets/data/hidrosinistecift.pdf";
-                }
-            } else if(Objects.equals(secilenPlatformTipi, "Devirmeli + Yürüyüş")) {
-                pdfPath = "/assets/data/hydraulicUnitData/pdf/hidrosdevirmeli.pdf";
-            }
-            pdfPath = null;
-            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "cropped_screenshot.png", null, pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString(), secilenMotorTipi, secilenPompa, secilenUniteTipi);
+            String pdfPath = hydraulicSchemaSelection(selectedCylinders, isPressureValf);
+            System.out.println("PDF Şema Yolu: " + pdfPath);
+            PDFUtil.pdfGenerator("/assets/images/general/onder_grup_main.png", "cropped_screenshot.png", null, "/assets/data/hydraulicUnitData/schematicPDF/powerpack/" + pdfPath, girilenSiparisNumarasi, kullanilacakKabinText.getText().toString(), secilenMotorTipi, secilenPompa, secilenUniteTipi, false);
         } else {
             Utils.showErrorMessage("Lütfen hesaplama işlemini tamamlayıp tekrar deneyin.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }
@@ -963,21 +952,49 @@ public class HidrosController {
         }
     }
 
-    /**
-     * Verilen bir String'in boş veya null olup olmadığını kontrol eder.
-     * @param text Kontrol edilecek String
-     * @return Eğer String boş veya null ise true, aksi halde false
-     */
     private boolean isStringEmpty(String text) {
         return text == null || text.trim().isEmpty();
     }
 
-    /**
-     * Verilen bir ComboBox'ın seçiminin boş olup olmadığını kontrol eder.
-     * @param comboBox Kontrol edilecek ComboBox
-     * @return Eğer ComboBox'ta seçim yapılmamışsa true, aksi halde false
-     */
     private boolean isComboBoxEmpty(ComboBox<?> comboBox) {
         return comboBox.getSelectionModel() == null || comboBox.getSelectionModel().getSelectedItem() == null;
+    }
+
+    private String hydraulicSchemaSelection(int selectedCylinders, String isPressureValf) {
+        if(secilenPlatformTipi.equals("ESP")) {
+            if(secilenInisTipi.equals("İnişte Tek Hız")) {
+                return getCylinderImage(selectedCylinders, isPressureValf, 1, 2, 3, 4);
+            } else if(secilenInisTipi.equals("İnişte Çift Hız")) {
+                return getCylinderImage(selectedCylinders, isPressureValf, 5, 6, 7, 8);
+            }
+        } else if(secilenPlatformTipi.equals("Devirmeli + Yürüyüş")) {
+            return getCylinderImage(selectedCylinders, isPressureValf, 9, 10, 11, 12);
+        } else if(secilenPlatformTipi.equals("Özel")) {
+            if(secilenBirinciValf.equals("1")) {
+                if(secilenIkinciValf.equals("J Merkez")) {
+                    return getCylinderImage(selectedCylinders, isPressureValf, 13, 14, 15, 16);
+                } else if(secilenIkinciValf.equals("H Merkez")) {
+                    return getCylinderImage(selectedCylinders, isPressureValf, 17, 18, 19, 20);
+                }
+            } else {
+                return getCylinderImage(selectedCylinders, isPressureValf, 21, 22, 23, 24);
+            }
+        }
+
+        return null;
+    }
+
+    private String getCylinderImage(int selectedCylinders, String isPressureValf, int one, int two, int three, int other) {
+        String suffix = isPressureValf.equals("Var") ? "B" : "";
+        switch (selectedCylinders) {
+            case 1:
+                return one + suffix + ".pdf";
+            case 2:
+                return two + suffix + ".pdf";
+            case 3:
+                return three + suffix + ".pdf";
+            default:
+                return other + suffix + ".pdf";
+        }
     }
 }

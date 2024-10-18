@@ -11,6 +11,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.controllers.Calculation.Hidros.HidrosController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
@@ -29,7 +30,15 @@ public class PDFUtil {
 
     private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
-    public static void pdfGenerator(String pngFilePath1, String pngFilePath2, String pngFilePath3, String pdfFilePath, String girilenSiparisNumarasi, String kullanilacakKabin, String motorDegeri, String pompaDegeri, String unitType) {
+    public static void pdfGenerator(String pngFilePath1,
+                                    String pngFilePath2,
+                                    String pngFilePath3,
+                                    String pdfFilePath,
+                                    String girilenSiparisNumarasi,
+                                    String kullanilacakKabin,
+                                    String motorDegeri,
+                                    String pompaDegeri,
+                                    String unitType, boolean isKlasik) {
         try {
             String ExPDFFilePath = SystemVariables.pdfFileLocalPath + girilenSiparisNumarasi + ".pdf";
 
@@ -95,35 +104,77 @@ public class PDFUtil {
             halilParagraph.setSpacingBefore(20);  // 20dp boşluk
             document.add(halilParagraph);
 
-            if (pdfFilePath != null) {
-                PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
+            if(pdfFilePath != null) {
+                if(isKlasik) {
+                    PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
 
-                document.newPage();
+                    document.newPage();
 
-                PdfImportedPage importedPage = writer.getImportedPage(reader, 1);
-                PdfContentByte cb = writer.getDirectContent();
+                    PdfImportedPage importedPage = writer.getImportedPage(reader, 1);
+                    PdfContentByte cb = writer.getDirectContent();
 
-                cb.addTemplate(importedPage, 0, 0);
+                    cb.addTemplate(importedPage, 0, 0);
 
-                cb.beginText();
-                BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-                cb.setFontAndSize(bf, 6);
+                    cb.beginText();
+                    BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    cb.setFontAndSize(bf, 6);
 
-                float xPosition = document.getPageSize().getWidth() - 110; // Sağ kenar boşluğu
-                float yPosition = document.getPageSize().getHeight() - 65; // Sayfanın üstünden 50 birim boşluk
+                    float xPosition = document.getPageSize().getWidth() - 110; // Sağ kenar boşluğu
+                    float yPosition = document.getPageSize().getHeight() - 65; // Sayfanın üstünden 50 birim boşluk
 
-                cb.setTextMatrix(xPosition, yPosition);
-                cb.showText(pompaDegeri);
+                    cb.setTextMatrix(xPosition, yPosition);
+                    cb.showText(pompaDegeri);
 
-                yPosition -= 13;
-                cb.setTextMatrix(xPosition, yPosition);
-                cb.showText(motorDegeri);
+                    yPosition -= 13;
+                    cb.setTextMatrix(xPosition, yPosition);
+                    cb.showText(motorDegeri);
 
-                cb.endText();
+                    cb.endText();
 
-                document.close();
-                writer.close();
-                reader.close();
+                    document.close();
+                    writer.close();
+                    reader.close();
+                } else {
+                    String motorText = "AC Motor";
+                    if(HidrosController.secilenMotorTipi.contains("DC")) {
+                        motorText = "DC Motor";
+                    }
+
+                    PdfReader reader = new PdfReader(Objects.requireNonNull(Launcher.class.getResource(pdfFilePath)));
+
+                    document.newPage();
+
+                    PdfImportedPage importedPage = writer.getImportedPage(reader, 1);
+                    PdfContentByte cb = writer.getDirectContent();
+
+                    cb.addTemplate(importedPage, 0, 0);
+
+                    cb.beginText();
+                    BaseFont bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    cb.setFontAndSize(bf, 7);
+
+                    float xPosition = document.getPageSize().getWidth() - 110; // Sağ kenar boşluğu
+                    float yPosition = document.getPageSize().getHeight() - 53; // Sayfanın üstünden 50 birim boşluk
+
+                    cb.setTextMatrix(xPosition - 112, yPosition);
+                    cb.showText(motorText);
+
+                    cb.setTextMatrix(xPosition - 182, yPosition);
+                    cb.showText(motorText);
+
+                    cb.setTextMatrix(xPosition, yPosition);
+                    cb.showText(motorDegeri);
+
+                    yPosition -= 13;
+                    cb.setTextMatrix(xPosition, yPosition);
+                    cb.showText(pompaDegeri);
+
+                    cb.endText();
+
+                    document.close();
+                    writer.close();
+                    reader.close();
+                }
             } else {
                 document.close();
                 writer.close();
