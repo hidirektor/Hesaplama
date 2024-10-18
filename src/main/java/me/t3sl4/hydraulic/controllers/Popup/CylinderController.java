@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.controllers.Calculation.Hidros.HidrosController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 
@@ -22,6 +21,8 @@ public class CylinderController {
     private int selectedCylinders = -1;
     private String pressureValfStatus = "";
     private boolean isConfirmed = false;
+    private String platformTipi = null;
+    private String birinciValf = null;
 
     @FXML
     public void initialize() {
@@ -31,7 +32,13 @@ public class CylinderController {
                 "3 Silindir",
                 "4 Silindir"
         );
-        if(HidrosController.secilenPlatformTipi.equals("Özel") && HidrosController.secilenBirinciValf.equals("1")) {
+
+        if(platformTipi == null || birinciValf == null) {
+            basincSalteriComboBox.getItems().addAll(
+                    "Var",
+                    "Yok"
+            );
+        } else if(platformTipi.equals("Özel") && birinciValf.equals("1")) {
             basincSalteriComboBox.setDisable(true);
         } else {
             basincSalteriComboBox.getItems().addAll(
@@ -84,5 +91,21 @@ public class CylinderController {
 
     public boolean isConfirmed() {
         return isConfirmed;
+    }
+
+    public String getPlatformTipi() {
+        return platformTipi;
+    }
+
+    public void setPlatformTipi(String platformTipi) {
+        this.platformTipi = platformTipi;
+    }
+
+    public String getBirinciValf() {
+        return birinciValf;
+    }
+
+    public void setBirinciValf(String birinciValf) {
+        this.birinciValf = birinciValf;
     }
 }

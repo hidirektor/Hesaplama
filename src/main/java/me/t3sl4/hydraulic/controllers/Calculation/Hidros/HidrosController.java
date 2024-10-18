@@ -802,7 +802,7 @@ public class HidrosController {
         int height = 430;
 
         if(hesaplamaBitti) {
-            String generalCyclinderString = Utils.showCyclinderPopup(SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
+            String generalCyclinderString = Utils.showCyclinderPopup(SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow(), secilenPlatformTipi, secilenBirinciValf);
             String numberPart = "";
             String stringPart = "";
             if(generalCyclinderString != null) {

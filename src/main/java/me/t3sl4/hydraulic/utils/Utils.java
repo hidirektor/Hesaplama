@@ -251,13 +251,18 @@ public class Utils {
         SceneUtil.changeScreen("fxml/ResetPassword.fxml", currentScreen);
     }
 
-    public static String showCyclinderPopup(Screen currentScreen, Stage currentStage) {
+    public static String showCyclinderPopup(Screen currentScreen, Stage currentStage, String platformTipi, String birinciValf) {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         try {
             FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/CylinderCount.fxml"));
             Parent root = loader.load();
 
             CylinderController controller = loader.getController();
+
+            if(platformTipi != null && birinciValf != null) {
+                controller.setPlatformTipi(platformTipi);
+                controller.setBirinciValf(birinciValf);
+            }
 
             Stage stage = new Stage();
 

@@ -451,7 +451,7 @@ public class KlasikController {
         int schematicImageHeight = 246;
 
         if(hesaplamaBitti) {
-            String generalCyclinderString = Utils.showCyclinderPopup(SceneUtil.getScreenOfNode(derinlikSonucText), (Stage)screenDetectorLabel.getScene().getWindow());
+            String generalCyclinderString = Utils.showCyclinderPopup(SceneUtil.getScreenOfNode(derinlikSonucText), (Stage)screenDetectorLabel.getScene().getWindow(), null, null);
             String numberPart = "";
             String stringPart = "";
             if(generalCyclinderString != null) {
