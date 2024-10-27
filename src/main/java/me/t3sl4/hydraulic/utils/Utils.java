@@ -831,6 +831,77 @@ public class Utils {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public static void deleteLocalUnitData(String yamlFilePath, String orderID) {
+        LoaderOptions loaderOptions = new LoaderOptions();
+        Yaml yaml = new Yaml(loaderOptions);
+        Map<String, Object> data;
+
+        File yamlFile = new File(yamlFilePath);
+        if (!yamlFile.exists()) {
+            throw new RuntimeException("YAML dosyası bulunamadı");
+        }
+
+        try (FileReader reader = new FileReader(yamlFile)) {
+            data = yaml.load(reader);
+            if (data == null || !data.containsKey("local_units")) {
+                throw new RuntimeException("YAML dosyasında geçerli bir 'local_units' alanı bulunamadı");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("YAML dosyası okunurken bir hata oluştu", e);
+        }
+
+        Map<String, Map<String, Object>> localUnits = (Map<String, Map<String, Object>>) data.get("local_units");
+        String targetKey = null;
+
+        // Find the entry to delete by matching order_number
+        for (Map.Entry<String, Map<String, Object>> entry : localUnits.entrySet()) {
+            Map<String, Object> unitData = entry.getValue();
+            if (orderID.equals(unitData.get("order_number"))) {
+                targetKey = entry.getKey();
+
+                // Delete associated files if paths are specified
+                String pdfPath = (String) unitData.get("pdf_path");
+                String excelPath = (String) unitData.get("excel_path");
+
+                if (pdfPath != null && !pdfPath.isEmpty()) {
+                    new File(pdfPath).delete();
+                }
+                if (excelPath != null && !excelPath.isEmpty()) {
+                    new File(excelPath).delete();
+                }
+                break;
+            }
+        }
+
+        if (targetKey == null) {
+            throw new RuntimeException("Verilen orderID ile eşleşen bir kayıt bulunamadı.");
+        }
+
+        // Remove the target entry
+        localUnits.remove(targetKey);
+
+        // Re-index remaining entries
+        Map<String, Map<String, Object>> updatedUnits = new LinkedHashMap<>();
+        int index = 0;
+        for (Map.Entry<String, Map<String, Object>> entry : localUnits.entrySet()) {
+            updatedUnits.put(String.valueOf(index++), entry.getValue());
+        }
+
+        data.put("local_units", updatedUnits);
+
+        // Write the updated data back to the YAML file
+        try (FileWriter writer = new FileWriter(yamlFile)) {
+            DumperOptions options = new DumperOptions();
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+            options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED);
+            yaml = new Yaml(options);
+            yaml.dump(data, writer);
+        } catch (IOException e) {
+            throw new RuntimeException("YAML dosyasına yazılırken bir hata oluştu", e);
+        }
+    }
+
     public static void parseHydraulicJsonResponse(String response, List<HydraulicInfo> finalHydraulicUnitList) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();

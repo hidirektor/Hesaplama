@@ -447,6 +447,7 @@ public class MainController implements Initializable {
                 Label InChargeLabel = (Label) loader.getNamespace().get("InChargeLabel");
                 Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
                 ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
+                ImageView deleteButton = (ImageView) loader.getNamespace().get("deleteIcon");
 
                 if(info.isLocal()) {
                     pdfViewButton.setText("Aç");
@@ -472,6 +473,18 @@ public class MainController implements Initializable {
                     } else {
                         openURL(BASE_URL + getPartListURLPrefix + info.getOrderID());
                     }
+                });
+
+                deleteButton.setOnMouseClicked(event -> {
+                   if(info.isLocal()) {
+                       Utils.deleteLocalUnitData(localHydraulicStatsPath, info.getOrderID());
+                   } else {
+                       //TODO
+                       /*
+                       Sunucudaki veriyi sil
+                        */
+                   }
+                    initializeHydraulicTable();
                 });
 
                 if (info.isLocal()) {
