@@ -214,6 +214,21 @@ public class MainController implements Initializable {
             }
         }
 
+        int classicUnitCount = 0;
+        int powerPackUnitCount = 0;
+
+        for(HydraulicInfo currentUnit : finalHydraulicUnitList) {
+            if(currentUnit.getHydraulicType().equals("Klasik")) {
+                classicUnitCount++;
+            } else if(currentUnit.getHydraulicType().equals("PowerPack")) {
+                powerPackUnitCount++;
+            }
+        }
+
+        toplamSiparisCount.setText(String.valueOf(finalHydraulicUnitList.size()));
+        klasikUniteCount.setText(String.valueOf(classicUnitCount));
+        hidrosUntiteCount.setText(String.valueOf(powerPackUnitCount));
+
         populateUIWithCachedData(finalHydraulicUnitList);
     }
 
@@ -334,11 +349,8 @@ public class MainController implements Initializable {
                 klasikUniteCount.setText(String.valueOf(klasik));
                 hidrosUntiteCount.setText(String.valueOf(hidros));
             });
-        } else {
-            toplamSiparisCount.setText("NaN");
-            klasikUniteCount.setText("NaN");
-            hidrosUntiteCount.setText("NaN");
         }
+
         excelVoidCount();
     }
 
