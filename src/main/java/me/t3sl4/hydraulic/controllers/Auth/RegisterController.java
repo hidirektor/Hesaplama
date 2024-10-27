@@ -18,7 +18,7 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.io.File;
 import java.io.IOException;
@@ -172,7 +172,7 @@ public class RegisterController implements Initializable {
 
     private void sendRegisterRequest(String jsonBody, Stage stage) {
         String registerUrl = BASE_URL + registerURLPrefix;
-        HTTPRequest.sendJsonRequest(registerUrl, "POST", jsonBody, new HTTPRequest.RequestCallback() {
+        HTTPMethod.sendJsonRequest(registerUrl, "POST", jsonBody, new HTTPMethod.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
                 uploadProfilePhoto2Server(stage);
@@ -197,7 +197,7 @@ public class RegisterController implements Initializable {
             return;
         }
 
-        HTTPRequest.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPRequest.RequestCallback() {
+        HTTPMethod.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPMethod.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 Platform.runLater(() -> {

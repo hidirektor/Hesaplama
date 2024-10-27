@@ -15,7 +15,7 @@ import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.io.File;
 import java.util.HashMap;
@@ -209,7 +209,7 @@ public class HidrosController {
             files.put("partListFile", partListFile);
             files.put("schematicFile", schematicFile);
 
-            HTTPRequest.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPRequest.RequestCallback() {
+            HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());

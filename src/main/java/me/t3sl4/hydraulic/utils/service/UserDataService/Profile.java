@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,7 +27,7 @@ public class Profile {
         } else {
             String photoUrl = BASE_URL + downloadPhotoURLPrefix;
 
-            HTTPRequest.downloadFile(photoUrl, "POST", localFileFinalPath, username, new HTTPRequest.RequestCallback() {
+            HTTPMethod.downloadFile(photoUrl, "POST", localFileFinalPath, username, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     setProfilePhoto(username, secilenFoto, profilePhotoImageView);

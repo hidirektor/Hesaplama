@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.io.IOException;
 import java.net.URL;
@@ -102,7 +102,7 @@ public class ResetPasswordEnterOTPController implements Initializable {
                     "\"otpCode\": \"" + girilenOTP + "\", " +
                     "\"otpSentTime\": \"" + SystemVariables.otpSentTime + "\"}";
 
-            HTTPRequest.sendJsonRequest(otpVerifyUrl, "POST", jsonOTPVerifyBody, new HTTPRequest.RequestCallback() {
+            HTTPMethod.sendJsonRequest(otpVerifyUrl, "POST", jsonOTPVerifyBody, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String otpResponse) throws IOException {
                     changeOTPScreen();

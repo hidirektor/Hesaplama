@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,7 +81,7 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
 
             System.out.println(otpUrl + jsonUpdatePassBody);
 
-            HTTPRequest.sendJsonRequest(otpUrl, "POST", jsonUpdatePassBody, new HTTPRequest.RequestCallback() {
+            HTTPMethod.sendJsonRequest(otpUrl, "POST", jsonUpdatePassBody, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String changeResponse) throws IOException {
                     backMainScreen();

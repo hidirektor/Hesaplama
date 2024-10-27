@@ -24,7 +24,8 @@ import me.t3sl4.hydraulic.utils.component.ThreeStateSwitch;
 import me.t3sl4.hydraulic.utils.database.Model.Table.HydraulicUnitList.HydraulicInfo;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
+import me.t3sl4.hydraulic.utils.service.HTTP.Request.HydraulicUnit.HydraulicService;
 import me.t3sl4.hydraulic.utils.service.UserDataService.Profile;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -357,7 +358,7 @@ public class MainController implements Initializable {
     public void hidrolikUnitStats(Runnable updateHydraulicText) {
         String profileInfoUrl = BASE_URL + hydraulicGetStatsURLPrefix;
 
-        HTTPRequest.sendJsonlessRequest(profileInfoUrl, "GET", new HTTPRequest.RequestCallback() {
+        HTTPMethod.sendJsonlessRequest(profileInfoUrl, "GET", new HTTPMethod.RequestCallback() {
             @Override
             public void onSuccess(String hydraulicResponse) {
                 JSONObject responseJson = new JSONObject(hydraulicResponse);
@@ -383,7 +384,7 @@ public class MainController implements Initializable {
         if(type == 1) {
             //Tümü
             jsonHydraulicBody = "{\"UnitType\": \"" + "" + "\"}";
-            HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+            HTTPMethod.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
@@ -400,7 +401,7 @@ public class MainController implements Initializable {
         } else if(type == 2) {
             //Klasik
             jsonHydraulicBody = "{\"UnitType\": \"" + "Klasik" + "\"}";
-            HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+            HTTPMethod.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
@@ -416,7 +417,7 @@ public class MainController implements Initializable {
         } else if(type == 3) {
             //Hidros
             jsonHydraulicBody = "{\"UnitType\": \"" + "PowerPack" + "\"}";
-            HTTPRequest.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPRequest.RequestCallback() {
+            HTTPMethod.sendJsonRequest(reqURL, "POST", jsonHydraulicBody, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     JSONArray responseJson = new JSONObject(response).getJSONObject("payload").getJSONArray("hydraulicInfoResult");
@@ -479,10 +480,12 @@ public class MainController implements Initializable {
                    if(info.isLocal()) {
                        Utils.deleteLocalUnitData(localHydraulicStatsPath, info.getOrderID());
                    } else {
-                       //TODO
-                       /*
-                       Sunucudaki veriyi sil
-                        */
+                       String jsonDeleteBody = "{\"orderID\": \"" + info.getOrderID() + "\"}";
+                       try {
+                           HydraulicService.deleteHydraulicUnit(jsonDeleteBody, kullaniciAdiIsimText, loggedInUser.getAccessToken());
+                       } catch (IOException e) {
+                           throw new RuntimeException(e);
+                       }
                    }
                     initializeHydraulicTable();
                 });

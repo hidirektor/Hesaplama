@@ -9,7 +9,7 @@ public class SystemVariables {
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
-    private static final String CURRENT_VERSION = "v3.4.1";
+    private static final String CURRENT_VERSION = "v3.4.2";
 
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
     public static String RELEASE_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases";
@@ -54,6 +54,7 @@ public class SystemVariables {
     public static String verifyOTPURLPrefix = "/otp/verifyOTP";
 
     public static String createHydraulicURLPrefix = "/hydraulic/createHydraulicUnit";
+    public static String deleteHydraulicURLPrefix = "/hydraulic/deleteHydraulicUnit";
     public static String orderNumbersURLPrefix = "/hydraulic/getOrderNumber";
     public static String getPartListURLPrefix = "/hydraulic/getPartList/";
     public static String getSchematicURLPrefix = "/hydraulic/getSchematic/";

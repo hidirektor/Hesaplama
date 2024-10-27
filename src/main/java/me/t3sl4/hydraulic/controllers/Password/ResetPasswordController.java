@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class ResetPasswordController implements Initializable {
             String otpUrl = BASE_URL + otpURLPrefix;
             String jsonOTPBody = "{\"userName\": \"" + enteredUserName + "\"}";
 
-            HTTPRequest.sendJsonRequest(otpUrl, "POST", jsonOTPBody, new HTTPRequest.RequestCallback() {
+            HTTPMethod.sendJsonRequest(otpUrl, "POST", jsonOTPBody, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String otpResponse) throws IOException {
                     JSONObject otpResponseObject = new JSONObject(otpResponse);

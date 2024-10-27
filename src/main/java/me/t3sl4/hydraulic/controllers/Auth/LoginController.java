@@ -14,7 +14,7 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.controllers.MainController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.service.RequestService;
+import me.t3sl4.hydraulic.utils.service.HTTP.Request.User.UserService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.BASE_URL;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.loginURLPrefix;
-import static me.t3sl4.hydraulic.utils.service.RequestService.updateUserAndOpenMainScreen;
+import static me.t3sl4.hydraulic.utils.service.HTTP.Request.User.UserService.updateUserAndOpenMainScreen;
 
 public class LoginController implements Initializable {
 
@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
 
         if (!txtUsername.getText().isEmpty() || !txtPassword.getText().isEmpty()) {
             jsonLoginBody = "{\"userName\": \"" + txtUsername.getText() + "\", \"password\": \"" + txtPassword.getText() + "\"}";
-            RequestService.loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText(), lblErrors);
+            UserService.loginReq(loginUrl, jsonLoginBody, stage, txtUsername.getText(), txtPassword.getText(), lblErrors);
         }
     }
 

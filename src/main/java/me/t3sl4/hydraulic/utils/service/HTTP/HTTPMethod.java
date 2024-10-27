@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.utils.service;
+package me.t3sl4.hydraulic.utils.service.HTTP;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HTTPRequest {
+public class HTTPMethod {
 
     public interface RequestCallback {
         void onSuccess(String response) throws IOException;

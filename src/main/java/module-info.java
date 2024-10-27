@@ -25,7 +25,6 @@ module me.t3sl.hydraulic {
 
     exports me.t3sl4.hydraulic.utils;
     opens me.t3sl4.hydraulic.controllers to javafx.fxml;
-    exports me.t3sl4.hydraulic.utils.service;
     opens me.t3sl4.hydraulic.utils.service to javafx.base;
     exports me.t3sl4.hydraulic.utils.database.Model.HydraulicData;
     opens me.t3sl4.hydraulic.utils.database.Model.HydraulicData to javafx.base;
@@ -59,4 +58,9 @@ module me.t3sl.hydraulic {
     opens me.t3sl4.hydraulic.controllers.Password to javafx.fxml;
     exports me.t3sl4.hydraulic;
     opens me.t3sl4.hydraulic to javafx.base, javafx.fxml;
+    exports me.t3sl4.hydraulic.utils.service.HTTP;
+    opens me.t3sl4.hydraulic.utils.service.HTTP to javafx.base;
+    opens me.t3sl4.hydraulic.utils.service.HTTP.Request to javafx.base;
+    exports me.t3sl4.hydraulic.utils.service.HTTP.Request.User;
+    opens me.t3sl4.hydraulic.utils.service.HTTP.Request.User to javafx.base;
 }

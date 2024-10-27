@@ -14,7 +14,7 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.service.HTTPRequest;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 import me.t3sl4.hydraulic.utils.service.UserDataService.Profile;
 import org.json.JSONObject;
 
@@ -166,7 +166,7 @@ public class ProfileEditController {
 
     private void sendUpdateRequest(String jsonBody, String username, Stage stage) {
         String registerUrl = BASE_URL + updateProfileURLPrefix;
-        HTTPRequest.sendAuthorizedJsonRequest(registerUrl, "POST", jsonBody, SystemVariables.loggedInUser.getAccessToken(), new HTTPRequest.RequestCallback() {
+        HTTPMethod.sendAuthorizedJsonRequest(registerUrl, "POST", jsonBody, SystemVariables.loggedInUser.getAccessToken(), new HTTPMethod.RequestCallback() {
             @Override
             public void onSuccess(String response) throws IOException {
                 if(secilenPhotoPath != null) {
@@ -203,7 +203,7 @@ public class ProfileEditController {
             return;
         }
 
-        HTTPRequest.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPRequest.RequestCallback() {
+        HTTPMethod.uploadFile(uploadUrl, "POST", profilePhotoFile, username, new HTTPMethod.RequestCallback() {
             @Override
             public void onSuccess(String response) {
                 Utils.showSuccessMessage("Profil fotoğrafı güncellendi!", SceneUtil.getScreenOfNode(btn_exit), (Stage)btn_exit.getScene().getWindow());
