@@ -9,7 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -30,6 +33,7 @@ import me.t3sl4.hydraulic.utils.service.UserDataService.Profile;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -110,6 +114,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Label versionCode;
+
+    @FXML
+    private TextField unitSearchBar;
 
     private List<HydraulicInfo> finalHydraulicUnitList = new ArrayList<>();
 
@@ -325,6 +332,35 @@ public class MainController implements Initializable {
     @FXML
     public void programiKapat() {
         System.exit(0);
+    }
+
+    @FXML
+    public void siparisNumarasiEntered() {
+        if(unitSearchBar.getText() != null) {
+            if(!unitSearchBar.getText().isEmpty()) {
+                List<HydraulicInfo> searchList = new ArrayList<>();
+                for(HydraulicInfo currentInfo : finalHydraulicUnitList) {
+                    if(currentInfo.getOrderID().equals(unitSearchBar.getText())) {
+                        searchList.add(currentInfo);
+                        populateUIWithCachedData(searchList);
+                        break;
+                    }
+                }
+            } else {
+                initializeHydraulicTable();
+            }
+        }
+    }
+
+    @FXML
+    public void siparisNumarasiBackSpacePressed(KeyEvent event) throws AWTException {
+        if(event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
+            unitSearchBar.clear();
+            Robot robot = new Robot();
+
+            robot.keyPress(java.awt.event.KeyEvent.VK_TAB);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_TAB);
+        }
     }
 
     public void userInfo() {
