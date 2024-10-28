@@ -153,10 +153,20 @@ public class MainController implements Initializable {
         hidrosSwitchVBox.getChildren().addAll(hidrosSwitch);
 
         klasikSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) {
+                if(hidrosSwitch.isIsToggled()) {
+                    hidrosSwitch.setIsToggled(false);
+                }
+            }
             initializeHydraulicTable();
         });
 
         hidrosSwitch.isToggledProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) {
+                if(klasikSwitch.isIsToggled()) {
+                    klasikSwitch.setIsToggled(false);
+                }
+            }
             initializeHydraulicTable();
         });
 
@@ -165,8 +175,8 @@ public class MainController implements Initializable {
     }
 
     private void initializeThreeState() {
-        threeStateSwitch.setLayoutX(780.0);
-        threeStateSwitch.setLayoutY(120.0);
+        threeStateSwitch.setLayoutX(770.0);
+        threeStateSwitch.setLayoutY(110.0);
 
         threeStateSwitch.setDefaultState(ThreeStateSwitch.SwitchState.LOCAL);
 
