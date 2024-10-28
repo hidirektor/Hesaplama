@@ -1462,22 +1462,39 @@ public class KlasikController {
                     } else {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/kilitliblok.png")));
                         sonucTankGorsel.setImage(image);
+                        yukseklikSonucText.setLayoutX(6.0);
                         genislikSonucText.setRotate(27.5);
-                        derinlikSonucText.setRotate(-27.5);
-                        derinlikSonucText.setLayoutX(193.0);
+                        derinlikSonucText.setRotate(-28.0);
+                        derinlikSonucText.setLayoutX(210.0);
+                        derinlikSonucText.setLayoutY(426.0);
                     }
                 }
             } else {
                 if(kompanzasyonDurumu.equals("Var")) {
                     image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tekhiz.png")));
                     sonucTankGorsel.setImage(image);
+                    yukseklikSonucText.setLayoutX(6.0);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-28.0);
+                    derinlikSonucText.setLayoutX(210.0);
+                    derinlikSonucText.setLayoutY(426.0);
                 } else {
                     if(secilenValfTipi.contains("Tek Hız")) {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tekhiz.png")));
                         sonucTankGorsel.setImage(image);
+                        yukseklikSonucText.setLayoutX(6.0);
+                        genislikSonucText.setRotate(27.5);
+                        derinlikSonucText.setRotate(-28.0);
+                        derinlikSonucText.setLayoutX(210.0);
+                        derinlikSonucText.setLayoutY(426.0);
                     } else {
                         image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/cifthiz.png")));
                         sonucTankGorsel.setImage(image);
+                        yukseklikSonucText.setLayoutX(6.0);
+                        genislikSonucText.setRotate(27.5);
+                        derinlikSonucText.setRotate(-28.0);
+                        derinlikSonucText.setLayoutX(210.0);
+                        derinlikSonucText.setLayoutY(426.0);
                     }
                 }
             }
