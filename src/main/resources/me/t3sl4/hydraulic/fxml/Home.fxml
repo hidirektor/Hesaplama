@@ -248,7 +248,7 @@
                         <Label layoutX="715.0" layoutY="205.0" text="Oluşturan" textFill="#e7e5e5" />
                         <Label layoutX="46.0" layoutY="51.0" prefHeight="18.0" text="Siparişlerde Ara: " textFill="#e7e5e5" />
                         <TextField fx:id="unitSearchBar" focusTraversable="false" layoutX="141.0" layoutY="48.0" onKeyPressed="#siparisNumarasiBackSpacePressed" onKeyTyped="#siparisNumarasiEntered" prefWidth="150.0" promptText="Sipariş Numarası" style="-fx-background-color: #02030A; -fx-border-color: #FFFFFF; -fx-border-radius: 2em; -fx-text-fill: #ffffff;" />
-                        <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="460.0" prefWidth="925.0" stylesheets="@../styling/style.css">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="232.0" prefHeight="460.0" prefWidth="925.0" stylesheets="@../styling/style.css">
                             <content>
                                 <VBox fx:id="pnItems" prefHeight="460.0" prefWidth="925.0" spacing="5.0" style="-fx-background-color: #02030A;">
                                     <padding>

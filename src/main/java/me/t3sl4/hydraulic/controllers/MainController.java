@@ -498,7 +498,7 @@ public class MainController implements Initializable {
 
                 if(info.isLocal()) {
                     pdfViewButton.setText("Aç");
-                    itemC.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-background-insets: 0;");
+                    itemC.setStyle("-fx-background-radius: 5; -fx-background-insets: 0;");
                 }
 
                 orderNumberLabel.setText(info.getOrderID());
