@@ -1442,73 +1442,66 @@ public class KlasikController {
 
                 }
             }
-            if(secilenHidrolikKilitDurumu.equals("Var")) {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/ingilteresogutuculu.png")));
-                sonucTankGorsel.setImage(image);
-                genislikSonucText.setLayoutY(412.0);
-                genislikSonucText.setRotate(33.5);
-                derinlikSonucText.setRotate(-30.0);
-                derinlikSonucText.setLayoutX(193.0);
-            } else {
-                image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/sogutuculukilitsiz.png")));
-                sonucTankGorsel.setImage(image);
-                genislikSonucText.setLayoutY(412.0);
-                genislikSonucText.setRotate(33.5);
-                derinlikSonucText.setRotate(-30.0);
-                derinlikSonucText.setLayoutX(193.0);
-            }
         } else {
             if(secilenHidrolikKilitDurumu.equals("Var")) {
-                if(kompanzasyonDurumu.equals("Var")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/sogutuculuotuzuc.png")));
-                    sonucTankGorsel.setImage(image);
-                    genislikSonucText.setRotate(27.5);
-                    derinlikSonucText.setRotate(-27.5);
-                    derinlikSonucText.setLayoutX(190.0);
-                } else {
-                    if(secilenPompaVal > 28.1) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/sogutuculuotuzuc.png")));
-                        sonucTankGorsel.setImage(image);
-                        genislikSonucText.setRotate(27.5);
-                        derinlikSonucText.setRotate(-27.5);
-                        derinlikSonucText.setLayoutX(190.0);
-                    } else {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/kilitliblok.png")));
-                        sonucTankGorsel.setImage(image);
-                        yukseklikSonucText.setLayoutX(6.0);
-                        genislikSonucText.setRotate(27.5);
-                        derinlikSonucText.setRotate(-28.0);
-                        derinlikSonucText.setLayoutX(210.0);
-                        derinlikSonucText.setLayoutY(426.0);
-                    }
-                }
-            } else {
-                if(kompanzasyonDurumu.equals("Var")) {
-                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tekhiz.png")));
+                if(secilenValfTipi.equals("Çift Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/kilit_ayri_cift_hiz.png")));
                     sonucTankGorsel.setImage(image);
                     yukseklikSonucText.setLayoutX(6.0);
                     genislikSonucText.setRotate(27.5);
                     derinlikSonucText.setRotate(-28.0);
                     derinlikSonucText.setLayoutX(210.0);
                     derinlikSonucText.setLayoutY(426.0);
-                } else {
-                    if(secilenValfTipi.contains("Tek Hız")) {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tekhiz.png")));
-                        sonucTankGorsel.setImage(image);
-                        yukseklikSonucText.setLayoutX(6.0);
-                        genislikSonucText.setRotate(27.5);
-                        derinlikSonucText.setRotate(-28.0);
-                        derinlikSonucText.setLayoutX(210.0);
-                        derinlikSonucText.setLayoutY(426.0);
-                    } else {
-                        image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/cifthiz.png")));
-                        sonucTankGorsel.setImage(image);
-                        yukseklikSonucText.setLayoutX(6.0);
-                        genislikSonucText.setRotate(27.5);
-                        derinlikSonucText.setRotate(-28.0);
-                        derinlikSonucText.setLayoutX(210.0);
-                        derinlikSonucText.setLayoutY(426.0);
-                    }
+                } else if(secilenValfTipi.equals("Kompanzasyon || Tek Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/kilit_ayri_kompanzasyon.png")));
+                    sonucTankGorsel.setImage(image);
+                    yukseklikSonucText.setLayoutX(6.0);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-28.0);
+                    derinlikSonucText.setLayoutX(210.0);
+                    derinlikSonucText.setLayoutY(426.0);
+                } else if(secilenValfTipi.equals("Tek Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/kilit_ayri_tek_hiz.png")));
+                    sonucTankGorsel.setImage(image);
+                    yukseklikSonucText.setLayoutX(6.0);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-28.0);
+                    derinlikSonucText.setLayoutX(210.0);
+                    derinlikSonucText.setLayoutY(426.0);
+                } else if(secilenValfTipi.equals("Kilitli Blok")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/kilitli_blok.png")));
+                    sonucTankGorsel.setImage(image);
+                    yukseklikSonucText.setLayoutX(6.0);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-28.0);
+                    derinlikSonucText.setLayoutX(210.0);
+                    derinlikSonucText.setLayoutY(426.0);
+                }
+            } else {
+                if(secilenValfTipi.equals("Çift Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/cift_hiz.png")));
+                    sonucTankGorsel.setImage(image);
+                    yukseklikSonucText.setLayoutX(6.0);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-28.0);
+                    derinlikSonucText.setLayoutX(210.0);
+                    derinlikSonucText.setLayoutY(426.0);
+                } else if(secilenValfTipi.equals("Tek Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tek_hiz.png")));
+                    sonucTankGorsel.setImage(image);
+                    yukseklikSonucText.setLayoutX(6.0);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-28.0);
+                    derinlikSonucText.setLayoutX(210.0);
+                    derinlikSonucText.setLayoutY(426.0);
+                } else if(secilenValfTipi.equals("Kompanzasyon || Tek Hız")) {
+                    image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/tek_hiz_kompanzasyon.png")));
+                    sonucTankGorsel.setImage(image);
+                    yukseklikSonucText.setLayoutX(6.0);
+                    genislikSonucText.setRotate(27.5);
+                    derinlikSonucText.setRotate(-28.0);
+                    derinlikSonucText.setLayoutX(210.0);
+                    derinlikSonucText.setLayoutY(426.0);
                 }
             }
         }
