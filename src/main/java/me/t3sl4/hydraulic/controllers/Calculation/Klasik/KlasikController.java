@@ -1430,6 +1430,19 @@ public class KlasikController {
 
         if(secilenSogutmaDurumu.equals("Var")) {
             if(secilenHidrolikKilitDurumu.equals("Var")) {
+                if(secilenValfTipi.equals("Çift Hız")) {
+
+                } else if(secilenValfTipi.contains("Tek Hız")) {
+
+                }
+            } else {
+                if(secilenValfTipi.equals("Çift Hız")) {
+
+                } else if(secilenValfTipi.contains("Tek Hız")) {
+
+                }
+            }
+            if(secilenHidrolikKilitDurumu.equals("Var")) {
                 image = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/data/hydraulicUnitData/cabins/classic/ingilteresogutuculu.png")));
                 sonucTankGorsel.setImage(image);
                 genislikSonucText.setLayoutY(412.0);
