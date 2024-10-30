@@ -285,31 +285,25 @@ public class MainController implements Initializable {
     }
 
     public void handleClicks(ActionEvent actionEvent) throws IOException {
-        if (actionEvent.getSource() == btnHidros) {
+         if(actionEvent.getSource()==btnKlasik) {
+            paneSwitch(1);
+        } else if (actionEvent.getSource() == btnHidros) {
             paneSwitch(2);
-        }
-        if (actionEvent.getSource() == btnInisMetodu) {
+        } else if (actionEvent.getSource() == btnInisMetodu) {
             paneSwitch(3);
-        }
-        if (actionEvent.getSource() == btnParametreler) {
+        } else if (actionEvent.getSource() == btnParametreler) {
             paneSwitch(4);
-        }
-        if (actionEvent.getSource() == btnHome) {
+        } else if (actionEvent.getSource() == btnHome) {
             pnlOverview.setStyle("-fx-background-color : #02030A");
             pnlOverview.toFront();
             updateHydraulicText();
             initializeHydraulicTable();
-        }
-        if(actionEvent.getSource() == btnOnlineMode) {
+        } else if(actionEvent.getSource() == btnOnlineMode) {
             Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
             currentStage.close();
             Utils.openLoginScreen(kullaniciAdiIsimText);
-        }
-        if(actionEvent.getSource() == btnMonitorAdapter) {
+        } else if(actionEvent.getSource() == btnMonitorAdapter) {
             Utils.showMonitorSelectionScreen(Screen.getScreens(), SceneUtil.getScreenOfNode(kullaniciAdiIsimText), false);
-        }
-        if(actionEvent.getSource()==btnKlasik) {
-            paneSwitch(1);
         }
     }
 
