@@ -3,7 +3,6 @@ package me.t3sl4.hydraulic.controllers.Auth;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -229,16 +228,11 @@ public class LoginController implements Initializable {
     }
 
     private void checkInternet() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Lütfen internet bağlantınızı kontrol edin!");
-        alert.setTitle("Internet Bağlantısı Kontrolü");
-        alert.setHeaderText(null);
-        alert.show();
 
         InternetService internetCheckService = new InternetService();
 
         internetCheckService.setOnSucceeded(event -> {
             if (internetCheckService.getValue()) {
-                alert.close();
                 SystemVariables.offlineMode = true;
             } else {
                 Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
@@ -246,7 +240,6 @@ public class LoginController implements Initializable {
         });
 
         internetCheckService.setOnFailed(event -> {
-            alert.close();
             Utils.showErrorOnLabel(lblErrors, "Bir hata oluştu, internet bağlantınızı kontrol edin!");
         });
 
