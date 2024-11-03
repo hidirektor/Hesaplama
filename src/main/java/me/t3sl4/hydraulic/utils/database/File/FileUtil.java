@@ -14,7 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 public class FileUtil {
-    public static void setupFileSystem() {
+    public static void criticalFileSystem() {
         // İşletim sistemine göre dosya yollarını ayarla
         String userHome = System.getProperty("user.name");
         String os = System.getProperty("os.name").toLowerCase();
@@ -71,7 +71,9 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void setupLocalData() {
         JSONUtil.loadJSONData();
         new YamlUtil(SystemVariables.classicComboDBPath, SystemVariables.powerPackComboDBPath, SystemVariables.classicPartsDBPath, SystemVariables.powerPackPartsHidrosDBPath, SystemVariables.powerPackPartsIthalDBPath, SystemVariables.schematicTextsDBPath);
     }

@@ -89,6 +89,8 @@ public class Utils {
         alert.setHeaderText(null);
         alert.setContentText(basariMesaji);
 
+        alert.getButtonTypes().setAll(ButtonType.OK);
+
         centerAlertOnScreen(alert, targetScreen);
         alert.showAndWait();
     }
@@ -510,7 +512,9 @@ public class Utils {
 
         SystemVariables.loggedInUser = null;
 
-        FileUtil.setupFileSystem();
+        FileUtil.criticalFileSystem();
+        Thread systemThread = new Thread(FileUtil::setupLocalData);
+        systemThread.start();
     }
 
     private static void deleteFile(String filePath) {
