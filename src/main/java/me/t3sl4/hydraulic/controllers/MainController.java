@@ -115,7 +115,7 @@ public class MainController implements Initializable {
     private Label parametreCount;
 
     @FXML
-    private Label versionCode;
+    public Label versionCode;
 
     @FXML
     private TextField unitSearchBar;
@@ -146,7 +146,7 @@ public class MainController implements Initializable {
 
         initializeHydraulicTable();
 
-        checkLicense();
+        Platform.runLater(() -> checkLicense());
     }
 
     private void initializeSwitchs() {
@@ -646,27 +646,21 @@ public class MainController implements Initializable {
     }
 
     public void checkLicense() {
-        Platform.runLater(() -> {
+        String licenseKey = Utils.checkLicenseKey();
+        Screen currentScreen = SceneUtil.getScreenOfNode(versionCode);
+        Stage currentStage = (Stage) versionCode.getScene().getWindow();
+        if (licenseKey == null) {
+            Utils.showLicensePopup(currentScreen, currentStage);
+        } else {
+            String licenseCheckURL = BASE_URL + checkLicenseUrlPrefix;
+
             try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                LicenseService.checkLicense(licenseCheckURL, licenseKey, null, () -> {
+                    Utils.showLicensePopup(currentScreen, currentStage);
+                });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-            String licenseKey = Utils.checkLicenseKey();
-            if (licenseKey == null) {
-                Utils.showLicensePopup(SceneUtil.getScreenOfNode(versionCode), (Stage) versionCode.getScene().getWindow());
-            } else {
-                String licenseCheckURL = BASE_URL + checkLicenseUrlPrefix;
-
-                try {
-                    LicenseService.checkLicense(licenseCheckURL, licenseKey, null, () -> {
-                        Utils.showLicensePopup(SceneUtil.getScreenOfNode(versionCode), (Stage) versionCode.getScene().getWindow());
-                    });
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        }
     }
 }
