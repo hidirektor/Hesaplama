@@ -7,6 +7,7 @@ import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -39,11 +40,28 @@ public class Main extends Application {
             }
         }
 
+        createLicenseFile();
+
         Thread systemThread = new Thread(FileUtil::setupFileSystem);
         systemThread.start();
     }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private void createLicenseFile() throws IOException {
+        String userHome = System.getProperty("user.name");
+        String os = System.getProperty("os.name").toLowerCase();
+        String basePath;
+
+        if (os.contains("win")) {
+            basePath = "C:/Users/" + userHome + "/";
+        } else {
+            basePath = "/Users/" + userHome + "/";
+        }
+
+        String licensePath = basePath + "/OnderGrup/userData/license.txt";
+        FileUtil.createFile(licensePath);
     }
 }

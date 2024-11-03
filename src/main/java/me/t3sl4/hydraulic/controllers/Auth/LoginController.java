@@ -1,7 +1,9 @@
 package me.t3sl4.hydraulic.controllers.Auth;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,7 +15,9 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.controllers.MainController;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.general.InternetService;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import me.t3sl4.hydraulic.utils.service.HTTP.Request.License.LicenseService;
 import me.t3sl4.hydraulic.utils.service.HTTP.Request.User.UserService;
 
 import java.io.IOException;
@@ -23,8 +27,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static me.t3sl4.hydraulic.utils.general.SystemVariables.BASE_URL;
-import static me.t3sl4.hydraulic.utils.general.SystemVariables.loginURLPrefix;
+import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 import static me.t3sl4.hydraulic.utils.service.HTTP.Request.User.UserService.updateUserAndOpenMainScreen;
 
 public class LoginController implements Initializable {
@@ -63,6 +66,12 @@ public class LoginController implements Initializable {
     @FXML
     private Button offlineMod;
 
+    @FXML
+    private Button offlineMod2;
+
+    @FXML
+    private Label licenseDescriptionLabel;
+
     private String girilenSifre = "";
 
     private static final Logger logger = Logger.getLogger(MainController.class.getName());
@@ -93,35 +102,30 @@ public class LoginController implements Initializable {
     @FXML
     public void onlineMod() {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
-        if (Utils.netIsAvailable()) {
-            if(!Utils.checkUpdateAndCancelEvent((Stage)offlineMod.getScene().getWindow())) {
-                Utils.checkLocalUserData(() -> {});
-                if(SystemVariables.loggedInUser != null) {
-                    if(SystemVariables.loggedInUser.getUserID() != null || SystemVariables.loggedInUser.getAccessToken() != null || SystemVariables.loggedInUser.getRefreshToken() != null) {
-                        updateUserAndOpenMainScreen(stage, lblErrors, () -> {
-                            try {
-                                Utils.deleteLocalData();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            loginPane.setVisible(true);
-                            offlineMod.setVisible(false);
-                            onlineMod.setVisible(false);
-                        });
-                    } else {
+        if(!Utils.checkUpdateAndCancelEvent((Stage)offlineMod.getScene().getWindow())) {
+            Utils.checkLocalUserData(() -> {});
+            if(SystemVariables.loggedInUser != null) {
+                if(SystemVariables.loggedInUser.getUserID() != null || SystemVariables.loggedInUser.getAccessToken() != null || SystemVariables.loggedInUser.getRefreshToken() != null) {
+                    updateUserAndOpenMainScreen(stage, lblErrors, () -> {
+                        try {
+                            Utils.deleteLocalData();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         loginPane.setVisible(true);
                         offlineMod.setVisible(false);
                         onlineMod.setVisible(false);
-                    }
+                    });
                 } else {
                     loginPane.setVisible(true);
                     offlineMod.setVisible(false);
                     onlineMod.setVisible(false);
                 }
+            } else {
+                loginPane.setVisible(true);
+                offlineMod.setVisible(false);
+                onlineMod.setVisible(false);
             }
-        } else {
-            SystemVariables.offlineMode = false;
-            Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
         }
     }
 
@@ -157,6 +161,10 @@ public class LoginController implements Initializable {
         txtPassword.textProperty().addListener((observable, oldValue, newValue) -> {
             girilenSifre = newValue;
         });
+
+        checkInternet();
+
+        checkLicense();
     }
 
     private void togglePasswordVisibility() {
@@ -191,5 +199,69 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) btnSignin.getScene().getWindow();
 
         stage.close();
+    }
+
+    private void checkLicense() {
+        if(Utils.checkLicenseKey() == null) {
+            Utils.showErrorOnLabel(lblErrors, "Lütfen giriş yaparak lisans anahtarını aktifleştirin.");
+            offlineMod.setDisable(true);
+            offlineMod2.setDisable(true);
+            Utils.licenseStatus(licenseDescriptionLabel, false);
+        } else {
+            String currentLicenseKey = Utils.checkLicenseKey();
+            String licenseCheckURL = BASE_URL + checkLicenseUrlPrefix;
+
+            try {
+                LicenseService.checkLicense(licenseCheckURL, currentLicenseKey, () -> {
+                    offlineMod.setDisable(false);
+                    offlineMod2.setDisable(false);
+                    Utils.licenseStatus(licenseDescriptionLabel, true);
+                }, () -> {
+                    offlineMod.setDisable(true);
+                    offlineMod2.setDisable(true);
+                    Utils.showErrorOnLabel(lblErrors, "Lütfen giriş yaparak yeni bir lisans aktifleştirin.");
+                    Utils.licenseStatus(licenseDescriptionLabel, false);
+                });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void checkInternet() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Lütfen internet bağlantınızı kontrol edin!");
+        alert.setTitle("Internet Bağlantısı Kontrolü");
+        alert.setHeaderText(null);
+        alert.show();
+
+        InternetService internetCheckService = new InternetService();
+
+        internetCheckService.setOnSucceeded(event -> {
+            if (internetCheckService.getValue()) {
+                alert.close();
+                SystemVariables.offlineMode = true;
+            } else {
+                Utils.showErrorOnLabel(lblErrors, "Lütfen internet bağlantınızı kontrol edin!");
+            }
+        });
+
+        internetCheckService.setOnFailed(event -> {
+            alert.close();
+            Utils.showErrorOnLabel(lblErrors, "Bir hata oluştu, internet bağlantınızı kontrol edin!");
+        });
+
+        internetCheckService.start();
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(5000);
+                    Platform.runLater(() -> internetCheckService.restart());
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+        }).start();
     }
 }

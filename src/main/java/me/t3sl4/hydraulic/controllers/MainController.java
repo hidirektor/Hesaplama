@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.controllers;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -29,6 +30,7 @@ import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 import me.t3sl4.hydraulic.utils.service.HTTP.Request.HydraulicUnit.HydraulicService;
+import me.t3sl4.hydraulic.utils.service.HTTP.Request.License.LicenseService;
 import me.t3sl4.hydraulic.utils.service.UserDataService.Profile;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -143,6 +145,8 @@ public class MainController implements Initializable {
         versionCode.setText(SystemVariables.getVersion());
 
         initializeHydraulicTable();
+
+        checkLicense();
     }
 
     private void initializeSwitchs() {
@@ -639,5 +643,30 @@ public class MainController implements Initializable {
             Stage stage = (Stage) pnlMenus.getScene().getWindow();
             stage.setIconified(true);
         }
+    }
+
+    public void checkLicense() {
+        Platform.runLater(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            String licenseKey = Utils.checkLicenseKey();
+            if (licenseKey == null) {
+                Utils.showLicensePopup(SceneUtil.getScreenOfNode(versionCode), (Stage) versionCode.getScene().getWindow());
+            } else {
+                String licenseCheckURL = BASE_URL + checkLicenseUrlPrefix;
+
+                try {
+                    LicenseService.checkLicense(licenseCheckURL, licenseKey, null, () -> {
+                        Utils.showLicensePopup(SceneUtil.getScreenOfNode(versionCode), (Stage) versionCode.getScene().getWindow());
+                    });
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }

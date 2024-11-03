@@ -32,6 +32,7 @@ public class FileUtil {
         SystemVariables.dataFileLocalPath = SystemVariables.mainPath + "data/";
 
         SystemVariables.tokenPath = SystemVariables.profilePhotoLocalPath + "auth.txt";
+        SystemVariables.licensePath = SystemVariables.profilePhotoLocalPath + "license.txt";
 
         SystemVariables.pdfFileLocalPath = SystemVariables.profilePhotoLocalPath + "HydraulicUnits/schematicFiles/";
         SystemVariables.excelFileLocalPath = SystemVariables.profilePhotoLocalPath + "HydraulicUnits/excelFiles/";
@@ -47,17 +48,14 @@ public class FileUtil {
         SystemVariables.schematicTextsDBPath = SystemVariables.dataFileLocalPath + "schematic_texts.yml";
 
         try {
-            // 1. OnderGrup klasörünü oluştur
             createDirectory(SystemVariables.mainPath);
 
-            // 2. data ve userData klasörlerini oluştur
             createDirectory(SystemVariables.dataFileLocalPath);
             createDirectory(SystemVariables.profilePhotoLocalPath);
 
-            // 3. userData içine boş auth.txt dosyasını oluştur
             createFile(SystemVariables.tokenPath);
+            createFile(SystemVariables.licensePath);
 
-            // 4. Belirtilen dosyaları data klasörüne kopyala
             fileCopy("/assets/data/programDatabase/general.json", SystemVariables.generalDBPath);
             fileCopy("/assets/data/programDatabase/cabins.json", SystemVariables.cabinsDBPath);
             fileCopy("/assets/data/programDatabase/classic_combo.yml", SystemVariables.classicComboDBPath);
@@ -67,7 +65,6 @@ public class FileUtil {
             fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath);
             fileCopy("/assets/data/programDatabase/schematic_texts.yml", SystemVariables.schematicTextsDBPath);
 
-            // 5. data klasörünün içine excelFiles ve schematicFiles klasörlerini oluştur
             createDirectory(SystemVariables.excelFileLocalPath);
             createDirectory(SystemVariables.pdfFileLocalPath);
             createFile(SystemVariables.localHydraulicStatsPath);
@@ -75,12 +72,10 @@ public class FileUtil {
             e.printStackTrace();
         }
 
-        // 7. Dataları yükle
         JSONUtil.loadJSONData();
         new YamlUtil(SystemVariables.classicComboDBPath, SystemVariables.powerPackComboDBPath, SystemVariables.classicPartsDBPath, SystemVariables.powerPackPartsHidrosDBPath, SystemVariables.powerPackPartsIthalDBPath, SystemVariables.schematicTextsDBPath);
     }
 
-    // Yardımcı metotlar
     private static void createDirectory(String path) throws IOException {
         Path dirPath = Paths.get(path);
         if (Files.notExists(dirPath)) {
@@ -88,7 +83,7 @@ public class FileUtil {
         }
     }
 
-    private static void createFile(String path) throws IOException {
+    public static void createFile(String path) throws IOException {
         Path filePath = Paths.get(path);
         if (Files.notExists(filePath)) {
             Files.createFile(filePath);

@@ -25,6 +25,7 @@ public class SystemVariables {
     //Local Data Paths
     public static String mainPath;
     public static String tokenPath;
+    public static String licensePath;
     public static String profilePhotoLocalPath;
     public static String pdfFileLocalPath;
     public static String excelFileLocalPath;
@@ -60,6 +61,9 @@ public class SystemVariables {
     public static String getSchematicURLPrefix = "/hydraulic/getSchematic/";
     public static String hydraulicGetStatsURLPrefix = "/hydraulic/getHydraulicStats";
     public static String hydraulicGetDetailsURLPrefix = "/hydraulic/getHydraulicDetails";
+
+    public static String checkLicenseUrlPrefix = "/license/check";
+    public static String activateLicenseUrlPrefix = "/license/activate";
 
     // Local Data
     @Getter

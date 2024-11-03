@@ -41,10 +41,10 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.awt.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -60,6 +60,9 @@ import java.util.prefs.Preferences;
 public class Utils {
 
     public static final Logger logger = Logger.getLogger(MainController.class.getName());
+
+    private static final String REGISTRY_PATH = "SOFTWARE\\OnderGrup\\HydraulicCalculation";
+    private static final String LICENSE_KEY_NAME = "LicenseKey";
 
     public static final String PREFERENCE_KEY = "defaultMonitor";
     public static Preferences prefs;
@@ -297,6 +300,41 @@ public class Utils {
             e.printStackTrace();
             Utils.showErrorMessage("Silindir seçimi sırasında bir hata oluştu.", currentScreen, currentStage);
             return null;
+        }
+    }
+
+    public static void showLicensePopup(Screen currentScreen, Stage currentStage) {
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
+        try {
+            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/LicensePopup.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+
+            Rectangle2D bounds = currentScreen.getVisualBounds();
+            stage.setOnShown(event -> {
+                double stageWidth = stage.getWidth();
+                double stageHeight = stage.getHeight();
+
+                // Calculate the center position
+                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+                // Set the stage position
+                stage.setX(centerX);
+                stage.setY(centerY);
+            });
+
+            stage.setTitle("Silindir Seçimi");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.getIcons().add(icon);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Utils.showErrorMessage("Lisans anahtarı girilirken hata meydana geldi.", currentScreen, currentStage);
         }
     }
 
@@ -910,6 +948,151 @@ public class Utils {
             finalHydraulicUnitList.addAll(Arrays.asList(infoArray));
         } catch (IOException e) {
             Utils.logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    public static String getDeviceInfoAsJson() {
+        try {
+            String osName = System.getProperty("os.name");
+            String osVersion = System.getProperty("os.version");
+            String osArch = System.getProperty("os.arch");
+            int availableProcessors = Runtime.getRuntime().availableProcessors();
+
+            long maxMemory = Runtime.getRuntime().maxMemory();
+            long totalMemory = Runtime.getRuntime().totalMemory();
+
+            String ipAddress = getIpAddress();
+            String externalIpAddress = getExternalIpAddress();
+            String hwid = getHardwareId();
+
+            JSONObject deviceInfoJson = new JSONObject();
+            deviceInfoJson.put("osName", osName);
+            deviceInfoJson.put("osVersion", osVersion);
+            deviceInfoJson.put("osArch", osArch);
+            deviceInfoJson.put("availableProcessors", availableProcessors);
+            deviceInfoJson.put("maxMemory", maxMemory);
+            deviceInfoJson.put("totalMemory", totalMemory);
+            deviceInfoJson.put("ipAddress", ipAddress);
+            deviceInfoJson.put("externalIpAddress", externalIpAddress);
+            deviceInfoJson.put("hwid", hwid);
+
+            return deviceInfoJson.toString(4);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{}";
+        }
+    }
+
+    private static String getIpAddress() {
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+
+                if (networkInterface.isUp() && !networkInterface.isLoopback()) {
+                    Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+                    while (inetAddresses.hasMoreElements()) {
+                        InetAddress inetAddress = inetAddresses.nextElement();
+                        if (inetAddress instanceof Inet4Address) {
+                            return inetAddress.getHostAddress();
+                        }
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return "Unknown";
+    }
+
+    private static String getExternalIpAddress() {
+        String ipAddress = "Unknown";
+        try {
+            URL url = new URL("http://api.ipify.org");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            ipAddress = reader.readLine();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ipAddress;
+    }
+
+    private static String getHardwareId() {
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                if (networkInterface != null && !networkInterface.isLoopback() && networkInterface.getHardwareAddress() != null) {
+                    byte[] macBytes = networkInterface.getHardwareAddress();
+                    StringBuilder macAddress = new StringBuilder();
+                    for (byte b : macBytes) {
+                        macAddress.append(String.format("%02X", b));
+                    }
+                    return macAddress.toString();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Unknown";
+    }
+
+    public static void saveLicenseKey(String licenseKey) {
+        try {
+            Files.write(Paths.get(SystemVariables.licensePath),
+                    licenseKey.getBytes(),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING);
+            System.out.println("Lisans anahtarı başarıyla kaydedildi.");
+        } catch (IOException e) {
+            System.err.println("Lisans anahtarı kaydedilirken hata: " + e.getMessage());
+        }
+    }
+
+    public static String checkLicenseKey() {
+        String userHome = System.getProperty("user.name");
+        String os = System.getProperty("os.name").toLowerCase();
+        String basePath;
+
+        if (os.contains("win")) {
+            basePath = "C:/Users/" + userHome + "/";
+        } else {
+            basePath = "/Users/" + userHome + "/";
+        }
+
+        String licensePath = basePath + "/OnderGrup/userData/license.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(licensePath))) {
+            String licenseKey = null;
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                licenseKey = line;
+                break;
+            }
+
+            if (licenseKey != null && !licenseKey.isEmpty()) {
+                //System.out.println("Lisans anahtarı: " + licenseKey);
+                return licenseKey;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void licenseStatus(Label licenseLabel, boolean licenseStatus) {
+        if(licenseStatus) {
+            String licenseKey = Utils.checkLicenseKey();
+            String displayKey = (licenseKey != null && licenseKey.length() > 10) ? licenseKey.substring(0, 10) : licenseKey;
+            licenseLabel.setText("Lisans Anahtarı : " + displayKey + " ...");
+        } else {
+            licenseLabel.setText("Lisans Durumu : Geçersiz Lisans\nLütfen giriş yaparak programı aktifleştirin.");
         }
     }
 }
