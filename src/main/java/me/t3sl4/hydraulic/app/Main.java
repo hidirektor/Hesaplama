@@ -15,6 +15,8 @@ public class Main extends Application {
 
     public static Screen defaultScreen;
 
+    public static String license;
+
     @lombok.SneakyThrows
     @Override
     public void start(Stage primaryStage) {

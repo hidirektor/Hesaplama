@@ -46,9 +46,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -675,6 +677,30 @@ public class Utils {
         }
     }
 
+    public static String calculateTimeRemaining(String unixTimestampString) {
+        long unixTimestamp = Long.parseLong(unixTimestampString);
+
+        Instant instant = Instant.ofEpochSecond(unixTimestamp);
+        LocalDateTime targetDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDateTime now = LocalDateTime.now();
+
+        long years = ChronoUnit.YEARS.between(now, targetDateTime);
+        now = now.plusYears(years);
+
+        long months = ChronoUnit.MONTHS.between(now, targetDateTime);
+        now = now.plusMonths(months);
+
+        long days = ChronoUnit.DAYS.between(now, targetDateTime);
+        now = now.plusDays(days);
+
+        long hours = ChronoUnit.HOURS.between(now, targetDateTime);
+        now = now.plusHours(hours);
+
+        long minutes = ChronoUnit.MINUTES.between(now, targetDateTime);
+
+        return years + " yıl, " + months + " ay, " + days + " gün, " + hours + " saat, " + minutes + " dk";
+    }
+
     public static String formatDateTimeMultiLine(String unixTimestamp) {
         try {
             Instant instant = Instant.ofEpochSecond(Long.valueOf(unixTimestamp));
@@ -1094,7 +1120,34 @@ public class Utils {
         if(licenseStatus) {
             String licenseKey = Utils.checkLicenseKey();
             String displayKey = (licenseKey != null && licenseKey.length() > 10) ? licenseKey.substring(0, 10) : licenseKey;
-            licenseLabel.setText("Lisans Anahtarı : " + displayKey + " ...");
+
+            JSONObject jsonObj = new JSONObject(Main.license);
+            JSONObject payload = jsonObj.getJSONObject("payload");
+
+            String licenseOwner = payload.getString("licenseOwner");
+            String licenseExpiry = payload.getString("licenseExpiry");
+            String licenseDeviceCount = payload.getString("licenseDeviceCount");
+
+            String displayText;
+
+            if (licenseExpiry.equals("endless")) {
+                displayText = "Lisans Sahibi : " + licenseOwner +
+                        "\nLisans Bitiş : Sınırsız" +
+                        "\nKalan Süre : Sınırsız" +
+                        "\nCihaz Sayısı : " + licenseDeviceCount +
+                        "\nLisans Anahtarı : " + displayKey + " ...";
+            } else {
+                String bitisTarihi = Utils.formatDateTime(licenseExpiry);
+                String kalanSure = calculateTimeRemaining(licenseExpiry);
+
+                displayText = "Lisans Sahibi : " + licenseOwner +
+                        "\nLisans Bitiş : " + bitisTarihi +
+                        "\nKalan Süre : " + kalanSure +
+                        "\nCihaz Sayısı : " + licenseDeviceCount +
+                        "\nLisans Anahtarı : " + displayKey + " ...";
+            }
+
+            licenseLabel.setText(displayText);
         } else {
             licenseLabel.setText("Lisans Durumu : Geçersiz Lisans\nLütfen giriş yaparak programı aktifleştirin.");
         }

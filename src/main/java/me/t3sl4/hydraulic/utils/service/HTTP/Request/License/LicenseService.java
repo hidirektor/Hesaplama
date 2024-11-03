@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.utils.service.HTTP.Request.License;
 
+import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ public class LicenseService {
         HTTPMethod.sendJsonRequest(licenseUrl, "POST", licenseJson.toString(), new HTTPMethod.RequestCallback() {
             @Override
             public void onSuccess(String licenseResponse) {
+                Main.license = licenseResponse;
                 if(onSuccess != null) {
                     onSuccess.run();
                 }
