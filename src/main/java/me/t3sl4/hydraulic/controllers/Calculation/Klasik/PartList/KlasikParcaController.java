@@ -22,10 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class KlasikParcaController {
     @FXML
@@ -192,12 +189,13 @@ public class KlasikParcaController {
     }
 
     private void tabloGuncelle() {
+        if(KlasikController.secilenSogutmaDurumu.equals("Yok")) {
+            loadStockCodes();
+        }
+
         loadMotorParca();
         loadKampanaParca();
         loadPompaParca();
-        if(KlasikController.secilenSogutmaDurumu.equals("Yok")) {
-            loadKabinKodu();
-        }
         loadKaplinParca();
         loadValfBlokParca();
 
@@ -221,17 +219,17 @@ public class KlasikParcaController {
         loadYagMiktari();
     }
 
-    private void loadKabinKodu() {
-        String malzemeKodu = null;
-        String malzemeAdi = null;
+    private void loadStockCodes() {
         String adet = "1";
 
         Kabin foundedTank = Utils.findTankByKabinName(KlasikController.atananKabinFinal);
-        malzemeKodu = foundedTank.getMalzemeKodu();
-        malzemeAdi = foundedTank.getMalzemeAdi();
+        List<ParcaTableData> dataList = Arrays.asList(
+                new ParcaTableData("----", "Kabin Genel Bilgisi", "----"),
+                new ParcaTableData(foundedTank.getKabinKodu(), foundedTank.getMalzemeAdi(), adet),
+                new ParcaTableData(foundedTank.getYagTankiKodu(), foundedTank.getTankName(), adet)
+        );
 
-        ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
-        parcaListesiTablo.getItems().add(data);
+        parcaListesiTablo.getItems().addAll(dataList);
     }
 
     private void loadKampanaParca() {

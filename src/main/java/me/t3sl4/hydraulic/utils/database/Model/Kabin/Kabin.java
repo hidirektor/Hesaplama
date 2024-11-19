@@ -18,10 +18,11 @@ public class Kabin {
     public int tankY;
     public int tankH;
 
-    public String malzemeKodu;
+    public String kabinKodu;
+    public String yagTankiKodu;
     public String malzemeAdi;
 
-    public Kabin(String tankName, String kabinName, int kabinHacim, int kabinX, int kabinY, int kabinH, int tankX, int tankY, int tankH, String malzemeKodu, String malzemeAdi) {
+    public Kabin(String tankName, String kabinName, int kabinHacim, int kabinX, int kabinY, int kabinH, int tankX, int tankY, int tankH, String kabinKodu, String yagTankiKodu, String malzemeAdi) {
         this.tankName = tankName;
         this.kabinName = kabinName;
         this.kabinHacim = kabinHacim;
@@ -31,7 +32,8 @@ public class Kabin {
         this.tankX = tankX;
         this.tankY = tankY;
         this.tankH = tankH;
-        this.malzemeKodu = malzemeKodu;
+        this.kabinKodu = kabinKodu;
+        this.yagTankiKodu = yagTankiKodu;
         this.malzemeAdi = malzemeAdi;
 
         this.gecisOlculeri = kabinX + "x" + kabinY + "x" + kabinH;
@@ -126,12 +128,20 @@ public class Kabin {
         this.tankH = tankH;
     }
 
-    public String getMalzemeKodu() {
-        return malzemeKodu;
+    public String getKabinKodu() {
+        return kabinKodu;
     }
 
-    public void setMalzemeKodu(String malzemeKodu) {
-        this.malzemeKodu = malzemeKodu;
+    public void setKabinKodu(String kabinKodu) {
+        this.kabinKodu = kabinKodu;
+    }
+
+    public String getYagTankiKodu() {
+        return yagTankiKodu;
+    }
+
+    public void setYagTankiKodu(String yagTankiKodu) {
+        this.yagTankiKodu = yagTankiKodu;
     }
 
     public String getMalzemeAdi() {
