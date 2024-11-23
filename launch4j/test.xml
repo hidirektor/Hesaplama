@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\hidir\Desktop\Hydraulic.jar</jar>
-  <outfile>C:\Users\hidir\Desktop\Hydraulic.exe</outfile>
+  <jar>C:\Users\hidir\OneDrive\Masaüstü\Hydraulic.jar</jar>
+  <outfile>C:\Users\hidir\OneDrive\Masaüstü\Hydraulic.exe</outfile>
   <errTitle>Programın çalışabilmesi için JRE 1.8.0 ve JDK 12.0.2 Gereklidir !</errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
