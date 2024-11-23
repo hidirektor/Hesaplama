@@ -10,7 +10,7 @@
       "tankY (D)": 350,
       "tankH (Y)": 300,
       "kabinHacim": 40,
-      "kabinKodu": "151-06-05-05",
+      "kabinKodu": "YMM.017.12.14781",
       "yagTankiKodu": "YMM.017.17.15531",
       "malzemeAdi": "KD40 Kabin"
     },
@@ -24,7 +24,7 @@
       "tankY (D)": 370,
       "tankH (Y)": 350,
       "kabinHacim": 70,
-      "kabinKodu": "151-06-05-06",
+      "kabinKodu": "YMM.017.12.15047",
       "yagTankiKodu": "YMM.017.17.15530",
       "malzemeAdi": "KD70 Kabin"
     },
@@ -66,7 +66,7 @@
       "tankY (D)": 600,
       "tankH (Y)": 400,
       "kabinHacim": 160,
-      "kabinKodu": "---",
+      "kabinKodu": "YMM.017.12.15963",
       "yagTankiKodu": "YMM.017.17.15169",
       "malzemeAdi": "KD1620 Kabin"
     },
@@ -80,7 +80,7 @@
       "tankY (D)": 650,
       "tankH (Y)": 400,
       "kabinHacim": 200,
-      "kabinKodu": "---",
+      "kabinKodu": "YMM.017.12.15963",
       "yagTankiKodu": "YMM.017.17.15907",
       "malzemeAdi": "KD1620 Kabin"
     },
@@ -94,7 +94,7 @@
       "tankY (D)": 700,
       "tankH (Y)": 400,
       "kabinHacim": 250,
-      "kabinKodu": "---",
+      "kabinKodu": "YMM.017.12.18280",
       "yagTankiKodu": "YMM.017.17.15908",
       "malzemeAdi": "KD2530 Kabin"
     },
@@ -108,7 +108,7 @@
       "tankY (D)": 800,
       "tankH (Y)": 400,
       "kabinHacim": 300,
-      "kabinKodu": "---",
+      "kabinKodu": "YMM.017.12.18280",
       "yagTankiKodu": "YMM.017.17.15909",
       "malzemeAdi": "KD2530 Kabin"
     },
