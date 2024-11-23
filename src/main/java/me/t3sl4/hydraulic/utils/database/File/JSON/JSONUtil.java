@@ -14,11 +14,12 @@ public class JSONUtil {
     private static final Logger logger = Logger.getLogger(JSONUtil.class.getName());
 
     public static void loadJSONData() {
-        readJson4DefinedTanks(SystemVariables.cabinsDBPath, SystemVariables.getLocalHydraulicData());
+        readJson4DefinedTanksClassic(SystemVariables.cabinsDBPath, SystemVariables.getLocalHydraulicData());
+        readJson4DefinedTanksPowerPack(SystemVariables.cabinsDBPath, SystemVariables.getLocalHydraulicData());
         readJson4Bosluk(SystemVariables.generalDBPath, SystemVariables.getLocalHydraulicData());
         readJson4UniteType(SystemVariables.generalDBPath, SystemVariables.getLocalHydraulicData());
     }
-    private static void readJson4DefinedTanks(String filePath, HydraulicData hydraulicData) {
+    private static void readJson4DefinedTanksClassic(String filePath, HydraulicData hydraulicData) {
         try {
             FileReader reader = new FileReader(filePath);
             StringBuilder sb = new StringBuilder();
@@ -30,6 +31,44 @@ public class JSONUtil {
 
             JSONObject jsonObject = new JSONObject(sb.toString());
             JSONArray classicCabinetes = jsonObject.getJSONArray("classic_cabins");
+
+            for (int j = 0; j < classicCabinetes.length(); j++) {
+                JSONObject cabinet = classicCabinetes.getJSONObject(j);
+
+                String tankName = cabinet.getString("tankName");
+                String kabinName = cabinet.getString("kabinName");
+                int kabinHacim = cabinet.getInt("kabinHacim");
+                int kabinX = cabinet.getInt("kabinX (G)");
+                int kabinY = cabinet.getInt("kabinY (D)");
+                int kabinH = cabinet.getInt("kabinH (Y)");
+                int tankX = cabinet.getInt("tankX (G)");
+                int tankY = cabinet.getInt("tankY (D)");
+                int tankH = cabinet.getInt("tankH (Y)");
+                String kabinKodu = cabinet.getString("kabinKodu");
+                String yagTankiKodu = cabinet.getString("yagTankiKodu");
+                String malzemeAdi = cabinet.getString("malzemeAdi");
+
+                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinX, kabinY, kabinH, tankX, tankY, tankH, kabinKodu, yagTankiKodu, malzemeAdi);
+                hydraulicData.inputTanks.add(tank);
+            }
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
+
+    private static void readJson4DefinedTanksPowerPack(String filePath, HydraulicData hydraulicData) {
+        try {
+            FileReader reader = new FileReader(filePath);
+            StringBuilder sb = new StringBuilder();
+            int i;
+            while ((i = reader.read()) != -1) {
+                sb.append((char) i);
+            }
+            reader.close();
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray classicCabinetes = jsonObject.getJSONArray("power_pack_cabins");
 
             for (int j = 0; j < classicCabinetes.length(); j++) {
                 JSONObject cabinet = classicCabinetes.getJSONObject(j);

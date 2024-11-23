@@ -11,7 +11,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.controllers.Calculation.Hidros.HidrosController;
+import me.t3sl4.hydraulic.controllers.Calculation.Klasik.KlasikController;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.ParcaTableData;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import org.apache.poi.ss.usermodel.Row;
@@ -21,10 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static me.t3sl4.hydraulic.controllers.Calculation.Hidros.HidrosController.secilenTankTipi;
 
@@ -211,8 +210,9 @@ public class HidrosParcaController {
 
     private void tabloGuncelle() {
         String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
+        loadStockCodes();
+
         if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
-            loadKabinKodu();
             loadMotorParca();
             loadPompaParca();
             loadTankTipi();
@@ -234,8 +234,6 @@ public class HidrosParcaController {
             }
         } else {
             //İthal Parçalar buraya
-            loadKabinKodu();
-
             if(secilenPlatform.equals("Özel - Yatay")) {
                 loadOzelYatayGenel();
             }
@@ -486,31 +484,17 @@ public class HidrosParcaController {
         parcaListesiTablo.getItems().add(data);
     }
 
-    private void loadKabinKodu() {
-        ParcaTableData separatorData = new ParcaTableData("----", "Kabin Kodu", "----");
-        parcaListesiTablo.getItems().add(separatorData);
+    private void loadStockCodes() {
+        String adet = "1";
 
-        String malzemeKodu = null;
-        String malzemeAdi = null;
-        String adet = null;
-        if(Objects.equals(HidrosController.kabinKodu, "KD-8 Engelli")) {
-            malzemeKodu = "151-06-05-061";
-            malzemeAdi = "KD-8 Engelli Kabin";
-            adet = "1";
-        } else if(Objects.equals(HidrosController.kabinKodu, "KD-10 (CARREFOUR)")) {
-            malzemeKodu = "151-06-05-103";
-            malzemeAdi = "KD-10 (CARREFOUR) Kabin";
-            adet = "1";
-        } else if(Objects.equals(HidrosController.kabinKodu, "KDB-20 (BALİNA)")) {
-            malzemeKodu = "150-52-19-011";
-            malzemeAdi = "KDB-20 (BALİNA) Kabin";
-            adet = "1";
-        }
+        Kabin foundedTank = Utils.findTankByKabinName(HidrosController.atananKabin);
+        List<ParcaTableData> dataList = Arrays.asList(
+                new ParcaTableData("----", "Kabin Genel Bilgisi", "----"),
+                new ParcaTableData(foundedTank.getKabinKodu(), foundedTank.getMalzemeAdi(), adet),
+                new ParcaTableData(foundedTank.getYagTankiKodu(), foundedTank.getTankName(), adet)
+        );
 
-        if(malzemeKodu != null) {
-            ParcaTableData data = new ParcaTableData(malzemeKodu, malzemeAdi, adet);
-            parcaListesiTablo.getItems().add(data);
-        }
+        parcaListesiTablo.getItems().addAll(dataList);
     }
 
     private void loadValfParcalar() {
@@ -602,7 +586,7 @@ public class HidrosParcaController {
             parcaListesiTablo.getItems().add(data);
         }
 
-        parcaListesiTablo.setRowFactory(tv -> new TableRow<ParcaTableData>() {
+        parcaListesiTablo.setRowFactory(tv -> new TableRow<>() {
             @Override
             protected void updateItem(ParcaTableData item, boolean empty) {
                 super.updateItem(item, empty);

@@ -142,6 +142,47 @@
     }
   ],
   "power_pack_cabins": [
-
+    {
+      "tankName": "---",
+      "kabinName": "KD 8",
+      "kabinX (G)": 431,
+      "kabinY (D)": 880,
+      "kabinH (Y)": 416,
+      "tankX (G)": 340,
+      "tankY (D)": 723,
+      "tankH (Y)": 371,
+      "kabinHacim": 0,
+      "kabinKodu": "YMM.017.12.14220",
+      "yagTankiKodu": "---",
+      "malzemeAdi": "KD8 Kabin"
+    },
+    {
+      "tankName": "---",
+      "kabinName": "KD 10",
+      "kabinX (G)": 484,
+      "kabinY (D)": 999,
+      "kabinH (Y)": 446,
+      "tankX (G)": 390,
+      "tankY (D)": 840,
+      "tankH (Y)": 400,
+      "kabinHacim": 0,
+      "kabinKodu": "YMM.017.12.14288",
+      "yagTankiKodu": "---",
+      "malzemeAdi": "KD10 Kabin"
+    },
+    {
+      "tankName": "---",
+      "kabinName": "KD 20",
+      "kabinX (G)": 580,
+      "kabinY (D)": 1195,
+      "kabinH (Y)": 494,
+      "tankX (G)": 460,
+      "tankY (D)": 850,
+      "tankH (Y)": 436,
+      "kabinHacim": 0,
+      "kabinKodu": "YMM.017.12.18653",
+      "yagTankiKodu": "---",
+      "malzemeAdi": "KD20 Kabin"
+    }
   ]
 }

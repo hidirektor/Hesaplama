@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
@@ -21,6 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.BASE_URL;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.createHydraulicURLPrefix;
@@ -128,6 +130,8 @@ public class HidrosController {
     public static String secilenPlatformTipi = null;
     public static String secilenIkinciValf = null;
     public static String kabinKodu = null;
+
+    public static String atananKabin = null;
 
     public boolean hesaplamaBitti = false;
 
@@ -876,72 +880,33 @@ public class HidrosController {
         if(!secilenTankTipi.contains("Özel")) {
             String motorKW = secilenMotorGucu.trim();
             String tankKapasite = secilenTankKapasitesi.trim();
+            Optional<Kabin> selectedKabin = Optional.empty();
 
-            if(Objects.equals(motorKW, "0.37 kW")) {
+            if(Objects.equals(motorKW, "4 kW")) {
                 if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
+                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
+                            .filter(kabin -> "KD 8".equals(kabin.getKabinName()))
+                            .findFirst();
                 } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                    kabinKodu = "KD-10 (CARREFOUR)";
+                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
+                            .filter(kabin -> "KD 20".equals(kabin.getKabinName()))
+                            .findFirst();
                 }
-            } else if(Objects.equals(motorKW, "0.55 kW")) {
+            } else {
                 if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
+                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
+                            .filter(kabin -> "KD 8".equals(kabin.getKabinName()))
+                            .findFirst();
                 } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                    kabinKodu = "KD-10 (CARREFOUR)";
-                }
-            } else if(Objects.equals(motorKW, "0.75 kW")) {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                    kabinKodu = "KD-10 (CARREFOUR)";
-                }
-            } else if(Objects.equals(motorKW, "1.1 kW")) {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                    kabinKodu = "KD-10 (CARREFOUR)";
-                }
-            } else if(Objects.equals(motorKW, "1.5 kW")) {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                    kabinKodu = "KD-10 (CARREFOUR)";
-                }
-            } else if(Objects.equals(motorKW, "2.2 kW")) {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                    kabinKodu = "KD-10 (CARREFOUR)";
-                }
-            } else if(Objects.equals(motorKW, "3 kW")) {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-10 (CARREFOUR)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103");
-                    kabinKodu = "KD-10 (CARREFOUR)";
-                }
-            } else if(Objects.equals(motorKW, "4 kW")) {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KD-8 Engelli\nÖlçü: 330x370x640\nKabin Kodu: 151-06-05-061");
-                    kabinKodu = "KD-8 Engelli";
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    kullanilacakKabinText.setText("Kullanılacak Kabin: KDB-20 (BALİNA)\nÖlçü: 390x400x840\nKabin Kodu: 151-06-05-103\nKabin Kodu: 150-52-19-011");
-                    kabinKodu = "KDB-20 (BALİNA)";
+                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
+                            .filter(kabin -> "KD 10".equals(kabin.getKabinName()))
+                            .findFirst();
                 }
             }
+
+            atananKabin = selectedKabin.get().kabinName;
+            kullanilacakKabinText.setText("Kullanılacak Kabin: " + selectedKabin.get().kabinName + "\nGeçiş Ölçüleri: " + selectedKabin.get().gecisOlculeri + "\nKabin Kodu: " + selectedKabin.get().kabinKodu);
+            kabinKodu = selectedKabin.get().kabinKodu;
         }
     }
 
