@@ -282,8 +282,8 @@ public class KlasikController {
     public void transferCalculation() {
         String creationURL = BASE_URL + createHydraulicURLPrefix;
 
-        String pdfPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".pdf";
-        String excelPath = System.getProperty("user.home") + "/Desktop/" + girilenSiparisNumarasi + ".xlsx";
+        String pdfPath = SystemVariables.localHydraulicStatsPath + "/schematicFiles/" + girilenSiparisNumarasi + ".pdf";
+        String excelPath = SystemVariables.localHydraulicStatsPath + "/excelFiles/" + girilenSiparisNumarasi + ".xlsx";
 
         if (new File(pdfPath).exists() && new File(excelPath).exists()) {
             File partListFile = new File(excelPath);

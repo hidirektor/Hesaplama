@@ -73,7 +73,8 @@ public class ResetPasswordController implements Initializable {
                 @Override
                 public void onSuccess(String otpResponse) throws IOException {
                     JSONObject otpResponseObject = new JSONObject(otpResponse);
-                    SystemVariables.otpSentTime = String.valueOf(otpResponseObject.get("otpSentTime"));
+                    JSONObject otpPayload = otpResponseObject.getJSONObject("payload");
+                    SystemVariables.otpSentTime = String.valueOf(otpPayload.get("otpSentTime"));
 
                     if (SystemVariables.otpSentTime != null) {
                         System.out.println("OTP Sent Time: " + SystemVariables.otpSentTime);

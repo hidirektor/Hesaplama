@@ -151,44 +151,46 @@ public class Utils {
             basePath = "/Users/" + userHome + "/";
         }
         String tokenPath = basePath + "/OnderGrup/" + "userData/auth.txt";
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(tokenPath));
-            if(reader != null) {
-                String line;
-                String userName = null, userID = null, accessToken = null, refreshToken = null;
+        if(new File(tokenPath).exists()) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(tokenPath));
+                if(reader != null) {
+                    String line;
+                    String userName = null, userID = null, accessToken = null, refreshToken = null;
 
-                while ((line = reader.readLine()) != null) {
-                    if (line.startsWith("userName: ")) {
-                        userName = line.substring("userName: ".length());
-                    } else if (line.startsWith("userID: ")) {
-                        userID = line.substring("userID: ".length());
-                    } else if (line.startsWith("AccessToken: ")) {
-                        accessToken = line.substring("AccessToken: ".length());
-                    } else if (line.startsWith("RefreshToken: ")) {
-                        refreshToken = line.substring("RefreshToken: ".length());
+                    while ((line = reader.readLine()) != null) {
+                        if (line.startsWith("userName: ")) {
+                            userName = line.substring("userName: ".length());
+                        } else if (line.startsWith("userID: ")) {
+                            userID = line.substring("userID: ".length());
+                        } else if (line.startsWith("AccessToken: ")) {
+                            accessToken = line.substring("AccessToken: ".length());
+                        } else if (line.startsWith("RefreshToken: ")) {
+                            refreshToken = line.substring("RefreshToken: ".length());
+                        }
                     }
-                }
-                reader.close();
+                    reader.close();
 
-                if (userName != null && userID != null && accessToken != null && refreshToken != null) {
-                    SystemVariables.loggedInUser = new User(userName);
+                    if (userName != null && userID != null && accessToken != null && refreshToken != null) {
+                        SystemVariables.loggedInUser = new User(userName);
 
-                    SystemVariables.loggedInUser.setUserID(userID);
-                    SystemVariables.loggedInUser.setAccessToken(accessToken);
-                    SystemVariables.loggedInUser.setRefreshToken(refreshToken);
+                        SystemVariables.loggedInUser.setUserID(userID);
+                        SystemVariables.loggedInUser.setAccessToken(accessToken);
+                        SystemVariables.loggedInUser.setRefreshToken(refreshToken);
+                    } else {
+                        if(onFailure != null) {
+                            onFailure.run();
+                        }
+                    }
                 } else {
                     if(onFailure != null) {
                         onFailure.run();
                     }
                 }
-            } else {
-                if(onFailure != null) {
-                    onFailure.run();
-                }
-            }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

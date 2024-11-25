@@ -17,6 +17,7 @@ import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.BASE_URL;
@@ -102,13 +103,13 @@ public class ResetPasswordEnterNewPasswordController implements Initializable {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("icons/ikon_hide_pass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/icons/ikon_hide_pass.png"))));
         } else {
             sifreText.setManaged(true);
             sifreText.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Launcher.class.getResourceAsStream("./assets/images/icons/ikon_show_pass.png")));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/icons/ikon_show_pass.png"))));
         }
     }
 
