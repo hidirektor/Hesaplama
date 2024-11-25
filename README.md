@@ -90,7 +90,7 @@ Programın geliştirilme sürecinde kullanılan teknolojiler aşağıdaki gibidi
 
 Aşağıdaki dokümanı kullanarak programın kullanımına ve hata kodlarına ilişkin tüm detaylara ulaşabilirsiniz.
 
-[Documentation](https://www.notion.so/Teamspace-Home-0c63f5fdeb054503a2b66944317b6a6a)
+[User Manual](https://github.com/hidirektor/ondergrup-hydraulic-tool/blob/main/docs/Onder%20Group%20Hydraulic%20Tool%20User%20Manual.pdf)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
