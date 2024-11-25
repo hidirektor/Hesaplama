@@ -270,15 +270,6 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
 
-        Path profilePhotoDir = Paths.get(SystemVariables.profilePhotoLocalPath);
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(profilePhotoDir)) {
-            for (Path file: stream) {
-                Files.deleteIfExists(file);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         stage.close();
         SceneUtil.changeScreen("fxml/Login.fxml", currentScreen);
     }
