@@ -487,7 +487,7 @@ public class HidrosParcaController {
     private void loadStockCodes() {
         String adet = "1";
 
-        Kabin foundedTank = Utils.findTankByKabinName(HidrosController.atananKabin);
+        Kabin foundedTank = Utils.findPowerPackTankByKabinName(HidrosController.atananKabin);
         List<ParcaTableData> dataList = Arrays.asList(
                 new ParcaTableData("----", "Kabin Genel Bilgisi", "----"),
                 new ParcaTableData(foundedTank.getKabinKodu(), foundedTank.getMalzemeAdi(), adet),

@@ -13,16 +13,15 @@ import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Motor;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.BASE_URL;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.createHydraulicURLPrefix;
@@ -463,23 +462,55 @@ public class HidrosController {
         motorGucuComboBox.getItems().clear();
         if(uniteTipiDurumu.equals("Hidros")) {
             if(secilenMotorTipi.equals("380 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("0"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("0").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             } else if(secilenMotorTipi.equals("220 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("2"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("2").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             } else if(secilenMotorTipi.equals("24 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("5"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("5").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             } else if(secilenMotorTipi.equals("12 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("4"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("4").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             }
         } else {
             if(secilenMotorTipi.equals("380 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("1"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("1").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             } else if(secilenMotorTipi.equals("220 V (AC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("3"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("3").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             } else if(secilenMotorTipi.equals("24 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("7"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("7").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             } else if(secilenMotorTipi.equals("12 V (DC)")) {
-                motorGucuComboBox.getItems().addAll(SystemVariables.getLocalHydraulicData().motorGucuMap.get("6"));
+                motorGucuComboBox.getItems().addAll(
+                        SystemVariables.getLocalHydraulicData().motorGucuMap.get("6").stream()
+                                .map(Motor::getName)
+                                .collect(Collectors.toList())
+                );
             }
         }
     }
@@ -879,34 +910,47 @@ public class HidrosController {
     private void calculateKabin() {
         if(!secilenTankTipi.contains("Özel")) {
             String motorKW = secilenMotorGucu.trim();
-            String tankKapasite = secilenTankKapasitesi.trim();
+            LinkedList<Motor> motorInfos = null;
             Optional<Kabin> selectedKabin = Optional.empty();
 
-            if(Objects.equals(motorKW, "4 kW")) {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
-                            .filter(kabin -> "KD 8".equals(kabin.getKabinName()))
-                            .findFirst();
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
-                            .filter(kabin -> "KD 20".equals(kabin.getKabinName()))
-                            .findFirst();
+            if(uniteTipiDurumu.equals("Hidros")) {
+                //Hidros için motor yüksekliğe göre kabin önerisi
+                if(secilenMotorTipi.equals("380 V (AC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("0");
+                } else if(secilenMotorTipi.equals("220 V (AC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("2");
+                } else if(secilenMotorTipi.equals("24 V (DC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("5");
+                } else if(secilenMotorTipi.equals("12 V (DC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("4");
                 }
             } else {
-                if(Objects.equals(tankKapasite, "4 Lt") || Objects.equals(tankKapasite, "6 Lt") || Objects.equals(tankKapasite, "8 Lt") || Objects.equals(tankKapasite, "12 Lt")) {
-                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
-                            .filter(kabin -> "KD 8".equals(kabin.getKabinName()))
-                            .findFirst();
-                } else if(Objects.equals(tankKapasite, "10 Lt") || Objects.equals(tankKapasite, "20 Lt") || Objects.equals(tankKapasite, "30 Lt")) {
-                    selectedKabin = SystemVariables.getLocalHydraulicData().inputTanks.stream()
-                            .filter(kabin -> "KD 10".equals(kabin.getKabinName()))
-                            .findFirst();
+                //İthal için motor yüksekliğe göre kabin önerisi
+                if(secilenMotorTipi.equals("380 V (AC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("1");
+                } else if(secilenMotorTipi.equals("220 V (AC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("3");
+                } else if(secilenMotorTipi.equals("24 V (DC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("7");
+                } else if(secilenMotorTipi.equals("12 V (DC)")) {
+                    motorInfos = SystemVariables.getLocalHydraulicData().motorGucuMap.get("6");
+                }
+            }
+
+            for(Kabin currentCabin : SystemVariables.getLocalHydraulicData().powerPackCabins) {
+                String currentMotorHeight = motorInfos.get(0).getMotorYukseklik().replace(" mm", "");
+                int currentMotorHeightVal = Integer.parseInt(currentMotorHeight);
+                if(currentCabin.getKabinDisH() > currentMotorHeightVal) {
+                    selectedKabin = Optional.of(currentCabin);
+                    break;
                 }
             }
 
             atananKabin = selectedKabin.get().kabinName;
             kullanilacakKabinText.setText("Kullanılacak Kabin: " + selectedKabin.get().kabinName + "\nGeçiş Ölçüleri: " + selectedKabin.get().gecisOlculeri + "\nKabin Kodu: " + selectedKabin.get().kabinKodu);
             kabinKodu = selectedKabin.get().kabinKodu;
+        } else {
+            kullanilacakKabinText.setText("Kullanılacak Kabin: " + "Özel Kabin" + "\nGirilen Ölçüler: " + ozelTankGenislik.getText() + "x" + ozelTankDerinlik.getText() + "x" + ozelTankYukseklik);
         }
     }
 

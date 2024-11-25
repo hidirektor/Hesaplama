@@ -52,7 +52,7 @@ public class JSONUtil {
                 String malzemeAdi = cabinet.getString("malzemeAdi");
 
                 Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinGecisX, kabinGecisY, kabinGecisH, kabinDisX, kabinDisY, kabinDisH, tankDisX, tankDisY, tankDisH, kabinKodu, yagTankiKodu, malzemeAdi);
-                hydraulicData.inputTanks.add(tank);
+                hydraulicData.classicCabins.add(tank);
             }
 
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class JSONUtil {
                 String malzemeAdi = cabinet.getString("malzemeAdi");
 
                 Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinGecisX, kabinGecisY, kabinGecisH, kabinDisX, kabinDisY, kabinDisH, tankDisX, tankDisY, tankDisH, kabinKodu, yagTankiKodu, malzemeAdi);
-                hydraulicData.inputTanks.add(tank);
+                hydraulicData.powerPackCabins.add(tank);
             }
 
         } catch (Exception e) {

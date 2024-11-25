@@ -496,8 +496,17 @@ public class Utils {
         timeline.playFromStart();
     }
 
-    public static Kabin findTankByKabinName(String kabinName) {
-        for (Kabin tank : SystemVariables.getLocalHydraulicData().inputTanks) {
+    public static Kabin findClassicTankByKabinName(String kabinName) {
+        for (Kabin tank : SystemVariables.getLocalHydraulicData().classicCabins) {
+            if (tank.getKabinName().equals(kabinName)) {
+                return tank;
+            }
+        }
+        return null;
+    }
+
+    public static Kabin findPowerPackTankByKabinName(String kabinName) {
+        for (Kabin tank : SystemVariables.getLocalHydraulicData().powerPackCabins) {
             if (tank.getKabinName().equals(kabinName)) {
                 return tank;
             }

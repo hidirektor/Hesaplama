@@ -222,7 +222,7 @@ public class KlasikParcaController {
     private void loadStockCodes() {
         String adet = "1";
 
-        Kabin foundedTank = Utils.findTankByKabinName(KlasikController.atananKabinFinal);
+        Kabin foundedTank = Utils.findClassicTankByKabinName(KlasikController.atananKabinFinal);
         List<ParcaTableData> dataList = Arrays.asList(
                 new ParcaTableData("----", "Kabin Genel Bilgisi", "----"),
                 new ParcaTableData(foundedTank.getKabinKodu(), foundedTank.getMalzemeAdi(), adet),

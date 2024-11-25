@@ -22,140 +22,189 @@ motor_gucu:
       '0':
         name: "0.37 kW"
         value: "0.37 kW"
+        motorYukseklik: "0 mm"
       '1':
         name: "0.55 kW"
         value: "0.55 kW"
+        motorYukseklik: "0 mm"
       '2':
         name: "0.75 kW"
         value: "0.75 kW"
+        motorYukseklik: "235 mm"
       '3':
         name: "1.1 kW"
         value: "1.1 kW"
+        motorYukseklik: "270 mm"
       '4':
         name: "1.5 kW"
         value: "1.5 kW"
+        motorYukseklik: "0 mm"
       '5':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "300 mm"
       '6':
         name: "3 kW"
         value: "3 kW"
+        motorYukseklik: "0 mm"
       '7':
         name: "4 kW"
         value: "4 kW"
+        motorYukseklik: "325 mm"
   '1': #İthal 380 V
     options:
       '0':
         name: "0.55 kW"
         value: "0.55 kW"
+        motorYukseklik: "215 mm"
       '1':
         name: "0.75 kW"
         value: "0.75 kW"
+        motorYukseklik: "255 mm"
       '2':
         name: "1.1 kW"
         value: "1.1 kW"
+        motorYukseklik: "255 mm"
       '3':
         name: "1.5 kW"
         value: "1.5 kW"
+        motorYukseklik: "260 mm"
       '4':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "285 mm"
       '5':
         name: "3 kW"
         value: "3 kW"
+        motorYukseklik: "315 mm"
       '6':
         name: "4 kW"
         value: "4 kW"
+        motorYukseklik: "315 mm"
   '2': #Hidros 220 V
     options:
       '0':
         name: "0.37 kW"
         value: "0.37 kW"
+        motorYukseklik: "0 mm"
       '1':
         name: "0.55 kW"
         value: "0.55 kW"
+        motorYukseklik: "230 mm"
       '2':
         name: "0.75 kW"
         value: "0.75 kW"
+        motorYukseklik: "0 mm"
       '3':
         name: "1.1 kW"
         value: "1.1 kW"
+        motorYukseklik: "270 mm"
       '4':
         name: "1.5 kW"
         value: "1.5 kW"
+        motorYukseklik: "285 mm"
       '5':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "315 mm"
       '6':
         name: "3 kW"
         value: "3 kW"
+        motorYukseklik: "0 mm"
+      '7':
+        name: "4 kW"
+        value: "4 kW"
+        motorYukseklik: "0 mm"
   '3': #İthal 220 V
     options:
       '0':
         name: "0.37 kW"
         value: "0.37 kW"
+        motorYukseklik: "0 mm"
       '1':
         name: "0.55 kW"
         value: "0.55 kW"
+        motorYukseklik: "255 mm"
       '2':
         name: "0.75 kW"
         value: "0.75 kW"
+        motorYukseklik: "255 mm"
       '3':
         name: "1.1 kW"
         value: "1.1 kW"
+        motorYukseklik: "265 mm"
       '4':
         name: "1.5 kW"
         value: "1.5 kW"
+        motorYukseklik: "270 mm"
       '5':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "295 mm"
       '6':
         name: "3 kW"
         value: "3 kW"
+        motorYukseklik: "0 mm"
+      '7':
+        name: "3 kW"
+        value: "3 kW"
+        motorYukseklik: "0 mm"
   '4': #Hidros 12 V
     options:
       '0':
         name: "0.8 kW"
         value: "0.8 kW"
+        motorYukseklik: "0 mm"
       '1':
         name: "1.6 kW"
         value: "1.6 kW"
+        motorYukseklik: "0 mm"
       '2':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "0 mm"
   '5': #Hidros 24 V
     options:
       '0':
         name: "0.8 kW"
         value: "0.8 kW"
+        motorYukseklik: "0 mm"
       '1':
         name: "1.6 kW"
         value: "1.6 kW"
+        motorYukseklik: "0 mm"
       '2':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "0 mm"
   '6': #İthal 12 V
     options:
       '0':
         name: "0.8 kW"
         value: "0.8 kW"
+        motorYukseklik: "0 mm"
       '1':
         name: "1.6 kW"
         value: "1.6 kW"
+        motorYukseklik: "0 mm"
       '2':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "0 mm"
   '7': #İthal 24 V
     options:
       '0':
         name: "0.8 kW"
         value: "0.8 kW"
+        motorYukseklik: "0 mm"
       '1':
         name: "1.6 kW"
         value: "1.6 kW"
+        motorYukseklik: "0 mm"
       '2':
         name: "2.2 kW"
         value: "2.2 kW"
+        motorYukseklik: "0 mm"
 pompa:
   '0': #Hidros Pompa
     options:

@@ -691,7 +691,7 @@ public class KlasikController {
         tabloGuncelle();
 
         Kabin finalTank = null;
-        for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
+        for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().classicCabins) {
             int selectedTankKabinHacim = selectedTank.getKabinHacim();
             int selectedTankKabinX = selectedTank.getKabinGecisX();
             int selectedTankKabinY = selectedTank.getKabinGecisY();
@@ -726,7 +726,7 @@ public class KlasikController {
             atananHacim = finalTank.getKabinHacim();
             atananHT = finalTank.getTankName();
             if(finalTank.getKabinDisH() < (motorYukseklik + h)) {
-                for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
+                for(Kabin selectedTank : getLocalHydraulicData().classicCabins) {
                     int kabinYukseklik = selectedTank.getKabinDisH();
                     //System.out.println("Kabin Yükseklik: " + kabinYukseklik + "\nÖnceden Seçilen Kabin Yükseklik: " + finalTank.getKabinH());
 

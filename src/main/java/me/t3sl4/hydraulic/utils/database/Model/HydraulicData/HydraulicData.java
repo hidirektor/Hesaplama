@@ -1,6 +1,7 @@
 package me.t3sl4.hydraulic.utils.database.Model.HydraulicData;
 
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Motor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +47,8 @@ public class HydraulicData {
     //Yeni sistem değişkenleri
 
     public ArrayList<String> uniteTipiDegerleri = new ArrayList<>(); //Jsondan gelen değerler
-    public LinkedList<Kabin> inputTanks = new LinkedList<>(); //Jsondan gelen tank verileri
+    public LinkedList<Kabin> classicCabins = new LinkedList<>(); //Jsondan gelen tank verileri
+    public LinkedList<Kabin> powerPackCabins = new LinkedList<>(); //Jsondan gelen tank verileri
 
     /*
     Classic Side
@@ -68,7 +70,7 @@ public class HydraulicData {
      */
     public Map<String, LinkedList<String>> motorVoltajMap = new HashMap<>();
     public Map<String, LinkedList<String>> uniteTipiMap = new HashMap<>();
-    public Map<String, LinkedList<String>> motorGucuMap = new HashMap<>();
+    public Map<String, LinkedList<Motor>> motorGucuMap = new HashMap<>();
     public Map<String, LinkedList<String>> pompaPowerPackMap = new HashMap<>();
     public Map<String, LinkedList<String>> tankTipiMap = new HashMap<>();
     public Map<String, LinkedList<String>> tankKapasitesiMap = new HashMap<>();

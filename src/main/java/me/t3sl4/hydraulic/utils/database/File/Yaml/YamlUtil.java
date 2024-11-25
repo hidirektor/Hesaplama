@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.utils.database.File.Yaml;
 
+import me.t3sl4.hydraulic.utils.database.Model.Kabin.Motor;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import org.yaml.snakeyaml.Yaml;
 
@@ -338,16 +339,17 @@ public class YamlUtil {
         Map<String, Map<String, Object>> motorGucuData = (Map<String, Map<String, Object>>) yamlData.get("motor_gucu");
 
         motorGucuData.forEach((key, value) -> {
-            LinkedList<String> motorGucuList = new LinkedList<>();
+            LinkedList<Motor> motorList = new LinkedList<>();
 
             Map<String, Map<String, String>> options = (Map<String, Map<String, String>>) value.get("options");
 
-            options.forEach((innerKey, pompaDetails) -> {
-                String pompaName = pompaDetails.get("name");
-                motorGucuList.add(pompaName);
+            options.forEach((innerKey, motorDetails) -> {
+                String motorName = motorDetails.get("name");
+                String motorYukseklik = motorDetails.get("motorYukseklik");
+                motorList.add(new Motor(motorName, motorYukseklik));
             });
 
-            SystemVariables.getLocalHydraulicData().motorGucuMap.put(key, motorGucuList);
+            SystemVariables.getLocalHydraulicData().motorGucuMap.put(key, motorList);
         });
     }
 
