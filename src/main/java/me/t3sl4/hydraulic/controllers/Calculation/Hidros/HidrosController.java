@@ -864,10 +864,10 @@ public class HidrosController {
 
     private void sonucButtonEnable() {
         exportButton.setDisable(false);
+        parcaListesiButton.setDisable(false);
         if(SystemVariables.loggedInUser != null) {
             kaydetButton.setDisable(false);
         }
-        parcaListesiButton.setDisable(false);
     }
 
     private void sonucButtonDisable() {

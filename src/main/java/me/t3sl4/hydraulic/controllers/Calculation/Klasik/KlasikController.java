@@ -693,9 +693,9 @@ public class KlasikController {
         Kabin finalTank = null;
         for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
             int selectedTankKabinHacim = selectedTank.getKabinHacim();
-            int selectedTankKabinX = selectedTank.getTankX();
-            int selectedTankKabinY = selectedTank.getTankY();
-            int selectedTankKabinH = selectedTank.getTankH();
+            int selectedTankKabinX = selectedTank.getKabinGecisX();
+            int selectedTankKabinY = selectedTank.getKabinGecisY();
+            int selectedTankKabinH = selectedTank.getKabinGecisH();
 
             if(selectedTankKabinX >= x && selectedTankKabinY >= y && selectedTankKabinH >= h) {
                 int kayipLitre = getLocalHydraulicData().kayipLitre;
@@ -720,17 +720,17 @@ public class KlasikController {
         }
 
         if (finalTank != null) {
-            x = finalTank.getTankX();
-            y = finalTank.getTankY();
-            h = finalTank.getTankH();
+            x = finalTank.getKabinGecisX();
+            y = finalTank.getKabinGecisY();
+            h = finalTank.getKabinGecisH();
             atananHacim = finalTank.getKabinHacim();
             atananHT = finalTank.getTankName();
-            if(finalTank.getKabinH() < (motorYukseklik + h)) {
+            if(finalTank.getKabinDisH() < (motorYukseklik + h)) {
                 for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().inputTanks) {
-                    int kabinYukseklik = selectedTank.getKabinH();
+                    int kabinYukseklik = selectedTank.getKabinDisH();
                     //System.out.println("Kabin Yükseklik: " + kabinYukseklik + "\nÖnceden Seçilen Kabin Yükseklik: " + finalTank.getKabinH());
 
-                    int tempYukseklik = finalTank.getKabinH() + motorYukseklik;
+                    int tempYukseklik = finalTank.getKabinDisH() + motorYukseklik;
                     System.out.println("Yukseklik Hesaplama: " + tempYukseklik + "   Kabin Yükseklik: " + kabinYukseklik);
 
                     if(kabinYukseklik >= tempYukseklik) {
@@ -743,10 +743,12 @@ public class KlasikController {
         }
 
         String atananKabin = finalTank.getKabinName();
+        String disOlculer = finalTank.getKabinOlculeri();
         String gecisOlculeri = finalTank.getGecisOlculeri();
+        String tankOlculeri = finalTank.getTankOlculeri();
 
         //kullanilacakKabin.setText("Kullanmanız Gereken Kabin: \n\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
-        kullanilacakKabin.setText("\t\t\t\t\t\t" + atananKabin + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)");
+        kullanilacakKabin.setText("\t\t\t\t\t\t" + atananKabin + "\n\t\t\tDış Ölçüler: " + disOlculer + " (x, y, h)" + "\n\t\t\tGeçiş Ölçüleri: " + gecisOlculeri + " (x, y, h)" + "\n\t\t\tTank Ölçüleri: " + tankOlculeri + " (x, y, h)");
         atananKabinFinal = atananKabin;
         gecisOlculeriFinal = gecisOlculeri;
         //int secilenMotorIndeks = motorComboBox.getSelectionModel().getSelectedIndex();

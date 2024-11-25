@@ -7,37 +7,46 @@ public class Kabin {
 
     public String gecisOlculeri;
     public String kabinOlculeri;
+    public String tankOlculeri;
 
     public int kabinHacim;
 
-    public int kabinX;
-    public int kabinY;
-    public int kabinH;
+    public int kabinGecisX;
+    public int kabinGecisY;
+    public int kabinGecisH;
 
-    public int tankX;
-    public int tankY;
-    public int tankH;
+    public int kabinDisX;
+    public int kabinDisY;
+    public int kabinDisH;
+
+    public int tankDisX;
+    public int tankDisY;
+    public int tankDisH;
 
     public String kabinKodu;
     public String yagTankiKodu;
     public String malzemeAdi;
 
-    public Kabin(String tankName, String kabinName, int kabinHacim, int kabinX, int kabinY, int kabinH, int tankX, int tankY, int tankH, String kabinKodu, String yagTankiKodu, String malzemeAdi) {
+    public Kabin(String tankName, String kabinName, int kabinHacim, int kabinGecisX, int kabinGecisY, int kabinGecisH, int kabinDisX, int kabinDisY, int kabinDisH, int tankDisX, int tankDisY, int tankDisH, String kabinKodu, String yagTankiKodu, String malzemeAdi) {
         this.tankName = tankName;
         this.kabinName = kabinName;
         this.kabinHacim = kabinHacim;
-        this.kabinX = kabinX;
-        this.kabinY = kabinY;
-        this.kabinH = kabinH;
-        this.tankX = tankX;
-        this.tankY = tankY;
-        this.tankH = tankH;
+        this.kabinGecisX = kabinGecisX;
+        this.kabinGecisY = kabinGecisY;
+        this.kabinGecisH = kabinGecisH;
+        this.kabinDisX = kabinDisX;
+        this.kabinDisY = kabinDisY;
+        this.kabinDisH = kabinDisH;
+        this.tankDisX = tankDisX;
+        this.tankDisY = tankDisY;
+        this.tankDisH = tankDisH;
         this.kabinKodu = kabinKodu;
         this.yagTankiKodu = yagTankiKodu;
         this.malzemeAdi = malzemeAdi;
 
-        this.gecisOlculeri = kabinX + "x" + kabinY + "x" + kabinH;
-        this.kabinOlculeri = tankX + "x" + tankY + "x" + tankH;
+        this.gecisOlculeri = kabinGecisX + "x" + kabinGecisY + "x" + kabinGecisH;
+        this.kabinOlculeri = kabinDisX + "x" + kabinDisY + "x" + kabinDisH;
+        this.tankOlculeri = tankDisX + "x" + tankDisY + "x" + tankDisH;
     }
 
     public String getTankName() {
@@ -80,52 +89,84 @@ public class Kabin {
         this.kabinHacim = kabinHacim;
     }
 
-    public int getKabinX() {
-        return kabinX;
+    public String getTankOlculeri() {
+        return tankOlculeri;
     }
 
-    public void setKabinX(int kabinX) {
-        this.kabinX = kabinX;
+    public void setTankOlculeri(String tankOlculeri) {
+        this.tankOlculeri = tankOlculeri;
     }
 
-    public int getKabinY() {
-        return kabinY;
+    public int getKabinGecisX() {
+        return kabinGecisX;
     }
 
-    public void setKabinY(int gecisY) {
-        this.kabinY = kabinY;
+    public void setKabinGecisX(int kabinGecisX) {
+        this.kabinGecisX = kabinGecisX;
     }
 
-    public int getKabinH() {
-        return kabinH;
+    public int getKabinGecisY() {
+        return kabinGecisY;
     }
 
-    public void setKabinH(int kabinH) {
-        this.kabinH = kabinH;
+    public void setKabinGecisY(int kabinGecisY) {
+        this.kabinGecisY = kabinGecisY;
     }
 
-    public int getTankX() {
-        return tankX;
+    public int getKabinGecisH() {
+        return kabinGecisH;
     }
 
-    public void setTankX(int tankX) {
-        this.tankX = tankX;
+    public void setKabinGecisH(int kabinGecisH) {
+        this.kabinGecisH = kabinGecisH;
     }
 
-    public int getTankY() {
-        return tankY;
+    public int getKabinDisX() {
+        return kabinDisX;
     }
 
-    public void setTankY(int tankY) {
-        this.tankY = tankY;
+    public void setKabinDisX(int kabinDisX) {
+        this.kabinDisX = kabinDisX;
     }
 
-    public int getTankH() {
-        return tankH;
+    public int getKabinDisY() {
+        return kabinDisY;
     }
 
-    public void setTankH(int tankH) {
-        this.tankH = tankH;
+    public void setKabinDisY(int kabinDisY) {
+        this.kabinDisY = kabinDisY;
+    }
+
+    public int getKabinDisH() {
+        return kabinDisH;
+    }
+
+    public void setKabinDisH(int kabinDisH) {
+        this.kabinDisH = kabinDisH;
+    }
+
+    public int getTankDisX() {
+        return tankDisX;
+    }
+
+    public void setTankDisX(int tankDisX) {
+        this.tankDisX = tankDisX;
+    }
+
+    public int getTankDisY() {
+        return tankDisY;
+    }
+
+    public void setTankDisY(int tankDisY) {
+        this.tankDisY = tankDisY;
+    }
+
+    public int getTankDisH() {
+        return tankDisH;
+    }
+
+    public void setTankDisH(int tankDisH) {
+        this.tankDisH = tankDisH;
     }
 
     public String getKabinKodu() {

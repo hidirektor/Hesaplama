@@ -41,7 +41,7 @@
                 <Button fx:id="exportButton" disable="true" layoutX="723.0" layoutY="107.0" mnemonicParsing="false" onAction="#exportProcess" style="-fx-background-color: #1761ab;" text="PDF Oluştur" />
                 <Button fx:id="parcaListesiButton" disable="true" layoutX="832.0" layoutY="107.0" mnemonicParsing="false" onAction="#parcaListesiGoster" style="-fx-background-color: #1761ab;" text="Parça Listesi" />
                 <Button fx:id="kaydetButton" layoutX="764.0" layoutY="153.0" mnemonicParsing="false" onAction="#transferCalculation" style="-fx-background-color: #1761ab;" text="Sunucuya Aktar" />
-                <TableView fx:id="sonucTablo" layoutY="505.0" prefHeight="195.0" prefWidth="944.0">
+                <TableView fx:id="sonucTablo" layoutY="525.0" prefHeight="175.0" prefWidth="944.0">
                     <columns>
                         <TableColumn fx:id="sonucTabloSatir1" editable="false" prefWidth="246.0" sortable="false" />
                         <TableColumn fx:id="sonucTabloSatir2" editable="false" prefWidth="700.0" sortable="false" />

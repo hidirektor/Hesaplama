@@ -38,17 +38,20 @@ public class JSONUtil {
                 String tankName = cabinet.getString("tankName");
                 String kabinName = cabinet.getString("kabinName");
                 int kabinHacim = cabinet.getInt("kabinHacim");
-                int kabinX = cabinet.getInt("kabinX (G)");
-                int kabinY = cabinet.getInt("kabinY (D)");
-                int kabinH = cabinet.getInt("kabinH (Y)");
-                int tankX = cabinet.getInt("tankX (G)");
-                int tankY = cabinet.getInt("tankY (D)");
-                int tankH = cabinet.getInt("tankH (Y)");
+                int kabinGecisX = cabinet.getInt("kabinGecisX (G)");
+                int kabinGecisY = cabinet.getInt("kabinGecisY (D)");
+                int kabinGecisH = cabinet.getInt("kabinGecisH (Y)");
+                int kabinDisX = cabinet.getInt("kabinDisX (G)");
+                int kabinDisY = cabinet.getInt("kabinDisY (D)");
+                int kabinDisH = cabinet.getInt("kabinDisH (Y)");
+                int tankDisX = cabinet.getInt("tankDisX (G)");
+                int tankDisY = cabinet.getInt("tankDisY (D)");
+                int tankDisH = cabinet.getInt("tankDisH (Y)");
                 String kabinKodu = cabinet.getString("kabinKodu");
                 String yagTankiKodu = cabinet.getString("yagTankiKodu");
                 String malzemeAdi = cabinet.getString("malzemeAdi");
 
-                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinX, kabinY, kabinH, tankX, tankY, tankH, kabinKodu, yagTankiKodu, malzemeAdi);
+                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinGecisX, kabinGecisY, kabinGecisH, kabinDisX, kabinDisY, kabinDisH, tankDisX, tankDisY, tankDisH, kabinKodu, yagTankiKodu, malzemeAdi);
                 hydraulicData.inputTanks.add(tank);
             }
 
@@ -76,17 +79,20 @@ public class JSONUtil {
                 String tankName = cabinet.getString("tankName");
                 String kabinName = cabinet.getString("kabinName");
                 int kabinHacim = cabinet.getInt("kabinHacim");
-                int kabinX = cabinet.getInt("kabinX (G)");
-                int kabinY = cabinet.getInt("kabinY (D)");
-                int kabinH = cabinet.getInt("kabinH (Y)");
-                int tankX = cabinet.getInt("tankX (G)");
-                int tankY = cabinet.getInt("tankY (D)");
-                int tankH = cabinet.getInt("tankH (Y)");
+                int kabinGecisX = cabinet.getInt("kabinGecisX (G)");
+                int kabinGecisY = cabinet.getInt("kabinGecisY (D)");
+                int kabinGecisH = cabinet.getInt("kabinGecisH (Y)");
+                int kabinDisX = cabinet.getInt("kabinDisX (G)");
+                int kabinDisY = cabinet.getInt("kabinDisY (D)");
+                int kabinDisH = cabinet.getInt("kabinDisH (Y)");
+                int tankDisX = cabinet.getInt("tankDisX (G)");
+                int tankDisY = cabinet.getInt("tankDisY (D)");
+                int tankDisH = cabinet.getInt("tankDisH (Y)");
                 String kabinKodu = cabinet.getString("kabinKodu");
                 String yagTankiKodu = cabinet.getString("yagTankiKodu");
                 String malzemeAdi = cabinet.getString("malzemeAdi");
 
-                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinX, kabinY, kabinH, tankX, tankY, tankH, kabinKodu, yagTankiKodu, malzemeAdi);
+                Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinGecisX, kabinGecisY, kabinGecisH, kabinDisX, kabinDisY, kabinDisH, tankDisX, tankDisY, tankDisH, kabinKodu, yagTankiKodu, malzemeAdi);
                 hydraulicData.inputTanks.add(tank);
             }
 
