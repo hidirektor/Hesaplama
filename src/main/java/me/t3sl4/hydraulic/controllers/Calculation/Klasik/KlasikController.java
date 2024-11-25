@@ -282,8 +282,8 @@ public class KlasikController {
     public void transferCalculation() {
         String creationURL = BASE_URL + createHydraulicURLPrefix;
 
-        String pdfPath = SystemVariables.localHydraulicStatsPath + "/schematicFiles/" + girilenSiparisNumarasi + ".pdf";
-        String excelPath = SystemVariables.localHydraulicStatsPath + "/excelFiles/" + girilenSiparisNumarasi + ".xlsx";
+        String pdfPath = SystemVariables.pdfFileLocalPath + girilenSiparisNumarasi + ".pdf";
+        String excelPath = excelFileLocalPath + girilenSiparisNumarasi + ".xlsx";
 
         if (new File(pdfPath).exists() && new File(excelPath).exists()) {
             File partListFile = new File(excelPath);
@@ -293,7 +293,7 @@ public class KlasikController {
             files.put("partListFile", partListFile);
             files.put("schematicFile", schematicFile);
 
-            HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPMethod.RequestCallback() {
+            HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), loggedInUser.getUserID(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
                     Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());

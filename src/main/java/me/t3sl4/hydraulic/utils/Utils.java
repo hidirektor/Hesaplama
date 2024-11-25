@@ -519,8 +519,6 @@ public class Utils {
     public static void deleteLocalData() throws IOException {
         deleteFile(SystemVariables.tokenPath);
 
-        deleteDirectory(new File(SystemVariables.profilePhotoLocalPath));
-
         deleteDirectory(new File(SystemVariables.dataFileLocalPath));
 
         SystemVariables.loggedInUser = null;

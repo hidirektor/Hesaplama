@@ -77,13 +77,13 @@ public class ProfileEditController {
             sifrePassword.setManaged(true);
             sifrePassword.setVisible(true);
             sifrePassword.setText(girilenSifre);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/ikon_hide_pass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/icons/ikon_hide_pass.png"))));
         } else {
             sifreText.setManaged(true);
             sifreText.setVisible(true);
             sifrePassword.setManaged(false);
             sifrePassword.setVisible(false);
-            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("icons/ikon_show_pass.png"))));
+            passwordVisibilityIcon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/icons/ikon_show_pass.png"))));
         }
     }
 

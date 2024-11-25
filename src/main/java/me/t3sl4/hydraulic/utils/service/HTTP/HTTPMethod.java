@@ -175,9 +175,10 @@ public class HTTPMethod {
         sendRequest(url, reqMethod, RequestType.MULTIPLE_FILE_UPLOAD, null, new HashMap<>(), files, null, callback);
     }
 
-    public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, String userName, String orderID, String hydraulicType, RequestCallback callback) {
+    public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, String userName, String userID, String orderID, String hydraulicType, RequestCallback callback) {
+        OkHttpClient client = new OkHttpClient();  // Ensure client is initialized
         Map<String, String> headers = new HashMap<>();
-        headers.put("authorization", "Bearer " + bearerToken);
+        headers.put("Authorization", "Bearer " + bearerToken);
 
         Task<Void> task = new Task<>() {
             @Override
@@ -188,23 +189,26 @@ public class HTTPMethod {
                     multipartBuilder.addFormDataPart("orderID", orderID);
                     multipartBuilder.addFormDataPart("hydraulicType", hydraulicType);
                     multipartBuilder.addFormDataPart("operationPlatform", "Desktop -- JavaFX");
-                    multipartBuilder.addFormDataPart("sourceUserID", SystemVariables.loggedInUser.getUserID());
-                    multipartBuilder.addFormDataPart("affectedUserID", null);
-                    multipartBuilder.addFormDataPart("affectedUserName", null);
-                    multipartBuilder.addFormDataPart("affectedMachineID", null);
-                    multipartBuilder.addFormDataPart("affectedMaintenanceID", null);
+                    multipartBuilder.addFormDataPart("sourceUserID", userID);
                     multipartBuilder.addFormDataPart("affectedHydraulicUnitID", orderID);
 
-                    files.forEach((name, file) -> multipartBuilder.addFormDataPart(name, file.getName(), RequestBody.create(file, MediaType.parse("application/octet-stream"))));
+                    // Add files dynamically with proper MIME type
+                    for (Map.Entry<String, File> entry : files.entrySet()) {
+                        String name = entry.getKey();
+                        File file = entry.getValue();
+                        String mimeType = (name.equals("partListFile")) ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : "application/pdf";
+                        multipartBuilder.addFormDataPart(name, file.getName(),
+                                RequestBody.create(file, MediaType.parse(mimeType)));
+                    }
 
                     RequestBody requestBody = multipartBuilder.build();
                     Request.Builder requestBuilder = new Request.Builder()
                             .url(url)
                             .method(reqMethod, requestBody)
-                            .addHeader("authorization", "Bearer " + bearerToken);
+                            .addHeader("Authorization", "Bearer " + bearerToken);
 
                     Request request = requestBuilder.build();
-
+                    System.out.println("Sending request to: " + url);  // Debugging
                     try (Response response = client.newCall(request).execute()) {
                         if (response.isSuccessful()) {
                             String responseBody = response.body() != null ? response.body().string() : "";
@@ -221,6 +225,7 @@ public class HTTPMethod {
                         System.out.println(response);
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
                     Platform.runLater(callback::onFailure);
                 }
                 return null;
