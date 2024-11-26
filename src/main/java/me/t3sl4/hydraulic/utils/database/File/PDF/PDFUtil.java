@@ -11,9 +11,11 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
 import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -181,6 +183,36 @@ public class PDFUtil {
             }
 
             System.out.println("PDF oluşturuldu.");
+            JSONObject jsonObject = new JSONObject();
+
+            if(ClassicController.hesaplamaBitti) {
+                jsonObject.put("Ünite Tipi", ClassicController.secilenUniteTipi);
+                jsonObject.put("Sipariş Numarası", ClassicController.girilenSiparisNumarasi);
+                jsonObject.put("Motor", ClassicController.secilenMotor);
+                jsonObject.put("Soğutma", ClassicController.secilenSogutmaDurumu);
+                jsonObject.put("Hidrolik Kilit", ClassicController.secilenHidrolikKilitDurumu);
+                jsonObject.put("Pompa", ClassicController.secilenPompa);
+                jsonObject.put("Gerekli Yağ Miktarı", ClassicController.girilenTankKapasitesiMiktari);
+                jsonObject.put("Kompanzasyon", ClassicController.kompanzasyonDurumu);
+                jsonObject.put("Valf Tipi", ClassicController.secilenValfTipi);
+                jsonObject.put("Kilit Motor", ClassicController.secilenKilitMotor);
+                jsonObject.put("Kilit Pompa", ClassicController.secilenKilitPompa);
+            } else if(PowerPackController.hesaplamaBitti) {
+                jsonObject.put("Ünite Tipi", PowerPackController.secilenUniteTipi);
+                jsonObject.put("Sipariş Numarası", PowerPackController.girilenSiparisNumarasi);
+                jsonObject.put("Motor Voltaj", PowerPackController.secilenMotorTipi);
+                jsonObject.put("Ünite Tipi", PowerPackController.uniteTipiDurumu);
+                jsonObject.put("Motor Gücü", PowerPackController.secilenMotorGucu);
+                jsonObject.put("Pompa", PowerPackController.secilenPompa);
+                jsonObject.put("Tank Tipi", PowerPackController.secilenTankTipi);
+                jsonObject.put("Tank Kapasitesi", PowerPackController.secilenTankKapasitesi);
+                jsonObject.put("Özel Tank Ölçüleri (GxDxY)", PowerPackController.secilenOzelTankGenislik + "x" + PowerPackController.secilenOzelTankDerinlik + "x" + PowerPackController.secilenOzelTankYukseklik);
+                jsonObject.put("Platform Tipi", PowerPackController.secilenPlatformTipi);
+                jsonObject.put("1. Valf Tipi", PowerPackController.secilenBirinciValf);
+                jsonObject.put("İniş Metodu", PowerPackController.secilenInisTipi);
+                jsonObject.put("2. Valf Tipi", PowerPackController.secilenIkinciValf);
+            }
+
             if(SystemVariables.loggedInUser != null) {
                 Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
                         girilenSiparisNumarasi,
@@ -189,7 +221,8 @@ public class PDFUtil {
                         ExPDFFilePath,
                         null,
                         "no",
-                        SystemVariables.loggedInUser.getUserID());
+                        SystemVariables.loggedInUser.getUserID(),
+                        jsonObject);
             } else {
                 Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
                         girilenSiparisNumarasi,
@@ -198,7 +231,8 @@ public class PDFUtil {
                         ExPDFFilePath,
                         null,
                         "yes",
-                        System.getProperty("user.name"));
+                        System.getProperty("user.name"),
+                        jsonObject);
             }
 
             File pngFile2 = new File(pngFilePath2);

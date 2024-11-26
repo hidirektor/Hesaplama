@@ -58,6 +58,7 @@ import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import java.util.zip.GZIPOutputStream;
 
 public class Utils {
 
@@ -650,7 +651,6 @@ public class Utils {
         }
     }
 
-
     public static void downloadLatestVersion(File selectedDirectory, ProgressUpdater progressUpdater) throws IOException {
         String os = System.getProperty("os.name").toLowerCase();
         String downloadURL = getDownloadURLForOS(os);
@@ -778,7 +778,7 @@ public class Utils {
 
     @SuppressWarnings("unchecked")
     public static void createLocalUnitData(String yamlFilePath, String orderNumber, String createdDate, String unitType,
-                                           String pdfPath, String excelPath, String isOffline, String createdBy) {
+                                           String pdfPath, String excelPath, String isOffline, String createdBy, JSONObject unitParameters) {
         LoaderOptions loaderOptions = new LoaderOptions();
         Yaml yaml = new Yaml(loaderOptions);
         Map<String, Object> data;
@@ -819,6 +819,10 @@ public class Utils {
             newEntry.put("unit_type", unitType);
             newEntry.put("pdf_path", pdfPath == null ? "" : pdfPath);
             newEntry.put("excel_path", excelPath == null ? "" : excelPath);
+
+            if (unitParameters != null) {
+                newEntry.put("unit_parameters", compress(unitParameters.toString()));
+            }
 
             Map<String, String> creationData = new HashMap<>();
             creationData.put("isOffline", isOffline);
@@ -900,6 +904,7 @@ public class Utils {
             hydraulicInfo.setHydraulicType(currentUnitType);
             hydraulicInfo.setSchematicID((String) unitData.get("pdf_path"));
             hydraulicInfo.setPartListID((String) unitData.get("excel_path"));
+            hydraulicInfo.setUnitParameters((String) unitData.get("unit_parameters"));
             hydraulicInfo.setCreatedDate(Long.parseLong((String) unitData.get("created_date")));
 
             Map<String, String> creationData = (Map<String, String>) unitData.get("creation_data");
@@ -922,6 +927,35 @@ public class Utils {
             System.out.println("User Name: " + info.getUserName());
             System.out.println("-----------------------");
         }*/
+    }
+
+    // JSON sıkıştırma
+    public static String compress(String jsonString) {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             GZIPOutputStream gzipOutputStream = new GZIPOutputStream(byteArrayOutputStream)) {
+            gzipOutputStream.write(jsonString.getBytes());
+            gzipOutputStream.close();
+            return Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray());
+        } catch (IOException e) {
+            throw new RuntimeException("JSON sıkıştırma sırasında bir hata oluştu", e);
+        }
+    }
+
+    // JSON açma
+    public static String decompress(String compressedString) {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+            byte[] compressedBytes = Base64.getDecoder().decode(compressedString);
+            try (java.util.zip.GZIPInputStream gzipInputStream = new java.util.zip.GZIPInputStream(new java.io.ByteArrayInputStream(compressedBytes))) {
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len = gzipInputStream.read(buffer)) > 0) {
+                    byteArrayOutputStream.write(buffer, 0, len);
+                }
+                return byteArrayOutputStream.toString();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("JSON açma sırasında bir hata oluştu", e);
+        }
     }
 
     public static String getCurrentUnixTime() {

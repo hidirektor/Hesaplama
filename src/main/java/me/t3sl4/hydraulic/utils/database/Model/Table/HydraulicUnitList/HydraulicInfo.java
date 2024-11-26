@@ -1,5 +1,7 @@
 package me.t3sl4.hydraulic.utils.database.Model.Table.HydraulicUnitList;
 
+import org.json.JSONObject;
+
 public class HydraulicInfo {
     private int id;
     private String userID;
@@ -10,6 +12,7 @@ public class HydraulicInfo {
     private String hydraulicType;
     private boolean isLocal;
     private long createdDate;
+    private String unitParameters;
 
     // Getter ve Setter metodları
     public int getId() {
@@ -82,5 +85,13 @@ public class HydraulicInfo {
 
     public void setLocal(boolean local) {
         isLocal = local;
+    }
+
+    public String getUnitParameters() {
+        return unitParameters;
+    }
+
+    public void setUnitParameters(String unitParameters) {
+        this.unitParameters = unitParameters;
     }
 }

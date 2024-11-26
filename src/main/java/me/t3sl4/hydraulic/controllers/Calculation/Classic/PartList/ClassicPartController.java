@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -134,6 +135,19 @@ public class ClassicPartController {
                 workbook.write(fileOut);
                 System.out.println("Excel dosyası başarıyla oluşturuldu: " + excelFileName);
 
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("Ünite Tipi", ClassicController.secilenUniteTipi);
+                jsonObject.put("Sipariş Numarası", ClassicController.girilenSiparisNumarasi);
+                jsonObject.put("Motor", ClassicController.secilenMotor);
+                jsonObject.put("Soğutma", ClassicController.secilenSogutmaDurumu);
+                jsonObject.put("Hidrolik Kilit", ClassicController.secilenHidrolikKilitDurumu);
+                jsonObject.put("Pompa", ClassicController.secilenPompa);
+                jsonObject.put("Gerekli Yağ Miktarı", ClassicController.girilenTankKapasitesiMiktari);
+                jsonObject.put("Kompanzasyon", ClassicController.kompanzasyonDurumu);
+                jsonObject.put("Valf Tipi", ClassicController.secilenValfTipi);
+                jsonObject.put("Kilit Motor", ClassicController.secilenKilitMotor);
+                jsonObject.put("Kilit Pompa", ClassicController.secilenKilitPompa);
+
                 if(SystemVariables.loggedInUser != null) {
                     Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
                             ClassicController.girilenSiparisNumarasi,
@@ -142,7 +156,8 @@ public class ClassicPartController {
                             null,
                             excelFileName,
                             "no",
-                            SystemVariables.loggedInUser.getUserID());
+                            SystemVariables.loggedInUser.getUserID(),
+                            jsonObject);
                 } else {
                     Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
                             ClassicController.girilenSiparisNumarasi,
@@ -151,7 +166,8 @@ public class ClassicPartController {
                             null,
                             excelFileName,
                             "yes",
-                            System.getProperty("user.name"));
+                            System.getProperty("user.name"),
+                            jsonObject);
                 }
 
                 Utils.openFile(excelFileName);

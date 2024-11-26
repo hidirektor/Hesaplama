@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
+import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
 import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -19,6 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -138,6 +140,21 @@ public class PowerPackPartController {
                 workbook.write(fileOut);
                 System.out.println("Excel dosyası başarıyla oluşturuldu: " + excelFileName);
 
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("Ünite Tipi", PowerPackController.secilenUniteTipi);
+                jsonObject.put("Sipariş Numarası", PowerPackController.girilenSiparisNumarasi);
+                jsonObject.put("Motor Voltaj", PowerPackController.secilenMotorTipi);
+                jsonObject.put("Ünite Tipi", PowerPackController.uniteTipiDurumu);
+                jsonObject.put("Motor Gücü", PowerPackController.secilenMotorGucu);
+                jsonObject.put("Pompa", PowerPackController.secilenPompa);
+                jsonObject.put("Tank Tipi", PowerPackController.secilenTankTipi);
+                jsonObject.put("Tank Kapasitesi", PowerPackController.secilenTankKapasitesi);
+                jsonObject.put("Özel Tank Ölçüleri (GxDxY)", PowerPackController.secilenOzelTankGenislik + "x" + PowerPackController.secilenOzelTankDerinlik + "x" + PowerPackController.secilenOzelTankYukseklik);
+                jsonObject.put("Platform Tipi", PowerPackController.secilenPlatformTipi);
+                jsonObject.put("1. Valf Tipi", PowerPackController.secilenBirinciValf);
+                jsonObject.put("İniş Metodu", PowerPackController.secilenInisTipi);
+                jsonObject.put("2. Valf Tipi", PowerPackController.secilenIkinciValf);
+
                 if (SystemVariables.loggedInUser != null) {
                     Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
                             PowerPackController.girilenSiparisNumarasi,
@@ -146,7 +163,8 @@ public class PowerPackPartController {
                             null,
                             excelFileName,
                             "no",
-                            SystemVariables.loggedInUser.getUserID());
+                            SystemVariables.loggedInUser.getUserID(),
+                            jsonObject);
                 } else {
                     Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
                             PowerPackController.girilenSiparisNumarasi,
@@ -155,7 +173,8 @@ public class PowerPackPartController {
                             null,
                             excelFileName,
                             "yes",
-                            System.getProperty("user.name"));
+                            System.getProperty("user.name"),
+                            jsonObject);
                 }
 
                 Utils.openFile(excelFileName);
