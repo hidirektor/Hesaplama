@@ -87,20 +87,24 @@ public class PowerPackPartController {
         String excelFileName = SystemVariables.excelFileLocalPath + PowerPackController.girilenSiparisNumarasi + ".xlsx";
 
         Map<String, ParcaTableData> malzemeMap = new LinkedHashMap<>();
+        Map<String, ParcaTableData> filteredMap = new LinkedHashMap<>();
+        Map<String, ParcaTableData> duplicateMap = new LinkedHashMap<>();
 
         for (ParcaTableData rowData : veriler) {
             if (!(rowData.getMalzemeKoduProperty().equals("----") && rowData.getMalzemeAdetProperty().equals("----"))) {
                 String malzemeKey = malzemeKodu + "_" + rowData.getMalzemeAdiProperty();
 
-                if (malzemeMap.containsKey(malzemeKey)) {
-                    ParcaTableData existingData = malzemeMap.get(malzemeKey);
+                if (filteredMap.containsKey(malzemeKey)) {
+                    ParcaTableData existingData = filteredMap.get(malzemeKey);
                     int existingAdet = Integer.parseInt(existingData.getMalzemeAdetProperty());
                     int yeniAdet = Integer.parseInt(rowData.getMalzemeAdetProperty());
                     // Adetleri topluyoruz
                     existingData.setMalzemeAdetProperty(String.valueOf(existingAdet + yeniAdet));
+                    duplicateMap.put(malzemeKey, existingData);
+                    filteredMap.remove(malzemeKey);
                 } else {
                     // Malzeme haritada yoksa yeni bir giriş ekle
-                    malzemeMap.put(malzemeKey, new ParcaTableData(
+                    filteredMap.put(malzemeKey, new ParcaTableData(
                             rowData.getMalzemeKoduProperty(),
                             rowData.getMalzemeAdiProperty(),
                             rowData.getMalzemeAdetProperty()
@@ -108,6 +112,9 @@ public class PowerPackPartController {
                 }
             }
         }
+
+        malzemeMap.putAll(filteredMap);
+        malzemeMap.putAll(duplicateMap);
 
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Malzeme Listesi");
@@ -117,11 +124,8 @@ public class PowerPackPartController {
             headerRow.createCell(1).setCellValue("Seçilen Malzeme");
             headerRow.createCell(2).setCellValue("Adet");
 
-            List<ParcaTableData> sortedData = new ArrayList<>(malzemeMap.values());
-            sortedData.sort((d1, d2) -> d1.getMalzemeKoduProperty().compareTo(d2.getMalzemeKoduProperty()));
-
             int excelRowIndex = 1;
-            for (ParcaTableData rowData : sortedData) {
+            for (ParcaTableData rowData : malzemeMap.values()) {
                 Row row = sheet.createRow(excelRowIndex++);
                 row.createCell(0).setCellValue(rowData.getMalzemeKoduProperty());
                 row.createCell(1).setCellValue(rowData.getMalzemeAdiProperty());
