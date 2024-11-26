@@ -11,7 +11,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
 import me.t3sl4.hydraulic.Launcher;
-import me.t3sl4.hydraulic.controllers.Calculation.Hidros.HidrosController;
+import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
@@ -136,7 +136,7 @@ public class PDFUtil {
                     reader.close();
                 } else {
                     String motorText = "AC Motor";
-                    if(HidrosController.secilenMotorTipi.contains("DC")) {
+                    if(PowerPackController.secilenMotorTipi.contains("DC")) {
                         motorText = "DC Motor";
                     }
 

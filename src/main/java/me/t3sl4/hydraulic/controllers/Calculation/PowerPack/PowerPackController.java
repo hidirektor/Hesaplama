@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.controllers.Calculation.Hidros;
+package me.t3sl4.hydraulic.controllers.Calculation.PowerPack;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
-public class HidrosController {
+public class PowerPackController {
     @FXML
     private VBox klasikVBox;
 
@@ -190,7 +190,7 @@ public class HidrosController {
     public void parcaListesiGoster() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         if(hesaplamaBitti) {
-            Utils.showParcaListesiPopup(icon, SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/HidrosParcaListesi.fxml");
+            Utils.showParcaListesiPopup(icon, SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/PowerPackPartList.fxml");
         } else {
             Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }

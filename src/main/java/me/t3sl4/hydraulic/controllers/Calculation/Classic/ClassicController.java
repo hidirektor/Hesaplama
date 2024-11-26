@@ -1,4 +1,4 @@
-package me.t3sl4.hydraulic.controllers.Calculation.Klasik;
+package me.t3sl4.hydraulic.controllers.Calculation.Classic;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -30,7 +30,7 @@ import java.util.*;
 
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
-public class KlasikController {
+public class ClassicController {
 
     @FXML
     public AnchorPane hydraulicUnitBox;
@@ -426,7 +426,7 @@ public class KlasikController {
     public void parcaListesiGoster() {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         if(hesaplamaBitti) {
-            Utils.showParcaListesiPopup(icon, SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/ParcaListesi.fxml");
+            Utils.showParcaListesiPopup(icon, SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/PartList.fxml");
         } else {
             Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }

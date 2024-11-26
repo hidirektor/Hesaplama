@@ -563,7 +563,7 @@ public class MainController implements Initializable {
             pnlMenus.setStyle("-fx-background-color : #353a46");
             pnlMenus.toFront();
             try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Klasik.fxml"));
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Classic.fxml"));
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
             } catch (IOException e) {
@@ -573,7 +573,7 @@ public class MainController implements Initializable {
             pnlMenus.setStyle("-fx-background-color : #353a46");
             pnlMenus.toFront();
             try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/PowerPack.fxml"));
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
             } catch (IOException e) {
@@ -583,7 +583,7 @@ public class MainController implements Initializable {
             pnlMenus.setStyle("-fx-background-color : #353a46");
             pnlMenus.toFront();
             try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/Hidros.fxml"));
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/PowerPack.fxml"));
                 Pane parametrePane = loader.load();
                 pnlMenus.getChildren().setAll(parametrePane);
             } catch (IOException e) {
