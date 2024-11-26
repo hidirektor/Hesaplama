@@ -14,12 +14,15 @@ import javafx.stage.Stage;
 import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
 import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportController {
 
@@ -162,9 +165,24 @@ public class ReportController {
             return;
         }
 
-        // İşlemi burada gerçekleştirin
-        showInfo("Hata bildirimi başarıyla gönderildi.");
+        Map<String, File> filesToSend = new HashMap<>();
+        for (File file : uploadedFiles) {
+            filesToSend.put(file.getName(), file);
+        }
+
+        HTTPMethod.sendBugReport(subject, details, filesToSend, new HTTPMethod.RequestCallback() {
+            @Override
+            public void onSuccess(String response) throws IOException {
+                showInfo("Hata bildirimi başarıyla gönderildi.");
+            }
+
+            @Override
+            public void onFailure() {
+                showError("Hata bildirimi gönderilemedi.");
+            }
+        });
     }
+
 
     private void openFileChooser() {
         if (uploadedFiles.size() >= 5) {

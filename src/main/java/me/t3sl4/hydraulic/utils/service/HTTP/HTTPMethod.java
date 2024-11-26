@@ -11,6 +11,9 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
+import static me.t3sl4.hydraulic.utils.general.SystemVariables.BASE_URL;
+import static me.t3sl4.hydraulic.utils.general.SystemVariables.sendBugReportURLPrefix;
+
 public class HTTPMethod {
 
     public interface RequestCallback {
@@ -233,4 +236,66 @@ public class HTTPMethod {
         };
         new Thread(task).start();
     }
+
+    public static void sendBugReport(String errorSubjectField, String errorDetailsArea, Map<String, File> uploadedFiles, RequestCallback callback) {
+        String creationURL = BASE_URL + sendBugReportURLPrefix;
+
+        MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBuilder.addFormDataPart("errorTitle", errorSubjectField);
+        multipartBuilder.addFormDataPart("errorDesc", errorDetailsArea);
+
+        if (uploadedFiles != null && !uploadedFiles.isEmpty()) {
+            int index = 0;
+            for (File file : uploadedFiles.values()) {
+                String mimeType = "application/octet-stream"; // Default mime type
+                String fileName = file.getName();
+                if (fileName.endsWith(".xlsx")) {
+                    mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                } else if (fileName.endsWith(".pdf")) {
+                    mimeType = "application/pdf";
+                }
+
+                multipartBuilder.addFormDataPart("attachment" + index, file.getName(), RequestBody.create(file, MediaType.parse(mimeType)));
+                index++;
+            }
+        }
+
+        RequestBody requestBody = multipartBuilder.build();
+
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(creationURL)
+                .method("POST", requestBody)
+                .addHeader("Content-Type", "multipart/form-data");
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = requestBuilder.build();
+        System.out.println("Sending request to: " + creationURL);  // Debugging message
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Platform.runLater(callback::onFailure);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body() != null ? response.body().string() : "";
+                    Platform.runLater(() -> {
+                        try {
+                            callback.onSuccess(responseBody);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                } else {
+                    Platform.runLater(callback::onFailure);
+                }
+                System.out.println(response);
+            }
+        });
+    }
+
+
 }

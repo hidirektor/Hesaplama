@@ -62,6 +62,8 @@ public class SystemVariables {
     public static String hydraulicGetStatsURLPrefix = "/hydraulic/getHydraulicStats";
     public static String hydraulicGetDetailsURLPrefix = "/hydraulic/getHydraulicDetails";
 
+    public static String sendBugReportURLPrefix = "/authorized/sendErrorReport";
+
     public static String checkLicenseUrlPrefix = "/license/check";
     public static String activateLicenseUrlPrefix = "/license/activate";
 
