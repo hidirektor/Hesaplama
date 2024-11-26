@@ -113,6 +113,7 @@ public class PowerPackController {
     @FXML
     private Label screenDetectorLabel;
 
+    public static String secilenUniteTipi = "PowerPack";
     public static String girilenSiparisNumarasi;
     public static String secilenMotorTipi = null;
     public static String secilenMotorGucu = null;
@@ -131,9 +132,7 @@ public class PowerPackController {
 
     public static String atananKabin = null;
 
-    public boolean hesaplamaBitti = false;
-
-    public static String secilenUniteTipi = "PowerPack";
+    public static boolean hesaplamaBitti = false;
 
     public void initialize() {
         comboBoxListener();

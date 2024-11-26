@@ -134,7 +134,7 @@ public class ClassicController {
     public static String secilenSogutmaDurumu = null;
 
     public boolean hidrolikKilitStat = false;
-    public boolean hesaplamaBitti = false;
+    public static boolean hesaplamaBitti = false;
 
     public static String atananHT;
 
