@@ -210,40 +210,26 @@ public class HidrosParcaController {
 
     private void tabloGuncelle() {
         String secilenPlatform = HidrosController.secilenPlatformTipi.trim();
+
         loadStockCodes();
+        loadMotorParca();
+        loadPompaParca();
+        loadTankTipi();
+        loadPlatformTipi();
+        //loadGenelParcalar();
+        if(HidrosController.secilenBirinciValf != null) {
+            loadValfParcalar();
+        }
 
-        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
-            loadMotorParca();
-            loadPompaParca();
-            loadTankTipi();
-            loadPlatformTipi();
-            //loadGenelParcalar();
-            if(HidrosController.secilenBirinciValf != null) {
-                loadValfParcalar();
-            }
+        if(secilenPlatform.equals("Özel - Yatay")) {
+            loadOzelYatayGenel();
+        }
 
-            if(secilenPlatform.equals("Özel - Yatay")) {
-                loadOzelYatayGenel();
-            }
-
-            loadManometre();
-            loadBasincSalteri();
-            loadElPompasiParca();
-            if(HidrosController.secilenTankKapasitesi != null) {
-                loadYagMiktari();
-            }
-        } else {
-            //İthal Parçalar buraya
-            if(secilenPlatform.equals("Özel - Yatay")) {
-                loadOzelYatayGenel();
-            }
-
-            loadManometre();
-            loadBasincSalteri();
-            loadElPompasiParca();
-            if(HidrosController.secilenTankKapasitesi != null) {
-                loadYagMiktari();
-            }
+        loadManometre();
+        loadBasincSalteri();
+        loadElPompasiParca();
+        if(HidrosController.secilenTankKapasitesi != null) {
+            loadYagMiktari();
         }
     }
 
@@ -252,37 +238,97 @@ public class HidrosParcaController {
 
         if (Objects.equals(HidrosController.secilenMotorTipi, "380 V (AC)")) {
             if(motorGucu.equals("0.37 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("0"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("0"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("0"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("0.55 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("1"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("1"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("1"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("0.75 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("2"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("2"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("2"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("1.1 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("3"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("3"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("3"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("1.5 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("4"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("4"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("4"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("2.2 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("5"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("5"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("5"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("3 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("6"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("6"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("6"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("4 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("7"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.get("7"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.get("7"), "Motor Parçaları");
+                }
             }
         } else if (Objects.equals(HidrosController.secilenMotorTipi, "220 V (AC)")) {
             if(motorGucu.equals("0.37 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("0"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("0"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.get("0"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("0.55 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("1"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("1"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.get("1"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("0.75 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("2"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("2"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.get("2"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("1.1 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("3"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("3"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.get("3"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("1.5 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("4"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("4"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.get("4"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("2.2 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("5"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("5"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.get("5"), "Motor Parçaları");
+                }
             } else if(motorGucu.equals("3 kW")) {
-                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("6"), "Motor Parçaları");
+                if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.get("6"), "Motor Parçaları");
+                } else {
+                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.get("6"), "Motor Parçaları");
+                }
             }
         }
     }
@@ -291,33 +337,89 @@ public class HidrosParcaController {
         String pompaDegeri = HidrosController.secilenPompa.trim();
 
         if(pompaDegeri.equals("0.8 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("0"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("0"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("0"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("1.1 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("1"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("1"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("1"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("1.3 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("2"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("2"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("2"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("1.8 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("3"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("3"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("3"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("2.1 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("4"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("4"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("4"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("2.7 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("5"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("5"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("5"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("3.2 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("6"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("6"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("6"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("3.7 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("7"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("7"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("7"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("4.2 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("8"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("8"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("8"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("4.8 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("9"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("9"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("9"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("5.8 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("10"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("10"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("10"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("7 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("11"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("11"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("11"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("8 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("12"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("12"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("12"), "Pompa Parçaları");
+            }
         } else if(pompaDegeri.equals("9 cc")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("13"), "Pompa Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.get("13"), "Pompa Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.get("13"), "Pompa Parçaları");
+            }
         }
     }
 
@@ -336,33 +438,85 @@ public class HidrosParcaController {
 
             if(Objects.equals(kontrolTankTipi, "Yatay")) {
                 if(kontrolTankKapasitesi.equals("2 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("0"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("0"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.get("0"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("4 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("1"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("1"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.get("1"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("6 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("2"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("2"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.get("2"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("8 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("3"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("3"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.get("3"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("10 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("4"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("4"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.get("4"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("12 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("5"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("5"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.get("5"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("20 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("6"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.get("6"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.get("6"), "Tank Parçaları");
+                    }
                 }
             } else if(Objects.equals(kontrolTankTipi, "Dikey")) {
                 if(kontrolTankKapasitesi.equals("4 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("0"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("0"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankDikey.get("0"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("6 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("1"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("1"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankDikey.get("1"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("8 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("2"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("2"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankDikey.get("2"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("10 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("3"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("3"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankDikey.get("3"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("12 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("4"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("4"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankDikey.get("4"), "Tank Parçaları");
+                    }
                 } else if(kontrolTankKapasitesi.equals("20 Lt")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("5"), "Tank Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.get("5"), "Tank Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankDikey.get("5"), "Tank Parçaları");
+                    }
                 }
             }
         }
@@ -378,23 +532,45 @@ public class HidrosParcaController {
                 String secilenInis = HidrosController.secilenInisTipi.trim();
 
                 if(Objects.equals(secilenInis, "İnişte Tek Hız")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPGenel.get("0"), "Platform Parçaları");
+                    }
                 } else if(Objects.equals(secilenInis, "İnişte Çift Hız")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPCiftHiz.get("0"), "Platform Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPCiftHiz.get("0"), "Platform Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPGenel.get("0"), "Platform Parçaları");
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPCiftHiz.get("0"), "Platform Parçaları");
+                    }
                 }
             } else if(Objects.equals(secilenTank, "Yatay")) {
                 String secilenInis = HidrosController.secilenInisTipi.trim();
 
                 if(Objects.equals(secilenInis, "İnişte Tek Hız")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPGenel.get("0"), "Platform Parçaları");
+                    }
                 } else if(Objects.equals(secilenInis, "İnişte Çift Hız")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPCiftHiz.get("0"), "Platform Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.get("0"), "Platform Parçaları");
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPCiftHiz.get("0"), "Platform Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPGenel.get("0"), "Platform Parçaları");
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPCiftHiz.get("0"), "Platform Parçaları");
+                    }
                 }
             }
         } else if(Objects.equals(secilenPlatform, "Devirmeli + Yürüyüş")) {
-            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDevirmeli.get("0"), "Platform Parçaları");
+            if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDevirmeli.get("0"), "Platform Parçaları");
+            } else {
+                generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaDevirmeli.get("0"), "Platform Parçaları");
+            }
         }
     }
 
@@ -447,11 +623,19 @@ public class HidrosParcaController {
     }
 
     private void loadGenelParcalar() {
-        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDefault.get("0"), "Standart Parçalar");
+        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDefault.get("0"), "Standart Parçalar");
+        } else {
+            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaDefault.get("0"), "Standart Parçalar");
+        }
     }
 
     private void loadOzelYatayGenel() {
-        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelYatayGenel.get("0"), "Özel Yatay Genel Parçalar");
+        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelYatayGenel.get("0"), "Özel Yatay Genel Parçalar");
+        } else {
+            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaOzelYatayGenel.get("0"), "Özel Yatay Genel Parçalar");
+        }
     }
 
     private void loadYagMiktari() {
@@ -490,8 +674,7 @@ public class HidrosParcaController {
         Kabin foundedTank = Utils.findPowerPackTankByKabinName(HidrosController.atananKabin);
         List<ParcaTableData> dataList = Arrays.asList(
                 new ParcaTableData("----", "Kabin Genel Bilgisi", "----"),
-                new ParcaTableData(foundedTank.getKabinKodu(), foundedTank.getMalzemeAdi(), adet),
-                new ParcaTableData(foundedTank.getYagTankiKodu(), foundedTank.getTankName(), adet)
+                new ParcaTableData(foundedTank.getKabinKodu(), foundedTank.getMalzemeAdi(), adet)
         );
 
         parcaListesiTablo.getItems().addAll(dataList);
@@ -502,21 +685,45 @@ public class HidrosParcaController {
             if(HidrosController.secilenBirinciValf.equals("1")) {
                 if(HidrosController.secilenIkinciValf.equals("Açık Merkez")) {
                     if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("0"), "Valf Parçaları");
+                        }
                     } else {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("1"), "Valf Parçaları");
+                        }
                     }
                 } else if(HidrosController.secilenIkinciValf.equals("J Merkez")) {
                     if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("2"), "Valf Parçaları");
+                        }
                     } else {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("3"), "Valf Parçaları");
+                        }
                     }
                 } else if(HidrosController.secilenIkinciValf.equals("H Merkez")) {
                     if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("4"), "Valf Parçaları");
+                        }
                     } else {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("5"), "Valf Parçaları");
+                        }
                     }
                 }
             } else {
@@ -525,42 +732,90 @@ public class HidrosParcaController {
         } else {
             if(HidrosController.secilenBirinciValf.equals("Açık Merkez")) {
                 if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"), "Valf Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"), "Valf Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("0"), "Valf Parçaları");
+                    }
                 } else {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"), "Valf Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"), "Valf Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("1"), "Valf Parçaları");
+                    }
                 }
             } else if(HidrosController.secilenBirinciValf.equals("J Merkez")) {
                 if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"), "Valf Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"), "Valf Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("2"), "Valf Parçaları");
+                    }
                 } else {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"), "Valf Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"), "Valf Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("3"), "Valf Parçaları");
+                    }
                 }
             } else if(HidrosController.secilenBirinciValf.equals("H Merkez")) {
                 if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"), "Valf Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"), "Valf Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("4"), "Valf Parçaları");
+                    }
                 } else {
-                    generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"), "Valf Parçaları");
+                    if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"), "Valf Parçaları");
+                    } else {
+                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("5"), "Valf Parçaları");
+                    }
                 }
             }
 
             if(HidrosController.secilenIkinciValf != null) {
                 if(HidrosController.secilenIkinciValf.equals("Açık Merkez")) {
                     if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("0"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("0"), "Valf Parçaları");
+                        }
                     } else {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("1"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("1"), "Valf Parçaları");
+                        }
                     }
                 } else if(HidrosController.secilenIkinciValf.equals("J Merkez")) {
                     if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("2"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("2"), "Valf Parçaları");
+                        }
                     } else {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("3"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("3"), "Valf Parçaları");
+                        }
                     }
                 } else if(HidrosController.secilenIkinciValf.equals("H Merkez")) {
                     if(!HidrosController.secilenMotorTipi.contains("12 V")) {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("4"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("4"), "Valf Parçaları");
+                        }
                     } else {
-                        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"), "Valf Parçaları");
+                        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.get("5"), "Valf Parçaları");
+                        } else {
+                            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.get("5"), "Valf Parçaları");
+                        }
                     }
                 }
             }
@@ -568,7 +823,11 @@ public class HidrosParcaController {
     }
 
     private void loadOzelCiftValf() {
-        generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelCiftValf.get("0"), "Özel Çift Valf Parçaları");
+        if(HidrosController.uniteTipiDurumu.equals("Hidros")) {
+            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelCiftValf.get("0"), "Özel Çift Valf Parçaları");
+        } else {
+            generalLoadFunc(SystemVariables.getLocalHydraulicData().powerPackIthalParcaOzelCiftValf.get("0"), "Özel Çift Valf Parçaları");
+        }
     }
 
     private void generalLoadFunc(LinkedList<String> parcaListesi, String seperatorText) {

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 
 public class YamlUtil {
 
@@ -70,26 +71,40 @@ public class YamlUtil {
 
     public void loadPowerPackHidrosPartList(String filePath) {
         try {
-            loadHidrosParcaMotor380(filePath);
-            loadHidrosParcaMotor220(filePath);
-            loadHidrosParcaPompa(filePath);
-            loadHidrosParcaTankDikey(filePath);
-            loadHidrosParcaTankYatay(filePath);
-            loadHidrosParcaESPGenel(filePath);
-            loadHidrosParcaESPDikeyCift(filePath);
-            loadHidrosParcaDevirmeli(filePath);
-            loadHidrosParcaStandart(filePath);
-            loadHidrosParcaOzelYatay(filePath);
-            loadHidrosParcaValfTipleri(filePath);
-            loadHidrosParcaOzelCiftValf(filePath);
+            loadPowerPackParcaMotor380(filePath, "hidros");
+            loadPowerPackParcaMotor220(filePath, "hidros");
+            loadPowerPackParcaPompa(filePath, "hidros");
+            loadPowerPackParcaTankDikey(filePath, "hidros");
+            loadPowerPackParcaTankYatay(filePath, "hidros");
+            loadPowerPackParcaESPGenel(filePath, "hidros");
+            loadPowerPackParcaESPDikeyCift(filePath, "hidros");
+            loadPowerPackParcaDevirmeli(filePath, "hidros");
+            loadPowerPackParcaStandart(filePath, "hidros");
+            loadPowerPackParcaOzelYatay(filePath, "hidros");
+            loadPowerPackParcaValfTipleri(filePath, "hidros");
+            loadPowerPackParcaOzelCiftValf(filePath, "hidros");
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
 
     public void loadPowerPackIthalPartList(String filePath) {
-        //TODO
-        //Power pack parçaları eklenecek
+        try {
+            loadPowerPackParcaMotor380(filePath, "ithal");
+            loadPowerPackParcaMotor220(filePath, "ithal");
+            loadPowerPackParcaPompa(filePath, "ithal");
+            loadPowerPackParcaTankDikey(filePath, "ithal");
+            loadPowerPackParcaTankYatay(filePath, "ithal");
+            loadPowerPackParcaESPGenel(filePath, "ithal");
+            loadPowerPackParcaESPDikeyCift(filePath, "ithal");
+            loadPowerPackParcaDevirmeli(filePath, "ithal");
+            loadPowerPackParcaStandart(filePath, "ithal");
+            loadPowerPackParcaOzelYatay(filePath, "ithal");
+            loadPowerPackParcaValfTipleri(filePath, "ithal");
+            loadPowerPackParcaOzelCiftValf(filePath, "ithal");
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadSchematicTexts(String filePath) {
@@ -746,7 +761,7 @@ public class YamlUtil {
         }
     }
 
-    public void loadHidrosParcaMotor380(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaMotor380(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -773,12 +788,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor380.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor380.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaMotor220(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaMotor220(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -805,12 +824,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaMotor220.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaMotor220.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaPompa(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaPompa(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -837,12 +860,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaPompa.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaPompa.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaTankDikey(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaTankDikey(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -869,12 +896,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankDikey.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankDikey.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaTankYatay(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaTankYatay(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -901,12 +932,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaTankYatay.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaTankYatay.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaESPGenel(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaESPGenel(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -933,12 +968,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPGenel.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPGenel.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaESPDikeyCift(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaESPDikeyCift(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -965,12 +1004,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPCiftHiz.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaESPCiftHiz.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaESPCiftHiz.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaDevirmeli(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaDevirmeli(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -997,12 +1040,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDevirmeli.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDevirmeli.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaDevirmeli.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaStandart(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaStandart(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1029,12 +1076,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDefault.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaDefault.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaDefault.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaOzelYatay(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaOzelYatay(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1061,12 +1112,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelYatayGenel.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelYatayGenel.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaOzelYatayGenel.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaValfTipleri(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaValfTipleri(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1093,12 +1148,16 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaValf.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaValf.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }
 
-    public void loadHidrosParcaOzelCiftValf(String filePath) throws FileNotFoundException {
+    public void loadPowerPackParcaOzelCiftValf(String filePath, String unitType) throws FileNotFoundException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1125,7 +1184,11 @@ public class YamlUtil {
                     partDetailsList.add(combinedDetails);
                 }
 
-                SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelCiftValf.put(kaplinKey, partDetailsList);
+                if(Objects.equals(unitType, "hidros")) {
+                    SystemVariables.getLocalHydraulicData().powerPackHidrosParcaOzelCiftValf.put(kaplinKey, partDetailsList);
+                } else {
+                    SystemVariables.getLocalHydraulicData().powerPackIthalParcaOzelCiftValf.put(kaplinKey, partDetailsList);
+                }
             }
         }
     }

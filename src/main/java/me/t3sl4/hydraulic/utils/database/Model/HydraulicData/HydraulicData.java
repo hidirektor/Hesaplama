@@ -95,7 +95,7 @@ public class HydraulicData {
     public Map<String, LinkedList<String>> classicParcaKilitMotor = new HashMap<>();
 
     /*
-    PowerPack Parça Listesi
+    PowerPack Hidros Parça Listesi
      */
     public Map<String, LinkedList<String>> powerPackHidrosParcaMotor380 = new HashMap<>();
     public Map<String, LinkedList<String>> powerPackHidrosParcaMotor220 = new HashMap<>();
@@ -110,17 +110,21 @@ public class HydraulicData {
     public Map<String, LinkedList<String>> powerPackHidrosParcaOzelCiftValf = new HashMap<>();
     public Map<String, LinkedList<String>> powerPackHidrosParcaValf = new HashMap<>();
 
-    //Bitişi
-
-    //PowerPack - Hidros Parça Listesi:
-
-    //PowerPack - İthal Parçalar
-    public HashMap<String, HashMap<String, String>> hidrosIthalParcaMotor380 = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosIthalParcaMotor220 = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosIthalParcaPompa = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosIthalParcaPompaCivata = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosIthalParcaTankDikey = new HashMap<>();
-    public HashMap<String, HashMap<String, String>> hidrosIthalParcaTankYatay = new HashMap<>();
+    /*
+    PowerPack İthal Parça Listesi
+     */
+    public Map<String, LinkedList<String>> powerPackIthalParcaMotor380 = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaMotor220 = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaPompa = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaTankDikey = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaTankYatay = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaESPGenel = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaESPCiftHiz = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaDevirmeli = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaDefault = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaOzelYatayGenel = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaOzelCiftValf = new HashMap<>();
+    public Map<String, LinkedList<String>> powerPackIthalParcaValf = new HashMap<>();
 
     //2D Texts
     public HashMap<String, String> schematicCiftHizTexts = new HashMap<>();

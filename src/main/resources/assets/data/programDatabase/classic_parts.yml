@@ -989,7 +989,7 @@ valf_bloklari:
   '3': #Kompanzasyon + Tek Hız 1 Grubu
     parts:
       '0':
-        malzemeKodu: "150-51-05-100"
+        malzemeKodu: "150-51-05-048"
         malzemeAdi: "Kompanzasyon + İnişte Tek Hız"
         malzemeAdet: "1"
       '1':
@@ -1185,7 +1185,7 @@ valf_bloklari:
   '7': #Kompanzasyon + Tek Hız 2 Grubu
     parts:
       '0':
-        malzemeKodu: "150-51-05-100"
+        malzemeKodu: "150-51-05-048"
         malzemeAdi: "Kompanzasyon + İnişte Tek Hız"
         malzemeAdet: "1"
       '1':
