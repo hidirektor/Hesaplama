@@ -92,16 +92,18 @@ public class PowerPackPartController {
 
         for (ParcaTableData rowData : veriler) {
             if (!(rowData.getMalzemeKoduProperty().equals("----") && rowData.getMalzemeAdetProperty().equals("----"))) {
-                String malzemeKey = malzemeKodu + "_" + rowData.getMalzemeAdiProperty();
+                String malzemeKey = rowData.getMalzemeKoduProperty();
 
                 if (filteredMap.containsKey(malzemeKey)) {
-                    ParcaTableData existingData = filteredMap.get(malzemeKey);
-                    int existingAdet = Integer.parseInt(existingData.getMalzemeAdetProperty());
-                    int yeniAdet = Integer.parseInt(rowData.getMalzemeAdetProperty());
-                    // Adetleri topluyoruz
-                    existingData.setMalzemeAdetProperty(String.valueOf(existingAdet + yeniAdet));
-                    duplicateMap.put(malzemeKey, existingData);
-                    filteredMap.remove(malzemeKey);
+                    if(!malzemeKey.equals("000-00-00-000")) {
+                        ParcaTableData existingData = filteredMap.get(malzemeKey);
+                        int existingAdet = Integer.parseInt(existingData.getMalzemeAdetProperty());
+                        int yeniAdet = Integer.parseInt(rowData.getMalzemeAdetProperty());
+                        // Adetleri topluyoruz
+                        existingData.setMalzemeAdetProperty(String.valueOf(existingAdet + yeniAdet));
+                        duplicateMap.put(malzemeKey, existingData);
+                        filteredMap.remove(malzemeKey);
+                    }
                 } else {
                     // Malzeme haritada yoksa yeni bir giriş ekle
                     filteredMap.put(malzemeKey, new ParcaTableData(
