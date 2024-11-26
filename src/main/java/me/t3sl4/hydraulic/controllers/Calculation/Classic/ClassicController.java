@@ -693,9 +693,9 @@ public class ClassicController {
         Kabin finalTank = null;
         for(Kabin selectedTank : SystemVariables.getLocalHydraulicData().classicCabins) {
             int selectedTankKabinHacim = selectedTank.getKabinHacim();
-            int selectedTankKabinX = selectedTank.getKabinGecisX();
-            int selectedTankKabinY = selectedTank.getKabinGecisY();
-            int selectedTankKabinH = selectedTank.getKabinGecisH();
+            int selectedTankKabinX = selectedTank.getTankDisX();
+            int selectedTankKabinY = selectedTank.getTankDisY();
+            int selectedTankKabinH = selectedTank.getTankDisH();
 
             if(selectedTankKabinX >= x && selectedTankKabinY >= y && selectedTankKabinH >= h) {
                 int kayipLitre = getLocalHydraulicData().kayipLitre;
@@ -720,17 +720,17 @@ public class ClassicController {
         }
 
         if (finalTank != null) {
-            x = finalTank.getKabinGecisX();
-            y = finalTank.getKabinGecisY();
-            h = finalTank.getKabinGecisH();
+            x = finalTank.getTankDisX();
+            y = finalTank.getTankDisY();
+            h = finalTank.getTankDisH();
             atananHacim = finalTank.getKabinHacim();
             atananHT = finalTank.getTankName();
-            if(finalTank.getKabinDisH() < (motorYukseklik + h)) {
+            if(finalTank.getKabinGecisH() < (motorYukseklik + h)) {
                 for(Kabin selectedTank : getLocalHydraulicData().classicCabins) {
-                    int kabinYukseklik = selectedTank.getKabinDisH();
+                    int kabinYukseklik = selectedTank.getKabinGecisH();
                     //System.out.println("Kabin Yükseklik: " + kabinYukseklik + "\nÖnceden Seçilen Kabin Yükseklik: " + finalTank.getKabinH());
 
-                    int tempYukseklik = finalTank.getKabinDisH() + motorYukseklik;
+                    int tempYukseklik = finalTank.getKabinGecisH() + motorYukseklik;
                     System.out.println("Yukseklik Hesaplama: " + tempYukseklik + "   Kabin Yükseklik: " + kabinYukseklik);
 
                     if(kabinYukseklik >= tempYukseklik) {

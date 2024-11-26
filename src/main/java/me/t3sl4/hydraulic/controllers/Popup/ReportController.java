@@ -49,6 +49,9 @@ public class ReportController {
 
     private final ObservableList<File> uploadedFiles = FXCollections.observableArrayList();
 
+    private static long lastReportTime = 0;  // Track the last time a report was sent
+    private static final long COOLDOWN_TIME = 5 * 60 * 1000;  // 5 minutes in milliseconds
+
     @FXML
     public void initialize() {
         uploadedFilesArea.setEditable(false);
@@ -165,24 +168,35 @@ public class ReportController {
             return;
         }
 
+        // Check if enough time has passed since the last report
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastReportTime < COOLDOWN_TIME) {
+            showError("Hata bildirimi göndermek için 5 dakika bekleyin.");
+            popupKapat();
+        }
+
+        // Prepare the files to be sent
         Map<String, File> filesToSend = new HashMap<>();
         for (File file : uploadedFiles) {
             filesToSend.put(file.getName(), file);
         }
 
+        // Send the bug report
         HTTPMethod.sendBugReport(subject, details, filesToSend, new HTTPMethod.RequestCallback() {
             @Override
-            public void onSuccess(String response) throws IOException {
+            public void onSuccess(String response) {
                 showInfo("Hata bildirimi başarıyla gönderildi.");
+                lastReportTime = System.currentTimeMillis();
+                popupKapat();
             }
 
             @Override
             public void onFailure() {
                 showError("Hata bildirimi gönderilemedi.");
+                popupKapat();
             }
         });
     }
-
 
     private void openFileChooser() {
         if (uploadedFiles.size() >= 5) {

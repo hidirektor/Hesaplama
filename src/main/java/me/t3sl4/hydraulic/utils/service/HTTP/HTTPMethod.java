@@ -247,7 +247,7 @@ public class HTTPMethod {
         if (uploadedFiles != null && !uploadedFiles.isEmpty()) {
             int index = 0;
             for (File file : uploadedFiles.values()) {
-                String mimeType = "application/octet-stream"; // Default mime type
+                String mimeType = "application/octet-stream";  // Default mime type
                 String fileName = file.getName();
                 if (fileName.endsWith(".xlsx")) {
                     mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -258,6 +258,8 @@ public class HTTPMethod {
                 multipartBuilder.addFormDataPart("attachment" + index, file.getName(), RequestBody.create(file, MediaType.parse(mimeType)));
                 index++;
             }
+        } else {
+            multipartBuilder.addFormDataPart("noFiles", "true");
         }
 
         RequestBody requestBody = multipartBuilder.build();
@@ -296,6 +298,4 @@ public class HTTPMethod {
             }
         });
     }
-
-
 }
