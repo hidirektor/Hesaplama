@@ -486,6 +486,7 @@ public class MainController implements Initializable {
                 Button pdfViewButton = (Button) loader.getNamespace().get("pdfViewButton");
                 ImageView excelViewButton = (ImageView) loader.getNamespace().get("excelPart");
                 ImageView deleteButton = (ImageView) loader.getNamespace().get("deleteIcon");
+                ImageView replayButton = (ImageView) loader.getNamespace().get("replayIcon");
 
                 if(info.isLocal()) {
                     pdfViewButton.setText("Aç");
