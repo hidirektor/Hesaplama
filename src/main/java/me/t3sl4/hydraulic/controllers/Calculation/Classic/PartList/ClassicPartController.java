@@ -80,7 +80,7 @@ public class ClassicPartController {
     @FXML
     public void exportExcelProcess() {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
-        String excelFileName = SystemVariables.excelFileLocalPath + PowerPackController.girilenSiparisNumarasi + ".xlsx";
+        String excelFileName = SystemVariables.excelFileLocalPath + ClassicController.girilenSiparisNumarasi + ".xlsx";
 
         Map<String, ParcaTableData> malzemeMap = new LinkedHashMap<>();
 
