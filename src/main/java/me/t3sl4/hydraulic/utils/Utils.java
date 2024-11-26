@@ -386,6 +386,48 @@ public class Utils {
         }
     }
 
+    public static void showReportPopup(Image icon, Screen currentScreen, String fxmlPath) {
+        AtomicReference<Double> screenX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> screenY = new AtomicReference<>((double) 0);
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource(fxmlPath));
+            VBox root = fxmlLoader.load();
+
+            Stage popupStage = new Stage();
+            Rectangle2D bounds = currentScreen.getVisualBounds();
+            popupStage.setOnShown(event -> {
+                double stageWidth = popupStage.getWidth();
+                double stageHeight = popupStage.getHeight();
+
+                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
+                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
+
+                popupStage.setX(centerX);
+                popupStage.setY(centerY);
+            });
+
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.initStyle(StageStyle.UNDECORATED);
+            popupStage.setScene(new Scene(root));
+            popupStage.getIcons().add(icon);
+
+            root.setOnMousePressed(event -> {
+                screenX.set(event.getSceneX());
+                screenY.set(event.getSceneY());
+            });
+            root.setOnMouseDragged(event -> {
+
+                popupStage.setX(event.getScreenX() - screenX.get());
+                popupStage.setY(event.getScreenY() - screenY.get());
+
+            });
+            popupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void showMonitorSelectionScreen(List<Screen> screens, Screen currentScreen, boolean redirectStatus) {
         Stage selectionStage = new Stage();
         VBox layout = new VBox(10);

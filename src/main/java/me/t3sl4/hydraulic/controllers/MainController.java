@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -87,7 +88,7 @@ public class MainController implements Initializable {
     public Button btnCloseProgram;
 
     @FXML
-    private Button btnInisMetodu;
+    private Button btnReportBug;
 
     @FXML
     private Button btnParametreler;
@@ -284,8 +285,6 @@ public class MainController implements Initializable {
             paneSwitch(1);
         } else if (actionEvent.getSource() == btnHidros) {
             paneSwitch(2);
-        } else if (actionEvent.getSource() == btnInisMetodu) {
-            paneSwitch(3);
         } else if (actionEvent.getSource() == btnParametreler) {
             paneSwitch(4);
         } else if (actionEvent.getSource() == btnHome) {
@@ -299,6 +298,9 @@ public class MainController implements Initializable {
             Utils.openLoginScreen(kullaniciAdiIsimText);
         } else if(actionEvent.getSource() == btnMonitorAdapter) {
             Utils.showMonitorSelectionScreen(Screen.getScreens(), SceneUtil.getScreenOfNode(kullaniciAdiIsimText), false);
+        } else if (actionEvent.getSource() == btnReportBug) {
+             javafx.scene.image.Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
+             Utils.showReportPopup(icon, SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/ReportBug.fxml");
         }
     }
 
@@ -570,16 +572,6 @@ public class MainController implements Initializable {
                 Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
         } else if(state == 2) {
-            pnlMenus.setStyle("-fx-background-color : #353a46");
-            pnlMenus.toFront();
-            try {
-                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/PowerPack.fxml"));
-                Pane parametrePane = loader.load();
-                pnlMenus.getChildren().setAll(parametrePane);
-            } catch (IOException e) {
-                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
-            }
-        } else if(state == 3) {
             pnlMenus.setStyle("-fx-background-color : #353a46");
             pnlMenus.toFront();
             try {

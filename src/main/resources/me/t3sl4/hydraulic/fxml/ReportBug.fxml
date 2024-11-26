@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="500.0" style="-fx-background-color: #02030A;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.Popup.ReportController">
+    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0">
+        <children>
+            <Text fill="#B7C3D7" layoutX="124.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Programı kullanabilmek için lisans anahtarını aktifleştirmeniz gerekmektedir." textAlignment="CENTER" wrappingWidth="254.44534301757812">
+                <font>
+                    <Font size="13.0" />
+                </font></Text>
+            <Text fill="#B7C3D7" layoutX="123.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lisans Anahtarınız" textAlignment="CENTER" wrappingWidth="254.44534301757812">
+                <font>
+                    <Font size="13.0" />
+                </font>
+            </Text>
+            <Button fx:id="sendReportButton" layoutX="216.0" layoutY="131.0" mnemonicParsing="false" onAction="#popupKapat" style="-fx-background-color: #1761ab;" text="Aktifleştir" />
+            <TextField fx:id="licenseKeyField" layoutX="10.0" layoutY="92.0" prefHeight="25.0" prefWidth="480.0" />
+        </children>
+    </AnchorPane>
+</VBox>
