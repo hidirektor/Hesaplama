@@ -24,6 +24,7 @@ import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.*;
@@ -293,9 +294,23 @@ public class ClassicController {
             files.put("partListFile", partListFile);
             files.put("schematicFile", schematicFile);
 
-            HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), loggedInUser.getUserID(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPMethod.RequestCallback() {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Ünite Tipi", ClassicController.secilenUniteTipi);
+            jsonObject.put("Sipariş Numarası", ClassicController.girilenSiparisNumarasi);
+            jsonObject.put("Motor", ClassicController.secilenMotor);
+            jsonObject.put("Soğutma", ClassicController.secilenSogutmaDurumu);
+            jsonObject.put("Hidrolik Kilit", ClassicController.secilenHidrolikKilitDurumu);
+            jsonObject.put("Pompa", ClassicController.secilenPompa);
+            jsonObject.put("Gerekli Yağ Miktarı", ClassicController.girilenTankKapasitesiMiktari);
+            jsonObject.put("Kompanzasyon", ClassicController.kompanzasyonDurumu);
+            jsonObject.put("Valf Tipi", ClassicController.secilenValfTipi);
+            jsonObject.put("Kilit Motor", ClassicController.secilenKilitMotor);
+            jsonObject.put("Kilit Pompa", ClassicController.secilenKilitPompa);
+
+            HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), loggedInUser.getUserID(), girilenSiparisNumarasi, secilenUniteTipi, Utils.compress(jsonObject.toString()), new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
+                    Utils.deleteLocalUnitData(localHydraulicStatsPath, girilenSiparisNumarasi);
                     Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
                 }
 

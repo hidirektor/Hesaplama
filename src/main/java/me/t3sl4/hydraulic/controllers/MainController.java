@@ -528,6 +528,10 @@ public class MainController implements Initializable {
                     initializeHydraulicTable();
                 });
 
+                replayButton.setOnMouseClicked(event -> {
+                    System.out.println(Utils.decompress(info.getUnitParameters()));
+                });
+
                 if (info.isLocal()) {
                     node.setOnMouseEntered(event -> itemC.setStyle("-fx-background-color : #FF6961"));
                 } else {

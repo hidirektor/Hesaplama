@@ -18,6 +18,7 @@ import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.TableData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.*;
@@ -210,9 +211,25 @@ public class PowerPackController {
             files.put("partListFile", partListFile);
             files.put("schematicFile", schematicFile);
 
-            HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), loggedInUser.getUserID(), girilenSiparisNumarasi, secilenUniteTipi, new HTTPMethod.RequestCallback() {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Ünite Tipi", PowerPackController.secilenUniteTipi);
+            jsonObject.put("Sipariş Numarası", PowerPackController.girilenSiparisNumarasi);
+            jsonObject.put("Motor Voltaj", PowerPackController.secilenMotorTipi);
+            jsonObject.put("Ünite Tipi", PowerPackController.uniteTipiDurumu);
+            jsonObject.put("Motor Gücü", PowerPackController.secilenMotorGucu);
+            jsonObject.put("Pompa", PowerPackController.secilenPompa);
+            jsonObject.put("Tank Tipi", PowerPackController.secilenTankTipi);
+            jsonObject.put("Tank Kapasitesi", PowerPackController.secilenTankKapasitesi);
+            jsonObject.put("Özel Tank Ölçüleri (GxDxY)", PowerPackController.secilenOzelTankGenislik + "x" + PowerPackController.secilenOzelTankDerinlik + "x" + PowerPackController.secilenOzelTankYukseklik);
+            jsonObject.put("Platform Tipi", PowerPackController.secilenPlatformTipi);
+            jsonObject.put("1. Valf Tipi", PowerPackController.secilenBirinciValf);
+            jsonObject.put("İniş Metodu", PowerPackController.secilenInisTipi);
+            jsonObject.put("2. Valf Tipi", PowerPackController.secilenIkinciValf);
+
+            HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), loggedInUser.getUserID(), girilenSiparisNumarasi, secilenUniteTipi, Utils.compress(jsonObject.toString()), new HTTPMethod.RequestCallback() {
                 @Override
                 public void onSuccess(String response) {
+                    Utils.deleteLocalUnitData(localHydraulicStatsPath, girilenSiparisNumarasi);
                     Utils.showSuccessMessage("Hidrolik ünitesi başarılı bir şekilde kaydedildi.", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
                 }
 

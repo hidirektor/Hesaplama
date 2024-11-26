@@ -178,7 +178,7 @@ public class HTTPMethod {
         sendRequest(url, reqMethod, RequestType.MULTIPLE_FILE_UPLOAD, null, new HashMap<>(), files, null, callback);
     }
 
-    public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, String userName, String userID, String orderID, String hydraulicType, RequestCallback callback) {
+    public static void authorizedUploadMultipleFiles(String url, String reqMethod, Map<String, File> files, String bearerToken, String userName, String userID, String orderID, String hydraulicType, String unitParameters, RequestCallback callback) {
         OkHttpClient client = new OkHttpClient();  // Ensure client is initialized
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + bearerToken);
@@ -191,6 +191,7 @@ public class HTTPMethod {
                     multipartBuilder.addFormDataPart("userName", userName);
                     multipartBuilder.addFormDataPart("orderID", orderID);
                     multipartBuilder.addFormDataPart("hydraulicType", hydraulicType);
+                    multipartBuilder.addFormDataPart("unitParameters", unitParameters);
                     multipartBuilder.addFormDataPart("operationPlatform", "Desktop -- JavaFX");
                     multipartBuilder.addFormDataPart("sourceUserID", userID);
                     multipartBuilder.addFormDataPart("affectedHydraulicUnitID", orderID);
