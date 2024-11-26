@@ -56,9 +56,9 @@ public class PowerPackPartController {
         manometreComboBox.getItems().clear();
         manometreComboBox.getItems().addAll("Var", "Yok");
 
-        malzemeKodu.setCellValueFactory(new PropertyValueFactory<>("satir1Property"));
-        secilenMalzeme.setCellValueFactory(new PropertyValueFactory<>("satir2Property"));
-        adet.setCellValueFactory(new PropertyValueFactory<>("satir3Property"));
+        malzemeKodu.setCellValueFactory(new PropertyValueFactory<>("malzemeKoduProperty"));
+        secilenMalzeme.setCellValueFactory(new PropertyValueFactory<>("malzemeAdiProperty"));
+        adet.setCellValueFactory(new PropertyValueFactory<>("malzemeAdetProperty"));
 
         parcaListesiTablo.getItems().clear();
         comboBoxListener();
@@ -71,9 +71,9 @@ public class PowerPackPartController {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
 
         for (ParcaTableData veri : veriler) {
-            clipboardString.append(veri.getSatir1Property()).append(" ");
-            clipboardString.append(veri.getSatir2Property()).append(" ");
-            clipboardString.append(veri.getSatir3Property()).append("\n");
+            clipboardString.append(veri.getMalzemeKoduProperty()).append(" ");
+            clipboardString.append(veri.getMalzemeAdiProperty()).append(" ");
+            clipboardString.append(veri.getMalzemeAdetProperty()).append("\n");
         }
 
         ClipboardContent content = new ClipboardContent();
@@ -86,25 +86,24 @@ public class PowerPackPartController {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
         String excelFileName = SystemVariables.excelFileLocalPath + PowerPackController.girilenSiparisNumarasi + ".xlsx";
 
-        Map<String, ParcaTableData> malzemeMap = new HashMap<>();
+        Map<String, ParcaTableData> malzemeMap = new LinkedHashMap<>();
 
         for (ParcaTableData rowData : veriler) {
-            // "----" separator satırlarını atla
-            if (!(rowData.getSatir1Property().equals("----") && rowData.getSatir3Property().equals("----"))) {
-                String malzemeKodu = rowData.getSatir1Property();
+            if (!(rowData.getMalzemeKoduProperty().equals("----") && rowData.getMalzemeAdetProperty().equals("----"))) {
+                String malzemeKey = malzemeKodu + "_" + rowData.getMalzemeAdiProperty();
 
-                // Eğer malzeme zaten haritada varsa, adetini güncelle
-                if (malzemeMap.containsKey(malzemeKodu)) {
-                    ParcaTableData existingData = malzemeMap.get(malzemeKodu);
-                    int existingAdet = Integer.parseInt(existingData.getSatir3Property());
-                    int yeniAdet = Integer.parseInt(rowData.getSatir3Property());
+                if (malzemeMap.containsKey(malzemeKey)) {
+                    ParcaTableData existingData = malzemeMap.get(malzemeKey);
+                    int existingAdet = Integer.parseInt(existingData.getMalzemeAdetProperty());
+                    int yeniAdet = Integer.parseInt(rowData.getMalzemeAdetProperty());
                     // Adetleri topluyoruz
-                    existingData.setSatir3Property(String.valueOf(existingAdet + yeniAdet));
+                    existingData.setMalzemeAdetProperty(String.valueOf(existingAdet + yeniAdet));
                 } else {
-                    malzemeMap.put(malzemeKodu, new ParcaTableData(
-                            rowData.getSatir1Property(),
-                            rowData.getSatir2Property(),
-                            rowData.getSatir3Property()
+                    // Malzeme haritada yoksa yeni bir giriş ekle
+                    malzemeMap.put(malzemeKey, new ParcaTableData(
+                            rowData.getMalzemeKoduProperty(),
+                            rowData.getMalzemeAdiProperty(),
+                            rowData.getMalzemeAdetProperty()
                     ));
                 }
             }
@@ -118,25 +117,22 @@ public class PowerPackPartController {
             headerRow.createCell(1).setCellValue("Seçilen Malzeme");
             headerRow.createCell(2).setCellValue("Adet");
 
-            int excelRowIndex = 1;
-            for (ParcaTableData rowData : malzemeMap.values()) {
-                // "----" separator satırlarını atla
-                if (!(rowData.getSatir1Property()
-                        .equals("----")
-                        && rowData.getSatir3Property().equals("----"))) {
+            List<ParcaTableData> sortedData = new ArrayList<>(malzemeMap.values());
+            sortedData.sort((d1, d2) -> d1.getMalzemeKoduProperty().compareTo(d2.getMalzemeKoduProperty()));
 
-                    Row row = sheet.createRow(excelRowIndex++);
-                    row.createCell(0).setCellValue(rowData.getSatir1Property());
-                    row.createCell(1).setCellValue(rowData.getSatir2Property());
-                    row.createCell(2).setCellValue(rowData.getSatir3Property());
-                }
+            int excelRowIndex = 1;
+            for (ParcaTableData rowData : sortedData) {
+                Row row = sheet.createRow(excelRowIndex++);
+                row.createCell(0).setCellValue(rowData.getMalzemeKoduProperty());
+                row.createCell(1).setCellValue(rowData.getMalzemeAdiProperty());
+                row.createCell(2).setCellValue(rowData.getMalzemeAdetProperty());
             }
 
             try (FileOutputStream fileOut = new FileOutputStream(excelFileName)) {
                 workbook.write(fileOut);
                 System.out.println("Excel dosyası başarıyla oluşturuldu: " + excelFileName);
 
-                if(SystemVariables.loggedInUser != null) {
+                if (SystemVariables.loggedInUser != null) {
                     Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,
                             PowerPackController.girilenSiparisNumarasi,
                             Utils.getCurrentUnixTime(),
@@ -155,6 +151,8 @@ public class PowerPackPartController {
                             "yes",
                             System.getProperty("user.name"));
                 }
+
+                Utils.openFile(excelFileName);
             }
 
         } catch (IOException e) {
@@ -851,7 +849,7 @@ public class PowerPackPartController {
                 if (item == null || empty) {
                     setStyle("");
                 } else {
-                    if (item.getSatir1Property().equals("----") && item.getSatir3Property().equals("----")) {
+                    if (item.getMalzemeKoduProperty().equals("----") && item.getMalzemeAdetProperty().equals("----")) {
                         setStyle("-fx-background-color: #F9F871; -fx-text-fill: black;");
                     } else {
                         setStyle("");

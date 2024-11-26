@@ -3,37 +3,37 @@ package me.t3sl4.hydraulic.utils.database.Model.Table.PartList;
 import javafx.beans.property.SimpleStringProperty;
 
 public class ParcaTableData {
-    private final SimpleStringProperty satir1Property;
-    private final SimpleStringProperty satir2Property;
-    private final SimpleStringProperty satir3Property;
+    private final SimpleStringProperty malzemeKoduProperty;
+    private final SimpleStringProperty malzemeAdiProperty;
+    private final SimpleStringProperty malzemeAdetProperty;
 
-    public ParcaTableData(String data1, String data2, String data3) {
-        this.satir1Property = new SimpleStringProperty(data1);
-        this.satir2Property = new SimpleStringProperty(data2);
-        this.satir3Property = new SimpleStringProperty(data3);
+    public ParcaTableData(String malzemeKodu, String malzemeAdi, String malzemeAdet) {
+        this.malzemeKoduProperty = new SimpleStringProperty(malzemeKodu);
+        this.malzemeAdiProperty = new SimpleStringProperty(malzemeAdi);
+        this.malzemeAdetProperty = new SimpleStringProperty(malzemeAdet);
     }
 
-    public String getSatir1Property() {
-        return satir1Property.get();
+    public String getMalzemeKoduProperty() {
+        return malzemeKoduProperty.get();
     }
 
-    public void setSatir1Property(String satir1) {
-        satir1Property.set(satir1);
+    public void setMalzemeKoduProperty(String malzemeKodu) {
+        malzemeKoduProperty.set(malzemeKodu);
     }
 
-    public String getSatir2Property() {
-        return satir2Property.get();
+    public String getMalzemeAdiProperty() {
+        return malzemeAdiProperty.get();
     }
 
-    public void setSatir2Property(String satir2) {
-        satir2Property.set(satir2);
+    public void setMalzemeAdiProperty(String malzemeAdi) {
+        malzemeAdiProperty.set(malzemeAdi);
     }
 
-    public String getSatir3Property() {
-        return satir3Property.get();
+    public String getMalzemeAdetProperty() {
+        return malzemeAdetProperty.get();
     }
 
-    public void setSatir3Property(String satir2) {
-        satir3Property.set(satir2);
+    public void setMalzemeAdetProperty(String malzemeAdet) {
+        malzemeAdetProperty.set(malzemeAdet);
     }
 }
