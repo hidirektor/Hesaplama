@@ -54,6 +54,8 @@
 [![ScreenShot-7][product-screenshot7]](https://ondergrup.com)
 [![ScreenShot-8][product-screenshot8]](https://ondergrup.com)
 [![ScreenShot-9][product-screenshot9]](https://ondergrup.com)
+[![ScreenShot-10][product-screenshot10]](https://ondergrup.com)
+[![ScreenShot-11][product-screenshot11]](https://ondergrup.com)
 
 Önder Grup çalışanlarının gelen işlere göre hidrolik ünitesi hesaplayabildikleri araçtır. Amaç hidrolik ünitesi hesaplama işlemini olabildiğince standart hale getirmektir.
 
@@ -176,6 +178,8 @@ I've included a few of my favorites to kick things off!
 [product-screenshot7]: readme/ss-7.png
 [product-screenshot8]: readme/ss-8.png
 [product-screenshot9]: readme/ss-9.png
+[product-screenshot10]: readme/ss-10.png
+[product-screenshot11]: readme/ss-11.png
 [Next.js]: https://img.shields.io/badge/java-000000?style=for-the-badge&logo=java&logoColor=white
 [Next-url]: https://www.java.com/tr/
 [React.js]: https://img.shields.io/badge/javafx-20232A?style=for-the-badge&logo=javafx&logoColor=61DAFB
