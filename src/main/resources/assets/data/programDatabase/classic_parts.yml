@@ -597,7 +597,7 @@ pompa:
       '0':
         malzemeKodu: "Veri Yok"
         malzemeAdi: "Veri Yok"
-        malzemeAdet: "Veri Yok"
+        malzemeAdet: "0"
   '9': #33.3 cc
     parts:
       '0':
