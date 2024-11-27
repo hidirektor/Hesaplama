@@ -960,6 +960,14 @@ public class Utils {
         }
     }
 
+    public static String getValidString(JSONObject jsonObject, String key) {
+        if (jsonObject.has(key)) {
+            String value = jsonObject.getString(key);
+            return value.equals("null") ? null : value;
+        }
+        return null;
+    }
+
     public static String getCurrentUnixTime() {
         long unixTime = Instant.now().getEpochSecond();
         return String.valueOf(unixTime);

@@ -144,7 +144,7 @@ public class PowerPackPartController {
                 jsonObject.put("Ünite Tipi", PowerPackController.secilenUniteTipi);
                 jsonObject.put("Sipariş Numarası", PowerPackController.girilenSiparisNumarasi);
                 jsonObject.put("Motor Voltaj", PowerPackController.secilenMotorTipi);
-                jsonObject.put("Ünite Tipi", PowerPackController.uniteTipiDurumu);
+                jsonObject.put("Ünite Durumu", PowerPackController.uniteTipiDurumu);
                 jsonObject.put("Motor Gücü", PowerPackController.secilenMotorGucu);
                 jsonObject.put("Pompa", PowerPackController.secilenPompa);
                 jsonObject.put("Tank Tipi", PowerPackController.secilenTankTipi);

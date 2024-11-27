@@ -5,6 +5,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
+import me.t3sl4.hydraulic.utils.database.Model.Replay.PowerPackData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class Main extends Application {
     public static Screen defaultScreen;
 
     public static String license;
+
+    public static PowerPackData powerPackReplayData = new PowerPackData();
 
     @lombok.SneakyThrows
     @Override

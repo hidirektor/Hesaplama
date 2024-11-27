@@ -22,6 +22,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.app.Main;
+import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.controllers.Popup.PopupController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.component.FilterSwitch;
@@ -34,12 +36,14 @@ import me.t3sl4.hydraulic.utils.service.HTTP.Request.HydraulicUnit.HydraulicServ
 import me.t3sl4.hydraulic.utils.service.HTTP.Request.License.LicenseService;
 import me.t3sl4.hydraulic.utils.service.UserDataService.Profile;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -533,7 +537,62 @@ public class MainController implements Initializable {
                 });
 
                 replayButton.setOnMouseClicked(event -> {
-                    System.out.println(Utils.decompress(info.getUnitParameters()));
+                    try {
+                        String rawJsonData = Utils.decompress(info.getUnitParameters());
+                        System.out.println("Çözülmüş JSON verisi: " + rawJsonData);
+
+                        String correctedJsonData = new String(Utils.decompress(info.getUnitParameters()).getBytes(), StandardCharsets.UTF_8);
+                        JSONObject currentHydraulicUnit = new JSONObject(correctedJsonData);
+
+                        System.out.println(currentHydraulicUnit.toString());
+
+                        if (currentHydraulicUnit.has("Ünite Tipi")) {
+                            String uniteTipi = (String) currentHydraulicUnit.get("Ünite Tipi");
+                            if(uniteTipi.equals("Klasik")) {
+                                Utils.clearOldCalculationData("klasik");
+                            } else if(uniteTipi.equals("PowerPack")) {
+                                Main.powerPackReplayData.setGirilenSiparisNumarasi(Utils.getValidString(currentHydraulicUnit, "Sipariş Numarası"));
+                                Main.powerPackReplayData.setSecilenMotorTipi(Utils.getValidString(currentHydraulicUnit, "Motor Voltaj"));
+                                Main.powerPackReplayData.setUniteTipiDurumu(Utils.getValidString(currentHydraulicUnit, "Ünite Durumu"));
+                                Main.powerPackReplayData.setSecilenMotorGucu(Utils.getValidString(currentHydraulicUnit, "Motor Gücü"));
+                                Main.powerPackReplayData.setSecilenPompa(Utils.getValidString(currentHydraulicUnit, "Pompa"));
+                                Main.powerPackReplayData.setSecilenTankTipi(Utils.getValidString(currentHydraulicUnit, "Tank Tipi"));
+                                Main.powerPackReplayData.setSecilenTankKapasitesi(Utils.getValidString(currentHydraulicUnit, "Tank Kapasitesi"));
+                                Main.powerPackReplayData.setSecilenPlatformTipi(Utils.getValidString(currentHydraulicUnit, "Platform Tipi"));
+                                Main.powerPackReplayData.setSecilenBirinciValf(Utils.getValidString(currentHydraulicUnit, "1. Valf Tipi"));
+                                Main.powerPackReplayData.setSecilenInisTipi(Utils.getValidString(currentHydraulicUnit, "İniş Metodu"));
+                                Main.powerPackReplayData.setSecilenIkinciValf(Utils.getValidString(currentHydraulicUnit, "2. Valf Tipi"));
+
+                                String ozelTankOlculeri = Utils.getValidString(currentHydraulicUnit, "Özel Tank Ölçüleri (GxDxY)");
+                                if (ozelTankOlculeri != null && ozelTankOlculeri.contains("x")) {
+                                    String[] tankOlculeri = ozelTankOlculeri.split("x");
+                                    if (tankOlculeri.length == 3) {
+                                        Main.powerPackReplayData.setSecilenOzelTankGenislik("null".equals(tankOlculeri[0]) ? null : tankOlculeri[0]);
+                                        Main.powerPackReplayData.setSecilenOzelTankDerinlik("null".equals(tankOlculeri[1]) ? null : tankOlculeri[1]);
+                                        Main.powerPackReplayData.setSecilenOzelTankYukseklik("null".equals(tankOlculeri[2]) ? null : tankOlculeri[2]);
+                                    } else {
+                                        System.err.println("Hata: 'Özel Tank Ölçüleri (GxDxY)' formatı beklenenden farklı.");
+                                    }
+                                } else {
+                                    System.err.println("Hata: 'Özel Tank Ölçüleri (GxDxY)' değeri null veya geçersiz formatta.");
+                                }
+
+                                Utils.clearOldCalculationData("hidros");
+                                paneSwitch(2);
+                            } else {
+                                System.out.println(uniteTipi);
+                                System.err.println("Hata: 'Ünite Tipi' geçersiz.");
+                            }
+                        } else {
+                            System.err.println("Hata: 'Ünite Tipi' anahtarı JSON objesinde bulunamadı.");
+                        }
+                    } catch (JSONException e) {
+                        System.err.println("Hata: JSON formatı hatalı veya geçersiz.");
+                    } catch (NullPointerException e) {
+                        System.err.println("Hata: JSON verisi null.");
+                    } catch (Exception e) {
+                        System.err.println("Hata: Beklenmeyen bir hata oluştu - " + e.getMessage());
+                    }
                 });
 
                 if (info.isLocal()) {
