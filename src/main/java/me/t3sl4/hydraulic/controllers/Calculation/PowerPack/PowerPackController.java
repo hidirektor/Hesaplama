@@ -170,6 +170,9 @@ public class PowerPackController {
         tankTipiComboBox.getSelectionModel().clearSelection();
         tankTipiComboBox.setPromptText("Tank Tipi");
         tankKapasitesiComboBox.setPromptText("Tank Kapasitesi");
+        ozelTankGenislik.setPromptText("Genişlik");
+        ozelTankYukseklik.setPromptText("Yükseklik");
+        ozelTankDerinlik.setPromptText("Derinlik");
         platformTipiComboBox.getSelectionModel().clearSelection();
         platformTipiComboBox.setPromptText("Platform Tipi");
         birinciValfComboBox.getSelectionModel().clearSelection();
@@ -965,7 +968,8 @@ public class PowerPackController {
             kullanilacakKabinText.setText("Kullanılacak Kabin: " + selectedKabin.get().kabinName + "\nGeçiş Ölçüleri: " + selectedKabin.get().gecisOlculeri + "\nKabin Kodu: " + selectedKabin.get().kabinKodu);
             kabinKodu = selectedKabin.get().kabinKodu;
         } else {
-            kullanilacakKabinText.setText("Kullanılacak Kabin: " + "Özel Kabin" + "\nGirilen Ölçüler: " + ozelTankGenislik.getText() + "x" + ozelTankDerinlik.getText() + "x" + ozelTankYukseklik);
+            atananKabin = "Özel Kabin";
+            kullanilacakKabinText.setText("Kullanılacak Kabin: " + "Özel Kabin" + "\nGirilen Ölçüler: " + ozelTankGenislik.getText() + "x" + ozelTankDerinlik.getText() + "x" + ozelTankYukseklik.getText());
         }
     }
 
