@@ -23,6 +23,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
+import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
 import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.controllers.Popup.PopupController;
 import me.t3sl4.hydraulic.utils.Utils;
@@ -538,18 +539,28 @@ public class MainController implements Initializable {
 
                 replayButton.setOnMouseClicked(event -> {
                     try {
-                        String rawJsonData = Utils.decompress(info.getUnitParameters());
-                        System.out.println("Çözülmüş JSON verisi: " + rawJsonData);
-
                         String correctedJsonData = new String(Utils.decompress(info.getUnitParameters()).getBytes(), StandardCharsets.UTF_8);
                         JSONObject currentHydraulicUnit = new JSONObject(correctedJsonData);
 
-                        System.out.println(currentHydraulicUnit.toString());
-
                         if (currentHydraulicUnit.has("Ünite Tipi")) {
-                            String uniteTipi = (String) currentHydraulicUnit.get("Ünite Tipi");
+                            String uniteTipi = currentHydraulicUnit.getString("Ünite Tipi");
                             if(uniteTipi.equals("Klasik")) {
+                                Main.classicReplayData.setSecilenUniteTipi(Utils.getValidString(currentHydraulicUnit, "Ünite Tipi"));
+                                Main.classicReplayData.setGirilenSiparisNumarasi(Utils.getValidString(currentHydraulicUnit, "Sipariş Numarası"));
+                                Main.classicReplayData.setSecilenMotor(Utils.getValidString(currentHydraulicUnit, "Motor"));
+                                Main.classicReplayData.setSecilenSogutmaDurumu(Utils.getValidString(currentHydraulicUnit, "Soğutma"));
+                                Main.classicReplayData.setSecilenHidrolikKilitDurumu(Utils.getValidString(currentHydraulicUnit, "Hidrolik Kilit"));
+                                Main.classicReplayData.setSecilenPompa(Utils.getValidString(currentHydraulicUnit, "Pompa"));
+                                Main.classicReplayData.setGirilenTankKapasitesiMiktari(currentHydraulicUnit.getInt("Gerekli Yağ Miktarı"));
+                                Main.classicReplayData.setKompanzasyonDurumu(Utils.getValidString(currentHydraulicUnit, "Kompanzasyon"));
+                                Main.classicReplayData.setSecilenValfTipi(Utils.getValidString(currentHydraulicUnit, "Valf Tipi"));
+                                Main.classicReplayData.setSecilenKilitMotor(Utils.getValidString(currentHydraulicUnit, "Kilit Motor"));
+                                Main.classicReplayData.setSecilenKilitPompa(Utils.getValidString(currentHydraulicUnit, "Kilit Pompa"));
+                                Main.classicReplayData.setSecilenKampana(currentHydraulicUnit.getInt("Seçilen Kampana"));
+                                Main.classicReplayData.setSecilenPompaVal(currentHydraulicUnit.getDouble("Seçilen Pompa Val"));
+
                                 Utils.clearOldCalculationData("klasik");
+                                paneSwitch(1);
                             } else if(uniteTipi.equals("PowerPack")) {
                                 Main.powerPackReplayData.setGirilenSiparisNumarasi(Utils.getValidString(currentHydraulicUnit, "Sipariş Numarası"));
                                 Main.powerPackReplayData.setSecilenMotorTipi(Utils.getValidString(currentHydraulicUnit, "Motor Voltaj"));
@@ -587,9 +598,9 @@ public class MainController implements Initializable {
                             System.err.println("Hata: 'Ünite Tipi' anahtarı JSON objesinde bulunamadı.");
                         }
                     } catch (JSONException e) {
-                        System.err.println("Hata: JSON formatı hatalı veya geçersiz.");
+                        System.err.println("Hata: JSON formatı hatalı veya geçersiz.\nHata Mesajı: " + e.getMessage());
                     } catch (NullPointerException e) {
-                        System.err.println("Hata: JSON verisi null.");
+                        System.err.println("Hata: JSON verisi null.\nHata Mesajı: " + e.getMessage());
                     } catch (Exception e) {
                         System.err.println("Hata: Beklenmeyen bir hata oluştu - " + e.getMessage());
                     }

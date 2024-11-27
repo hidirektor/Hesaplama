@@ -2,6 +2,7 @@ package me.t3sl4.hydraulic.controllers.Calculation.Classic;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.application.Platform;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +17,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
+import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.File.PDF.PDFUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -106,6 +108,9 @@ public class ClassicController {
     private Button kaydetButton;
 
     @FXML
+    private Button hesaplaButton;
+
+    @FXML
     private Button parcaListesiButton;
 
     @FXML
@@ -158,6 +163,15 @@ public class ClassicController {
         if(SystemVariables.loggedInUser == null) {
             kaydetButton.setDisable(true);
         }
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(this::loadReplayedData);
+        }).start();
     }
 
     @FXML
@@ -306,6 +320,8 @@ public class ClassicController {
             jsonObject.put("Valf Tipi", ClassicController.secilenValfTipi);
             jsonObject.put("Kilit Motor", ClassicController.secilenKilitMotor);
             jsonObject.put("Kilit Pompa", ClassicController.secilenKilitPompa);
+            jsonObject.put("Seçilen Kampana", ClassicController.secilenKampana);
+            jsonObject.put("Seçilen Pompa Val", ClassicController.secilenPompaVal);
 
             HTTPMethod.authorizedUploadMultipleFiles(creationURL, "POST", files, SystemVariables.loggedInUser.getAccessToken(), SystemVariables.loggedInUser.getUsername(), loggedInUser.getUserID(), girilenSiparisNumarasi, secilenUniteTipi, Utils.compress(jsonObject.toString()), new HTTPMethod.RequestCallback() {
                 @Override
@@ -1709,5 +1725,90 @@ public class ClassicController {
             Stage stage = (Stage) exportButton.getScene().getWindow();
             stage.setIconified(true);
         }
+    }
+
+    public void loadReplayedData() {
+        girilenSiparisNumarasi = Main.classicReplayData.getGirilenSiparisNumarasi();
+        secilenMotor = Main.classicReplayData.getSecilenMotor();
+        secilenKampana = Main.classicReplayData.getSecilenKampana();
+        secilenSogutmaDurumu = Main.classicReplayData.getSecilenSogutmaDurumu();
+        secilenHidrolikKilitDurumu = Main.classicReplayData.getSecilenHidrolikKilitDurumu();
+        secilenPompa = Main.classicReplayData.getSecilenPompa();
+        secilenPompaVal = Main.classicReplayData.getSecilenPompaVal();
+        girilenTankKapasitesiMiktari = Main.classicReplayData.getGirilenTankKapasitesiMiktari();
+        kompanzasyonDurumu = Main.classicReplayData.getKompanzasyonDurumu();
+        secilenValfTipi = Main.classicReplayData.getSecilenValfTipi();
+        secilenKilitMotor = Main.classicReplayData.getSecilenKilitMotor();
+        secilenKilitPompa = Main.classicReplayData.getSecilenKilitPompa();
+
+        System.out.println("ClassicController verileri kontrol ediliyor:");
+
+        if (girilenSiparisNumarasi != null && !girilenSiparisNumarasi.equals("null")) {
+            System.out.println("Girilen Sipariş Numarası: " + girilenSiparisNumarasi);
+            siparisNumarasi.setText(girilenSiparisNumarasi);
+            dataInit("motor", null);
+        }
+
+        if(secilenMotor != null && !secilenMotor.equals("null")) {
+            System.out.println("Seçilen Motor: " + secilenMotor);
+            Utils.selectReplayedComboItem(motorComboBox, secilenMotor);
+            dataInit("sogutma", null);
+        }
+
+        if(secilenSogutmaDurumu != null && !secilenSogutmaDurumu.equals("null")) {
+            System.out.println("Seçilen Soğutma Durumu: " + secilenSogutmaDurumu);
+            Utils.selectReplayedComboItem(sogutmaComboBox, secilenSogutmaDurumu);
+            dataInit("hidrolikKilit", null);
+        }
+
+        if(secilenHidrolikKilitDurumu != null && !secilenHidrolikKilitDurumu.equals("null")) {
+            System.out.println("Seçilen Hidrolik Kilit Durumu: " + secilenHidrolikKilitDurumu);
+            Utils.selectReplayedComboItem(hidrolikKilitComboBox, secilenHidrolikKilitDurumu);
+            dataInit("pompa", null);
+        }
+
+        if(secilenPompa != null && !secilenPompa.equals("null")) {
+            System.out.println("Seçilen Pompa Durumu: " + secilenPompa);
+            Utils.selectReplayedComboItem(pompaComboBox, secilenPompa);
+            tankKapasitesiTextField.setDisable(false);
+        }
+
+        if(girilenTankKapasitesiMiktari != 0) {
+            System.out.println("Girilen Tank Kapasitesi: " + girilenTankKapasitesiMiktari);
+            tankKapasitesiTextField.setText(String.valueOf(girilenTankKapasitesiMiktari));
+            initComboBoxes("tankKapasitesi", 0);
+        }
+
+        if(kompanzasyonDurumu != null && !kompanzasyonDurumu.equals("null")) {
+            System.out.println("Seçilen Kompanzasyon Durumu: " + kompanzasyonDurumu);
+            Utils.selectReplayedComboItem(kompanzasyonComboBox, kompanzasyonDurumu);
+            if(secilenSogutmaDurumu != null && secilenHidrolikKilitDurumu != null && secilenPompa != null && kompanzasyonDurumu != null) {
+                initValfValues();
+            }
+        }
+
+        if(secilenValfTipi != null && !secilenValfTipi.equals("null")) {
+            System.out.println("Seçilen Valf Tipi: " + secilenValfTipi);
+            Utils.selectReplayedComboItem(valfTipiComboBox, secilenValfTipi);
+            if(secilenSogutmaDurumu.equals("Yok") && secilenHidrolikKilitDurumu.equals("Var") && kompanzasyonDurumu.equals("Var")) {
+                dataInit("kilitMotor", 0);
+            } else {
+                hesaplaButton.fire();
+            }
+        }
+
+        if(secilenKilitMotor != null && !secilenKilitMotor.equals("null")) {
+            System.out.println("Seçilen Kilit Motor: " + secilenKilitMotor);
+            Utils.selectReplayedComboItem(kilitMotorComboBox, secilenKilitMotor);
+            dataInit("kilitPompa", null);
+        }
+
+        if(secilenKilitPompa != null && !secilenKilitPompa.equals("null")) {
+            System.out.println("Seçilen Kilit Pompa: " + secilenKilitPompa);
+            Utils.selectReplayedComboItem(kilitPompaComboBox, secilenKilitPompa);
+            hesaplaButton.fire();
+        }
+
+        System.out.println("Veri kontrolü tamamlandı.");
     }
 }

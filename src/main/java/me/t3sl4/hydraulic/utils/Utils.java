@@ -1281,4 +1281,14 @@ public class Utils {
             ClassicController.hesaplamaBitti = false;
         }
     }
+
+    public static void selectReplayedComboItem(ComboBox<String> currentComboBox, String currentData) {
+        for (String item : currentComboBox.getItems()) {
+            if (item.equals(currentData)) {
+                currentComboBox.getSelectionModel().select(item);
+                break;
+            }
+        }
+        currentComboBox.setDisable(false);
+    }
 }

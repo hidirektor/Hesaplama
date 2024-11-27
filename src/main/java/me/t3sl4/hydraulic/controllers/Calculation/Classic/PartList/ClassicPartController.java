@@ -147,6 +147,8 @@ public class ClassicPartController {
                 jsonObject.put("Valf Tipi", ClassicController.secilenValfTipi);
                 jsonObject.put("Kilit Motor", ClassicController.secilenKilitMotor);
                 jsonObject.put("Kilit Pompa", ClassicController.secilenKilitPompa);
+                jsonObject.put("Seçilen Kampana", ClassicController.secilenKampana);
+                jsonObject.put("Seçilen Pompa Val", ClassicController.secilenPompaVal);
 
                 if(SystemVariables.loggedInUser != null) {
                     Utils.createLocalUnitData(SystemVariables.localHydraulicStatsPath,

@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.controllers.Calculation.PowerPack;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -148,7 +149,14 @@ public class PowerPackController {
             kaydetButton.setDisable(true);
         }
 
-        loadReplayedData();
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(this::loadReplayedData);
+        }).start();
     }
 
     @FXML
@@ -1033,8 +1041,6 @@ public class PowerPackController {
     }
 
     public void loadReplayedData() {
-        Utils.clearOldCalculationData("hidros");
-
         girilenSiparisNumarasi = Main.powerPackReplayData.getGirilenSiparisNumarasi();
         secilenMotorTipi = Main.powerPackReplayData.getSecilenMotorTipi();
         uniteTipiDurumu = Main.powerPackReplayData.getUniteTipiDurumu();
@@ -1059,34 +1065,34 @@ public class PowerPackController {
         }
         if (secilenMotorTipi != null && !secilenMotorTipi.equals("null")) {
             System.out.println("Seçilen Motor Tipi: " + secilenMotorTipi);
-            selectReplayedComboItem(motorComboBox, secilenMotorTipi);
+            Utils.selectReplayedComboItem(motorComboBox, secilenMotorTipi);
             initUniteTipi();
         }
         if (uniteTipiDurumu != null && !uniteTipiDurumu.equals("null")) {
             System.out.println("Ünite Tipi Durumu: " + uniteTipiDurumu);
-            selectReplayedComboItem(uniteTipiComboBox, uniteTipiDurumu);
+            Utils.selectReplayedComboItem(uniteTipiComboBox, uniteTipiDurumu);
             initMotorGucu();
         }
         if (secilenMotorGucu != null && !secilenMotorGucu.equals("null")) {
             System.out.println("Seçilen Motor Gücü: " + secilenMotorGucu);
-            selectReplayedComboItem(motorGucuComboBox, secilenMotorGucu);
+            Utils.selectReplayedComboItem(motorGucuComboBox, secilenMotorGucu);
             initPompa();
         }
         if (secilenPompa != null && !secilenPompa.equals("null")) {
             System.out.println("Seçilen Pompa: " + secilenPompa);
-            selectReplayedComboItem(pompaComboBox, secilenPompa);
+            Utils.selectReplayedComboItem(pompaComboBox, secilenPompa);
             initTankTipi();
         }
         if (secilenTankTipi != null && !secilenTankTipi.equals("null")) {
             System.out.println("Seçilen Tank Tipi: " + secilenTankTipi);
-            selectReplayedComboItem(tankTipiComboBox, secilenTankTipi);
+            Utils.selectReplayedComboItem(tankTipiComboBox, secilenTankTipi);
             if(!secilenTankTipi.contains("Özel")) {
                 initTankKapasitesi();
             }
         }
         if (secilenTankKapasitesi != null && !secilenTankKapasitesi.equals("null")) {
             System.out.println("Seçilen Tank Kapasitesi: " + secilenTankKapasitesi);
-            selectReplayedComboItem(tankKapasitesiComboBox, secilenTankKapasitesi);
+            Utils.selectReplayedComboItem(tankKapasitesiComboBox, secilenTankKapasitesi);
             initPlatformTipi();
         }
         if (secilenOzelTankGenislik != null && !secilenOzelTankGenislik.equals("null")) {
@@ -1098,7 +1104,7 @@ public class PowerPackController {
         }
         if (secilenPlatformTipi != null && !secilenPlatformTipi.equals("null")) {
             System.out.println("Seçilen Platform Tipi: " + secilenPlatformTipi);
-            selectReplayedComboItem(platformTipiComboBox, secilenPlatformTipi);
+            Utils.selectReplayedComboItem(platformTipiComboBox, secilenPlatformTipi);
             if(secilenPlatformTipi.contains("Özel")) {
                 initValfTipi();
             } else {
@@ -1107,15 +1113,14 @@ public class PowerPackController {
         }
         if (secilenInisTipi != null && !secilenInisTipi.equals("null")) {
             System.out.println("Seçilen İniş Tipi: " + secilenInisTipi);
-            selectReplayedComboItem(inisTipiComboBox, secilenInisTipi);
+            Utils.selectReplayedComboItem(inisTipiComboBox, secilenInisTipi);
 
             hesaplaButton.fire();
         }
         if (secilenBirinciValf != null && !secilenBirinciValf.equals("null")) {
             System.out.println("Seçilen Birinci Valf: " + secilenBirinciValf);
-            selectReplayedComboItem(birinciValfComboBox, secilenBirinciValf);
+            Utils.selectReplayedComboItem(birinciValfComboBox, secilenBirinciValf);
             if(secilenBirinciValf.equals("1")) {
-
                 hesaplaButton.fire();
             } else {
                 initIkinciValf();
@@ -1123,21 +1128,9 @@ public class PowerPackController {
         }
         if (secilenIkinciValf != null && !secilenIkinciValf.equals("null")) {
             System.out.println("Seçilen İkinci Valf: " + secilenIkinciValf);
-            selectReplayedComboItem(ikinciValfComboBox, secilenIkinciValf);
-
-            hesaplaButton.fire();
+            Utils.selectReplayedComboItem(ikinciValfComboBox, secilenIkinciValf);
         }
 
         System.out.println("Veri kontrolü tamamlandı.");
-    }
-
-    private void selectReplayedComboItem(ComboBox<String> currentComboBox, String currentData) {
-        for (String item : currentComboBox.getItems()) {
-            if (item.equals(currentData)) {
-                currentComboBox.getSelectionModel().select(item);
-                break;
-            }
-        }
-        currentComboBox.setDisable(false);
     }
 }
