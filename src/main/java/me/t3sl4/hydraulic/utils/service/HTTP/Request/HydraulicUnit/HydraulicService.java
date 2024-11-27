@@ -20,12 +20,13 @@ public class HydraulicService {
             @Override
             public void onSuccess(String profileInfoResponse) {
                 Stage lblErrorsStage = (Stage) lblErrors.getScene().getWindow();
-                Utils.showSuccessMessage("Hidrolik ünitesi silinemedi!", Main.defaultScreen, lblErrorsStage);
+                Utils.showSuccessMessage("Hidrolik ünitesi silindi!", Main.defaultScreen, lblErrorsStage);
             }
 
             @Override
             public void onFailure() {
-                Utils.showErrorOnLabel(lblErrors, "Hidrolik ünitesi silinemedi!");
+                Stage lblErrorsStage = (Stage) lblErrors.getScene().getWindow();
+                Utils.showErrorMessage("Hidrolik ünitesi silinemedi!", Main.defaultScreen, lblErrorsStage);
             }
         });
     }
