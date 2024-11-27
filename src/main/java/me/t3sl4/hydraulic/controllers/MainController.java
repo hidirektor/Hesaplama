@@ -281,9 +281,13 @@ public class MainController implements Initializable {
     }
 
     public void handleClicks(ActionEvent actionEvent) throws IOException {
-         if(actionEvent.getSource()==btnKlasik) {
+        if(actionEvent.getSource()==btnKlasik) {
+            Utils.clearOldCalculationData("hidros");
+            Utils.clearOldCalculationData("klasik");
             paneSwitch(1);
         } else if (actionEvent.getSource() == btnHidros) {
+            Utils.clearOldCalculationData("hidros");
+            Utils.clearOldCalculationData("klasik");
             paneSwitch(2);
         } else if (actionEvent.getSource() == btnParametreler) {
             paneSwitch(4);
@@ -299,8 +303,8 @@ public class MainController implements Initializable {
         } else if(actionEvent.getSource() == btnMonitorAdapter) {
             Utils.showMonitorSelectionScreen(Screen.getScreens(), SceneUtil.getScreenOfNode(kullaniciAdiIsimText), false);
         } else if (actionEvent.getSource() == btnReportBug) {
-             javafx.scene.image.Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
-             Utils.showReportPopup(icon, SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/ReportBug.fxml");
+            javafx.scene.image.Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
+            Utils.showReportPopup(icon, SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/ReportBug.fxml");
         }
     }
 
@@ -515,16 +519,16 @@ public class MainController implements Initializable {
                 });
 
                 deleteButton.setOnMouseClicked(event -> {
-                   if(info.isLocal()) {
-                       Utils.deleteLocalUnitData(localHydraulicStatsPath, info.getOrderID());
-                   } else {
-                       String jsonDeleteBody = "{\"orderID\": \"" + info.getOrderID() + "\"}";
-                       try {
-                           HydraulicService.deleteHydraulicUnit(jsonDeleteBody, kullaniciAdiIsimText, loggedInUser.getAccessToken());
-                       } catch (IOException e) {
-                           throw new RuntimeException(e);
-                       }
-                   }
+                    if(info.isLocal()) {
+                        Utils.deleteLocalUnitData(localHydraulicStatsPath, info.getOrderID());
+                    } else {
+                        String jsonDeleteBody = "{\"orderID\": \"" + info.getOrderID() + "\"}";
+                        try {
+                            HydraulicService.deleteHydraulicUnit(jsonDeleteBody, kullaniciAdiIsimText, loggedInUser.getAccessToken());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     initializeHydraulicTable();
                 });
 
@@ -607,17 +611,17 @@ public class MainController implements Initializable {
 
                 PopupController popupController = loader.getController();
                 popupController.setValues(
-                getLocalHydraulicData().kampanaTankArasiBoslukX, getLocalHydraulicData().kampanaTankArasiBoslukY, getLocalHydraulicData().kampanaBoslukYOn,
-                getLocalHydraulicData().tekHizTankArasiBoslukX, getLocalHydraulicData().tekHizTankArasiBoslukY, getLocalHydraulicData().tekHizAraBoslukX,
-                getLocalHydraulicData().tekHizYOn, getLocalHydraulicData().tekHizBlokX, getLocalHydraulicData().tekHizBlokY,
-                getLocalHydraulicData().ciftHizTankArasiBoslukX, getLocalHydraulicData().ciftHizTankArasiBoslukY, getLocalHydraulicData().ciftHizAraBoslukX,
-                getLocalHydraulicData().ciftHizYOn, getLocalHydraulicData().ciftHizBlokX, getLocalHydraulicData().ciftHizBlokY,
-                getLocalHydraulicData().kilitliBlokTankArasiBoslukX, getLocalHydraulicData().kilitliBlokTankArasiBoslukY, getLocalHydraulicData().kilitliBlokAraBoslukX,
-                getLocalHydraulicData().kilitliBlokYOn, getLocalHydraulicData().kilitliBlokX, getLocalHydraulicData().kilitliBlokY,
-                getLocalHydraulicData().kilitMotorTankArasiBoslukX, getLocalHydraulicData().kilitMotorTankArasiBoslukY, getLocalHydraulicData().kilitMotorAraBoslukX,
-                getLocalHydraulicData().kilitMotorYOn, getLocalHydraulicData().tekHizKilitAyriY, getLocalHydraulicData().tekHizKilitAyriYOn,
-                getLocalHydraulicData().ciftHizKilitAyriY, getLocalHydraulicData().ciftHizKilitAyriYOn, getLocalHydraulicData().kilitMotorX,
-                getLocalHydraulicData().kilitMotorY, getLocalHydraulicData().kayipLitre, getLocalHydraulicData().defaultHeight
+                        getLocalHydraulicData().kampanaTankArasiBoslukX, getLocalHydraulicData().kampanaTankArasiBoslukY, getLocalHydraulicData().kampanaBoslukYOn,
+                        getLocalHydraulicData().tekHizTankArasiBoslukX, getLocalHydraulicData().tekHizTankArasiBoslukY, getLocalHydraulicData().tekHizAraBoslukX,
+                        getLocalHydraulicData().tekHizYOn, getLocalHydraulicData().tekHizBlokX, getLocalHydraulicData().tekHizBlokY,
+                        getLocalHydraulicData().ciftHizTankArasiBoslukX, getLocalHydraulicData().ciftHizTankArasiBoslukY, getLocalHydraulicData().ciftHizAraBoslukX,
+                        getLocalHydraulicData().ciftHizYOn, getLocalHydraulicData().ciftHizBlokX, getLocalHydraulicData().ciftHizBlokY,
+                        getLocalHydraulicData().kilitliBlokTankArasiBoslukX, getLocalHydraulicData().kilitliBlokTankArasiBoslukY, getLocalHydraulicData().kilitliBlokAraBoslukX,
+                        getLocalHydraulicData().kilitliBlokYOn, getLocalHydraulicData().kilitliBlokX, getLocalHydraulicData().kilitliBlokY,
+                        getLocalHydraulicData().kilitMotorTankArasiBoslukX, getLocalHydraulicData().kilitMotorTankArasiBoslukY, getLocalHydraulicData().kilitMotorAraBoslukX,
+                        getLocalHydraulicData().kilitMotorYOn, getLocalHydraulicData().tekHizKilitAyriY, getLocalHydraulicData().tekHizKilitAyriYOn,
+                        getLocalHydraulicData().ciftHizKilitAyriY, getLocalHydraulicData().ciftHizKilitAyriYOn, getLocalHydraulicData().kilitMotorX,
+                        getLocalHydraulicData().kilitMotorY, getLocalHydraulicData().kayipLitre, getLocalHydraulicData().defaultHeight
                 );
                 popupController.showValues();
             } catch (IOException e) {

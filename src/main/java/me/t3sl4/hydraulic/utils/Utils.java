@@ -23,6 +23,8 @@ import javafx.stage.*;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
+import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
+import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.controllers.MainController;
 import me.t3sl4.hydraulic.controllers.Popup.CylinderController;
 import me.t3sl4.hydraulic.controllers.Popup.UpdateAlertController;
@@ -1235,6 +1237,40 @@ public class Utils {
             licenseLabel.setText(displayText);
         } else {
             licenseLabel.setText("Lisans Durumu : Geçersiz Lisans\nLütfen giriş yaparak programı aktifleştirin.");
+        }
+    }
+    
+    public static void clearOldCalculationData(String unitType) {
+        if(unitType.equals("hidros")) {
+            PowerPackController.secilenUniteTipi = "PowerPack";
+            PowerPackController.girilenSiparisNumarasi = null;
+            PowerPackController.secilenMotorTipi = null;
+            PowerPackController.uniteTipiDurumu = null;
+            PowerPackController.secilenMotorGucu = null;
+            PowerPackController.secilenPompa = null;
+            PowerPackController.secilenTankTipi = null;
+            PowerPackController.secilenTankKapasitesi = null;
+            PowerPackController.secilenOzelTankGenislik = null;
+            PowerPackController.secilenOzelTankDerinlik = null;
+            PowerPackController.secilenOzelTankYukseklik = null;
+            PowerPackController.secilenPlatformTipi = null;
+            PowerPackController.secilenBirinciValf = null;
+            PowerPackController.secilenInisTipi = null;
+            PowerPackController.secilenIkinciValf = null;
+            PowerPackController.hesaplamaBitti = false;
+        } else if(unitType.equals("klasik")) {
+            ClassicController.secilenUniteTipi = "Klasik";
+            ClassicController.girilenSiparisNumarasi = null;
+            ClassicController.secilenMotor = null;
+            ClassicController.secilenSogutmaDurumu = null;
+            ClassicController.secilenHidrolikKilitDurumu = null;
+            ClassicController.secilenPompa = null;
+            ClassicController.girilenTankKapasitesiMiktari = 0;
+            ClassicController.kompanzasyonDurumu = null;
+            ClassicController.secilenValfTipi = null;
+            ClassicController.secilenKilitMotor = null;
+            ClassicController.secilenKilitPompa = null;
+            ClassicController.hesaplamaBitti = false;
         }
     }
 }
