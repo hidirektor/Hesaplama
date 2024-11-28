@@ -22,6 +22,7 @@ module me.t3sl.hydraulic {
     requires java.net.http;
     requires org.apache.commons.io;
     requires javafx.media;
+    requires com.google.common;
 
     exports me.t3sl4.hydraulic.utils;
     opens me.t3sl4.hydraulic.controllers to javafx.fxml;

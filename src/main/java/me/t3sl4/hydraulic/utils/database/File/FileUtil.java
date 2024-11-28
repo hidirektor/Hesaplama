@@ -84,13 +84,20 @@ public class FileUtil {
     public static void setupLocalData() {
         JSONUtil.loadJSONData();
         new YamlUtil(SystemVariables.classicComboDBPath, SystemVariables.powerPackComboDBPath, SystemVariables.classicPartsDBPath, SystemVariables.powerPackPartsHidrosDBPath, SystemVariables.powerPackPartsIthalDBPath, SystemVariables.schematicTextsDBPath);
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(FileUtil::partRenameAutomatically);
+        }).start();
     }
 
     public static void partRenameAutomatically() {
         Set<String> modifiedFiles = new HashSet<>();
 
         try {
-            // 1. part_origins.yml dosyasını yükle
             Map<String, Object> partOrigins = loadYamlFile(SystemVariables.partOriginsDBPath);
 
             String[] TARGET_FILES = {
@@ -99,28 +106,18 @@ public class FileUtil {
                     SystemVariables.powerPackPartsIthalDBPath
             };
 
-            // 2. Hedef dosyaları işleme al
             for (String targetFilePath : TARGET_FILES) {
                 Map<String, Object> targetData = loadYamlFile(targetFilePath);
 
-                // 3. Adım 1: malzemeAdi aynı olanların malzemeKodunu düzelt
                 boolean isModifiedByName = updateParts(targetData, partOrigins, true);
 
-                // 4. Adım 2: malzemeKodu aynı olanların malzemeAdini düzelt
                 boolean isModifiedByCode = updateParts(targetData, partOrigins, false);
 
-                // 5. Eğer dosyada herhangi bir değişiklik olduysa kaydet ve set'e ekle
                 if (isModifiedByName || isModifiedByCode) {
                     saveYamlFile(targetFilePath, targetData);
                     modifiedFiles.add(targetFilePath);
                 }
             }
-
-            // 6. Değişiklik olan dosyalar için fileCopy çağrısı yap
-            /*for (String modifiedFile : modifiedFiles) {
-                fileCopy(modifiedFile, SystemVariables.generalDBPath);
-                System.out.println("Değişiklik olan dosya kopyalandı: " + modifiedFile);
-            }*/
 
             System.out.println("Güncelleme tamamlandı.");
         } catch (IOException e) {

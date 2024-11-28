@@ -1,5 +1,8 @@
 package me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PartList;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -88,37 +91,85 @@ public class PowerPackPartController {
         ObservableList<ParcaTableData> veriler = parcaListesiTablo.getItems();
         String excelFileName = SystemVariables.excelFileLocalPath + PowerPackController.girilenSiparisNumarasi + ".xlsx";
 
-        Map<String, ParcaTableData> malzemeMap = new LinkedHashMap<>();
-        Map<String, ParcaTableData> filteredMap = new LinkedHashMap<>();
-        Map<String, ParcaTableData> duplicateMap = new LinkedHashMap<>();
+        Multimap<String, ParcaTableData> malzemeMultimap = LinkedListMultimap.create();
+        Multimap<String, ParcaTableData> filteredMultimap = LinkedListMultimap.create();
+        Multimap<String, ParcaTableData> duplicateMultimap = LinkedListMultimap.create();
 
         for (ParcaTableData rowData : veriler) {
             if (!(rowData.getMalzemeKoduProperty().equals("----") && rowData.getMalzemeAdetProperty().equals("----"))) {
                 String malzemeKey = rowData.getMalzemeKoduProperty();
 
-                if (filteredMap.containsKey(malzemeKey)) {
-                    if(!malzemeKey.equals("000-00-00-000")) {
-                        ParcaTableData existingData = filteredMap.get(malzemeKey);
-                        int existingAdet = Integer.parseInt(existingData.getMalzemeAdetProperty());
-                        int yeniAdet = Integer.parseInt(rowData.getMalzemeAdetProperty());
-                        // Adetleri topluyoruz
-                        existingData.setMalzemeAdetProperty(String.valueOf(existingAdet + yeniAdet));
-                        duplicateMap.put(malzemeKey, existingData);
-                        filteredMap.remove(malzemeKey);
-                    }
-                } else {
-                    // Malzeme haritada yoksa yeni bir giriş ekle
-                    filteredMap.put(malzemeKey, new ParcaTableData(
-                            rowData.getMalzemeKoduProperty(),
-                            rowData.getMalzemeAdiProperty(),
-                            rowData.getMalzemeAdetProperty()
-                    ));
-                }
+                filteredMultimap.put(malzemeKey, new ParcaTableData(
+                        rowData.getMalzemeKoduProperty(),
+                        rowData.getMalzemeAdiProperty(),
+                        rowData.getMalzemeAdetProperty()
+                ));
             }
         }
 
-        malzemeMap.putAll(filteredMap);
-        malzemeMap.putAll(duplicateMap);
+        List<String> keysToRemove = new ArrayList<>();
+        Iterator<String> iterator = filteredMultimap.keySet().iterator();
+
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+
+            // "000-00-00-000" ve "Veri Yok" olmayan key'ler için işlem yap
+            if (!key.equals("000-00-00-000") && !key.equals("Veri Yok")) {
+                int toplamAdet = 0;
+                String currentAdet = "";
+                String malzemeKodu = null;
+                String malzemeAdi = null;
+
+                // Aynı key'e sahip öğeleri topla
+                for (ParcaTableData data : filteredMultimap.get(key)) {
+                    if (data.getMalzemeAdetProperty() != null && !data.getMalzemeAdetProperty().isEmpty() && !data.getMalzemeAdetProperty().contains("Lt")) {
+                        toplamAdet += Integer.parseInt(data.getMalzemeAdetProperty());
+                    } else {
+                        currentAdet = data.getMalzemeAdetProperty();
+                    }
+                    if (malzemeKodu == null) {
+                        malzemeKodu = data.getMalzemeKoduProperty();
+                    }
+                    if (malzemeAdi == null) {
+                        malzemeAdi = data.getMalzemeAdiProperty();
+                    }
+                }
+
+                // duplicateMultimap'e, key ve toplam adet bilgisi ile veri ekle
+                ParcaTableData duplicateData;
+                if(toplamAdet > 0) {
+                    duplicateData = new ParcaTableData(malzemeKodu, malzemeAdi, String.valueOf(toplamAdet));
+                } else {
+                    duplicateData = new ParcaTableData(malzemeKodu, malzemeAdi, currentAdet);
+                }
+                duplicateMultimap.put(key, duplicateData);
+
+                // Konsola duplicate verileri yazdır
+                System.out.println("Key: " + key + ", Malzeme Kodu: " + malzemeKodu +
+                        ", Malzeme Adı: " + malzemeAdi + ", Toplam Adet: " + toplamAdet);
+
+                // Silinecek anahtarı işaretle
+                keysToRemove.add(key);
+            }
+        }
+
+        for (String key : keysToRemove) {
+            filteredMultimap.removeAll(key);
+        }
+
+        // filteredMultimap'teki elemanları sırayla ekle
+        for (String key : filteredMultimap.keySet()) {
+            for (ParcaTableData data : filteredMultimap.get(key)) {
+                malzemeMultimap.put(key, data);
+            }
+        }
+
+        // duplicateMultimap'teki elemanları sırayla ekle
+        for (String key : duplicateMultimap.keySet()) {
+            for (ParcaTableData data : duplicateMultimap.get(key)) {
+                malzemeMultimap.put(key, data);
+            }
+        }
 
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Malzeme Listesi");
@@ -129,7 +180,7 @@ public class PowerPackPartController {
             headerRow.createCell(2).setCellValue("Adet");
 
             int excelRowIndex = 1;
-            for (ParcaTableData rowData : malzemeMap.values()) {
+            for (ParcaTableData rowData : malzemeMultimap.values()) {
                 Row row = sheet.createRow(excelRowIndex++);
                 row.createCell(0).setCellValue(rowData.getMalzemeKoduProperty());
                 row.createCell(1).setCellValue(rowData.getMalzemeAdiProperty());
