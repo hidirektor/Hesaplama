@@ -40,6 +40,7 @@ public class SystemVariables {
     public static String powerPackPartsHidrosDBPath;
     public static String powerPackPartsIthalDBPath;
     public static String schematicTextsDBPath;
+    public static String partOriginsDBPath;
 
     //Used endpoints
     public static String loginURLPrefix = "/auth/login";

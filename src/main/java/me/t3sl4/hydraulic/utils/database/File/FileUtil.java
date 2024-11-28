@@ -1,16 +1,22 @@
 package me.t3sl4.hydraulic.utils.database.File;
 
+import javafx.application.Platform;
 import me.t3sl4.hydraulic.utils.database.File.JSON.JSONUtil;
 import me.t3sl4.hydraulic.utils.database.File.Yaml.YamlUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class FileUtil {
@@ -46,6 +52,7 @@ public class FileUtil {
         SystemVariables.powerPackPartsHidrosDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_hidros.yml";
         SystemVariables.powerPackPartsIthalDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_ithal.yml";
         SystemVariables.schematicTextsDBPath = SystemVariables.dataFileLocalPath + "schematic_texts.yml";
+        SystemVariables.partOriginsDBPath = SystemVariables.dataFileLocalPath + "part_origins.yml";
 
         try {
             createDirectory(SystemVariables.mainPath);
@@ -64,6 +71,7 @@ public class FileUtil {
             fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath);
             fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath);
             fileCopy("/assets/data/programDatabase/schematic_texts.yml", SystemVariables.schematicTextsDBPath);
+            fileCopy("/assets/data/programDatabase/part_origins.yml", SystemVariables.partOriginsDBPath);
 
             createDirectory(SystemVariables.excelFileLocalPath);
             createDirectory(SystemVariables.pdfFileLocalPath);
@@ -76,6 +84,49 @@ public class FileUtil {
     public static void setupLocalData() {
         JSONUtil.loadJSONData();
         new YamlUtil(SystemVariables.classicComboDBPath, SystemVariables.powerPackComboDBPath, SystemVariables.classicPartsDBPath, SystemVariables.powerPackPartsHidrosDBPath, SystemVariables.powerPackPartsIthalDBPath, SystemVariables.schematicTextsDBPath);
+    }
+
+    public static void partRenameAutomatically() {
+        Set<String> modifiedFiles = new HashSet<>();
+
+        try {
+            // 1. part_origins.yml dosyasını yükle
+            Map<String, Object> partOrigins = loadYamlFile(SystemVariables.partOriginsDBPath);
+
+            String[] TARGET_FILES = {
+                    SystemVariables.classicPartsDBPath,
+                    SystemVariables.powerPackPartsHidrosDBPath,
+                    SystemVariables.powerPackPartsIthalDBPath
+            };
+
+            // 2. Hedef dosyaları işleme al
+            for (String targetFilePath : TARGET_FILES) {
+                Map<String, Object> targetData = loadYamlFile(targetFilePath);
+
+                // 3. Adım 1: malzemeAdi aynı olanların malzemeKodunu düzelt
+                boolean isModifiedByName = updateParts(targetData, partOrigins, true);
+
+                // 4. Adım 2: malzemeKodu aynı olanların malzemeAdini düzelt
+                boolean isModifiedByCode = updateParts(targetData, partOrigins, false);
+
+                // 5. Eğer dosyada herhangi bir değişiklik olduysa kaydet ve set'e ekle
+                if (isModifiedByName || isModifiedByCode) {
+                    saveYamlFile(targetFilePath, targetData);
+                    modifiedFiles.add(targetFilePath);
+                }
+            }
+
+            // 6. Değişiklik olan dosyalar için fileCopy çağrısı yap
+            /*for (String modifiedFile : modifiedFiles) {
+                fileCopy(modifiedFile, SystemVariables.generalDBPath);
+                System.out.println("Değişiklik olan dosya kopyalandı: " + modifiedFile);
+            }*/
+
+            System.out.println("Güncelleme tamamlandı.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Dosya işlemleri sırasında bir hata oluştu.");
+        }
     }
 
     private static void createDirectory(String path) throws IOException {
@@ -115,6 +166,105 @@ public class FileUtil {
                     }
                 });
             }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static boolean updateParts(Map<String, Object> targetData, Map<String, Object> partOrigins, boolean matchByName) {
+        boolean isModified = false;
+
+        // part_origins verisini al
+        Map<String, Object> originsParts = (Map<String, Object>) partOrigins.get("part_origins");
+
+        if (originsParts != null) {
+            for (Object originPartKey : originsParts.keySet()) {
+                Map<String, Object> originPart = (Map<String, Object>) originsParts.get(originPartKey);
+
+                if (originPart != null) {
+                    // parts içindeki malzemeKodu ve malzemeAdi'ni almak için iç içe yapıyı kontrol et
+                    Map<String, Object> parts = (Map<String, Object>) originPart.get("parts");
+                    if (parts != null && parts.containsKey("0")) {
+                        Map<String, Object> part = (Map<String, Object>) parts.get("0");
+                        String originCode = (String) part.get("malzemeKodu");
+                        String originName = (String) part.get("malzemeAdi");
+
+                        if (originName == null || originCode == null) {
+                            System.err.println("Hata: part_origins içerisinde eksik veri var. originName veya originCode null.");
+                            continue; // Eksik veri varsa bu kaydı atla
+                        }
+
+                        // TARGET dosyasındaki motor veya ozel_cift_valf yapılarını kontrol et
+                        for (Object targetKey : targetData.keySet()) {
+                            Map<String, Object> targetPart = (Map<String, Object>) targetData.get(targetKey);
+
+                            if (targetPart != null) {
+                                // motor formatındaki dosyalar için
+                                System.out.println(targetPart);
+                                for (Object outerKey : targetPart.keySet()) {
+                                    Map<String, Object> outerPart = (Map<String, Object>) targetPart.get(outerKey);
+                                    System.out.println("Dış Anahtar: " + outerKey + ", Değer: " + outerPart);
+
+                                    if (outerPart != null && outerPart.containsKey("parts")) {
+                                        Map<String, Object> targetParts = (Map<String, Object>) outerPart.get("parts");
+
+                                        // "parts" içindeki her bir sayı key'ini kontrol et
+                                        for (Object innerKey : targetParts.keySet()) {
+                                            Map<String, Object> currentPart = (Map<String, Object>) targetParts.get(innerKey);
+                                            System.out.println("parts içindeki Anahtar: " + innerKey + ", Değer: " + currentPart);
+
+                                            if (currentPart != null && currentPart.containsKey("malzemeKodu") && currentPart.containsKey("malzemeAdi")) {
+                                                String targetName = (String) currentPart.get("malzemeAdi");
+                                                String targetCode = (String) currentPart.get("malzemeKodu");
+
+                                                System.out.println("Hedef İsim: " + targetName);
+                                                System.out.println("Hedef Kod: " + targetCode);
+
+                                                if (targetName == null || targetCode == null) {
+                                                    System.err.println("Hata: Hedef dosyada eksik veri var. targetName veya targetCode null.");
+                                                    continue; // Eksik veri varsa bu kaydı atla
+                                                }
+
+                                                // Güncelleme mantığı
+                                                if (matchByName && originName.equals(targetName) && !originCode.equals(targetCode)) {
+                                                    currentPart.put("malzemeKodu", originCode); // malzemeKodu'nu güncelle
+                                                    isModified = true;
+                                                } else if (!matchByName && originCode.equals(targetCode) && !originName.equals(targetName)) {
+                                                    currentPart.put("malzemeAdi", originName); // malzemeAdi'ni güncelle
+                                                    isModified = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return isModified;
+    }
+
+    private static Map<String, Object> loadYamlFile(String filePath) throws IOException {
+        Yaml yaml = new Yaml();
+        try (InputStream inputStream = new FileInputStream(filePath)) {
+            Map<String, Object> yamlData = yaml.load(inputStream);
+            System.out.println("YAML Dosyası İçeriği:");
+            System.out.println(yamlData);  // Bu şekilde dosya içeriğini yazdırabilirsiniz
+            return yamlData;
+        }
+    }
+
+    private static void saveYamlFile(String filePath, Map<String, Object> data) throws IOException {
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED);
+        options.setPrettyFlow(true);
+        Yaml yaml = new Yaml(options);
+
+        try (FileWriter writer = new FileWriter(filePath)) {
+            yaml.dump(data, writer);
         }
     }
 }

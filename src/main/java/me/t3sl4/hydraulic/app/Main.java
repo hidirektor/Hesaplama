@@ -1,6 +1,7 @@
 package me.t3sl4.hydraulic.app;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
@@ -49,6 +50,14 @@ public class Main extends Application {
 
         Thread systemThread = new Thread(FileUtil::setupLocalData);
         systemThread.start();
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(FileUtil::partRenameAutomatically);
+        }).start();
     }
 
     public static void main(String[] args) {

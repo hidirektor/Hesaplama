@@ -485,22 +485,28 @@ public class YamlUtil {
         Map<String, Object> yamlData = yaml.load(input);
 
         if (yamlData != null) {
-            Map<String, Object> motorData = (Map<String, Object>) yamlData.get("motor");
+            Map<String, Object> valfData = (Map<String, Object>) yamlData.get("motor");
 
-            for (Map.Entry<String, Object> entry : motorData.entrySet()) {
-                String key = entry.getKey();
-                Map<String, String> motorDetails = (Map<String, String>) entry.getValue();
+            for (Map.Entry<String, Object> kaplinEntry : valfData.entrySet()) {
+                String kaplinKey = kaplinEntry.getKey();
+                Map<String, Object> partsData = (Map<String, Object>) kaplinEntry.getValue();
+                Map<String, Object> parts = (Map<String, Object>) partsData.get("parts");
 
-                String malzemeKodu = motorDetails.get("malzemeKodu");
-                String malzemeAdi = motorDetails.get("malzemeAdi");
-                String malzemeAdet = motorDetails.get("malzemeAdet");
+                LinkedList<String> partDetailsList = new LinkedList<>();
 
-                String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+                for (Map.Entry<String, Object> partEntry : parts.entrySet()) {
+                    Map<String, String> partDetails = (Map<String, String>) partEntry.getValue();
 
-                LinkedList<String> motorList = new LinkedList<>();
-                motorList.add(combinedDetails);
+                    String malzemeKodu = partDetails.get("malzemeKodu");
+                    String malzemeAdi = partDetails.get("malzemeAdi");
+                    String malzemeAdet = partDetails.get("malzemeAdet");
 
-                SystemVariables.getLocalHydraulicData().classicParcaMotor.put(key, motorList);
+                    String combinedDetails = malzemeKodu + ";" + malzemeAdi + ";" + malzemeAdet;
+
+                    partDetailsList.add(combinedDetails);
+                }
+
+                SystemVariables.getLocalHydraulicData().classicParcaMotor.put(kaplinKey, partDetailsList);
             }
         }
     }

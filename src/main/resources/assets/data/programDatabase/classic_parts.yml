@@ -1,52 +1,76 @@
 motor:
   '0': #2.2 kW
-    malzemeKodu: "150-52-13-012"
-    malzemeAdi: "2.2 KW 1500d/dk 380V B5 FLANŞLI VOLT"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-012"
+        malzemeAdi: "2.2 KW 1500d/dk 380V B5 FLANŞLI VOLT"
+        malzemeAdet: "1"
   '1': #3 kW
-    malzemeKodu: "150-52-13-013"
-    malzemeAdi: "3 KW 1500d/dk 380V B5 FLANŞLI VOLT"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-013"
+        malzemeAdi: "3 KW 1500d/dk 380V B5 FLANŞLI VOLT"
+        malzemeAdet: "1"
   '2': #4 kW
-    malzemeKodu: "150-52-13-014"
-    malzemeAdi: "4 kW B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-014"
+        malzemeAdi: "4 kW B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '3': #5.5 kW
-    malzemeKodu: "150-52-13-016"
-    malzemeAdi: "5.5 kW  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-016"
+        malzemeAdi: "5.5 kW  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '4': #5.5 kW (Kompakt)
-    malzemeKodu: "150-52-13-016"
-    malzemeAdi: "5.5 kW (Kompakt)  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-016"
+        malzemeAdi: "5.5 kW (Kompakt)  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '5': #7.5 kW (Kompakt)
-    malzemeKodu: "150-52-13-017"
-    malzemeAdi: "7.5 kW (Kompakt)  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-017"
+        malzemeAdi: "7.5 kW (Kompakt)  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '6': #11 kW
-    malzemeKodu: "150-52-13-213"
-    malzemeAdi: "11 kW  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-213"
+        malzemeAdi: "11 kW  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '7': #11 kW (Kompakt)
-    malzemeKodu: "150-52-13-018"
-    malzemeAdi: "11 kW (Kompakt)  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-018"
+        malzemeAdi: "11 kW (Kompakt)  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '8': #15 kW
-    malzemeKodu: "150-52-13-019"
-    malzemeAdi: "15 kW  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-019"
+        malzemeAdi: "15 kW  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '9': #18.5 kW
-    malzemeKodu: "150-52-13-196"
-    malzemeAdi: "18.5 kW  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-196"
+        malzemeAdi: "18.5 kW  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '10': #22 kW
-    malzemeKodu: "150-52-13-020"
-    malzemeAdi: "22 kW  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-020"
+        malzemeAdi: "22 kW  B5 Flanşlı Motor"
+        malzemeAdet: "1"
   '11': #37 kW
-    malzemeKodu: "150-52-13-199"
-    malzemeAdi: "37 kW  B5 Flanşlı Motor"
-    malzemeAdet: "1"
+    parts:
+      '0':
+        malzemeKodu: "150-52-13-199"
+        malzemeAdi: "37 kW  B5 Flanşlı Motor"
+        malzemeAdet: "1"
 kampana:
   '0': #1K 250
     parts:
