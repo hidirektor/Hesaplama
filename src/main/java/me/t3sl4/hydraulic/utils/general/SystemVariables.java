@@ -9,7 +9,7 @@ public class SystemVariables {
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
-    private static final String CURRENT_VERSION = "v3.6.2";
+    private static final String CURRENT_VERSION = "v3.6.3";
 
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
     public static String RELEASE_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases";
