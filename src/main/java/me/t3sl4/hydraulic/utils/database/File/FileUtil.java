@@ -5,9 +5,7 @@ import me.t3sl4.hydraulic.utils.database.File.JSON.JSONUtil;
 import me.t3sl4.hydraulic.utils.database.File.Yaml.YamlUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -52,7 +50,8 @@ public class FileUtil {
         SystemVariables.powerPackPartsHidrosDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_hidros.yml";
         SystemVariables.powerPackPartsIthalDBPath = SystemVariables.dataFileLocalPath + "powerpack_parts_ithal.yml";
         SystemVariables.schematicTextsDBPath = SystemVariables.dataFileLocalPath + "schematic_texts.yml";
-        SystemVariables.partOriginsDBPath = SystemVariables.dataFileLocalPath + "part_origins.yml";
+        SystemVariables.partOriginsClassicDBPath = SystemVariables.dataFileLocalPath + "part_origins_classic.yml";
+        SystemVariables.partOriginsPowerPackDBPath = SystemVariables.dataFileLocalPath + "part_origins_powerpack.yml";
 
         try {
             createDirectory(SystemVariables.mainPath);
@@ -71,7 +70,8 @@ public class FileUtil {
             fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath);
             fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath);
             fileCopy("/assets/data/programDatabase/schematic_texts.yml", SystemVariables.schematicTextsDBPath);
-            fileCopy("/assets/data/programDatabase/part_origins.yml", SystemVariables.partOriginsDBPath);
+            fileCopy("/assets/data/programDatabase/part_origins_classic.yml", SystemVariables.partOriginsClassicDBPath);
+            fileCopy("/assets/data/programDatabase/part_origins_powerpack.yml", SystemVariables.partOriginsPowerPackDBPath);
 
             createDirectory(SystemVariables.excelFileLocalPath);
             createDirectory(SystemVariables.pdfFileLocalPath);
@@ -90,21 +90,33 @@ public class FileUtil {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Platform.runLater(FileUtil::partRenameAutomatically);
+            Platform.runLater(() -> FileUtil.partRenameAutomatically("klasik"));
+            Platform.runLater(() -> FileUtil.partRenameAutomatically("powerpack"));
         }).start();
     }
 
-    public static void partRenameAutomatically() {
+    public static void partRenameAutomatically(String partType) {
         Set<String> modifiedFiles = new HashSet<>();
 
         try {
-            Map<String, Object> partOrigins = loadYamlFile(SystemVariables.partOriginsDBPath);
+            Map<String, Object> partOrigins;
 
-            String[] TARGET_FILES = {
-                    SystemVariables.classicPartsDBPath,
-                    SystemVariables.powerPackPartsHidrosDBPath,
-                    SystemVariables.powerPackPartsIthalDBPath
-            };
+            String[] TARGET_FILES;
+
+            if(partType.equals("klasik")) {
+                partOrigins = loadYamlFile(SystemVariables.partOriginsClassicDBPath);
+
+                TARGET_FILES = new String[]{
+                        SystemVariables.classicPartsDBPath
+                };
+            } else {
+                partOrigins = loadYamlFile(SystemVariables.partOriginsPowerPackDBPath);
+
+                TARGET_FILES = new String[]{
+                        SystemVariables.powerPackPartsHidrosDBPath,
+                        SystemVariables.powerPackPartsIthalDBPath
+                };
+            }
 
             for (String targetFilePath : TARGET_FILES) {
                 Map<String, Object> targetData = loadYamlFile(targetFilePath);

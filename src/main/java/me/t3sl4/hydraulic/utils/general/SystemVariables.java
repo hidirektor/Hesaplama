@@ -9,7 +9,7 @@ public class SystemVariables {
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
-    private static final String CURRENT_VERSION = "v3.6.3";
+    private static final String CURRENT_VERSION = "v3.6.4";
 
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
     public static String RELEASE_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases";
@@ -40,7 +40,8 @@ public class SystemVariables {
     public static String powerPackPartsHidrosDBPath;
     public static String powerPackPartsIthalDBPath;
     public static String schematicTextsDBPath;
-    public static String partOriginsDBPath;
+    public static String partOriginsClassicDBPath;
+    public static String partOriginsPowerPackDBPath;
 
     //Used endpoints
     public static String loginURLPrefix = "/auth/login";
