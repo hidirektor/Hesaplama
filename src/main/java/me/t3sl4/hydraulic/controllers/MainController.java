@@ -11,10 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -129,6 +131,33 @@ public class MainController implements Initializable {
     @FXML
     private TextField unitSearchBar;
 
+    @FXML
+    private AnchorPane collapsableAnchor;
+
+    @FXML
+    private AnchorPane hesaplamaAnchor;
+
+    @FXML
+    private AnchorPane hataYonetimiAnchor;
+
+    @FXML
+    private AnchorPane programSettingsAnchor;
+
+    @FXML
+    private AnchorPane accountSettingsAnchor;
+
+    @FXML
+    private TitledPane hesaplamaTitledPane;
+
+    @FXML
+    private TitledPane hataYonetimiTitledPane;
+
+    @FXML
+    private TitledPane programSettingsTitledPane;
+
+    @FXML
+    private TitledPane accountSettingsTitledPane;
+
     private List<HydraulicInfo> finalHydraulicUnitList = new ArrayList<>();
 
     int siparisSayisi;
@@ -156,6 +185,8 @@ public class MainController implements Initializable {
         initializeHydraulicTable();
 
         Platform.runLater(() -> checkLicense());
+
+        Utils.collapsableListener(collapsableAnchor, hesaplamaAnchor, hataYonetimiAnchor, programSettingsAnchor, accountSettingsAnchor, hesaplamaTitledPane, hataYonetimiTitledPane, programSettingsTitledPane, accountSettingsTitledPane);
     }
 
     private void initializeSwitchs() {
@@ -270,6 +301,9 @@ public class MainController implements Initializable {
 
         if(loggedInUser != null) {
             loggedInUser = null;
+        } else {
+            Utils.showErrorMessage("Yalnızca giriş yapmış olan kullanıcılar çıkış yapabilir.", SceneUtil.getScreenOfNode(kullaniciAdiIsimText), (Stage)kullaniciAdiIsimText.getScene().getWindow());
+            return;
         }
 
         Path authFilePath = Paths.get(SystemVariables.tokenPath);
@@ -305,9 +339,13 @@ public class MainController implements Initializable {
             updateHydraulicText();
             initializeHydraulicTable();
         } else if(actionEvent.getSource() == btnOnlineMode) {
-            Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
-            currentStage.close();
-            Utils.openLoginScreen(kullaniciAdiIsimText);
+            if(loggedInUser == null) {
+                Stage currentStage = (Stage) btnOnlineMode.getScene().getWindow();
+                currentStage.close();
+                Utils.openLoginScreen(kullaniciAdiIsimText);
+            } else {
+                Utils.showErrorMessage("Zaten şuan çevrimiçi durumdasınız.", SceneUtil.getScreenOfNode(kullaniciAdiIsimText), (Stage)kullaniciAdiIsimText.getScene().getWindow());
+            }
         } else if(actionEvent.getSource() == btnMonitorAdapter) {
             Utils.showMonitorSelectionScreen(Screen.getScreens(), SceneUtil.getScreenOfNode(kullaniciAdiIsimText), false);
         } else if (actionEvent.getSource() == btnReportBug) {
@@ -342,6 +380,8 @@ public class MainController implements Initializable {
             } catch(IOException e) {
                 Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
+        } else {
+            Utils.showErrorMessage("Yalnızca giriş yapmış olan kullanıcılar profillerini güncelleyebilir.", SceneUtil.getScreenOfNode(kullaniciAdiIsimText), (Stage)kullaniciAdiIsimText.getScene().getWindow());
         }
     }
 
@@ -384,14 +424,9 @@ public class MainController implements Initializable {
             kullaniciAdiIsimText.setText(loggedInUser.getUsername() + "\n" + loggedInUser.getFullName() + "\n" + loggedInUser.getCompanyName() + "\n ");
             Profile.downloadAndSetProfilePhoto(loggedInUser.getUsername(), profilePhotoCircle, kullaniciProfilFoto);
             updateHydraulicText();
-            buttonsVBox.getChildren().remove(btnOnlineMode);
         } else {
             kullaniciAdiIsimText.setText("Standart Kullanıcı");
             updateHydraulicText();
-
-            buttonsVBox.getChildren().remove(btnProfil);
-            buttonsVBox.getChildren().remove(btnSignout);
-            buttonsVBox.toFront();
         }
     }
 

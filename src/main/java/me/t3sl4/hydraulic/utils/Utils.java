@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -1332,5 +1333,45 @@ public class Utils {
             }
         }
         currentComboBox.setDisable(false);
+    }
+
+    public static void collapsableListener(
+            AnchorPane menuPane,
+            AnchorPane firstItem, AnchorPane secondItem, AnchorPane thirthItem, AnchorPane fourthItem,
+            TitledPane firstPane, TitledPane secondPane, TitledPane thirthPane, TitledPane fourthPane) {
+
+        // Varsayılan boyutlar
+        int defaultMenuNameSize = 30; // TitledPane başlığı için
+        int defaultItemSize = 40;    // Her bir öğenin boyutu
+        int[] itemCounts = {3, 2, 1, 3}; // Her TitledPane'in altındaki öğe sayısı
+
+        ChangeListener<Boolean> titledPaneListener = (observable, oldValue, newValue) -> {
+            double newHeight = defaultMenuNameSize;
+            double currentY = defaultMenuNameSize;
+
+            TitledPane[] panes = {firstPane, secondPane, thirthPane, fourthPane};
+            AnchorPane[] items = {firstItem, secondItem, thirthItem, fourthItem};
+
+            for (int i = 0; i < panes.length; i++) {
+                if (panes[i].isExpanded()) {
+                    newHeight += defaultItemSize * itemCounts[i];
+                }
+                newHeight += defaultMenuNameSize; // Başlık boyutunu ekle
+
+                if (i > 0) {
+                    currentY += panes[i - 1].isExpanded()
+                            ? (itemCounts[i - 1] * defaultItemSize + defaultMenuNameSize)
+                            : defaultMenuNameSize;
+                }
+                items[i].setLayoutY(currentY);
+            }
+
+            menuPane.setPrefHeight(newHeight);
+        };
+
+        firstPane.expandedProperty().addListener(titledPaneListener);
+        secondPane.expandedProperty().addListener(titledPaneListener);
+        thirthPane.expandedProperty().addListener(titledPaneListener);
+        fourthPane.expandedProperty().addListener(titledPaneListener);
     }
 }

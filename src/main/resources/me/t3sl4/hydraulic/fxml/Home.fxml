@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F9F871;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F9F871;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.MainController">
     <children>
         <VBox fx:id="buttonsVBox" alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #F9F871;" AnchorPane.topAnchor="0.0">
             <children>
@@ -57,11 +57,11 @@
                 </Button>
                 <ScrollPane hbarPolicy="NEVER" prefWidth="200.0" stylesheets="@../styling/style.css">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                        <AnchorPane fx:id="collapsableAnchor" minHeight="0.0" minWidth="0.0" prefWidth="200.0">
                             <children>
-                                <AnchorPane prefHeight="150.0" prefWidth="200.0">
+                                <AnchorPane fx:id="hesaplamaAnchor" layoutY="30.0" prefHeight="150.0" prefWidth="200.0">
                                     <children>
-                                        <TitledPane animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hesaplama">
+                                        <TitledPane fx:id="hesaplamaTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hesaplama">
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0">
                                                     <children>
@@ -108,9 +108,9 @@
                                         </TitledPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="150.0" prefHeight="110.0" prefWidth="200.0">
+                                <AnchorPane fx:id="hataYonetimiAnchor" layoutY="60.0" prefHeight="110.0" prefWidth="200.0">
                                     <children>
-                                        <TitledPane animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hata Yönetimi">
+                                        <TitledPane fx:id="hataYonetimiTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hata Yönetimi">
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="200.0">
                                                     <children>
@@ -144,9 +144,9 @@
                                         </TitledPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="260.0" prefHeight="70.0" prefWidth="200.0">
+                                <AnchorPane fx:id="programSettingsAnchor" layoutY="90.0" prefHeight="70.0" prefWidth="200.0">
                                     <children>
-                                        <TitledPane animated="false" expanded="false" stylesheets="@../styling/style.css" text="Program Ayarları">
+                                        <TitledPane fx:id="programSettingsTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Program Ayarları">
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="40.0" prefWidth="200.0">
                                                     <children>
@@ -168,9 +168,9 @@
                                         </TitledPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane layoutY="330.0" prefHeight="150.0" prefWidth="200.0">
+                                <AnchorPane fx:id="accountSettingsAnchor" layoutY="120.0" prefHeight="150.0" prefWidth="200.0">
                                     <children>
-                                        <TitledPane animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hesap Ayarları">
+                                        <TitledPane fx:id="accountSettingsTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hesap Ayarları">
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0">
                                                     <children>
@@ -208,7 +208,7 @@
                                                                 </ImageView>
                                                             </graphic>
                                                             <padding>
-                                                                <Insets left="50.0" />
+                                                                <Insets bottom="5.0" left="50.0" />
                                                             </padding>
                                                         </Button>
                                                     </children>
@@ -234,8 +234,11 @@
                         </ImageView>
                     </graphic>
                     <padding>
-                        <Insets bottom="20.0" left="50.0" />
+                        <Insets left="50.0" />
                     </padding>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
                 </Button>
                 <ImageView fx:id="leftSubLogo" fitHeight="42.0" fitWidth="200.0" onMouseClicked="#onderGrupSiteOpen" pickOnBounds="true" preserveRatio="true">
                     <image>
