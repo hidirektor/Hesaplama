@@ -96,6 +96,9 @@ public class MainController implements Initializable {
     private Button btnReportBug;
 
     @FXML
+    private Button btnDebugMode;
+
+    @FXML
     private Button btnParametreler;
 
     @FXML
@@ -310,6 +313,9 @@ public class MainController implements Initializable {
         } else if (actionEvent.getSource() == btnReportBug) {
             javafx.scene.image.Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
             Utils.showReportPopup(icon, SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/ReportBug.fxml");
+        } else if (actionEvent.getSource() == btnDebugMode) {
+            javafx.scene.image.Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
+            Utils.showConsolePopup(icon, SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/Console.fxml");
         }
     }
 
