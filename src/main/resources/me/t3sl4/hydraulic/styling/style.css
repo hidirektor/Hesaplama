@@ -20,6 +20,32 @@
     -fx-background-color:transparent;
 }
 
+.titled-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.titled-pane > .title {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Oku Gizle */
+.titled-pane > .title > .arrow {
+    -fx-opacity: 0;
+    -fx-shape: "";
+}
+
+/* İçerik Bölgesi */
+.titled-pane > .content {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+    -fx-border-width: 0 0 0 0;
+}
+
 .increment-button, .decrement-button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
@@ -36,6 +62,15 @@
 .scroll-bar:vertical .thumb {
     -fx-background-color: #10165F;
     -fx-background-radius: 5em;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
 }
 
 .scroll-pane > .corner {
