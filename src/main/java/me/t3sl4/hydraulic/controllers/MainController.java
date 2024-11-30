@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -370,7 +372,6 @@ public class MainController implements Initializable {
         } else if (actionEvent.getSource() == btnRefreshDB) {
             handleRefreshButtonAction();
         } else if (actionEvent.getSource() == btnEditDB) {
-
         }
     }
 
