@@ -76,3 +76,8 @@
 .scroll-pane > .corner {
     -fx-background-color: black;
 }
+
+.jfx-combo-box .list-cell:filled:selected {
+    -fx-text-fill: #4a90e2;
+    -fx-background-color: transparent;
+}

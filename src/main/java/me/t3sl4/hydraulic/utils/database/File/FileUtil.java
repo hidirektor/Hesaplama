@@ -153,14 +153,21 @@ public class FileUtil {
     }
 
     private static void fileCopy(String sourcePath, String destPath) throws IOException {
-        InputStream resourceAsStream = FileUtil.class.getResourceAsStream(sourcePath);
-        if (resourceAsStream == null) {
-            throw new FileNotFoundException("Kaynak bulunamadı: " + sourcePath);
-        }
+        File destinationFile = new File(destPath);
 
-        Path destination = Paths.get(destPath);
-        Files.copy(resourceAsStream, destination, StandardCopyOption.REPLACE_EXISTING);
-        resourceAsStream.close();
+        if (!destinationFile.exists()) {
+            InputStream resourceAsStream = FileUtil.class.getResourceAsStream(sourcePath);
+
+            if (resourceAsStream == null) {
+                throw new FileNotFoundException("Kaynak bulunamadı: " + sourcePath);
+            }
+
+            Path destination = Paths.get(destPath);
+            Files.copy(resourceAsStream, destination, StandardCopyOption.REPLACE_EXISTING);
+            resourceAsStream.close();
+        } else {
+            System.out.println("File already exists: " + destPath);
+        }
     }
 
     private static void cleanDirectory(String path) throws IOException {
