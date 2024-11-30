@@ -18,8 +18,13 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.File.FileDescription;
+import me.t3sl4.hydraulic.utils.general.Highlighter.JsonSyntaxHighlighter;
+import me.t3sl4.hydraulic.utils.general.Highlighter.YamlSyntaxHighlighter;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import org.fxmisc.richtext.Caret;
+import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.yaml.snakeyaml.DumperOptions;
@@ -57,7 +62,7 @@ public class EditorController {
     private Label fileDescription;
 
     @FXML
-    private JFXTextArea fileContentArea;
+    private CodeArea fileContentArea;
 
     private final Map<String, FileDescription> fileDescriptions = new HashMap<>();
 
@@ -66,6 +71,8 @@ public class EditorController {
 
     public void initialize() {
         minimizeImage.toFront();
+
+        fileContentArea.setParagraphGraphicFactory(LineNumberFactory.get(fileContentArea));
 
         fileDescriptions.put("cabis.json", new FileDescription("Kabin yapılandırma dosyası.", SystemVariables.cabinsDBPath));
         fileDescriptions.put("general.json", new FileDescription("Parametreleri içeren dosyadır.", SystemVariables.generalDBPath));
@@ -90,7 +97,7 @@ public class EditorController {
                 fileDescription.setVisible(false);
                 fileDescription.setText("");
                 fileContentArea.setVisible(false);
-                fileContentArea.setText("");
+                fileContentArea.clear();
             }
         });
 
@@ -152,9 +159,12 @@ public class EditorController {
     private void loadFileContent(String path) {
         try {
             String content = new String(Files.readAllBytes(new File(path).toPath()));
-            fileContentArea.setText(content);
+            fileContentArea.clear();
+            fileContentArea.appendText(content);
+            highlightSyntax(content);
         } catch (IOException e) {
-            fileContentArea.setText("Dosya yüklenemedi: " + e.getMessage());
+            fileContentArea.clear();
+            fileContentArea.appendText("Dosya yüklenemedi: " + e.getMessage());
         }
     }
 
@@ -211,9 +221,9 @@ public class EditorController {
                 Files.write(new File(description.getPath()).toPath(), content.getBytes());
             }
             isContentModified = false;
-            System.out.println("Dosya başarıyla kaydedildi.");
+            Utils.showSuccessMessage("Dosya başarıyla kaydedildi.", SceneUtil.getScreenOfNode(fileDescription), (Stage)fileDescription.getScene().getWindow());
         } catch (IOException e) {
-            System.out.println("Dosya kaydedilemedi: " + e.getMessage());
+            Utils.showErrorMessage("Dosya kaydedilemedi: " + e.getMessage(), SceneUtil.getScreenOfNode(fileDescription), (Stage)fileDescription.getScene().getWindow());
         }
     }
 
@@ -284,5 +294,13 @@ public class EditorController {
             }
         }
         return -1;
+    }
+
+    private void highlightSyntax(String content) {
+        if (fileComboBox.getSelectionModel().getSelectedItem().endsWith(".json")) {
+            fileContentArea.setStyleSpans(0, JsonSyntaxHighlighter.getStyleSpans(content));
+        } else if (fileComboBox.getSelectionModel().getSelectedItem().endsWith(".yml")) {
+            fileContentArea.setStyleSpans(0, YamlSyntaxHighlighter.getStyleSpans(content));
+        }
     }
 }

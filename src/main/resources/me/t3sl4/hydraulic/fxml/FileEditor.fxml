@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import org.fxmisc.richtext.CodeArea?>
 <VBox fx:id="klasikVBox" prefHeight="700.0" prefWidth="944.0" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.Editor.EditorController">
     <children>
         <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="700.0" prefWidth="944.0" VBox.vgrow="ALWAYS">
@@ -35,7 +36,7 @@
                 <JFXComboBox fx:id="fileComboBox" disable="true" focusColor="#0f9d58" layoutX="335.0" layoutY="231.0" promptText="Lütfen düzenlemek istediğiniz dosyayı seçin." style="-fx-prompt-text-fill: #ffffff;" stylesheets="@../styling/style.css" />
                 <Label fx:id="fileDescription" layoutX="335.0" layoutY="265.0" text="Label" textFill="WHITE" visible="false" />
 
-                <JFXTextArea fx:id="fileContentArea" layoutY="300.0" prefHeight="344.0" prefWidth="904.0" style="-fx-text-fill: #f4f4f9;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <CodeArea fx:id="fileContentArea" layoutY="300.0" prefHeight="344.0" prefWidth="904.0" style="-fx-background-color: transparent;" stylesheets="@../styling/codearea.css" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             </children>
         </AnchorPane>
     </children>

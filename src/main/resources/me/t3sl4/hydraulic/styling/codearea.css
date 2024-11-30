@@ -1,0 +1,48 @@
+/* JSON Syntax Highlighter */
+
+/* JSON anahtarları için stil */
+.json-key {
+    -fx-fill: #0074d9; /* Mavi renk */
+    -fx-font-weight: bold;
+}
+
+/* JSON string'leri için stil */
+.json-string {
+    -fx-fill: #2e8b57; /* Yeşil renk */
+}
+
+/* JSON sayıları için stil */
+.json-number {
+    -fx-fill: #d9534f; /* Kırmızı renk */
+}
+
+/* JSON yorumları için stil (varsa) */
+.json-comment {
+    -fx-fill: #888888; /* Gri renk */
+    -fx-font-style: italic;
+}
+
+
+/* YAML Syntax Highlighter */
+
+/* YAML anahtarları için stil */
+.yaml-key {
+    -fx-fill: #ff6347; /* Domates kırmızısı */
+    -fx-font-weight: bold;
+}
+
+/* YAML string'leri için stil */
+.yaml-string {
+    -fx-fill: #32cd32; /* Lime Green */
+}
+
+/* YAML değerleri için stil */
+.yaml-value {
+    -fx-fill: #1e90ff; /* Dodger Blue */
+}
+
+/* YAML yorumları için stil (varsa) */
+.yaml-comment {
+    -fx-fill: #808080; /* Gri renk */
+    -fx-font-style: italic;
+}
