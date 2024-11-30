@@ -35,7 +35,7 @@
                 <JFXComboBox fx:id="fileComboBox" disable="true" focusColor="#0f9d58" layoutX="335.0" layoutY="231.0" promptText="Lütfen düzenlemek istediğiniz dosyayı seçin." style="-fx-prompt-text-fill: #ffffff;" stylesheets="@../styling/style.css" />
                 <Label fx:id="fileDescription" layoutX="335.0" layoutY="265.0" text="Label" textFill="WHITE" visible="false" />
 
-                <JFXTextArea fx:id="fileContentArea" layoutY="300.0" prefHeight="344.0" prefWidth="904.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <JFXTextArea fx:id="fileContentArea" layoutY="300.0" prefHeight="344.0" prefWidth="904.0" style="-fx-text-fill: #f4f4f9;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             </children>
         </AnchorPane>
     </children>

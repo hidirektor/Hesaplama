@@ -1,5 +1,8 @@
 package me.t3sl4.hydraulic.controllers.Editor;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
@@ -16,8 +19,11 @@ import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.File.FileDescription;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.parser.ParserException;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -175,11 +181,11 @@ public class EditorController {
         if (!validationPassed) {
             String errorMessage = "Dosya formatı hatalı. Satır: ";
             if (selectedFile.endsWith(".json")) {
-                int jsonErrorLine = findJsonErrorLine(new IOException(content));  // JSON hatasını kontrol et
-                errorMessage += jsonErrorLine != -1 ? jsonErrorLine : "Bilinmiyor";
+                int jsonErrorLine = findJsonErrorLine(content);  // JSON hatasını kontrol et
+                errorMessage += (jsonErrorLine - 1) + " ya da " + jsonErrorLine;
             } else if (selectedFile.endsWith(".yml") || selectedFile.endsWith(".yaml")) {
-                int yamlErrorLine = findYamlErrorLine(content, new Exception(content));  // YAML hatasını kontrol et
-                errorMessage += yamlErrorLine != -1 ? yamlErrorLine : "Bilinmiyor";
+                int yamlErrorLine = findYamlErrorLine(content);  // YAML hatasını kontrol et
+                errorMessage += (yamlErrorLine - 1) + " ya da " + yamlErrorLine;
             } else {
                 errorMessage += "Geçersiz format.";
             }
@@ -229,8 +235,6 @@ public class EditorController {
             new com.fasterxml.jackson.databind.ObjectMapper().readTree(content);
             return true;
         } catch (IOException e) {
-            int lineNumber = findJsonErrorLine(e);
-            System.out.println("JSON Error at line: " + lineNumber + " - " + e.getMessage());
             return false;
         }
     }
@@ -240,30 +244,43 @@ public class EditorController {
             new Yaml().load(content);
             return true;
         } catch (Exception e) {
-            int lineNumber = findYamlErrorLine(content, e);
-            System.out.println("YAML Error at line: " + lineNumber + " - " + e.getMessage());
             return false;
         }
     }
 
-    private int findJsonErrorLine(IOException e) {
-        String message = e.getMessage();
+    public int findJsonErrorLine(String message) {
+        try {
+            new JSONObject(message);
+        } catch (JSONException e) {
+            String regex = "line\\s*(\\d+)";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(e.getMessage());
 
-        Pattern pattern = Pattern.compile("line (\\d+)");
-        Matcher matcher = pattern.matcher(message);
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
+            if (matcher.find()) {
+                return Integer.parseInt(matcher.group(1));
+            }
         }
+
         return -1;
     }
 
-    private int findYamlErrorLine(String content, Exception e) {
-        String message = e.getMessage();
+    private int findYamlErrorLine(String content) {
+        try {
+            Yaml yaml = new Yaml();
+            yaml.load(content);
+        } catch (Exception e) {
+            String message = e.getMessage();
 
-        Pattern pattern = Pattern.compile("line (\\d+)");
-        Matcher matcher = pattern.matcher(message);
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
+            Pattern pattern = Pattern.compile("line\\s*(\\d+), column\\s*(\\d+):");
+            Matcher matcher = pattern.matcher(message);
+            int count = 0;
+
+            while (matcher.find()) {
+                count++;
+                if (count == 2) {
+                    return Integer.parseInt(matcher.group(1));
+                }
+            }
         }
         return -1;
     }
