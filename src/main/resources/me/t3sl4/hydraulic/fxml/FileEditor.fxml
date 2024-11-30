@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="klasikVBox" prefHeight="700.0" prefWidth="944.0" style="-fx-background-color: #353a46;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.Editor.EditorController">
+    <children>
+        <AnchorPane fx:id="hydraulicUnitBox" maxHeight="-1.0" maxWidth="-1.0" minWidth="-Infinity" prefHeight="700.0" prefWidth="944.0" VBox.vgrow="ALWAYS">
+            <children>
+                <ImageView fx:id="minimizeImage" fitHeight="24.0" fitWidth="24.0" layoutX="907.0" layoutY="10.0" onMouseClicked="#minimizeProgram" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../assets/images/icons/ikon_minimize.png" />
+                    </image>
+                </ImageView>
+            <Button fx:id="saveButton" layoutX="424.0" layoutY="648.0" mnemonicParsing="false" text="Dosyayı Kaydet" />
+            <JFXCheckBox fx:id="classicEditor" layoutX="352.0" layoutY="200.0" text="Klasik Editör" textFill="WHITE" unCheckedColor="WHITE" />
+            <JFXCheckBox fx:id="modernEditor" layoutX="490.0" layoutY="200.0" text="Modern Editör" textFill="WHITE" unCheckedColor="WHITE" />
+            <Label lineSpacing="2.0" prefWidth="474.0" text="Dosya düzenleme sistemine eriştiniz. Program verilerini bu ekrandan güncellemek için aşağıdaki adımları takip edin.&#10;1- Dosya düzenleme modunuzu seçin.&#10;2- Düzenlemek istediğiniz dosyayı seçin.&#10;3- Eğer modern editör seçtiyseniz ekleme yapmak istediğiniz dış anahtarı seçin.&#10;4- Eğer moden editör seçtiyseniz ekleme yapmak istediğiniz iç anahtarı seçiniz.&#10;5- Gerekli güncellemeleri yaptıktan sonra dosyayı kaydet butonuna tıklayın." textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

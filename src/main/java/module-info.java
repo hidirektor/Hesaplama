@@ -1,5 +1,4 @@
 module me.t3sl.hydraulic {
-    requires javafx.controls;
     requires javafx.fxml;
 
     requires itext.xtra;
@@ -16,13 +15,14 @@ module me.t3sl.hydraulic {
     requires annotations;
     requires org.yaml.snakeyaml;
     requires java.desktop;
-    requires java.logging;
     requires static lombok;
     requires java.prefs;
     requires java.net.http;
     requires org.apache.commons.io;
     requires javafx.media;
     requires com.google.common;
+    requires com.jfoenix;
+    requires java.logging;
 
     exports me.t3sl4.hydraulic.utils;
     opens me.t3sl4.hydraulic.controllers to javafx.fxml;
@@ -41,6 +41,7 @@ module me.t3sl.hydraulic {
     opens me.t3sl4.hydraulic.controllers.Auth to javafx.fxml;
     exports me.t3sl4.hydraulic.controllers.User;
     opens me.t3sl4.hydraulic.controllers.User to javafx.fxml;
+    opens me.t3sl4.hydraulic.controllers.Editor to javafx.fxml;
     opens me.t3sl4.hydraulic.utils to javafx.base, javafx.fxml;
     exports me.t3sl4.hydraulic.utils.general;
     opens me.t3sl4.hydraulic.utils.general to javafx.base, javafx.fxml;

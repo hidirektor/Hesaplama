@@ -372,6 +372,7 @@ public class MainController implements Initializable {
         } else if (actionEvent.getSource() == btnRefreshDB) {
             handleRefreshButtonAction();
         } else if (actionEvent.getSource() == btnEditDB) {
+            paneSwitch(5);
         }
     }
 
@@ -785,6 +786,16 @@ public class MainController implements Initializable {
                         getLocalHydraulicData().kilitMotorY, getLocalHydraulicData().kayipLitre, getLocalHydraulicData().defaultHeight
                 );
                 popupController.showValues();
+            } catch (IOException e) {
+                Utils.logger.log(Level.SEVERE, e.getMessage(), e);
+            }
+        } else if(state == 5) {
+            pnlMenus.setStyle("-fx-background-color : #353a46");
+            pnlMenus.toFront();
+            try {
+                FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/FileEditor.fxml"));
+                Pane parametrePane = loader.load();
+                pnlMenus.getChildren().setAll(parametrePane);
             } catch (IOException e) {
                 Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
