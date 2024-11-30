@@ -118,6 +118,8 @@ public class EditorController {
                 } else {
                     fileDescription.setText("Dosya bilgisi bulunamadı.");
                 }
+            } else if(newValue != null && modernEditor.isSelected()) {
+                //Modern Editör kodları
             } else {
                 fileDescription.setText("Açıklama bulunamadı.");
                 fileDescription.setVisible(false);
