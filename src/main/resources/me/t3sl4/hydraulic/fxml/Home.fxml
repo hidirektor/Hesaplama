@@ -55,13 +55,13 @@
                         <Insets left="50.0" />
                     </padding>
                 </Button>
-                <ScrollPane hbarPolicy="NEVER" prefWidth="200.0" stylesheets="@../styling/style.css">
+                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" stylesheets="@../styling/style.css">
                     <content>
-                        <AnchorPane fx:id="collapsableAnchor" minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                        <AnchorPane fx:id="collapsableAnchor" minHeight="0.0" minWidth="0.0">
                             <children>
-                                <AnchorPane fx:id="hesaplamaAnchor" layoutY="30.0" prefHeight="150.0" prefWidth="200.0">
+                                <AnchorPane fx:id="hesaplamaAnchor" layoutY="30.0" prefHeight="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <TitledPane fx:id="hesaplamaTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hesaplama">
+                                        <TitledPane fx:id="hesaplamaTitledPane" animated="false" stylesheets="@../styling/style.css" text="Hesaplama" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0">
                                                     <children>
@@ -108,9 +108,9 @@
                                         </TitledPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="hataYonetimiAnchor" layoutY="60.0" prefHeight="110.0" prefWidth="200.0">
+                                <AnchorPane fx:id="hataYonetimiAnchor" layoutY="180.0" prefHeight="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <TitledPane fx:id="hataYonetimiTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hata Yönetimi">
+                                        <TitledPane fx:id="hataYonetimiTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hata Yönetimi" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="200.0">
                                                     <children>
@@ -144,11 +144,11 @@
                                         </TitledPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="programSettingsAnchor" layoutY="90.0" prefHeight="70.0" prefWidth="200.0">
+                                <AnchorPane fx:id="programSettingsAnchor" layoutY="210.0" prefHeight="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <TitledPane fx:id="programSettingsTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Program Ayarları">
+                                        <TitledPane fx:id="programSettingsTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Program Ayarları" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="40.0" prefWidth="200.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="200.0">
                                                     <children>
                                                         <Button fx:id="btnMonitorAdapter" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="40.0" prefWidth="259.0" stylesheets="@../styling/style.css" text="Monitör Değiştir">
                                                             <graphic>
@@ -162,15 +162,39 @@
                                                                 <Insets left="50.0" />
                                                             </padding>
                                                         </Button>
+                                          <Button fx:id="btnRefreshDB" alignment="BASELINE_LEFT" graphicTextGap="22.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="40.0" prefWidth="259.0" stylesheets="@../styling/style.css" text="Veritabanını Yenile">
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../../assets/images/icons/ikon_data_update.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                             <padding>
+                                                <Insets left="50.0" />
+                                             </padding>
+                                          </Button>
+                                          <Button fx:id="btnEditDB" alignment="BASELINE_LEFT" graphicTextGap="22.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="40.0" prefWidth="259.0" stylesheets="@../styling/style.css" text="Veritabanını Düzenle">
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../../assets/images/icons/ikon_data_edit.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                             <padding>
+                                                <Insets left="50.0" />
+                                             </padding>
+                                          </Button>
                                                     </children>
                                                 </AnchorPane>
                                             </content>
                                         </TitledPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="accountSettingsAnchor" layoutY="120.0" prefHeight="150.0" prefWidth="200.0">
+                                <AnchorPane fx:id="accountSettingsAnchor" layoutY="240.0" prefHeight="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <TitledPane fx:id="accountSettingsTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hesap Ayarları">
+                                        <TitledPane fx:id="accountSettingsTitledPane" animated="false" expanded="false" stylesheets="@../styling/style.css" text="Hesap Ayarları" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="200.0">
                                                     <children>

@@ -21,8 +21,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
@@ -31,6 +33,7 @@ import me.t3sl4.hydraulic.controllers.Popup.PopupController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.component.FilterSwitch;
 import me.t3sl4.hydraulic.utils.component.ThreeStateSwitch;
+import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Table.HydraulicUnitList.HydraulicInfo;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
@@ -55,6 +58,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import static me.t3sl4.hydraulic.utils.Utils.openURL;
@@ -99,6 +105,12 @@ public class MainController implements Initializable {
 
     @FXML
     private Button btnDebugMode;
+
+    @FXML
+    private Button btnRefreshDB;
+
+    @FXML
+    private Button btnEditDB;
 
     @FXML
     private Button btnParametreler;
@@ -174,6 +186,9 @@ public class MainController implements Initializable {
     private VBox hidrosSwitchVBox;
 
     private ThreeStateSwitch threeStateSwitch = new ThreeStateSwitch();
+
+    private static final int COOLDOWN_SECONDS = 300; // 5 dakika (300 saniye)
+    private boolean isButtonCoolingDown = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -349,11 +364,45 @@ public class MainController implements Initializable {
         } else if(actionEvent.getSource() == btnMonitorAdapter) {
             Utils.showMonitorSelectionScreen(Screen.getScreens(), SceneUtil.getScreenOfNode(kullaniciAdiIsimText), false);
         } else if (actionEvent.getSource() == btnReportBug) {
-            javafx.scene.image.Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
-            Utils.showReportPopup(icon, SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/ReportBug.fxml");
+            Utils.showPopup(SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/ReportBug.fxml", "Hydraulic Tool || Hata Bildir", Modality.APPLICATION_MODAL, StageStyle.UNDECORATED);
         } else if (actionEvent.getSource() == btnDebugMode) {
-            javafx.scene.image.Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
-            Utils.showConsolePopup(icon, SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/Console.fxml");
+            Utils.showPopup(SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/Console.fxml", "Hydraulic Tool || Konsol", Modality.NONE, null);
+        } else if (actionEvent.getSource() == btnRefreshDB) {
+            handleRefreshButtonAction();
+        } else if (actionEvent.getSource() == btnEditDB) {
+
+        }
+    }
+
+    public void handleRefreshButtonAction() {
+        if (!isButtonCoolingDown) {
+            // Butonu devre dışı bırak
+            isButtonCoolingDown = true;
+            btnRefreshDB.setDisable(true);
+
+            Thread systemThread = new Thread(() -> {
+                FileUtil.setupLocalData();
+
+                Platform.runLater(() ->
+                        Utils.showSuccessMessage(
+                                "Veriler güncellendi :))",
+                                SceneUtil.getScreenOfNode(kullaniciAdiIsimText),
+                                (Stage) kullaniciAdiIsimText.getScene().getWindow()
+                        )
+                );
+            });
+            systemThread.start();
+
+            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+            scheduler.schedule(() -> {
+                Platform.runLater(() -> {
+                    btnRefreshDB.setDisable(false);
+                    isButtonCoolingDown = false;
+                });
+                scheduler.shutdown();
+            }, COOLDOWN_SECONDS, TimeUnit.SECONDS);
+        } else {
+            Utils.showErrorMessage("Verileri 5 dakikada bir yenileyebilirsin.", SceneUtil.getScreenOfNode(kullaniciAdiIsimText), (Stage)kullaniciAdiIsimText.getScene().getWindow());
         }
     }
 
@@ -376,7 +425,7 @@ public class MainController implements Initializable {
                 double centerX = (paneWidth - parametreWidth) / 2;
                 double centerY = (paneHeight - parametreHeight) / 2;
                 profilPane.setLayoutX(centerX);
-                profilPane.setLayoutY(centerY+20);
+                profilPane.setLayoutY(centerY);
             } catch(IOException e) {
                 Utils.logger.log(Level.SEVERE, e.getMessage(), e);
             }
@@ -753,13 +802,13 @@ public class MainController implements Initializable {
         Screen currentScreen = SceneUtil.getScreenOfNode(versionCode);
         Stage currentStage = (Stage) versionCode.getScene().getWindow();
         if (licenseKey == null) {
-            Utils.showLicensePopup(currentScreen, currentStage);
+            Utils.showPopup(currentScreen, "fxml/LicensePopup.fxml", "Hydraulic Tool || Lisans Kontrol", Modality.APPLICATION_MODAL, StageStyle.UNDECORATED);
         } else {
             String licenseCheckURL = BASE_URL + checkLicenseUrlPrefix;
 
             try {
                 LicenseService.checkLicense(licenseCheckURL, licenseKey, null, () -> {
-                    Utils.showLicensePopup(currentScreen, currentStage);
+                    Utils.showPopup(currentScreen, "fxml/LicensePopup.fxml", "Hydraulic Tool || Lisans Kontrol", Modality.APPLICATION_MODAL, StageStyle.UNDECORATED);
                 });
             } catch (IOException e) {
                 throw new RuntimeException(e);

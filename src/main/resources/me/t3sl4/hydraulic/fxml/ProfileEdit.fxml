@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.DropShadow?>
@@ -10,7 +9,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="620.0" prefWidth="790.0" style="-fx-background-color: #ffffff;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.User.ProfileEditController">
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<AnchorPane prefHeight="700.0" prefWidth="944.0" style="-fx-background-color: #ffffff;" stylesheets="@../styling/style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.User.ProfileEditController">
 
     <children>
         <JFXTextField fx:id="isimSoyisimText" focusColor="#48a5ea" layoutX="93.0" layoutY="251.0" prefHeight="25.0" prefWidth="217.0" promptText="İsim Soyisim" />
@@ -38,10 +41,10 @@
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <JFXButton layoutX="93.0" layoutY="389.0" onMouseClicked="#kayitBilgiTemizle" style="-fx-background-color: #FF6961;" prefHeight="25.0" prefWidth="94.0" text="Temizle" textFill="WHITE" />
+        <JFXButton layoutX="93.0" layoutY="389.0" onMouseClicked="#kayitBilgiTemizle" prefHeight="25.0" prefWidth="94.0" style="-fx-background-color: #FF6961;" text="Temizle" textFill="WHITE" />
         <JFXButton fx:id="profilGuncelle" layoutX="529.0" layoutY="380.0" onMouseClicked="#profilGuncelleme" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: #77DD77;" text="Profili Güncelle" textFill="BLACK" />
-        <Separator layoutX="44.0" layoutY="68.0" prefHeight="1.0" prefWidth="600.0" />
-        <JFXButton layoutX="230.0" layoutY="130.0" onAction="#uploadProfilePhoto" style="-fx-background-color: #48A5EA;" prefHeight="25.0" prefWidth="100.0" text="Fotoğraf Yükle" />
+        <Separator layoutX="44.0" layoutY="68.0" prefHeight="1.0" prefWidth="900.0" />
+        <JFXButton layoutX="230.0" layoutY="130.0" onAction="#uploadProfilePhoto" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #48A5EA;" text="Fotoğraf Yükle" />
         <StackPane layoutX="320.0" layoutY="90.0">
             <Circle fx:id="secilenFoto" fill="#ffffff" layoutY="50" radius="50.0" visible="false">
                 <effect>

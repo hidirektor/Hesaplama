@@ -25,6 +25,7 @@ public class SceneUtil {
 
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setTitle("Hydraulic Tool " + SystemVariables.getVersion());
 
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         primaryStage.getIcons().add(icon);
@@ -60,6 +61,7 @@ public class SceneUtil {
         Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Login.fxml")));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setTitle("Hydraulic Tool " + SystemVariables.getVersion());
 
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         primaryStage.getIcons().add(icon);

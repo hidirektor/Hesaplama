@@ -313,42 +313,9 @@ public class Utils {
         }
     }
 
-    public static void showLicensePopup(Screen currentScreen, Stage currentStage) {
+    public static void showPopup(Screen currentScreen, String fxmlPath, String title, Modality popupModality, StageStyle popupStyle) {
         Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
-        try {
-            FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/LicensePopup.fxml"));
-            Parent root = loader.load();
 
-            Stage stage = new Stage();
-
-            Rectangle2D bounds = currentScreen.getVisualBounds();
-            stage.setOnShown(event -> {
-                double stageWidth = stage.getWidth();
-                double stageHeight = stage.getHeight();
-
-                // Calculate the center position
-                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
-                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
-
-                // Set the stage position
-                stage.setX(centerX);
-                stage.setY(centerY);
-            });
-
-            stage.setTitle("Silindir Seçimi");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setScene(new Scene(root));
-            stage.getIcons().add(icon);
-            stage.showAndWait();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Utils.showErrorMessage("Lisans anahtarı girilirken hata meydana geldi.", currentScreen, currentStage);
-        }
-    }
-
-    public static void showParcaListesiPopup(Image icon, Screen currentScreen, String fxmlPath) {
         AtomicReference<Double> screenX = new AtomicReference<>((double) 0);
         AtomicReference<Double> screenY = new AtomicReference<>((double) 0);
 
@@ -369,92 +336,11 @@ public class Utils {
                 popupStage.setY(centerY);
             });
 
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.initStyle(StageStyle.UNDECORATED);
-            popupStage.setScene(new Scene(root));
-            popupStage.getIcons().add(icon);
-
-            root.setOnMousePressed(event -> {
-                screenX.set(event.getSceneX());
-                screenY.set(event.getSceneY());
-            });
-            root.setOnMouseDragged(event -> {
-
-                popupStage.setX(event.getScreenX() - screenX.get());
-                popupStage.setY(event.getScreenY() - screenY.get());
-
-            });
-            popupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void showReportPopup(Image icon, Screen currentScreen, String fxmlPath) {
-        AtomicReference<Double> screenX = new AtomicReference<>((double) 0);
-        AtomicReference<Double> screenY = new AtomicReference<>((double) 0);
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource(fxmlPath));
-            VBox root = fxmlLoader.load();
-
-            Stage popupStage = new Stage();
-            Rectangle2D bounds = currentScreen.getVisualBounds();
-            popupStage.setOnShown(event -> {
-                double stageWidth = popupStage.getWidth();
-                double stageHeight = popupStage.getHeight();
-
-                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
-                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
-
-                popupStage.setX(centerX);
-                popupStage.setY(centerY);
-            });
-
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.initStyle(StageStyle.UNDECORATED);
-            popupStage.setScene(new Scene(root));
-            popupStage.getIcons().add(icon);
-
-            root.setOnMousePressed(event -> {
-                screenX.set(event.getSceneX());
-                screenY.set(event.getSceneY());
-            });
-            root.setOnMouseDragged(event -> {
-
-                popupStage.setX(event.getScreenX() - screenX.get());
-                popupStage.setY(event.getScreenY() - screenY.get());
-
-            });
-            popupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void showConsolePopup(Image icon, Screen currentScreen, String fxmlPath) {
-        AtomicReference<Double> screenX = new AtomicReference<>((double) 0);
-        AtomicReference<Double> screenY = new AtomicReference<>((double) 0);
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource(fxmlPath));
-            VBox root = fxmlLoader.load();
-
-            Stage popupStage = new Stage();
-            Rectangle2D bounds = currentScreen.getVisualBounds();
-            popupStage.setOnShown(event -> {
-                double stageWidth = popupStage.getWidth();
-                double stageHeight = popupStage.getHeight();
-
-                double centerX = bounds.getMinX() + (bounds.getWidth() - stageWidth) / 2;
-                double centerY = bounds.getMinY() + (bounds.getHeight() - stageHeight) / 2;
-
-                popupStage.setX(centerX);
-                popupStage.setY(centerY);
-            });
-
-            popupStage.initModality(Modality.NONE);
-            popupStage.setTitle("Konsol Ekranı");
+            popupStage.initModality(popupModality);
+            if(popupStyle != null) {
+                popupStage.initStyle(popupStyle);
+            }
+            popupStage.setTitle(title);
             popupStage.setScene(new Scene(root));
             popupStage.getIcons().add(icon);
 
@@ -475,6 +361,8 @@ public class Utils {
     }
 
     public static void showMonitorSelectionScreen(List<Screen> screens, Screen currentScreen, boolean redirectStatus) {
+        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
+
         Stage selectionStage = new Stage();
         VBox layout = new VBox(10);
         layout.setStyle("-fx-background-color: #353a46;");
@@ -517,6 +405,8 @@ public class Utils {
         selectionStage.setScene(scene);
         selectionStage.initStyle(StageStyle.TRANSPARENT);
         selectionStage.initStyle(StageStyle.UNDECORATED);
+        selectionStage.setTitle("Hydraulic Tool || Monitör Seçimi");
+        selectionStage.getIcons().add(icon);
         selectionStage.setResizable(false);
         selectionStage.centerOnScreen();
 
@@ -1343,7 +1233,7 @@ public class Utils {
         // Varsayılan boyutlar
         int defaultMenuNameSize = 30; // TitledPane başlığı için
         int defaultItemSize = 40;    // Her bir öğenin boyutu
-        int[] itemCounts = {3, 2, 1, 3}; // Her TitledPane'in altındaki öğe sayısı
+        int[] itemCounts = {3, 2, 3, 3}; // Her TitledPane'in altındaki öğe sayısı
 
         ChangeListener<Boolean> titledPaneListener = (observable, oldValue, newValue) -> {
             double newHeight = defaultMenuNameSize;

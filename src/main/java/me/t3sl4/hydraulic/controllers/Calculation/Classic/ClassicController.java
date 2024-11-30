@@ -14,7 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
@@ -455,9 +457,8 @@ public class ClassicController {
 
     @FXML
     public void parcaListesiGoster() {
-        Image icon = new Image(Objects.requireNonNull(Launcher.class.getResourceAsStream("/assets/images/general/logo.png")));
         if(hesaplamaBitti) {
-            Utils.showParcaListesiPopup(icon, SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/PartList.fxml");
+            Utils.showPopup(SceneUtil.getScreenOfNode(screenDetectorLabel), "fxml/PartList.fxml", "Hydraulic Tool || Parça Listesi", Modality.APPLICATION_MODAL, StageStyle.UNDECORATED);
         } else {
             Utils.showErrorMessage("Lütfen önce hesaplama işlemini bitirin !", SceneUtil.getScreenOfNode(screenDetectorLabel), (Stage)screenDetectorLabel.getScene().getWindow());
         }
