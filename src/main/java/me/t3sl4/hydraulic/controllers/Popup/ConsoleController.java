@@ -3,8 +3,6 @@ package me.t3sl4.hydraulic.controllers.Popup;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
-import org.yaml.snakeyaml.reader.StreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,15 +20,29 @@ public class ConsoleController {
 
     @FXML
     public void initialize() {
-        redirectStandardOut(consoleOutput);
+        redirectStandardOutput(consoleOutput);
+        redirectStandardError(consoleOutput);
 
         System.out.println("Önder Grup Debug Tool v1.0");
     }
 
-    private void redirectStandardOut(TextArea area) {
+    private void redirectStandardOutput(TextArea area) {
+        redirectStream(System.out, area);
+    }
+
+    private void redirectStandardError(TextArea area) {
+        redirectStream(System.err, area);
+    }
+
+    private void redirectStream(PrintStream originalStream, TextArea area) {
         try {
             PipedInputStream in = new PipedInputStream();
-            System.setOut(new PrintStream(new PipedOutputStream(in), true, UTF_8));
+            PrintStream pipedOut = new PrintStream(new PipedOutputStream(in), true, UTF_8);
+            if (originalStream == System.out) {
+                System.setOut(pipedOut);
+            } else if (originalStream == System.err) {
+                System.setErr(pipedOut);
+            }
 
             Thread thread = new Thread(new StreamReader(in, area));
             thread.setDaemon(true);
