@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -63,14 +64,6 @@ public class EditorController {
     private boolean isContentModified = false;
     private boolean validationPassed = false;
 
-    private static final Pattern JSON_PATTERN = Pattern.compile(
-            "(\"[^\"]*\")|(\\{)|(\\})|(\\[)|(\\])|(:)|([0-9]+)|(\\s+)"
-    );
-
-    private static final Pattern YAML_PATTERN = Pattern.compile(
-            "(\\w+)(:)|(\"[^\"]*\")|(\\{)|(\\})|(\\[)|(\\])|(\\s+)"
-    );
-
     public void initialize() {
         minimizeImage.toFront();
 
@@ -93,7 +86,11 @@ public class EditorController {
                 classicMode();
             } else {
                 fileComboBox.setDisable(true);
+                fileComboBox.getSelectionModel().clearSelection();
                 fileDescription.setVisible(false);
+                fileDescription.setText("");
+                fileContentArea.setVisible(false);
+                fileContentArea.setText("");
             }
         });
 
@@ -102,8 +99,9 @@ public class EditorController {
                 classicEditor.setSelected(false);
                 modernMode();
             } else {
-                fileComboBox.setDisable(true);
-                fileDescription.setVisible(false);
+                // TODO
+                // Moden editör seçimi kaldırılırsa
+                // Modern editör verileri sıfırlanacak ve ui güncellenecek
             }
         });
 
@@ -120,6 +118,7 @@ public class EditorController {
                 }
             } else if(newValue != null && modernEditor.isSelected()) {
                 //Modern Editör kodları
+                fileContentArea.setVisible(false);
             } else {
                 fileDescription.setText("Açıklama bulunamadı.");
                 fileDescription.setVisible(false);
