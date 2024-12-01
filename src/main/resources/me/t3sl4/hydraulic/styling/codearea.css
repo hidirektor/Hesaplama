@@ -36,3 +36,7 @@
     -fx-fill: #4682b4; /* Çelik mavisi */
     -fx-font-weight: bold;
 }
+
+.yaml-blank {
+    -fx-fill: #ffffff; /* Beyaz */
+}

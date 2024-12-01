@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 public class YamlSyntaxHighlighter {
 
     private static final Pattern YAML_PATTERN = Pattern.compile(
-            "(?<KEYVALUE>[a-zA-Z0-9_-öşçığüÖŞÇİĞÜ]+(?:\\s*[:]\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s#]+)))" +  // Key-Value (Anahtarlar ve Değerler)
-                    "|(?<COMMENT>#.*$)" +  // Yorumlar
-                    "|(?<STRUCTURAL>[\\[\\]{}:,'\\\"])(?=\\S|$)", // Yapısal elemanlar (virgül, köşeli parantez, süslü parantez, iki nokta)
+            "(?<STRUCTURAL>[\\[\\]{}:,'\\\"']|':)(?=\\s|\\b|$|[İÖÇığüşçıİĞÜÖŞÇ])" + // Yapısal elemanlar (virgül, köşeli parantez, süslü parantez, iki nokta)
+            "|(?<KEYVALUE>\\s*(?=#[^\\s])|[a-zA-Z0-9öşçığüÖŞÇİĞÜ()._\\-\\/Ø\"]+(?:\\s*))" +  // Key-Value (Anahtarlar ve Değerler)
+                    "|(?<COMMENT>#\\s?.*$)",  // Yorumlar
             Pattern.MULTILINE
     );
 
@@ -24,10 +24,10 @@ public class YamlSyntaxHighlighter {
 
         while (matcher.find()) {
             String styleClass =
-                    matcher.group("KEYVALUE") != null ? "yaml-key" :
-                            matcher.group("COMMENT") != null ? "yaml-comment" :
-                                    matcher.group("STRUCTURAL") != null ? "yaml-structural" :
-                                            null;
+                    matcher.group("STRUCTURAL") != null ? "yaml-structural" :
+                            matcher.group("KEYVALUE") != null ? "yaml-key" :
+                                    matcher.group("COMMENT") != null ? "yaml-comment" :
+                                            "yaml-blank";
 
             assert styleClass != null;
 
