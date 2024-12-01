@@ -3,12 +3,18 @@ package me.t3sl4.hydraulic.controllers.Editor;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.File.FileDescription;
+import me.t3sl4.hydraulic.utils.database.Model.ModernEditor.ModernEditor;
 import me.t3sl4.hydraulic.utils.general.Highlighter.JsonSyntaxHighlighter;
 import me.t3sl4.hydraulic.utils.general.Highlighter.YamlSyntaxHighlighter;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
@@ -28,6 +34,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,6 +61,33 @@ public class EditorController {
 
     @FXML
     private CodeArea fileContentArea;
+
+    /*
+    Modern Editör componentleri
+     */
+    @FXML
+    private ScrollPane fileItemsScrollPane;
+
+    @FXML
+    private VBox fileItems;
+
+    @FXML
+    private JFXComboBox<String> firstKeyCombo;
+
+    @FXML
+    private JFXComboBox<String> secondKeyCombo;
+
+    @FXML
+    private Label topKeyTableLabel;
+
+    @FXML
+    private Label subKeyTableLabel;
+
+    @FXML
+    private Label keyTableLabel;
+
+    @FXML
+    private Label valueTableLabel;
 
     private final Map<String, FileDescription> fileDescriptions = new HashMap<>();
 
@@ -97,9 +131,14 @@ public class EditorController {
                 classicEditor.setSelected(false);
                 modernMode();
             } else {
-                // TODO
-                // Moden editör seçimi kaldırılırsa
-                // Modern editör verileri sıfırlanacak ve ui güncellenecek
+                fileItemsScrollPane.setVisible(false);
+                fileItems.setVisible(false);
+                firstKeyCombo.setVisible(false);
+                secondKeyCombo.setVisible(false);
+                topKeyTableLabel.setVisible(false);
+                subKeyTableLabel.setVisible(false);
+                keyTableLabel.setVisible(false);
+                valueTableLabel.setVisible(false);
             }
         });
 
@@ -145,6 +184,110 @@ public class EditorController {
     private void modernMode() {
         System.out.println("Modern Mode seçildi");
         fileComboBox.setDisable(false);
+
+        topKeyTableLabel.setVisible(true);
+        subKeyTableLabel.setVisible(true);
+        keyTableLabel.setVisible(true);
+        valueTableLabel.setVisible(true);
+
+        fileComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String path = fileDescriptions.get(newValue).getPath();
+                ModernEditor modernEditor = new ModernEditor(List.of(ModernEditor.Operation.ADD, ModernEditor.Operation.EDIT, ModernEditor.Operation.DELETE), path, 5);
+                displayFileKeys(modernEditor);
+            }
+        });
+    }
+
+    private void displayFileKeys(ModernEditor modernEditor) {
+        fileItemsScrollPane.setVisible(true);
+        fileItems.setVisible(true);
+
+        fileItems.getChildren().clear(); // Mevcut öğeleri temizle
+
+        firstKeyCombo.setVisible(true);
+        firstKeyCombo.setDisable(false);
+        firstKeyCombo.getItems().clear();
+
+        // Tüm üst anahtarları ComboBox'a ekle
+        modernEditor.getDataMap().forEach((key, value) -> {
+            String[] keys = key.split("\\.", 2); // En fazla 2 parçaya böl
+            String topKey = keys[0];
+            if (!firstKeyCombo.getItems().contains(topKey)) {
+                firstKeyCombo.getItems().add(topKey);
+            }
+        });
+
+        // İlk ComboBox seçim olayları
+        firstKeyCombo.setOnAction(event -> {
+            String selectedTopKey = firstKeyCombo.getValue();
+            System.out.println("Selected Top Key: " + selectedTopKey);
+
+            // İlgili alt anahtarları yüklemek için ikinci ComboBox'u temizle ve doldur
+            secondKeyCombo.getItems().clear();
+            modernEditor.getDataMap().forEach((key, value) -> {
+                if (key.startsWith(selectedTopKey + ".") && key.split("\\.").length > 1) {
+                    String subKey = key.substring(selectedTopKey.length() + 1);
+
+                    // Eğer subKey ".parts" içermiyorsa sonuna ekle
+                    if (!subKey.endsWith(".parts")) {
+                        subKey += ".parts";
+                    }
+
+                    // Alt anahtarları ikinci ComboBox'a ekle
+                    if (!secondKeyCombo.getItems().contains(subKey)) {
+                        secondKeyCombo.getItems().add(subKey);
+                    }
+                }
+            });
+
+            // Eğer alt anahtarlar varsa ComboBox'u göster, yoksa verileri yükle
+            if (!secondKeyCombo.getItems().isEmpty()) {
+                secondKeyCombo.setVisible(true);
+                secondKeyCombo.setDisable(false);
+            } else {
+                loadKeyData(selectedTopKey, null, modernEditor);
+            }
+        });
+
+        // İkinci ComboBox seçim olayları
+        secondKeyCombo.setOnAction(event -> {
+            String selectedSubKey = secondKeyCombo.getValue();
+            System.out.println("Selected Sub Key: " + selectedSubKey);
+
+            loadKeyData(firstKeyCombo.getValue(), selectedSubKey, modernEditor);
+        });
+    }
+
+    private void loadKeyData(String topKey, String subKey, ModernEditor modernEditor) {
+        fileItems.getChildren().clear(); // Mevcut öğeleri temizle
+
+        modernEditor.getDataMap().forEach((key, value) -> {
+            if (key.equals(topKey + (subKey != null ? "." + subKey : ""))) {
+                System.out.println("Key: " + key + ", Value: " + value);
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/EditorItem.fxml"));
+                    javafx.scene.Node node = loader.load();
+
+                    HBox itemC = (HBox) loader.getNamespace().get("itemC");
+                    Label topKeyLabel = (Label) loader.getNamespace().get("topKeyLabel");
+                    Label subKeyLabel = (Label) loader.getNamespace().get("subKeyLabel");
+                    Label keyLabel = (Label) loader.getNamespace().get("keyLabel");
+                    Label valueLabel = (Label) loader.getNamespace().get("valueLabel");
+                    ImageView addIcon = (ImageView) loader.getNamespace().get("addIcon");
+                    ImageView editIcon = (ImageView) loader.getNamespace().get("editIcon");
+                    ImageView deleteIcon = (ImageView) loader.getNamespace().get("deleteIcon");
+
+                    topKeyLabel.setText(topKey);
+                    subKeyLabel.setText(subKey != null ? subKey : "N/A");
+
+                    fileItems.getChildren().add(node);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void loadFileContent(String path) {
