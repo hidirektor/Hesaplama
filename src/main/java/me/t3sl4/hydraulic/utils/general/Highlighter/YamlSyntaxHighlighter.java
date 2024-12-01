@@ -12,7 +12,7 @@ public class YamlSyntaxHighlighter {
 
     private static final Pattern YAML_PATTERN = Pattern.compile(
             "(?<STRUCTURAL>[\\[\\]{}:,'\\\"']|':)(?=\\s|\\b|$|[İÖÇığüşçıİĞÜÖŞÇ])" + // Yapısal elemanlar (virgül, köşeli parantez, süslü parantez, iki nokta)
-            "|(?<KEYVALUE>\\s*(?=#[^\\s])|[a-zA-Z0-9öşçığüÖŞÇİĞÜ()._\\-\\/Ø\"]+(?:\\s*))" +  // Key-Value (Anahtarlar ve Değerler)
+            "|(?<KEYVALUE>\\s*(?=#[^\\s])|[a-zA-Z0-9öşçığüÖŞÇİĞÜ()._\\-\\/Ø\\+½]+(?:\\s*)|(?<=\\d)\\\"(?!\\s*'))" +  // Key-Value (Anahtarlar ve Değerler)
                     "|(?<COMMENT>#\\s?.*$)",  // Yorumlar
             Pattern.MULTILINE
     );
