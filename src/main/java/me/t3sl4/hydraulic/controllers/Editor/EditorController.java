@@ -28,8 +28,11 @@ import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.parser.ParserException;
+import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -74,7 +77,7 @@ public class EditorController {
 
         fileContentArea.setParagraphGraphicFactory(LineNumberFactory.get(fileContentArea));
 
-        fileDescriptions.put("cabis.json", new FileDescription("Kabin yapılandırma dosyası.", SystemVariables.cabinsDBPath));
+        fileDescriptions.put("cabins.json", new FileDescription("Kabin yapılandırma dosyası.", SystemVariables.cabinsDBPath));
         fileDescriptions.put("general.json", new FileDescription("Parametreleri içeren dosyadır.", SystemVariables.generalDBPath));
         fileDescriptions.put("part_origins_classic.yml", new FileDescription("Klasik parçaların orijinal isim ve stok kodu dosyasıdır.", SystemVariables.partOriginsClassicDBPath));
         fileDescriptions.put("part_origins_powerpack.yml", new FileDescription("PowerPack parçaların orijinal isim ve stok kodu dosyasıdır.", SystemVariables.partOriginsPowerPackDBPath));
@@ -206,16 +209,19 @@ public class EditorController {
 
         try {
             if (selectedFile.endsWith(".yml")) {
+                LoaderOptions loaderOptions = new LoaderOptions();
+                loaderOptions.setProcessComments(true);
                 DumperOptions options = new DumperOptions();
                 options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
                 options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED);
                 options.setPrettyFlow(true);
 
-                Yaml yaml = new Yaml(options);
+                Yaml yaml = new Yaml(new Constructor(loaderOptions), new Representer(options), options, loaderOptions);
 
-                Map<String, Object> data = parseYamlToMap(content);
+                String yamlContent = yaml.dump(parseYamlToMap(content));
+
                 try (FileWriter writer = new FileWriter(description.getPath())) {
-                    yaml.dump(data, writer);
+                    yaml.dump(yamlContent, writer);
                 }
             } else {
                 Files.write(new File(description.getPath()).toPath(), content.getBytes());

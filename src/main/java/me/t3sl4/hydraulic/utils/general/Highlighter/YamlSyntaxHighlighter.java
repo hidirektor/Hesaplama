@@ -2,7 +2,6 @@ package me.t3sl4.hydraulic.utils.general.Highlighter;
 
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
-import org.fxmisc.richtext.model.StyleSpan;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,36 +10,35 @@ import java.util.regex.Pattern;
 
 public class YamlSyntaxHighlighter {
 
-    // Anahtarlar için regex (YAML anahtarları genellikle ":" ile biter)
-    private static final String KEY_PATTERN = "^\\s*([a-zA-Z0-9_\\-]+)(?=\\s*:)";
-
-    // Stringler için regex (Çift tırnakla tanımlanan stringler)
-    private static final String STRING_PATTERN = "\"([^\"]*)\"";
-
-    // Değerler için regex (YAML'deki ":" işaretinden sonra gelen değerler)
-    private static final String VALUE_PATTERN = "(?<=:\\s*)([^\\n]+)";
+    private static final Pattern YAML_PATTERN = Pattern.compile(
+            "(?<KEYVALUE>[a-zA-Z0-9_-öşçığüÖŞÇİĞÜ]+(?:\\s*:\\s*\"[^\"]*\"|\\s*:\\s*'[^']*'|\\s*:\\s*[^\\s#]+)*)" +  // Key-Value (Anahtarlar ve Değerler)
+                    "|(?<COMMENT>#.*$)" +  // Yorumlar
+                    "|(?<STRUCTURAL>[\\[\\]{}:,])", // Yapısal elemanlar (virgül, köşeli parantez, süslü parantez, iki nokta)
+            Pattern.MULTILINE
+    );
 
     public static StyleSpans<Collection<String>> getStyleSpans(String text) {
-        Matcher matcher = Pattern.compile(KEY_PATTERN).matcher(text);
-        StyleSpansBuilder<Collection<String>> styleSpansBuilder = new StyleSpansBuilder<>();
+        Matcher matcher = YAML_PATTERN.matcher(text);
+        int lastEnd = 0;
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
 
         while (matcher.find()) {
-            // Calculate the length of the span and add it with the style
-            styleSpansBuilder.add(new StyleSpan<>(Collections.singleton("yaml-key"), matcher.end() - matcher.start()));
+            String styleClass =
+                    matcher.group("KEYVALUE") != null ? "yaml-key" :
+                            matcher.group("COMMENT") != null ? "yaml-comment" :
+                                    matcher.group("STRUCTURAL") != null ? "yaml-structural" :
+                                            null;
+
+            assert styleClass != null;
+
+            spansBuilder.add(Collections.emptyList(), matcher.start() - lastEnd);
+
+            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            lastEnd = matcher.end();
         }
 
-        matcher = Pattern.compile(STRING_PATTERN).matcher(text);
-        while (matcher.find()) {
-            // Calculate the length of the span and add it with the style
-            styleSpansBuilder.add(new StyleSpan<>(Collections.singleton("yaml-string"), matcher.end() - matcher.start()));
-        }
+        spansBuilder.add(Collections.emptyList(), text.length() - lastEnd);
 
-        matcher = Pattern.compile(VALUE_PATTERN).matcher(text);
-        while (matcher.find()) {
-            // Calculate the length of the span and add it with the style
-            styleSpansBuilder.add(new StyleSpan<>(Collections.singleton("yaml-value"), matcher.end() - matcher.start()));
-        }
-
-        return styleSpansBuilder.create();
+        return spansBuilder.create();
     }
 }
