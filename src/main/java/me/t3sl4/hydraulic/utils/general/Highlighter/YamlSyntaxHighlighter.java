@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 public class YamlSyntaxHighlighter {
 
     private static final Pattern YAML_PATTERN = Pattern.compile(
-            "(?<KEYVALUE>[a-zA-Z0-9_-öşçığüÖŞÇİĞÜ]+(?:\\s*:\\s*\"[^\"]*\"|\\s*:\\s*'[^']*'|\\s*:\\s*[^\\s#]+)*)" +  // Key-Value (Anahtarlar ve Değerler)
+            "(?<KEYVALUE>[a-zA-Z0-9_-öşçığüÖŞÇİĞÜ]+(?:\\s*[:]\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s#]+)))" +  // Key-Value (Anahtarlar ve Değerler)
                     "|(?<COMMENT>#.*$)" +  // Yorumlar
-                    "|(?<STRUCTURAL>[\\[\\]{}:,])", // Yapısal elemanlar (virgül, köşeli parantez, süslü parantez, iki nokta)
+                    "|(?<STRUCTURAL>[\\[\\]{}:,'\\\"])(?=\\S|$)", // Yapısal elemanlar (virgül, köşeli parantez, süslü parantez, iki nokta)
             Pattern.MULTILINE
     );
 

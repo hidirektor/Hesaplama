@@ -34,4 +34,5 @@
 
 .yaml-structural {
     -fx-fill: #4682b4; /* Çelik mavisi */
+    -fx-font-weight: bold;
 }
