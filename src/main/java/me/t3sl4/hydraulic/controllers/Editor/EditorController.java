@@ -1,20 +1,11 @@
 package me.t3sl4.hydraulic.controllers.Editor;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.File.FileDescription;
@@ -22,23 +13,20 @@ import me.t3sl4.hydraulic.utils.general.Highlighter.JsonSyntaxHighlighter;
 import me.t3sl4.hydraulic.utils.general.Highlighter.YamlSyntaxHighlighter;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import org.fxmisc.richtext.Caret;
-import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.LoaderOptions;
+import org.snakeyaml.engine.v2.api.LoadSettings;
+import org.snakeyaml.engine.v2.api.lowlevel.Compose;
+import org.snakeyaml.engine.v2.nodes.Node;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.parser.ParserException;
-import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Collection;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -208,21 +196,18 @@ public class EditorController {
         }
 
         try {
-            if (selectedFile.endsWith(".yml")) {
-                LoaderOptions loaderOptions = new LoaderOptions();
-                loaderOptions.setProcessComments(true);
-                DumperOptions options = new DumperOptions();
-                options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-                options.setDefaultScalarStyle(DumperOptions.ScalarStyle.DOUBLE_QUOTED);
-                options.setPrettyFlow(true);
+            if (selectedFile.endsWith(".yml") || selectedFile.endsWith(".yaml")) {
+                LoadSettings settings = LoadSettings.builder()
+                        .setUseMarks(true)
+                        .build();
 
-                Yaml yaml = new Yaml(new Constructor(loaderOptions), new Representer(options), options, loaderOptions);
+                Compose compose = new Compose(settings);
 
-                String yamlContent = yaml.dump(parseYamlToMap(content));
+                InputStream yamlStream = Files.newInputStream(Paths.get(description.getPath()));
 
-                try (FileWriter writer = new FileWriter(description.getPath())) {
-                    yaml.dump(yamlContent, writer);
-                }
+                Node node = compose.composeInputStream(yamlStream).orElseThrow(() -> new IOException("YAML okuma hatası"));
+
+                Files.write(Paths.get(description.getPath()), content.getBytes());
             } else {
                 Files.write(new File(description.getPath()).toPath(), content.getBytes());
             }
@@ -231,11 +216,6 @@ public class EditorController {
         } catch (IOException e) {
             Utils.showErrorMessage("Dosya kaydedilemedi: " + e.getMessage(), SceneUtil.getScreenOfNode(fileDescription), (Stage)fileDescription.getScene().getWindow());
         }
-    }
-
-    private Map<String, Object> parseYamlToMap(String yamlContent) {
-        Yaml yaml = new Yaml();
-        return yaml.load(yamlContent);
     }
 
     private boolean validateFile(String fileName, String content) {
