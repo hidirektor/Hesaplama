@@ -8,13 +8,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -29,8 +26,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.t3sl4.hydraulic.Launcher;
 import me.t3sl4.hydraulic.app.Main;
-import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
-import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.controllers.Popup.PopupController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.component.FilterSwitch;
@@ -52,7 +47,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -438,6 +432,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void programiKapat() {
+        Platform.exit();
         System.exit(0);
     }
 

@@ -1,5 +1,6 @@
 package me.t3sl4.hydraulic.controllers.Popup;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
 import java.io.File;
@@ -43,6 +45,7 @@ public class UpdateAlertController {
     @FXML
     private void handleUpdate() {
         Utils.openURL(SystemVariables.NEW_VERSION_URL);
+        Platform.exit();
         System.exit(0); // Programı kapat
     }
 
@@ -53,6 +56,12 @@ public class UpdateAlertController {
         File selectedDirectory = directoryChooser.showDialog(currentStage);
 
         if (selectedDirectory != null) {
+            File[] matchingFiles = selectedDirectory.listFiles(file -> file.getName().startsWith("windows_Hydraulic"));
+            if (matchingFiles != null && matchingFiles.length > 0) {
+                Utils.showErrorMessage("Seçilen dizinde 'windows_Hydraulic' ile başlayan bir dosya zaten var. Lütfen farklı bir konum seçin.", SceneUtil.getScreenOfNode(versionLabel), (Stage)versionLabel.getScene().getWindow());
+                return;
+            }
+
             downloadBar.setVisible(true);
             scissorLiftView.setVisible(true);
 
