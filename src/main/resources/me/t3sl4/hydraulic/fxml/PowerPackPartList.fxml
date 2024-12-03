@@ -23,7 +23,7 @@
                     <TableColumn fx:id="adet" minWidth="0.0" prefWidth="75.0" text="Adet" />
                 </columns>
             </TableView>
-            <Text fill="#B7C3D7" layoutX="124.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seçilen Malzeme Listesini Görmek İçin Basınç Şalteri ve Manometreyi Seçmeyi Unutmayın !!!" textAlignment="CENTER" wrappingWidth="252.39910888671875">
+            <Text fill="#B7C3D7" layoutX="124.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seçilen Malzeme Listesini Görmek İçin Basınç Şalteri, El Pompası ve Manometreyi Seçmeyi Unutmayın !!!" textAlignment="CENTER" wrappingWidth="252.39910888671875">
             <font>
                <Font size="13.0" />
             </font></Text>
