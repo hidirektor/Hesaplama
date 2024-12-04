@@ -13,7 +13,6 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
-import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.ParcaTableData;
@@ -483,6 +482,8 @@ public class ClassicPartController {
             generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaDefault.get("8"), "Standart Parçalar");
         } else if(Objects.equals(ClassicController.atananHT, "HT 400")) {
             generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaDefault.get("9"), "Standart Parçalar");
+        } else if(Objects.equals(ClassicController.atananHT, "HT SOĞUTMA")) {
+            generalLoadFunc(SystemVariables.getLocalHydraulicData().classicParcaDefault.get("10"), "Standart Parçalar");
         }
     }
 
