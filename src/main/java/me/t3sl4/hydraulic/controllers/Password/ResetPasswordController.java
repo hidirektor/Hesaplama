@@ -1,12 +1,10 @@
 package me.t3sl4.hydraulic.controllers.Password;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
@@ -41,9 +39,8 @@ public class ResetPasswordController implements Initializable {
     }
 
     @FXML
-    public void programiKapat(MouseEvent event) {
-        Platform.exit();
-        System.exit(0);
+    public void programiKapat() {
+        Utils.systemShutdown();
     }
 
     @FXML

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -1263,5 +1264,27 @@ public class Utils {
         secondPane.expandedProperty().addListener(titledPaneListener);
         thirthPane.expandedProperty().addListener(titledPaneListener);
         fourthPane.expandedProperty().addListener(titledPaneListener);
+    }
+
+    public static void systemShutdown() {
+        Platform.exit();
+
+        shutdownActiveThreads();
+
+        System.exit(0);
+    }
+
+    private static void shutdownActiveThreads() {
+        Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+        for (Thread thread : threadSet) {
+            if (thread.isAlive() && !thread.isDaemon() && !thread.getName().equals("main")) {
+                System.out.println("Kapatılacak thread: " + thread.getName());
+                try {
+                    thread.interrupt(); // Thread'i kes
+                } catch (Exception e) {
+                    System.err.println("Thread kapatılamadı: " + thread.getName() + " - " + e.getMessage());
+                }
+            }
+        }
     }
 }

@@ -432,8 +432,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void programiKapat() {
-        Platform.exit();
-        System.exit(0);
+        Utils.systemShutdown();
     }
 
     @FXML

@@ -3,13 +3,11 @@ package me.t3sl4.hydraulic.controllers.Password;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -74,9 +72,8 @@ public class ResetPasswordEnterOTPController implements Initializable {
     }
 
     @FXML
-    public void programiKapat(MouseEvent event) {
-        Platform.exit();
-        System.exit(0);
+    public void programiKapat() {
+        Utils.systemShutdown();
     }
 
     @FXML

@@ -78,8 +78,7 @@ public class RegisterController implements Initializable {
 
     @FXML
     private void programiKapat(MouseEvent event) {
-        Platform.exit();
-        System.exit(0);
+        Utils.systemShutdown();
     }
 
     @FXML

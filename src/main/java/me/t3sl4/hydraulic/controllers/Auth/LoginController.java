@@ -194,10 +194,8 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void ekraniKapat() {
-        Stage stage = (Stage) btnSignin.getScene().getWindow();
-
-        stage.close();
+    public void programiKapat() {
+        Utils.systemShutdown();
     }
 
     private void checkLicense() {
