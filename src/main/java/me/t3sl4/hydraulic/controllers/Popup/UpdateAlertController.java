@@ -8,6 +8,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import lombok.Setter;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
@@ -31,13 +32,13 @@ public class UpdateAlertController {
     @FXML
     private ImageView closeButton;
 
+    @Setter
     private Stage currentStage;
 
-    public void setCurrentStage(Stage currentStage) {
-        this.currentStage = currentStage;
-    }
+    private String versionCode;
 
     public void setUpdateDetails(String version, String details) {
+        versionCode = version;
         versionLabel.setText("Yeni Sürüm: " + version);
         updateDetails.setText(details);
     }
@@ -58,18 +59,36 @@ public class UpdateAlertController {
         if (selectedDirectory != null) {
             File[] matchingFiles = selectedDirectory.listFiles(file -> file.getName().startsWith("windows_Hydraulic"));
             if (matchingFiles != null && matchingFiles.length > 0) {
-                Utils.showErrorMessage("Seçilen dizinde 'windows_Hydraulic' ile başlayan bir dosya zaten var. Lütfen farklı bir konum seçin.", SceneUtil.getScreenOfNode(versionLabel), (Stage)versionLabel.getScene().getWindow());
-                return;
+                File newDirectory = new File(selectedDirectory, "Hidrolik Yeni Sürüm v" + versionCode);
+                if (newDirectory.exists()) {
+                    deleteDirectoryRecursively(newDirectory);
+                    System.out.println("'Hidrolik Yeni Sürüm v'" + versionCode + "' klasörü silindi ve yeniden oluşturulacak.");
+                }
+                boolean created = newDirectory.mkdirs();
+                if (created) {
+                    System.out.println("Yeni klasör 'Hidrolik Yeni Sürüm v" + versionCode + "' oluşturuldu.");
+                } else {
+                    System.out.println("Yeni klasör oluşturulamadı.");
+                    Utils.showErrorMessage("Yeni klasör oluşturulamadı. Lütfen farklı bir konum seçin.", SceneUtil.getScreenOfNode(versionLabel), (Stage) versionLabel.getScene().getWindow());
+                    return;
+                }
+
+                selectedDirectory = newDirectory;
+                Utils.showErrorMessage("Seçilen dizinde 'windows_Hydraulic' ile başlayan bir dosya zaten var. 'Hidrolik Yeni Sürüm' klasörü oluşturuldu.",
+                        SceneUtil.getScreenOfNode(versionLabel), (Stage) versionLabel.getScene().getWindow());
+            } else {
+                selectedDirectory = directoryChooser.showDialog(currentStage);
             }
 
             downloadBar.setVisible(true);
             scissorLiftView.setVisible(true);
 
+            File finalSelectedDirectory = selectedDirectory;
             Task<Void> downloadTask = new Task<>() {
                 @Override
                 protected Void call() {
                     try {
-                        Utils.downloadLatestVersion(selectedDirectory, this::updateProgress);
+                        Utils.downloadLatestVersion(finalSelectedDirectory, this::updateProgress);
                         closeButton.setVisible(true);
                         downloadBar.setVisible(false);
                         scissorLiftView.setVisible(false);
@@ -91,7 +110,19 @@ public class UpdateAlertController {
     }
 
     @FXML
-    public void ekraniKapat() {
-        System.exit(1);
+    public void programiKapat() {
+        Utils.systemShutdown();
+    }
+
+    private void deleteDirectoryRecursively(File directory) {
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    deleteDirectoryRecursively(file);
+                }
+            }
+        }
+        directory.delete();
     }
 }

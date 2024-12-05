@@ -1,7 +1,6 @@
 package me.t3sl4.hydraulic.app;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;

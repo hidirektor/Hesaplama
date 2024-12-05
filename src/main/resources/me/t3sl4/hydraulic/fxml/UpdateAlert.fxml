@@ -36,7 +36,7 @@
       <wrapText>true</wrapText>
    </Label>
 
-   <ImageView fx:id="closeButton" fitHeight="24.0" fitWidth="24.0" visible="false" layoutX="5.0" layoutY="5.0" onMouseClicked="#ekraniKapat" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="closeButton" fitHeight="24.0" fitWidth="24.0" visible="false" layoutX="5.0" layoutY="5.0" onMouseClicked="#programiKapat" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../../assets/images/icons/ikon_close.png" />
       </image>
