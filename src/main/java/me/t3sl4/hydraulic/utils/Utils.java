@@ -1234,7 +1234,7 @@ public class Utils {
         // Varsayılan boyutlar
         int defaultMenuNameSize = 30; // TitledPane başlığı için
         int defaultItemSize = 40;    // Her bir öğenin boyutu
-        int[] itemCounts = {3, 2, 3, 3}; // Her TitledPane'in altındaki öğe sayısı
+        int[] itemCounts = {3, 2, 4, 3}; // Her TitledPane'in altındaki öğe sayısı
 
         ChangeListener<Boolean> titledPaneListener = (observable, oldValue, newValue) -> {
             double newHeight = defaultMenuNameSize;

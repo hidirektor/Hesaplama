@@ -5,7 +5,6 @@ import me.t3sl4.hydraulic.utils.general.SystemVariables;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -123,7 +122,7 @@ public class YamlUtil {
         }
     }
 
-    public void loadMotor(String filePath) throws FileNotFoundException {
+    public void loadMotor(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -141,9 +140,10 @@ public class YamlUtil {
             });
             SystemVariables.getLocalHydraulicData().motorMap.put(key, motorList);
         });
+        input.close();
     }
 
-    public void loadSogutma(String filePath) throws FileNotFoundException {
+    public void loadSogutma(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -164,9 +164,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().coolingMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadHydraulicLock(String filePath) throws FileNotFoundException {
+    public void loadHydraulicLock(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -187,9 +188,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().hydraulicLockMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadPompa(String filePath) throws FileNotFoundException {
+    public void loadPompa(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -208,9 +210,10 @@ public class YamlUtil {
 
             SystemVariables.getLocalHydraulicData().pumpMap.put(key, pompaList);
         });
+        input.close();
     }
 
-    public void loadKompanzasyon(String filePath) throws FileNotFoundException {
+    public void loadKompanzasyon(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -231,9 +234,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().compensationMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadValfTipi(String filePath) throws FileNotFoundException {
+    public void loadValfTipi(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -252,9 +256,10 @@ public class YamlUtil {
 
             SystemVariables.getLocalHydraulicData().valveTypeMap.put(key, valfTipiList);
         });
+        input.close();
     }
 
-    public void loadKilitMotor(String filePath) throws FileNotFoundException {
+    public void loadKilitMotor(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -275,9 +280,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().lockMotorMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadKilitPompa(String filePath) throws FileNotFoundException {
+    public void loadKilitPompa(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -298,9 +304,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().lockPumpMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadMotorVoltaj(String filePath) throws FileNotFoundException {
+    public void loadMotorVoltaj(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -321,9 +328,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().motorVoltajMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadUniteTipi(String filePath) throws FileNotFoundException {
+    public void loadUniteTipi(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -344,9 +352,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().uniteTipiMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadMotorGucu(String filePath) throws FileNotFoundException {
+    public void loadMotorGucu(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -366,9 +375,10 @@ public class YamlUtil {
 
             SystemVariables.getLocalHydraulicData().motorGucuMap.put(key, motorList);
         });
+        input.close();
     }
 
-    public void loadPowerPackPompa(String filePath) throws FileNotFoundException {
+    public void loadPowerPackPompa(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -387,9 +397,10 @@ public class YamlUtil {
 
             SystemVariables.getLocalHydraulicData().pompaPowerPackMap.put(key, pompaList);
         });
+        input.close();
     }
 
-    public void loadTankTipi(String filePath) throws FileNotFoundException {
+    public void loadTankTipi(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -410,9 +421,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().tankTipiMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadTankKapasitesi(String filePath) throws FileNotFoundException {
+    public void loadTankKapasitesi(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -431,9 +443,10 @@ public class YamlUtil {
 
             SystemVariables.getLocalHydraulicData().tankKapasitesiMap.put(key, tankKapasitesiList);
         });
+        input.close();
     }
 
-    public void loadPlatformTipi(String filePath) throws FileNotFoundException {
+    public void loadPlatformTipi(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -454,9 +467,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().platformTipiMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackValfTipi(String filePath) throws FileNotFoundException {
+    public void loadPowerPackValfTipi(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -477,9 +491,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().valfTipiMap.put(key, valuesList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaMotor(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaMotor(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -509,9 +524,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaMotor.put(kaplinKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaKampana(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaKampana(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -541,9 +557,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaKampana.put(kampanaKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaPompa(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaPompa(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -573,9 +590,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaPompa.put(pompaKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaKaplin(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaKaplin(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -605,9 +623,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaKaplin.put(kaplinKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaValfBloklari(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaValfBloklari(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -637,9 +656,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaValfBloklari.put(kaplinKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaSogutma(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaSogutma(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -669,9 +689,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaSogutma.put(kaplinKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaBasincSalteri(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaBasincSalteri(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -701,9 +722,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaBasincSalteri.put(kaplinKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaDefault(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaDefault(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -733,9 +755,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaDefault.put(kaplinKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadClassicParcaKilitMotor(String filePath) throws FileNotFoundException {
+    public void loadClassicParcaKilitMotor(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -765,9 +788,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().classicParcaKilitMotor.put(kaplinKey, partDetailsList);
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaMotor380(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaMotor380(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -801,9 +825,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaMotor220(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaMotor220(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -837,9 +862,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaPompa(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaPompa(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -873,9 +899,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaTankDikey(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaTankDikey(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -909,9 +936,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaTankYatay(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaTankYatay(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -945,9 +973,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaESPGenel(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaESPGenel(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -981,9 +1010,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaESPDikeyCift(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaESPDikeyCift(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1017,9 +1047,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaDevirmeli(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaDevirmeli(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1053,9 +1084,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaStandart(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaStandart(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1089,9 +1121,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaOzelYatay(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaOzelYatay(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1125,9 +1158,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaValfTipleri(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaValfTipleri(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1161,9 +1195,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadPowerPackParcaOzelCiftValf(String filePath, String unitType) throws FileNotFoundException {
+    public void loadPowerPackParcaOzelCiftValf(String filePath, String unitType) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1197,9 +1232,10 @@ public class YamlUtil {
                 }
             }
         }
+        input.close();
     }
 
-    public void loadCiftHizTexts(String filePath) throws FileNotFoundException {
+    public void loadCiftHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1218,9 +1254,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicCiftHizTexts.put(key, combinedValue);
             }
         }
+        input.close();
     }
 
-    public void loadKilitAyriCiftHizTexts(String filePath) throws FileNotFoundException {
+    public void loadKilitAyriCiftHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1239,9 +1276,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicKilitAyriCiftHizTexts.put(key, combinedValue);
             }
         }
+        input.close();
     }
 
-    public void loadKilitAyriTekHizTexts(String filePath) throws FileNotFoundException {
+    public void loadKilitAyriTekHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1260,9 +1298,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicKilitAyriTekHizTexts.put(key, combinedValue);
             }
         }
+        input.close();
     }
 
-    public void loadKilitliBlokTexts(String filePath) throws FileNotFoundException {
+    public void loadKilitliBlokTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1281,9 +1320,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicKilitliBlokTexts.put(key, combinedValue);
             }
         }
+        input.close();
     }
 
-    public void loadTekHizKompanzasyonArtiTekHizTexts(String filePath) throws FileNotFoundException {
+    public void loadTekHizKompanzasyonArtiTekHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1302,9 +1342,11 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicTekHizKompanzasyonArtiTekHizTexts.put(key, combinedValue);
             }
         }
+
+        input.close();
     }
 
-    public void loadSogutmaKilitsizCiftHizTexts(String filePath) throws FileNotFoundException {
+    public void loadSogutmaKilitsizCiftHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1323,9 +1365,11 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicSogutmaKilitsizCiftHizTexts.put(key, combinedValue);
             }
         }
+
+        input.close();
     }
 
-    public void loadSogutmaKilitliCiftHizTexts(String filePath) throws FileNotFoundException {
+    public void loadSogutmaKilitliCiftHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1344,9 +1388,11 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicSogutmaKilitliCiftHizTexts.put(key, combinedValue);
             }
         }
+
+        input.close();
     }
 
-    public void loadSogutmaKilitsizTekHizTexts(String filePath) throws FileNotFoundException {
+    public void loadSogutmaKilitsizTekHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1365,9 +1411,10 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicSogutmaKilitsizTekHizTexts.put(key, combinedValue);
             }
         }
+        input.close();
     }
 
-    public void loadSogutmaKilitliTekHizTexts(String filePath) throws FileNotFoundException {
+    public void loadSogutmaKilitliTekHizTexts(String filePath) throws IOException {
         InputStream input = new FileInputStream(filePath);
         Yaml yaml = new Yaml();
         Map<String, Object> yamlData = yaml.load(input);
@@ -1386,5 +1433,6 @@ public class YamlUtil {
                 SystemVariables.getLocalHydraulicData().schematicSogutmaKilitliTekHizTexts.put(key, combinedValue);
             }
         }
+        input.close();
     }
 }

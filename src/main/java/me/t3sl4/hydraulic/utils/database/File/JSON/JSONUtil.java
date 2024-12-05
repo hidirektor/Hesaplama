@@ -54,7 +54,6 @@ public class JSONUtil {
                 Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinGecisX, kabinGecisY, kabinGecisH, kabinDisX, kabinDisY, kabinDisH, tankDisX, tankDisY, tankDisH, kabinKodu, yagTankiKodu, malzemeAdi);
                 hydraulicData.classicCabins.add(tank);
             }
-
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -95,7 +94,6 @@ public class JSONUtil {
                 Kabin tank = new Kabin(tankName, kabinName, kabinHacim, kabinGecisX, kabinGecisY, kabinGecisH, kabinDisX, kabinDisY, kabinDisH, tankDisX, tankDisY, tankDisH, kabinKodu, yagTankiKodu, malzemeAdi);
                 hydraulicData.powerPackCabins.add(tank);
             }
-
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
         }

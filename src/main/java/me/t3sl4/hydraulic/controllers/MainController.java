@@ -60,6 +60,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import static me.t3sl4.hydraulic.utils.Utils.openURL;
+import static me.t3sl4.hydraulic.utils.database.File.FileUtil.fileCopy;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
 public class MainController implements Initializable {
@@ -101,6 +102,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Button btnDebugMode;
+
+    @FXML
+    private Button btnLoadOriginalDB;
 
     @FXML
     private Button btnRefreshDB;
@@ -185,6 +189,9 @@ public class MainController implements Initializable {
 
     private static final int COOLDOWN_SECONDS = 300; // 5 dakika (300 saniye)
     private boolean isButtonCoolingDown = false;
+
+    private static final int COOLDOWN_SECONDS_ORIGIN = 300;
+    private boolean isCooldown = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -363,6 +370,8 @@ public class MainController implements Initializable {
             Utils.showPopup(SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/ReportBug.fxml", "Hydraulic Tool || Hata Bildir", Modality.APPLICATION_MODAL, StageStyle.UNDECORATED);
         } else if (actionEvent.getSource() == btnDebugMode) {
             Utils.showPopup(SceneUtil.getScreenOfNode(kullaniciAdiIsimText), "fxml/Console.fxml", "Hydraulic Tool || Konsol", Modality.NONE, null);
+        } else if(actionEvent.getSource() == btnLoadOriginalDB) {
+            handleLoadOriginData();
         } else if (actionEvent.getSource() == btnRefreshDB) {
             handleRefreshButtonAction();
         } else if (actionEvent.getSource() == btnEditDB) {
@@ -400,6 +409,45 @@ public class MainController implements Initializable {
         } else {
             Utils.showErrorMessage("Verileri 5 dakikada bir yenileyebilirsin.", SceneUtil.getScreenOfNode(kullaniciAdiIsimText), (Stage)kullaniciAdiIsimText.getScene().getWindow());
         }
+    }
+
+    private void handleLoadOriginData() {
+        Platform.runLater(() -> {
+            try {
+                fileCopy("/assets/data/programDatabase/general.json", SystemVariables.generalDBPath, true);
+                fileCopy("/assets/data/programDatabase/cabins.json", SystemVariables.cabinsDBPath, true);
+                fileCopy("/assets/data/programDatabase/classic_combo.yml", SystemVariables.classicComboDBPath, true);
+                fileCopy("/assets/data/programDatabase/powerpack_combo.yml", SystemVariables.powerPackComboDBPath, true);
+                fileCopy("/assets/data/programDatabase/classic_parts.yml", SystemVariables.classicPartsDBPath, true);
+                fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath, true);
+                fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath, true);
+                fileCopy("/assets/data/programDatabase/schematic_texts.yml", SystemVariables.schematicTextsDBPath, true);
+                fileCopy("/assets/data/programDatabase/part_origins_classic.yml", SystemVariables.partOriginsClassicDBPath, true);
+                fileCopy("/assets/data/programDatabase/part_origins_powerpack.yml", SystemVariables.partOriginsPowerPackDBPath, true);
+
+                isCooldown = true;
+                btnLoadOriginalDB.setDisable(true);
+
+                Utils.showSuccessMessage(
+                        "Orijinal veriler geri yüklendi :))",
+                        SceneUtil.getScreenOfNode(kullaniciAdiIsimText),
+                        (Stage) kullaniciAdiIsimText.getScene().getWindow()
+                );
+
+                Thread systemThread = new Thread(FileUtil::setupLocalData);
+                systemThread.start();
+
+                Executors.newSingleThreadScheduledExecutor().schedule(() -> {
+                    Platform.runLater(() -> {
+                        isCooldown = false;
+                        btnLoadOriginalDB.setDisable(false);
+                        System.out.println("Cooldown tamamlandı, işlem tekrar yapılabilir.");
+                    });
+                }, COOLDOWN_SECONDS_ORIGIN, TimeUnit.SECONDS);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML

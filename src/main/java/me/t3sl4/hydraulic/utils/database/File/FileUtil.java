@@ -62,16 +62,16 @@ public class FileUtil {
             createFile(SystemVariables.tokenPath);
             createFile(SystemVariables.licensePath);
 
-            fileCopy("/assets/data/programDatabase/general.json", SystemVariables.generalDBPath);
-            fileCopy("/assets/data/programDatabase/cabins.json", SystemVariables.cabinsDBPath);
-            fileCopy("/assets/data/programDatabase/classic_combo.yml", SystemVariables.classicComboDBPath);
-            fileCopy("/assets/data/programDatabase/powerpack_combo.yml", SystemVariables.powerPackComboDBPath);
-            fileCopy("/assets/data/programDatabase/classic_parts.yml", SystemVariables.classicPartsDBPath);
-            fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath);
-            fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath);
-            fileCopy("/assets/data/programDatabase/schematic_texts.yml", SystemVariables.schematicTextsDBPath);
-            fileCopy("/assets/data/programDatabase/part_origins_classic.yml", SystemVariables.partOriginsClassicDBPath);
-            fileCopy("/assets/data/programDatabase/part_origins_powerpack.yml", SystemVariables.partOriginsPowerPackDBPath);
+            fileCopy("/assets/data/programDatabase/general.json", SystemVariables.generalDBPath, false);
+            fileCopy("/assets/data/programDatabase/cabins.json", SystemVariables.cabinsDBPath, false);
+            fileCopy("/assets/data/programDatabase/classic_combo.yml", SystemVariables.classicComboDBPath, false);
+            fileCopy("/assets/data/programDatabase/powerpack_combo.yml", SystemVariables.powerPackComboDBPath, false);
+            fileCopy("/assets/data/programDatabase/classic_parts.yml", SystemVariables.classicPartsDBPath, false);
+            fileCopy("/assets/data/programDatabase/powerpack_parts_hidros.yml", SystemVariables.powerPackPartsHidrosDBPath, false);
+            fileCopy("/assets/data/programDatabase/powerpack_parts_ithal.yml", SystemVariables.powerPackPartsIthalDBPath, false);
+            fileCopy("/assets/data/programDatabase/schematic_texts.yml", SystemVariables.schematicTextsDBPath, false);
+            fileCopy("/assets/data/programDatabase/part_origins_classic.yml", SystemVariables.partOriginsClassicDBPath, false);
+            fileCopy("/assets/data/programDatabase/part_origins_powerpack.yml", SystemVariables.partOriginsPowerPackDBPath, false);
 
             createDirectory(SystemVariables.excelFileLocalPath);
             createDirectory(SystemVariables.pdfFileLocalPath);
@@ -152,10 +152,10 @@ public class FileUtil {
         }
     }
 
-    private static void fileCopy(String sourcePath, String destPath) throws IOException {
+    public static void fileCopy(String sourcePath, String destPath, boolean isRefresh) throws IOException {
         File destinationFile = new File(destPath);
 
-        if (!destinationFile.exists()) {
+        if(isRefresh) {
             InputStream resourceAsStream = FileUtil.class.getResourceAsStream(sourcePath);
 
             if (resourceAsStream == null) {
@@ -166,7 +166,19 @@ public class FileUtil {
             Files.copy(resourceAsStream, destination, StandardCopyOption.REPLACE_EXISTING);
             resourceAsStream.close();
         } else {
-            System.out.println("File already exists: " + destPath);
+            if (!destinationFile.exists()) {
+                InputStream resourceAsStream = FileUtil.class.getResourceAsStream(sourcePath);
+
+                if (resourceAsStream == null) {
+                    throw new FileNotFoundException("Kaynak bulunamadı: " + sourcePath);
+                }
+
+                Path destination = Paths.get(destPath);
+                Files.copy(resourceAsStream, destination, StandardCopyOption.REPLACE_EXISTING);
+                resourceAsStream.close();
+            } else {
+                System.out.println("File already exists: " + destPath);
+            }
         }
     }
 
