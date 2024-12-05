@@ -297,6 +297,52 @@ public class EditorController {
                         keyTableLabel.setLayoutX(keyLabel.getLayoutX() + 40);
 
                         fileItems.getChildren().add(node);
+                    } else if (itemMap.containsKey("name") && itemMap.containsKey("value") && itemMap.containsKey("motorYukseklik")) {
+                        topKeyTableLabel.setText("name");
+                        subKeyTableLabel.setText("value");
+                        keyTableLabel.setText("motorYukseklik");
+                        valueTableLabel.setVisible(false);
+
+                        System.out.println("Veri tablosu ekleniyor...");
+
+                        String nameStr = (String) itemMap.get("name");
+                        String valueStr = (String) itemMap.get("value");
+                        String motorYukseklikStr = itemMap.get("motorYukseklik").toString();
+
+                        topKeyLabel.setText(nameStr);
+                        subKeyLabel.setText(valueStr);
+                        keyLabel.setText(motorYukseklikStr);
+                        valueLabel.setVisible(false);
+
+                        topKeyTableLabel.setLayoutX(topKeyLabel.getLayoutX() + 40);
+                        subKeyTableLabel.setLayoutX(subKeyLabel.getLayoutX() + 40);
+                        keyTableLabel.setLayoutX(keyLabel.getLayoutX() + 40);
+
+                        fileItems.getChildren().add(node);
+                    } else if (itemMap.containsKey("name") && itemMap.containsKey("value") && itemMap.containsKey("kampana") && itemMap.containsKey("yukseklik")) {
+                        topKeyTableLabel.setText("name");
+                        subKeyTableLabel.setText("value");
+                        keyTableLabel.setText("motorYukseklik");
+                        valueTableLabel.setText("yukseklik");
+
+                        System.out.println("Veri tablosu ekleniyor...");
+
+                        String nameStr = (String) itemMap.get("name");
+                        String valueStr = (String) itemMap.get("value");
+                        String kampanaStr = itemMap.get("kampana").toString();
+                        String yukseklikStr = itemMap.get("yukseklik").toString();
+
+                        topKeyLabel.setText(nameStr);
+                        subKeyLabel.setText(valueStr);
+                        keyLabel.setText(kampanaStr);
+                        valueLabel.setText(yukseklikStr);
+
+                        topKeyTableLabel.setLayoutX(topKeyLabel.getLayoutX() + 40);
+                        subKeyTableLabel.setLayoutX(subKeyLabel.getLayoutX() + 40);
+                        keyTableLabel.setLayoutX(keyLabel.getLayoutX() + 40);
+                        valueTableLabel.setLayoutX(valueLabel.getLayoutX() + 40);
+
+                        fileItems.getChildren().add(node);
                     } else {
                         System.out.println("Veri bu anahtarları içermiyor:");
                         System.out.println(key + ": " + value);
