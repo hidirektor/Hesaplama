@@ -203,64 +203,61 @@ public class EditorController {
         fileItemsScrollPane.setVisible(true);
         fileItems.setVisible(true);
 
-        fileItems.getChildren().clear(); // Mevcut öğeleri temizle
+        fileItems.getChildren().clear();
 
         firstKeyCombo.setVisible(true);
         firstKeyCombo.setDisable(false);
         firstKeyCombo.getItems().clear();
 
-        // Tüm üst anahtarları ComboBox'a ekle
-        modernEditor.getDataMap().forEach((key, value) -> {
-            String[] keys = key.split("\\.", 2); // En fazla 2 parçaya böl
-            String topKey = keys[0];
+        modernEditor.getMainKeys().forEach(topKey -> {
             if (!firstKeyCombo.getItems().contains(topKey)) {
                 firstKeyCombo.getItems().add(topKey);
             }
         });
 
-        // İlk ComboBox seçim olayları
-        firstKeyCombo.setOnAction(event -> {
-            String selectedTopKey = firstKeyCombo.getValue();
-            System.out.println("Selected Top Key: " + selectedTopKey);
+        firstKeyCombo.setOnAction(event -> handleFirstComboSelection(modernEditor));
 
-            // İlgili alt anahtarları yüklemek için ikinci ComboBox'u temizle ve doldur
+        secondKeyCombo.setVisible(false);
+    }
+
+    private void handleFirstComboSelection(ModernEditor modernEditor) {
+        String selectedTopKey = firstKeyCombo.getValue();
+        System.out.println("Selected Top Key: " + selectedTopKey);
+
+        if(modernEditor.getSubKeys() != null && !modernEditor.getSubKeys().isEmpty()) {
             secondKeyCombo.getItems().clear();
-            modernEditor.getDataMap().forEach((key, value) -> {
-                if (key.startsWith(selectedTopKey + ".") && key.split("\\.").length > 1) {
-                    String subKey = key.substring(selectedTopKey.length() + 1);
-
-                    // Eğer subKey ".parts" içermiyorsa sonuna ekle
+            modernEditor.getSubKeys().forEach(subKey -> {
+                if (subKey.startsWith(selectedTopKey + ".") && subKey.split("\\.").length > 1) {
                     if (!subKey.endsWith(".parts")) {
                         subKey += ".parts";
                     }
 
-                    // Alt anahtarları ikinci ComboBox'a ekle
                     if (!secondKeyCombo.getItems().contains(subKey)) {
                         secondKeyCombo.getItems().add(subKey);
                     }
                 }
             });
 
-            // Eğer alt anahtarlar varsa ComboBox'u göster, yoksa verileri yükle
-            if (!secondKeyCombo.getItems().isEmpty()) {
-                secondKeyCombo.setVisible(true);
-                secondKeyCombo.setDisable(false);
-            } else {
-                loadKeyData(selectedTopKey, null, modernEditor);
-            }
-        });
+            secondKeyCombo.setVisible(true);
+            secondKeyCombo.setDisable(false);
+        } else {
+            loadKeyData(selectedTopKey, null, modernEditor);
+            System.out.println(modernEditor.getKeyData(selectedTopKey, null));
+        }
 
-        // İkinci ComboBox seçim olayları
         secondKeyCombo.setOnAction(event -> {
             String selectedSubKey = secondKeyCombo.getValue();
-            System.out.println("Selected Sub Key: " + selectedSubKey);
+            if (selectedSubKey != null) {
+                System.out.println("Selected Sub Key: " + selectedSubKey);
 
-            loadKeyData(firstKeyCombo.getValue(), selectedSubKey, modernEditor);
+                loadKeyData(selectedTopKey, selectedSubKey, modernEditor);
+                System.out.println(modernEditor.getKeyData(selectedTopKey, selectedSubKey));
+            }
         });
     }
 
     private void loadKeyData(String topKey, String subKey, ModernEditor modernEditor) {
-        fileItems.getChildren().clear(); // Mevcut öğeleri temizle
+        fileItems.getChildren().clear();
 
         modernEditor.getDataMap().forEach((key, value) -> {
             if (key.equals(topKey + (subKey != null ? "." + subKey : ""))) {

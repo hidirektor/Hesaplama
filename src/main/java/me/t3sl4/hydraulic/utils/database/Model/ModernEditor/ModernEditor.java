@@ -27,6 +27,8 @@ public class ModernEditor {
     private String currentFileContent;
     private final Map<String, Object> dataMap = new HashMap<>();
     private final Deque<String> changeHistory = new LinkedList<>();
+    private final List<String> mainKeys = new ArrayList<>();
+    private final List<String> subKeys = new ArrayList<>();
 
     /**
      * Initializes ModernEditor with the supported operations, file path, and undo limit.
@@ -42,6 +44,7 @@ public class ModernEditor {
 
         loadFileContent();
         parseData();
+        populateKeys();
     }
 
     /**
@@ -96,7 +99,7 @@ public class ModernEditor {
     }
 
     /**
-     * Recursively maps YAML data into the data map, handling special cases for "parts".
+     * Recursively maps YAML data into the data map, handling specific key formats.
      *
      * @param yamlData  Current YAML data node.
      * @param parentKey Parent key for nested data.
@@ -106,25 +109,58 @@ public class ModernEditor {
             ((Map<?, ?>) yamlData).forEach((key, value) -> {
                 String compositeKey = parentKey.isEmpty() ? key.toString() : parentKey + "." + key;
 
-                // Check if the current key is "parts" and its value is a map
-                if (key.equals("parts") && value instanceof Map) {
-                    // Process parts as a list-like structure
-                    Map<?, ?> partsMap = (Map<?, ?>) value;
-                    List<Map<String, Object>> partsList = new ArrayList<>();
-                    partsMap.forEach((partKey, partValue) -> {
-                        if (partValue instanceof Map) {
-                            partsList.add((Map<String, Object>) partValue);
-                        }
-                    });
-                    dataMap.put(compositeKey, partsList);
+                if (value instanceof Map) {
+                    Map<?, ?> valueMap = (Map<?, ?>) value;
+
+                    if (valueMap.containsKey("parts")) {
+                        dataMap.put(compositeKey + ".parts", valueMap.get("parts"));
+                        //mapYamlData(valueMap.get("parts"), compositeKey + ".parts");
+                    } else if (valueMap.containsKey("options")) {
+                        dataMap.put(compositeKey + ".options", valueMap.get("options"));
+                        //mapYamlData(valueMap.get("options"), compositeKey + ".options");
+                    } else {
+                        dataMap.put(compositeKey, value);
+                        mapYamlData(value, compositeKey);
+                    }
+                } else if (value instanceof List) {
+                    dataMap.put(compositeKey, value);
                 } else {
                     dataMap.put(compositeKey, value);
-                    mapYamlData(value, compositeKey);
                 }
             });
         }
     }
 
+    /**
+     * Populates mainKeys and subKeys lists based on dataMap.
+     */
+    private void populateKeys() {
+        for (String key : dataMap.keySet()) {
+            if (!key.contains(".")) {
+                mainKeys.add(key);
+            } else {
+                subKeys.add(key);
+            }
+        }
+    }
+
+    /**
+     * Retrieves the list of main keys (top-level keys).
+     *
+     * @return List of main keys.
+     */
+    public List<String> getMainKeys() {
+        return Collections.unmodifiableList(mainKeys);
+    }
+
+    /**
+     * Retrieves the list of sub-keys (nested keys).
+     *
+     * @return List of sub-keys.
+     */
+    public List<String> getSubKeys() {
+        return Collections.unmodifiableList(subKeys);
+    }
 
     /**
      * Saves the updated content to the file and maintains a history for undo operations.
@@ -181,5 +217,26 @@ public class ModernEditor {
      */
     public String getCurrentFileContent() {
         return currentFileContent;
+    }
+
+    /**
+     * Retrieves the data for the specified topKey and subKey from the dataMap.
+     *
+     * @param topKey   The top-level key (main key).
+     * @param subKey   The nested sub-key, can be null.
+     * @return         The data corresponding to the specified topKey and subKey.
+     */
+    public Object getKeyData(String topKey, String subKey) {
+        if (subKey == null) {
+            return dataMap.get(topKey);
+        }
+
+        if (subKey.startsWith(topKey + ".")) {
+            subKey = subKey.substring(topKey.length() + 1);
+        }
+
+        String compositeKey = topKey + "." + subKey;
+
+        return dataMap.get(compositeKey);
     }
 }
