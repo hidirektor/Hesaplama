@@ -37,37 +37,37 @@
                     </content>
                 </ScrollPane>
 
-                <ScrollPane fx:id="fileItemsScrollPane" hbarPolicy="NEVER" layoutX="0.0" layoutY="320.0" prefWidth="904.0" stylesheets="@../styling/style.css" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <ScrollPane fx:id="fileItemsScrollPane" hbarPolicy="NEVER" layoutX="0.0" layoutY="320.0" prefHeight="330.0" prefWidth="904.0" stylesheets="@../styling/style.css" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <content>
-                        <VBox fx:id="fileItems" prefWidth="904.0" spacing="5.0" stylesheets="@../styling/style.css" visible="false">
+                        <VBox fx:id="fileItems" prefWidth="904.0" spacing="5.0" stylesheets="@../styling/style.css" visible="false" VBox.vgrow="ALWAYS">
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </VBox>
                     </content>
                 </ScrollPane>
-            <Label fx:id="topKeyTableLabel" layoutX="70.0" layoutY="305.0" text="Üst Anahtar" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="subKeyTableLabel" layoutX="265.0" layoutY="305.0" text="Üst Anahtar" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="keyTableLabel" layoutX="470.0" layoutY="305.0" text="Belirteç" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="valueTableLabel" layoutX="660.0" layoutY="305.0" text="Değer" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <JFXComboBox fx:id="firstKeyCombo" disable="true" focusColor="#0f9d58" layoutX="335.0" layoutY="270.0" promptText="Üst Anahtar" style="-fx-prompt-text-fill: #ffffff;" stylesheets="@../styling/style.css" visible="false" />
-            <JFXComboBox fx:id="secondKeyCombo" disable="true" focusColor="#0f9d58" layoutX="509.0" layoutY="270.0" promptText="Alt Anahtar" style="-fx-prompt-text-fill: #ffffff;" stylesheets="@../styling/style.css" visible="false" />
+                <Label fx:id="topKeyTableLabel" layoutX="70.0" layoutY="305.0" text="Üst Anahtar" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="subKeyTableLabel" layoutX="265.0" layoutY="305.0" text="Üst Anahtar" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="keyTableLabel" layoutX="470.0" layoutY="305.0" text="Belirteç" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="valueTableLabel" layoutX="660.0" layoutY="305.0" text="Değer" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXComboBox fx:id="firstKeyCombo" disable="true" focusColor="#0f9d58" layoutX="335.0" layoutY="270.0" promptText="Üst Anahtar" style="-fx-prompt-text-fill: #ffffff;" stylesheets="@../styling/style.css" visible="false" />
+                <JFXComboBox fx:id="secondKeyCombo" disable="true" focusColor="#0f9d58" layoutX="509.0" layoutY="270.0" promptText="Alt Anahtar" style="-fx-prompt-text-fill: #ffffff;" stylesheets="@../styling/style.css" visible="false" />
             </children>
         </AnchorPane>
     </children>

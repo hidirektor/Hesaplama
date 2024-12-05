@@ -5,24 +5,28 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<HBox fx:id="itemC" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="904.0" spacing="3.75" style="-fx-background-color: #0C39FF; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="itemC" alignment="CENTER" cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="904.0" spacing="10.0" style="-fx-background-color: #0C39FF; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="topKeyLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="215.0" text="Üst Anahtar" textAlignment="CENTER" textFill="#b7c3d7" HBox.hgrow="ALWAYS" />
-        <Label fx:id="subKeyLabel" alignment="CENTER" prefHeight="30.0" prefWidth="215.0" text="Alt Anahtar" textAlignment="CENTER" textFill="#b7c3d7" HBox.hgrow="ALWAYS">
-            <HBox.margin>
-                <Insets />
-            </HBox.margin>
-        </Label>
-        <Label fx:id="keyLabel" alignment="CENTER" prefHeight="30.0" prefWidth="215.0" text="Key" textAlignment="CENTER" textFill="#b7c3d7" HBox.hgrow="ALWAYS">
-            <HBox.margin>
-                <Insets />
-            </HBox.margin>
-        </Label>
-        <Label fx:id="valueLabel" alignment="CENTER" prefHeight="30.0" prefWidth="215.0" text="Value" textAlignment="CENTER" textFill="#b7c3d7" HBox.hgrow="ALWAYS">
-            <HBox.margin>
-                <Insets />
-            </HBox.margin>
-        </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0" spacing="10.0">
+         <children>
+              <Label fx:id="topKeyLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="200.0" text="Üst Anahtar" textAlignment="CENTER" textFill="#b7c3d7" wrapText="true" HBox.hgrow="ALWAYS" />
+              <Label fx:id="subKeyLabel" alignment="CENTER" layoutX="200.0" prefHeight="30.0" prefWidth="200.0" text="Alt Anahtar" textAlignment="CENTER" textFill="#b7c3d7" wrapText="true" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                      <Insets />
+                  </HBox.margin>
+              </Label>
+              <Label fx:id="keyLabel" alignment="CENTER" layoutX="400.0" prefHeight="30.0" prefWidth="200.0" text="Key" textAlignment="CENTER" textFill="#b7c3d7" wrapText="true" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                      <Insets />
+                  </HBox.margin>
+              </Label>
+              <Label fx:id="valueLabel" alignment="CENTER" layoutX="600.0" prefHeight="30.0" prefWidth="200.0" text="Value" textAlignment="CENTER" textFill="#b7c3d7" wrapText="true" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                      <Insets />
+                  </HBox.margin>
+              </Label>
+         </children>
+      </HBox>
       <HBox alignment="CENTER" prefHeight="40.0">
          <children>
                 <ImageView fx:id="addIcon" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">

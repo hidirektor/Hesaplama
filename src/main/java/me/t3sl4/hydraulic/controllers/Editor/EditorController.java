@@ -242,7 +242,6 @@ public class EditorController {
             secondKeyCombo.setDisable(false);
         } else {
             loadKeyData(selectedTopKey, null, modernEditor);
-            System.out.println(modernEditor.getKeyData(selectedTopKey, null));
         }
 
         secondKeyCombo.setOnAction(event -> {
@@ -251,7 +250,6 @@ public class EditorController {
                 System.out.println("Selected Sub Key: " + selectedSubKey);
 
                 loadKeyData(selectedTopKey, selectedSubKey, modernEditor);
-                System.out.println(modernEditor.getKeyData(selectedTopKey, selectedSubKey));
             }
         });
     }
@@ -259,10 +257,14 @@ public class EditorController {
     private void loadKeyData(String topKey, String subKey, ModernEditor modernEditor) {
         fileItems.getChildren().clear();
 
-        modernEditor.getDataMap().forEach((key, value) -> {
-            if (key.equals(topKey + (subKey != null ? "." + subKey : ""))) {
-                System.out.println("Key: " + key + ", Value: " + value);
+        Object data = modernEditor.getKeyData(topKey, subKey);
+        System.out.println("Keye göre Data: " + data);
 
+        if (data != null && data instanceof Map) {
+            Map<?, ?> dataMap = (Map<?, ?>) data;
+
+            dataMap.forEach((key, value) -> {
+                Map<?, ?> itemMap = (Map<?, ?>) dataMap.get(key);
                 try {
                     FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("fxml/EditorItem.fxml"));
                     javafx.scene.Node node = loader.load();
@@ -272,19 +274,38 @@ public class EditorController {
                     Label subKeyLabel = (Label) loader.getNamespace().get("subKeyLabel");
                     Label keyLabel = (Label) loader.getNamespace().get("keyLabel");
                     Label valueLabel = (Label) loader.getNamespace().get("valueLabel");
-                    ImageView addIcon = (ImageView) loader.getNamespace().get("addIcon");
-                    ImageView editIcon = (ImageView) loader.getNamespace().get("editIcon");
-                    ImageView deleteIcon = (ImageView) loader.getNamespace().get("deleteIcon");
 
-                    topKeyLabel.setText(topKey);
-                    subKeyLabel.setText(subKey != null ? subKey : "N/A");
+                    if (itemMap.containsKey("malzemeKodu") && itemMap.containsKey("malzemeAdi") && itemMap.containsKey("malzemeAdet")) {
+                        topKeyTableLabel.setText("malzemeKodu");
+                        subKeyTableLabel.setText("malzemeAdi");
+                        keyTableLabel.setText("malzemeAdet");
+                        valueTableLabel.setVisible(false);
 
-                    fileItems.getChildren().add(node);
+                        System.out.println("Veri tablosu ekleniyor...");
+
+                        String malzemeKodu = (String) itemMap.get("malzemeKodu");
+                        String malzemeAdi = (String) itemMap.get("malzemeAdi");
+                        String malzemeAdet = itemMap.get("malzemeAdet").toString();
+
+                        topKeyLabel.setText(malzemeKodu);
+                        subKeyLabel.setText(malzemeAdi);
+                        keyLabel.setText(malzemeAdet);
+                        valueLabel.setVisible(false);
+
+                        topKeyTableLabel.setLayoutX(topKeyLabel.getLayoutX() + 40);
+                        subKeyTableLabel.setLayoutX(subKeyLabel.getLayoutX() + 40);
+                        keyTableLabel.setLayoutX(keyLabel.getLayoutX() + 40);
+
+                        fileItems.getChildren().add(node);
+                    } else {
+                        System.out.println("Veri bu anahtarları içermiyor:");
+                        System.out.println(key + ": " + value);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-        });
+            });
+        }
     }
 
     private void loadFileContent(String path) {
