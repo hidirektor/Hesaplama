@@ -59,14 +59,14 @@ public class UpdateAlertController {
         if (selectedDirectory != null) {
             File[] matchingFiles = selectedDirectory.listFiles(file -> file.getName().startsWith("windows_Hydraulic"));
             if (matchingFiles != null && matchingFiles.length > 0) {
-                File newDirectory = new File(selectedDirectory, "Hidrolik Yeni Sürüm v" + versionCode);
+                File newDirectory = new File(selectedDirectory, "Hidrolik Yeni Sürüm " + versionCode);
                 if (newDirectory.exists()) {
                     deleteDirectoryRecursively(newDirectory);
-                    System.out.println("'Hidrolik Yeni Sürüm v'" + versionCode + "' klasörü silindi ve yeniden oluşturulacak.");
+                    System.out.println("'Hidrolik Yeni Sürüm " + versionCode + "' klasörü silindi ve yeniden oluşturulacak.");
                 }
                 boolean created = newDirectory.mkdirs();
                 if (created) {
-                    System.out.println("Yeni klasör 'Hidrolik Yeni Sürüm v" + versionCode + "' oluşturuldu.");
+                    System.out.println("Yeni klasör 'Hidrolik Yeni Sürüm " + versionCode + "' oluşturuldu.");
                 } else {
                     System.out.println("Yeni klasör oluşturulamadı.");
                     Utils.showErrorMessage("Yeni klasör oluşturulamadı. Lütfen farklı bir konum seçin.", SceneUtil.getScreenOfNode(versionLabel), (Stage) versionLabel.getScene().getWindow());
