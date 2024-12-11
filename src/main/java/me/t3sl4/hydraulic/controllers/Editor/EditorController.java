@@ -116,13 +116,9 @@ public class EditorController {
             if (newValue) {
                 modernEditor.setSelected(false);
                 classicMode();
+                disableModernSections();
             } else {
-                fileComboBox.setDisable(true);
-                fileComboBox.getSelectionModel().clearSelection();
-                fileDescription.setVisible(false);
-                fileDescription.setText("");
-                fileContentArea.setVisible(false);
-                fileContentArea.clear();
+                disableClassicSections();
             }
         });
 
@@ -130,15 +126,9 @@ public class EditorController {
             if (newValue) {
                 classicEditor.setSelected(false);
                 modernMode();
+                disableClassicSections();
             } else {
-                fileItemsScrollPane.setVisible(false);
-                fileItems.setVisible(false);
-                firstKeyCombo.setVisible(false);
-                secondKeyCombo.setVisible(false);
-                topKeyTableLabel.setVisible(false);
-                subKeyTableLabel.setVisible(false);
-                keyTableLabel.setVisible(false);
-                valueTableLabel.setVisible(false);
+                disableModernSections();
             }
         });
 
@@ -495,5 +485,24 @@ public class EditorController {
         } else if (fileComboBox.getSelectionModel().getSelectedItem().endsWith(".yml")) {
             fileContentArea.setStyleSpans(0, YamlSyntaxHighlighter.getStyleSpans(content));
         }
+    }
+
+    private void disableModernSections() {
+        fileItemsScrollPane.setVisible(false);
+        fileItems.setVisible(false);
+        firstKeyCombo.setVisible(false);
+        secondKeyCombo.setVisible(false);
+        topKeyTableLabel.setVisible(false);
+        subKeyTableLabel.setVisible(false);
+        keyTableLabel.setVisible(false);
+        valueTableLabel.setVisible(false);
+    }
+
+    private void disableClassicSections() {
+        fileComboBox.getSelectionModel().clearSelection();
+        fileDescription.setVisible(false);
+        fileDescription.setText("");
+        fileContentArea.setVisible(false);
+        fileContentArea.clear();
     }
 }
