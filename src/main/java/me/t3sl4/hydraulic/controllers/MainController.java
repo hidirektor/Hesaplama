@@ -66,6 +66,9 @@ import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 public class MainController implements Initializable {
 
     @FXML
+    private AnchorPane mainAnchor;
+
+    @FXML
     public VBox buttonsVBox;
 
     @FXML

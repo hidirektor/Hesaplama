@@ -72,7 +72,7 @@
         </Label>
         <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="394.0" layoutY="14.0" onMouseClicked="#openOnder" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../../assets/images/general/logo.png" />
+                <Image url="@../../../../assets/images/general/logo-sade.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="828.0" layoutY="2.0" onMouseClicked="#programiKapat" pickOnBounds="true" preserveRatio="true">
