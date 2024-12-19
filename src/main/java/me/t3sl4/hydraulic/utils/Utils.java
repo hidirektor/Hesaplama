@@ -1269,22 +1269,6 @@ public class Utils {
     public static void systemShutdown() {
         Platform.exit();
 
-        shutdownActiveThreads();
-
         System.exit(0);
-    }
-
-    private static void shutdownActiveThreads() {
-        Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-        for (Thread thread : threadSet) {
-            if (thread.isAlive() && !thread.isDaemon() && !thread.getName().equals("main")) {
-                System.out.println("Kapatılacak thread: " + thread.getName());
-                try {
-                    thread.interrupt(); // Thread'i kes
-                } catch (Exception e) {
-                    System.err.println("Thread kapatılamadı: " + thread.getName() + " - " + e.getMessage());
-                }
-            }
-        }
     }
 }
