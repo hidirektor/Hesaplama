@@ -2,21 +2,21 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/hidirektor/OnderGrup-Hydraulic-Tool">
+  <a href="https://github.com/hidirektor/ondergrup-hydraulic-tool">
     <img src="readme/onderGrupMain.png" alt="Logo" width="320" height="80">
   </a>
 
-  <h3 align="center">Önder Grup Hidrolik</h3>
+  <h3 align="center">Önder Grup Hydraulic Tool</h3>
 
   <p align="center">
-    Hidrolik ünitesi hesaplama programı!
+    Hydraulic Unit Calculation Tool
     <br />
-    <a href="https://www.notion.so/Teamspace-Home-0c63f5fdeb054503a2b66944317b6a6a"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/hidirektor/ondergrup-hydraulic-tool/blob/main/docs/Onder%20Group%20Hydraulic%20Tool%20User%20Manual.pdf"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/hidirektor/OnderGrup-Hydraulic-Tool/issues">Report Bug</a>
+    <a href="mailto:hidirektor@gmail.com">Report Bug</a>
     ·
-    <a href="https://github.com/hidirektor/OnderGrup-Hydraulic-Tool/issues">Request Feature</a>
+    <a href="mailto:hidirektor@gmail.com">Request Feature</a>
   </p>
 </div>
 
@@ -57,19 +57,19 @@
 [![ScreenShot-10][product-screenshot10]](https://ondergrup.com)
 [![ScreenShot-11][product-screenshot11]](https://ondergrup.com)
 
-Önder Grup çalışanlarının gelen işlere göre hidrolik ünitesi hesaplayabildikleri araçtır. Amaç hidrolik ünitesi hesaplama işlemini olabildiğince standart hale getirmektir.
+It is a tool that Önder Group employees can use to calculate the hydraulic unit according to the incoming jobs. The aim is to standardize the hydraulic unit calculation process as much as possible.
 
-Programın yapabildikleri:
-* Klasik tipteki hidrolik ünitesi hesaplama işlemini gerçekleştirme
-* PowerPack tipindeki hidrolik ünitesi hesaplama işlemini gerçekleştirme
-* Hesaplama sonrası PDF dokümanı oluşturabilme
-* Hesaplama sonrası parça listesini excel formatında oluşturabilme
-* Hesaplama sonrası sonuç dosyalarını ve değerlerini veritabanına kaydedebilme
-* Profil güncelleyebilme
-* Kayıt olabilme
-* Şifre sıfırlayabilme
+The program can:
+* Perform the calculation of the classic type of hydraulic unit
+* Perform the calculation of the PowerPack type of hydraulic unit
+* Create a PDF document after the calculation
+* Create the parts list in Excel format after the calculation
+* Save the result files and values to the database after the calculation
+* Update the profile
+* Register
+* Reset the password
 
-Tabii ki programa yalnızca ENGINEER, TECHNICIAN ve SYSOP türündeki kullanıcılar erişebilir :smile:
+Of course, only ENGINEER, TECHNICIAN and SYSOP type users can access the program :smile:
 
 # Replay Mode
 [![ScreenShot-12][product-screenshot12]](https://ondergrup.com)
@@ -80,7 +80,7 @@ Tabii ki programa yalnızca ENGINEER, TECHNICIAN ve SYSOP türündeki kullanıc�
 
 ### Built With
 
-Programın geliştirilme sürecinde kullanılan teknolojiler aşağıdaki gibidir.
+The technologies used in the development process of the program are as follows.
 
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
@@ -93,7 +93,7 @@ Programın geliştirilme sürecinde kullanılan teknolojiler aşağıdaki gibidi
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Aşağıdaki dokümanı kullanarak programın kullanımına ve hata kodlarına ilişkin tüm detaylara ulaşabilirsiniz.
+You can access all the details regarding the use of the program and error codes using the document below.
 
 [User Manual](https://github.com/hidirektor/ondergrup-hydraulic-tool/blob/main/docs/Onder%20Group%20Hydraulic%20Tool%20User%20Manual.pdf)
 
