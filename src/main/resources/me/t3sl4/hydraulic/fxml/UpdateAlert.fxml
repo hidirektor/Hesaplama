@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="300.0" prefWidth="450.0" stylesheets="@../styling/update_available.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.Popup.UpdateAlertController">
@@ -10,14 +11,7 @@
          <Image url="@../../../../assets/images/general/new_update.jpeg" />
       </image>
    </ImageView>
-     <Button fx:id="downloadButton" layoutX="307.0" layoutY="172.0" onAction="#handleDownload" prefHeight="20.0" prefWidth="131.0" text="Şimdi İndir" />
-   <ProgressBar fx:id="downloadBar" layoutX="302.0" layoutY="279.0" prefHeight="15.0" prefWidth="138.0" progress="0.0" visible="false" />
-     <Button fx:id="updateButton" layoutX="263.0" layoutY="203.0" onAction="#handleUpdate" prefHeight="20.0" prefWidth="175.0" text="Github'da Görüntüle" />
-   <ImageView fx:id="scissorLiftView" fitHeight="75.0" fitWidth="100.0" layoutX="320.0" layoutY="220.0" visible="false">
-      <image>
-         <Image url="@../../../../assets/images/general/scissor_lift_animation.gif" />
-      </image>
-   </ImageView>
+     <Button fx:id="updateButton" layoutX="263.0" layoutY="203.0" onAction="#handleUpdate" prefHeight="20.0" prefWidth="175.0" text="Launcher'ı Çalıştır ve Güncelle" />
    <Label layoutX="254.0" layoutY="9.0" text="Güncelleme Var" textFill="#315463">
       <font>
          <Font name="System Bold" size="24.0" />

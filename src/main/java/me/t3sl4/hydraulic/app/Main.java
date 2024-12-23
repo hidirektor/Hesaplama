@@ -55,22 +55,16 @@ public class Main extends Application {
     }
 
     private void checkVersionFromPrefs() {
-        // Sabit düğüm adı kullanarak Preferences oluşturuluyor
         Utils.prefs = Preferences.userRoot().node("onderGrupUpdater");
 
-        // Launcher için key
         String launcherVersionKey = "launcher_version";
-        // HydraulicTool için key
         String hydraulicVersionKey = "hydraulic_version";
 
-        // Mevcut sürüm (Launcher için)
         String currentVersion = SystemVariables.CURRENT_VERSION;
 
-        // Kaydedilmiş sürümleri oku
         String savedLauncherVersion = Utils.prefs.get(launcherVersionKey, null);
         String savedHydraulicVersion = Utils.prefs.get(hydraulicVersionKey, "unknown");
 
-        // Launcher sürümünü kontrol et ve güncelle
         if (savedHydraulicVersion == null || !savedHydraulicVersion.equals(currentVersion)) {
             Utils.prefs.put(hydraulicVersionKey, currentVersion);
             savedHydraulicVersion = Utils.prefs.get(hydraulicVersionKey, "unknown");
