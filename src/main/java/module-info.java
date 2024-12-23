@@ -25,6 +25,8 @@ module me.t3sl.hydraulic {
     requires java.logging;
     requires org.fxmisc.richtext;
     requires org.snakeyaml.engine.v2;
+    requires com.sun.jna.platform;
+    requires java.management;
 
     exports me.t3sl4.hydraulic.utils;
     opens me.t3sl4.hydraulic.controllers to javafx.fxml;

@@ -47,6 +47,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
@@ -1267,8 +1268,14 @@ public class Utils {
     }
 
     public static void systemShutdown() {
-        Platform.exit();
+        try {
+            Path lockFilePath = Path.of(System.getProperty("user.home"), ".onder_grup_hydraulic.pid");
+            Files.deleteIfExists(lockFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        Platform.exit();
         System.exit(0);
     }
 }
