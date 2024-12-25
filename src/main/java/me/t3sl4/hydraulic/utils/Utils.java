@@ -2,6 +2,9 @@ package me.t3sl4.hydraulic.utils;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.platform.win32.WinUser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -1277,5 +1280,77 @@ public class Utils {
 
         Platform.exit();
         System.exit(0);
+    }
+
+    public static void checkVersionFromPrefs() {
+        Utils.prefs = Preferences.userRoot().node("onderGrupUpdater");
+
+        String launcherVersionKey = "launcher_version";
+        String hydraulicVersionKey = "hydraulic_version";
+
+        String currentVersion = SystemVariables.CURRENT_VERSION;
+
+        String savedLauncherVersion = Utils.prefs.get(launcherVersionKey, null);
+        String savedHydraulicVersion = Utils.prefs.get(hydraulicVersionKey, "unknown");
+
+        if (savedHydraulicVersion == null || !savedHydraulicVersion.equals(currentVersion)) {
+            Utils.prefs.put(hydraulicVersionKey, currentVersion);
+            savedHydraulicVersion = Utils.prefs.get(hydraulicVersionKey, "unknown");
+        }
+
+        // HydraulicTool sürümünü logla
+        System.out.println("HydraulicTool sürümü: " + savedHydraulicVersion);
+    }
+
+    public static boolean checkSingleInstance() {
+        String pid = java.lang.management.ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+        File lockFile = new File(System.getProperty("user.home"), ".onder_grup_hydraulic.pid");
+
+        try {
+            if (lockFile.exists()) {
+                List<String> lines = Files.readAllLines(lockFile.toPath());
+                if (!lines.isEmpty()) {
+                    String existingPid = lines.get(0);
+                    if (isProcessRunning(existingPid)) {
+                        return false;
+                    }
+                }
+            }
+
+            Files.write(lockFile.toPath(), pid.getBytes());
+            lockFile.deleteOnExit();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public static boolean isProcessRunning(String pid) {
+        try {
+            Process process = Runtime.getRuntime().exec("tasklist");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(pid)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void focusApp(String windowTitle) {
+        Platform.runLater(() -> {
+            User32 user32 = User32.INSTANCE;
+            WinDef.HWND hwnd = user32.FindWindow(null, windowTitle);
+            if (hwnd != null) {
+                user32.ShowWindow(hwnd, WinUser.SW_RESTORE);
+                user32.SetForegroundWindow(hwnd);
+            } else {
+                System.out.println("Pencere bulunamadı.");
+            }
+        });
     }
 }
