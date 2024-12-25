@@ -27,7 +27,7 @@ public class Main extends Application {
     @lombok.SneakyThrows
     @Override
     public void start(Stage primaryStage) {
-        Utils.prefs = Preferences.userRoot().node(this.getClass().getName());
+        Utils.prefs = Preferences.userRoot().node("onderGrupUpdater");
         String defaultMonitor = Utils.checkDefaultMonitor();
         FileUtil.criticalFileSystem();
 

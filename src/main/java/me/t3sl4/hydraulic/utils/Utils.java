@@ -72,10 +72,7 @@ public class Utils {
 
     public static final Logger logger = Logger.getLogger(MainController.class.getName());
 
-    private static final String REGISTRY_PATH = "SOFTWARE\\OnderGrup\\HydraulicCalculation";
-    private static final String LICENSE_KEY_NAME = "LicenseKey";
-
-    public static final String PREFERENCE_KEY = "defaultMonitor";
+    public static final String MONITOR_KEY = "defaultMonitor";
     public static Preferences prefs;
 
     public static void showErrorMessage(String hataMesaji, Screen targetScreen, Stage currentStage) {
@@ -446,11 +443,11 @@ public class Utils {
     }
 
     private static void saveSelectedMonitor(String monitor) {
-        prefs.put(PREFERENCE_KEY, monitor);
+        prefs.put(MONITOR_KEY, monitor);
     }
 
     public static String checkDefaultMonitor() {
-        return Utils.prefs.get(PREFERENCE_KEY, null);
+        return Utils.prefs.get(MONITOR_KEY, null);
     }
 
     public static void offlineMod(Label lblErrors, Runnable onComplete) {
@@ -1283,8 +1280,6 @@ public class Utils {
     }
 
     public static void checkVersionFromPrefs() {
-        Utils.prefs = Preferences.userRoot().node("onderGrupUpdater");
-
         String launcherVersionKey = "launcher_version";
         String hydraulicVersionKey = "hydraulic_version";
 
