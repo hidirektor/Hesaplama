@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
+import me.t3sl4.hydraulic.utils.Version.UpdateChecker;
 import me.t3sl4.hydraulic.utils.database.File.FileUtil;
 import me.t3sl4.hydraulic.utils.database.Model.Replay.ClassicData;
 import me.t3sl4.hydraulic.utils.database.Model.Replay.PowerPackData;
@@ -45,6 +46,9 @@ public class Main extends Application {
             Platform.exit();
             return;
         }
+
+        UpdateChecker updateChecker = new UpdateChecker();
+        updateChecker.start();
 
         checkVersionFromPrefs();
 
@@ -141,7 +145,6 @@ public class Main extends Application {
             }
         });
     }
-
 
     public static void main(String[] args) {
         launch(args);

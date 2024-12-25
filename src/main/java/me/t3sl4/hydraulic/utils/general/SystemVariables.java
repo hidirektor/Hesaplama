@@ -9,12 +9,13 @@ public class SystemVariables {
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
-    public static final String CURRENT_VERSION = "v3.8.2";
+    public static final String CURRENT_VERSION = "v3.8.3";
 
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
     public static String RELEASE_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases";
     public static String NEW_VERSION_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases/latest";
     public static String ASSET_URL = "https://api.github.com/repos/hidirektor/ondergrup-hydraulic-tool/releases/latest";
+    public static String LAUNCHER_ASSET_URL = "https://api.github.com/repos/hidirektor/ondergrup-launcher/releases/latest";
 
     public static String WEB_URL = "https://ondergrup.com";
     public static String developedBy = "Designed and Coded by\nHalil İbrahim Direktör";
