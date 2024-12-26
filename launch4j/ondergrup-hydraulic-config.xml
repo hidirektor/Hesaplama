@@ -12,7 +12,7 @@
   <supportUrl>https://github.com/hidirektor</supportUrl>
   <stayAlive>false</stayAlive>
   <restartOnCrash>true</restartOnCrash>
-  <manifest></manifest>
+  <manifest>C:\Users\hidir\IdeaProjects\ondergrup-hydraulic-tool\app.manifest</manifest>
   <icon>C:\Users\hidir\IdeaProjects\ondergrup-hydraulic-tool\src\main\resources\assets\images\general\logo.ico</icon>
   <jre>
     <path>%JAVA_HOME%;%PATH%</path>
