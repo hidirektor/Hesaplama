@@ -14,6 +14,10 @@
   <restartOnCrash>true</restartOnCrash>
   <manifest>C:\Users\hidir\IdeaProjects\ondergrup-hydraulic-tool\app.manifest</manifest>
   <icon>C:\Users\hidir\IdeaProjects\ondergrup-hydraulic-tool\src\main\resources\assets\images\general\logo.ico</icon>
+  <singleInstance>
+    <mutexName>ondergrup_hydraulic_tool</mutexName>
+    <windowTitle>Önder Grup Hydraulic Tool</windowTitle>
+  </singleInstance>
   <jre>
     <path>%JAVA_HOME%;%PATH%</path>
     <requiresJdk>true</requiresJdk>
