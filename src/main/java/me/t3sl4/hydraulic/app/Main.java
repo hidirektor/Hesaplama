@@ -31,11 +31,13 @@ public class Main extends Application {
         String defaultMonitor = Utils.checkDefaultMonitor();
         FileUtil.criticalFileSystem();
 
-        if (!Utils.checkSingleInstance()) {
-            System.out.println("Program zaten çalışıyor. Odaklanıyor...");
-            Utils.focusApp("Hydraulic Tool " + SystemVariables.getVersion());
-            Platform.exit();
-            return;
+        if(!System.getProperty("os.name").toLowerCase().contains("win")) {
+            if (!Utils.checkSingleInstance()) {
+                System.out.println("Program zaten çalışıyor. Odaklanıyor...");
+                Utils.focusApp("Hydraulic Tool " + SystemVariables.getVersion());
+                Platform.exit();
+                return;
+            }
         }
 
         Utils.checkVersionFromPrefs();

@@ -1268,11 +1268,13 @@ public class Utils {
     }
 
     public static void systemShutdown() {
-        try {
-            Path lockFilePath = Path.of(System.getProperty("user.home"), ".onder_grup_hydraulic.pid");
-            Files.deleteIfExists(lockFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!System.getProperty("os.name").toLowerCase().contains("win")) {
+            try {
+                Path lockFilePath = Path.of(System.getProperty("user.home"), ".onder_grup_hydraulic.pid");
+                Files.deleteIfExists(lockFilePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Platform.exit();
