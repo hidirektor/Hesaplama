@@ -11,6 +11,7 @@ import me.t3sl4.hydraulic.utils.database.Model.Replay.PowerPackData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -24,9 +25,8 @@ public class Main extends Application {
     public static PowerPackData powerPackReplayData = new PowerPackData();
     public static ClassicData classicReplayData = new ClassicData();
 
-    @lombok.SneakyThrows
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         Utils.prefs = Preferences.userRoot().node("onderGrupUpdater");
         String defaultMonitor = Utils.checkDefaultMonitor();
         FileUtil.criticalFileSystem();

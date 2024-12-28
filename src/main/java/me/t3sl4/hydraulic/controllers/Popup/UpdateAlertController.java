@@ -3,7 +3,6 @@ package me.t3sl4.hydraulic.controllers.Popup;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import lombok.Setter;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
 
@@ -18,7 +17,6 @@ public class UpdateAlertController {
 
     private String versionCode;
 
-    @Setter
     private Stage currentStage;
 
     public void setUpdateDetails(String version, String details) {
@@ -38,5 +36,9 @@ public class UpdateAlertController {
     @FXML
     public void programiKapat() {
         Utils.systemShutdown();
+    }
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
     }
 }

@@ -15,7 +15,6 @@ module me.t3sl.hydraulic {
     requires annotations;
     requires org.yaml.snakeyaml;
     requires java.desktop;
-    requires static lombok;
     requires java.prefs;
     requires java.net.http;
     requires org.apache.commons.io;

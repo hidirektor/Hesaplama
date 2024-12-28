@@ -1,11 +1,9 @@
 package me.t3sl4.hydraulic.utils.general;
 
-import lombok.Getter;
 import me.t3sl4.hydraulic.utils.database.Model.HydraulicData.HydraulicData;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
 
 public class SystemVariables {
-    @Getter
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
@@ -71,7 +69,6 @@ public class SystemVariables {
     public static String activateLicenseUrlPrefix = "/license/activate";
 
     // Local Data
-    @Getter
     public static HydraulicData localHydraulicData = new HydraulicData();
 
     public static void setOfflineMode(boolean offlineMode) {
@@ -84,5 +81,13 @@ public class SystemVariables {
 
     public static String getVersion() {
         return CURRENT_VERSION;
+    }
+
+    public static HydraulicData getLocalHydraulicData() {
+        return localHydraulicData;
+    }
+
+    public static boolean isOfflineMode() {
+        return offlineMode;
     }
 }
