@@ -59,10 +59,6 @@ jobs:
     needs: check-version
     if: needs.check-version.outputs.version_changed == 'true'
     runs-on: macos-latest
-    strategy:
-      max-parallel: 1
-      fail-fast: false
-    retry: 3
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -90,10 +86,6 @@ jobs:
   unix-build:
     needs: macos-build
     runs-on: ubuntu-20.04
-    strategy:
-      max-parallel: 1
-      fail-fast: false
-    retry: 3
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -121,10 +113,6 @@ jobs:
   windows-build:
     needs: unix-build
     runs-on: windows-latest
-    strategy:
-      max-parallel: 1
-      fail-fast: false
-    retry: 3
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
