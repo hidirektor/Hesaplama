@@ -126,7 +126,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Retry Maven Build (Windows)
+      - name: Maven Build (Windows)
         run: |
           for i in {1..3}; do
             mvn clean package && break || sleep 10
