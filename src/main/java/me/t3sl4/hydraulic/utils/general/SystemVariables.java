@@ -7,12 +7,12 @@ public class SystemVariables {
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
-    public static final String CURRENT_VERSION = "v3.9.1";
+    public static final String CURRENT_VERSION = "v3.9.2";
 
     public static final String REPO_OWNER = "hidirektor";
     public static final String HYDRAULIC_REPO_NAME = "ondergrup-hydraulic-tool";
 
-    public static final String PREF_NODE_NAME = "Canicula/releases";
+    public static final String PREF_NODE_NAME = "/Canicula/releases";
     public static final String HYDRAULIC_PREF_KEY = "hydraulic_version";
     public static final String DISPLAY_PREF_KEY = "default_display";
 
