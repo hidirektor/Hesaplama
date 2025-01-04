@@ -38,9 +38,10 @@ import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.HydraulicUnitList.HydraulicInfo;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
-import me.t3sl4.hydraulic.utils.general.VersionUtility;
 import me.t3sl4.hydraulic.utils.service.UserDataService.User;
-import org.json.JSONArray;
+import me.t3sl4.util.os.OSUtil;
+import me.t3sl4.util.version.VersionUtil;
+import me.t3sl4.util.version.model.ReleaseDetail;
 import org.json.JSONObject;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
@@ -65,15 +66,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import java.util.zip.GZIPOutputStream;
 
 public class Utils {
-
     public static final Logger logger = Logger.getLogger(MainController.class.getName());
-
-    public static final String MONITOR_KEY = "defaultMonitor";
-    public static Preferences prefs;
 
     public static void showErrorMessage(String hataMesaji, Screen targetScreen, Stage currentStage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -389,7 +385,7 @@ public class Utils {
         selectButton.setStyle("-fx-background-color: #1761ab; -fx-text-fill: white;");
         selectButton.setOnAction(event -> {
             String selectedMonitor = monitorComboBox.getSelectionModel().getSelectedItem();
-            saveSelectedMonitor(selectedMonitor);
+            OSUtil.updatePrefData(SystemVariables.PREF_NODE_NAME, SystemVariables.DISPLAY_PREF_KEY, selectedMonitor);
 
             try {
                 int monitorIndex = Integer.parseInt(selectedMonitor.split(" ")[1]) - 1;
@@ -440,14 +436,6 @@ public class Utils {
         }
 
         return "Unknown Monitor";
-    }
-
-    private static void saveSelectedMonitor(String monitor) {
-        prefs.put(MONITOR_KEY, monitor);
-    }
-
-    public static String checkDefaultMonitor() {
-        return Utils.prefs.get(MONITOR_KEY, null);
     }
 
     public static void offlineMod(Label lblErrors, Runnable onComplete) {
@@ -544,10 +532,19 @@ public class Utils {
     }
 
     public static boolean checkUpdateAndCancelEvent(Stage currentStage) {
-        String[] updateInfo = VersionUtility.checkForUpdate();
-        if (updateInfo != null) {
-            showUpdateAlert(currentStage, updateInfo[0], updateInfo[1]); // Version and details
+        String currentVersion = SystemVariables.getVersion();
+        String latestVersion = VersionUtil.getLatestVersion(SystemVariables.REPO_OWNER, SystemVariables.HYDRAULIC_REPO_NAME);
+
+        if(currentVersion.equals(latestVersion)) {
+            return false;
+        } else {
+            ReleaseDetail versionDetail = VersionUtil.getReleaseDetail(SystemVariables.REPO_OWNER, SystemVariables.HYDRAULIC_REPO_NAME, latestVersion);
+
+            if (versionDetail != null) {
+                showUpdateAlert(currentStage, versionDetail.getTitle(), versionDetail.getDescription());
+            }
         }
+
         return false;
     }
 
@@ -586,71 +583,6 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void downloadLatestVersion(File selectedDirectory, ProgressUpdater progressUpdater) throws IOException {
-        String os = System.getProperty("os.name").toLowerCase();
-        String downloadURL = getDownloadURLForOS(os);
-
-        if (downloadURL == null) {
-            System.out.println("Uygun sürüm bulunamadı.");
-            return;
-        }
-
-        File downloadFile = new File(selectedDirectory.getAbsolutePath() + "/" + getFileNameFromURL(downloadURL));
-        try (BufferedInputStream in = new BufferedInputStream(new URL(downloadURL).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(downloadFile)) {
-
-            byte[] dataBuffer = new byte[1024];
-            int bytesRead;
-            long totalBytesRead = 0;
-            long fileSize = new URL(downloadURL).openConnection().getContentLengthLong();
-
-            while ((bytesRead = in.read(dataBuffer, 0, dataBuffer.length)) != -1) {
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
-                totalBytesRead += bytesRead;
-
-                // İlerlemeyi güncelle
-                progressUpdater.updateProgress(totalBytesRead, fileSize);
-            }
-
-            System.out.println("Dosya başarıyla indirildi: " + downloadFile.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-
-    private static String getDownloadURLForOS(String os) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) new URL(SystemVariables.ASSET_URL).openConnection();
-        connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
-
-        if (connection.getResponseCode() == 200) {
-            String jsonResponse = new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
-            JSONObject releaseData = new JSONObject(jsonResponse);
-            JSONArray assets = releaseData.getJSONArray("assets");
-
-            for (int i = 0; i < assets.length(); i++) {
-                JSONObject asset = assets.getJSONObject(i);
-                String assetName = asset.getString("name");
-
-                if (os.contains("win") && assetName.contains("windows")) {
-                    return asset.getString("browser_download_url");
-                } else if (os.contains("mac") && assetName.contains("macOS")) {
-                    return asset.getString("browser_download_url");
-                } else if ((os.contains("nix") || os.contains("nux")) && assetName.contains("linux")) {
-                    return asset.getString("browser_download_url");
-                }
-            }
-        } else {
-            System.out.println("GitHub API'ye erişilemedi: " + connection.getResponseMessage());
-        }
-
-        return null;
-    }
-
-    private static String getFileNameFromURL(String url) {
-        return url.substring(url.lastIndexOf('/') + 1);
     }
 
     public static String formatDateTime(String unixTimestamp) {
@@ -1279,24 +1211,6 @@ public class Utils {
 
         Platform.exit();
         System.exit(0);
-    }
-
-    public static void checkVersionFromPrefs() {
-        String launcherVersionKey = "launcher_version";
-        String hydraulicVersionKey = "hydraulic_version";
-
-        String currentVersion = SystemVariables.CURRENT_VERSION;
-
-        String savedLauncherVersion = Utils.prefs.get(launcherVersionKey, null);
-        String savedHydraulicVersion = Utils.prefs.get(hydraulicVersionKey, "unknown");
-
-        if (savedHydraulicVersion == null || !savedHydraulicVersion.equals(currentVersion)) {
-            Utils.prefs.put(hydraulicVersionKey, currentVersion);
-            savedHydraulicVersion = Utils.prefs.get(hydraulicVersionKey, "unknown");
-        }
-
-        // HydraulicTool sürümünü logla
-        System.out.println("HydraulicTool sürümü: " + savedHydraulicVersion);
     }
 
     public static boolean checkSingleInstance() {

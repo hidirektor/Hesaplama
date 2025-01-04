@@ -5,8 +5,6 @@ module me.t3sl.hydraulic {
     requires itextpdf;
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
-    requires org.json;
-    requires com.google.gson;
     requires okhttp3;
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.codec;
@@ -15,8 +13,6 @@ module me.t3sl.hydraulic {
     requires annotations;
     requires org.yaml.snakeyaml;
     requires java.desktop;
-    requires java.prefs;
-    requires java.net.http;
     requires org.apache.commons.io;
     requires javafx.media;
     requires com.google.common;
@@ -26,6 +22,9 @@ module me.t3sl.hydraulic {
     requires org.snakeyaml.engine.v2;
     requires com.sun.jna.platform;
     requires java.management;
+    requires me.t3sl4.util.os;
+    requires org.json;
+    requires me.t3sl4.util.version;
 
     exports me.t3sl4.hydraulic.utils;
     opens me.t3sl4.hydraulic.controllers to javafx.fxml;

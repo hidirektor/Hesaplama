@@ -7,13 +7,16 @@ public class SystemVariables {
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
-    public static final String CURRENT_VERSION = "v3.9.0";
+    public static final String CURRENT_VERSION = "v3.9.1";
+
+    public static final String REPO_OWNER = "hidirektor";
+    public static final String HYDRAULIC_REPO_NAME = "ondergrup-hydraulic-tool";
+
+    public static final String PREF_NODE_NAME = "Canicula/releases";
+    public static final String HYDRAULIC_PREF_KEY = "hydraulic_version";
+    public static final String DISPLAY_PREF_KEY = "default_display";
 
     public static String BASE_URL = "https://ondergrup.hidirektor.com.tr/api/v2";
-    public static String RELEASE_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases";
-    public static String NEW_VERSION_URL = "https://github.com/hidirektor/ondergrup-hydraulic-tool/releases/latest";
-    public static String ASSET_URL = "https://api.github.com/repos/hidirektor/ondergrup-hydraulic-tool/releases/latest";
-    public static String LAUNCHER_ASSET_URL = "https://api.github.com/repos/hidirektor/ondergrup-launcher/releases/latest";
 
     public static String WEB_URL = "https://ondergrup.com";
     public static String developedBy = "Designed and Coded by\nHalil İbrahim Direktör";

@@ -10,10 +10,10 @@ import me.t3sl4.hydraulic.utils.database.Model.Replay.ClassicData;
 import me.t3sl4.hydraulic.utils.database.Model.Replay.PowerPackData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import me.t3sl4.util.os.OSUtil;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 public class Main extends Application {
     List<Screen> screens = Screen.getScreens();
@@ -27,8 +27,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Utils.prefs = Preferences.userRoot().node("onderGrupUpdater");
-        String defaultMonitor = Utils.checkDefaultMonitor();
+        String defaultMonitor = OSUtil.getPrefData(SystemVariables.PREF_NODE_NAME, SystemVariables.DISPLAY_PREF_KEY);
         FileUtil.criticalFileSystem();
 
         if(!System.getProperty("os.name").toLowerCase().contains("win")) {
@@ -40,7 +39,7 @@ public class Main extends Application {
             }
         }
 
-        Utils.checkVersionFromPrefs();
+        OSUtil.updateLocalVersion(SystemVariables.PREF_NODE_NAME, SystemVariables.HYDRAULIC_PREF_KEY, SystemVariables.getVersion());
 
         defaultScreen = screens.get(0);
 
