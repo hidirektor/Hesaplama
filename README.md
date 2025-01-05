@@ -11,8 +11,6 @@
   <p align="center">
     Hydraulic Unit Calculation Tool
     <br />
-    <a href="https://github.com/hidirektor/ondergrup-hydraulic-tool/blob/main/docs/Onder%20Group%20Hydraulic%20Tool%20User%20Manual.pdf"><strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a href="mailto:hidirektor@gmail.com">Report Bug</a>
     ·
