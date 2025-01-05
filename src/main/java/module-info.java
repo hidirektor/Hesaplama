@@ -25,6 +25,7 @@ module me.t3sl.hydraulic {
     requires me.t3sl4.util.os;
     requires org.json;
     requires me.t3sl4.util.version;
+    requires me.t3sl4.util.file;
 
     exports me.t3sl4.hydraulic.utils;
     opens me.t3sl4.hydraulic.controllers to javafx.fxml;

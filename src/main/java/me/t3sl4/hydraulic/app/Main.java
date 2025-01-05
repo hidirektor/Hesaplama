@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import me.t3sl4.hydraulic.utils.Utils;
-import me.t3sl4.hydraulic.utils.database.File.FileUtil;
+import me.t3sl4.hydraulic.utils.database.File.FileUtility;
 import me.t3sl4.hydraulic.utils.database.Model.Replay.ClassicData;
 import me.t3sl4.hydraulic.utils.database.Model.Replay.PowerPackData;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
@@ -28,7 +28,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         String defaultMonitor = OSUtil.getPrefData(SystemVariables.PREF_NODE_NAME, SystemVariables.DISPLAY_PREF_KEY);
-        FileUtil.criticalFileSystem();
+        FileUtility.criticalFileSystem();
 
         if(!System.getProperty("os.name").toLowerCase().contains("win")) {
             if (!Utils.checkSingleInstance()) {
@@ -59,7 +59,7 @@ public class Main extends Application {
             }
         }
 
-        Thread systemThread = new Thread(FileUtil::setupLocalData);
+        Thread systemThread = new Thread(FileUtility::setupLocalData);
         systemThread.start();
     }
 

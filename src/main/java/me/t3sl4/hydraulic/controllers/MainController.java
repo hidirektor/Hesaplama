@@ -30,7 +30,7 @@ import me.t3sl4.hydraulic.controllers.Popup.PopupController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.component.FilterSwitch;
 import me.t3sl4.hydraulic.utils.component.ThreeStateSwitch;
-import me.t3sl4.hydraulic.utils.database.File.FileUtil;
+import me.t3sl4.hydraulic.utils.database.File.FileUtility;
 import me.t3sl4.hydraulic.utils.database.Model.Table.HydraulicUnitList.HydraulicInfo;
 import me.t3sl4.hydraulic.utils.general.SceneUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
@@ -38,6 +38,7 @@ import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
 import me.t3sl4.hydraulic.utils.service.HTTP.Request.HydraulicUnit.HydraulicService;
 import me.t3sl4.hydraulic.utils.service.HTTP.Request.License.LicenseService;
 import me.t3sl4.hydraulic.utils.service.UserDataService.Profile;
+import me.t3sl4.util.os.desktop.DesktopUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,7 +61,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import static me.t3sl4.hydraulic.utils.Utils.openURL;
-import static me.t3sl4.hydraulic.utils.database.File.FileUtil.fileCopy;
+import static me.t3sl4.hydraulic.utils.database.File.FileUtility.fileCopy;
 import static me.t3sl4.hydraulic.utils.general.SystemVariables.*;
 
 public class MainController implements Initializable {
@@ -386,7 +387,7 @@ public class MainController implements Initializable {
             btnRefreshDB.setDisable(true);
 
             Thread systemThread = new Thread(() -> {
-                FileUtil.setupLocalData();
+                FileUtility.setupLocalData();
 
                 Platform.runLater(() ->
                         Utils.showSuccessMessage(
@@ -434,7 +435,7 @@ public class MainController implements Initializable {
                         (Stage) kullaniciAdiIsimText.getScene().getWindow()
                 );
 
-                Thread systemThread = new Thread(FileUtil::setupLocalData);
+                Thread systemThread = new Thread(FileUtility::setupLocalData);
                 systemThread.start();
 
                 Executors.newSingleThreadScheduledExecutor().schedule(() -> {
@@ -643,7 +644,11 @@ public class MainController implements Initializable {
 
                 pdfViewButton.setOnAction(event -> {
                     if(info.isLocal()) {
-                        Utils.openFile(info.getSchematicID());
+                        try {
+                            DesktopUtil.startExternalApplication(info.getSchematicID());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else {
                         openURL(BASE_URL + getSchematicURLPrefix + info.getOrderID());
                     }
@@ -651,7 +656,11 @@ public class MainController implements Initializable {
 
                 excelViewButton.setOnMouseClicked(event -> {
                     if(info.isLocal()) {
-                        Utils.openFile(info.getPartListID());
+                        try {
+                            DesktopUtil.startExternalApplication(info.getPartListID());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else {
                         openURL(BASE_URL + getPartListURLPrefix + info.getOrderID());
                     }

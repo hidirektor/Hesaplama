@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import me.t3sl4.hydraulic.utils.database.File.JSON.JSONUtil;
 import me.t3sl4.hydraulic.utils.database.File.Yaml.YamlUtil;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import me.t3sl4.util.file.DirectoryUtil;
+import me.t3sl4.util.file.FileUtil;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -17,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class FileUtil {
+public class FileUtility {
     public static void criticalFileSystem() {
         // İşletim sistemine göre dosya yollarını ayarla
         String userHome = System.getProperty("user.name");
@@ -54,13 +56,13 @@ public class FileUtil {
         SystemVariables.partOriginsPowerPackDBPath = SystemVariables.dataFileLocalPath + "part_origins_powerpack.yml";
 
         try {
-            createDirectory(SystemVariables.mainPath);
+            DirectoryUtil.createDirectory(SystemVariables.mainPath);
 
-            createDirectory(SystemVariables.dataFileLocalPath);
-            createDirectory(SystemVariables.profilePhotoLocalPath);
+            DirectoryUtil.createDirectory(SystemVariables.dataFileLocalPath);
+            DirectoryUtil.createDirectory(SystemVariables.profilePhotoLocalPath);
 
-            createFile(SystemVariables.tokenPath);
-            createFile(SystemVariables.licensePath);
+            FileUtil.createFile(SystemVariables.tokenPath);
+            FileUtil.createFile(SystemVariables.licensePath);
 
             fileCopy("/assets/data/programDatabase/general.json", SystemVariables.generalDBPath, false);
             fileCopy("/assets/data/programDatabase/cabins.json", SystemVariables.cabinsDBPath, false);
@@ -73,9 +75,9 @@ public class FileUtil {
             fileCopy("/assets/data/programDatabase/part_origins_classic.yml", SystemVariables.partOriginsClassicDBPath, false);
             fileCopy("/assets/data/programDatabase/part_origins_powerpack.yml", SystemVariables.partOriginsPowerPackDBPath, false);
 
-            createDirectory(SystemVariables.excelFileLocalPath);
-            createDirectory(SystemVariables.pdfFileLocalPath);
-            createFile(SystemVariables.localHydraulicStatsPath);
+            DirectoryUtil.createDirectory(SystemVariables.excelFileLocalPath);
+            DirectoryUtil.createDirectory(SystemVariables.pdfFileLocalPath);
+            FileUtil.createFile(SystemVariables.localHydraulicStatsPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,8 +92,8 @@ public class FileUtil {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Platform.runLater(() -> FileUtil.partRenameAutomatically("klasik"));
-            Platform.runLater(() -> FileUtil.partRenameAutomatically("powerpack"));
+            Platform.runLater(() -> FileUtility.partRenameAutomatically("klasik"));
+            Platform.runLater(() -> FileUtility.partRenameAutomatically("powerpack"));
         }).start();
     }
 
@@ -138,25 +140,11 @@ public class FileUtil {
         }
     }
 
-    private static void createDirectory(String path) throws IOException {
-        Path dirPath = Paths.get(path);
-        if (Files.notExists(dirPath)) {
-            Files.createDirectories(dirPath);
-        }
-    }
-
-    public static void createFile(String path) throws IOException {
-        Path filePath = Paths.get(path);
-        if (Files.notExists(filePath)) {
-            Files.createFile(filePath);
-        }
-    }
-
     public static void fileCopy(String sourcePath, String destPath, boolean isRefresh) throws IOException {
         File destinationFile = new File(destPath);
 
         if(isRefresh) {
-            InputStream resourceAsStream = FileUtil.class.getResourceAsStream(sourcePath);
+            InputStream resourceAsStream = FileUtility.class.getResourceAsStream(sourcePath);
 
             if (resourceAsStream == null) {
                 throw new FileNotFoundException("Kaynak bulunamadı: " + sourcePath);
@@ -167,7 +155,7 @@ public class FileUtil {
             resourceAsStream.close();
         } else {
             if (!destinationFile.exists()) {
-                InputStream resourceAsStream = FileUtil.class.getResourceAsStream(sourcePath);
+                InputStream resourceAsStream = FileUtility.class.getResourceAsStream(sourcePath);
 
                 if (resourceAsStream == null) {
                     throw new FileNotFoundException("Kaynak bulunamadı: " + sourcePath);
@@ -178,21 +166,6 @@ public class FileUtil {
                 resourceAsStream.close();
             } else {
                 System.out.println("File already exists: " + destPath);
-            }
-        }
-    }
-
-    private static void cleanDirectory(String path) throws IOException {
-        Path dirPath = Paths.get(path);
-        if (Files.exists(dirPath)) {
-            try (Stream<Path> files = Files.list(dirPath)) {
-                files.forEach(file -> {
-                    try {
-                        Files.deleteIfExists(file);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
             }
         }
     }

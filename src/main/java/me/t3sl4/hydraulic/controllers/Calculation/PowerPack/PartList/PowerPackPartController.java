@@ -19,6 +19,7 @@ import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
 import me.t3sl4.hydraulic.utils.database.Model.Table.PartList.ParcaTableData;
 import me.t3sl4.hydraulic.utils.general.SystemVariables;
+import me.t3sl4.util.os.desktop.DesktopUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -228,7 +229,7 @@ public class PowerPackPartController {
                             jsonObject);
                 }
 
-                Utils.openFile(excelFileName);
+                DesktopUtil.startExternalApplication(excelFileName);
             }
 
         } catch (IOException e) {

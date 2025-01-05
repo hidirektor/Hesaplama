@@ -3,6 +3,7 @@ package me.t3sl4.hydraulic.utils.service.HTTP.Request.License;
 import me.t3sl4.hydraulic.app.Main;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.service.HTTP.HTTPMethod;
+import me.t3sl4.util.os.device.DeviceUtil;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class LicenseService {
         JSONObject licenseJson = new JSONObject();
         licenseJson.put("licenseKey", licenseKey);
         licenseJson.put("activatedBy", activatedBy);
-        licenseJson.put("deviceInfo", Utils.getDeviceInfoAsJson().toString());
+        licenseJson.put("deviceInfo", DeviceUtil.getDeviceInfoAsJson().toString());
 
         HTTPMethod.sendAuthorizedJsonRequest(licenseUrl, "POST", licenseJson.toString(), accessToken, new HTTPMethod.RequestCallback() {
             @Override
