@@ -45,17 +45,17 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![ScreenShot][product-screenshot]](https://ondergrup.com)
-[![ScreenShot-2][product-screenshot2]](https://ondergrup.com)
-[![ScreenShot-3][product-screenshot3]](https://ondergrup.com)
-[![ScreenShot-4][product-screenshot4]](https://ondergrup.com)
-[![ScreenShot-5][product-screenshot5]](https://ondergrup.com)
-[![ScreenShot-6][product-screenshot6]](https://ondergrup.com)
-[![ScreenShot-7][product-screenshot7]](https://ondergrup.com)
-[![ScreenShot-8][product-screenshot8]](https://ondergrup.com)
-[![ScreenShot-9][product-screenshot9]](https://ondergrup.com)
-[![ScreenShot-10][product-screenshot10]](https://ondergrup.com)
-[![ScreenShot-11][product-screenshot11]](https://ondergrup.com)
+[![ScreenShot][product-screenshot]]
+[![ScreenShot-2][product-screenshot2]]
+[![ScreenShot-3][product-screenshot3]]
+[![ScreenShot-4][product-screenshot4]]
+[![ScreenShot-5][product-screenshot5]]
+[![ScreenShot-6][product-screenshot6]]
+[![ScreenShot-7][product-screenshot7]]
+[![ScreenShot-8][product-screenshot8]]
+[![ScreenShot-9][product-screenshot9]]
+[![ScreenShot-10][product-screenshot10]]
+[![ScreenShot-11][product-screenshot11]]
 
 It is a tool that Önder Group employees can use to calculate the hydraulic unit according to the incoming jobs. The aim is to standardize the hydraulic unit calculation process as much as possible.
 
