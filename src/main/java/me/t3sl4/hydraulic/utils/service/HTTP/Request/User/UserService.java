@@ -41,7 +41,6 @@ public class UserService {
                         JSONObject mainObject = defaultObject.getJSONObject("payload");
 
                         JSONObject userObject = mainObject.getJSONObject("user");
-                        JSONObject userPreferencesObject = mainObject.getJSONObject("userPreferences");
 
                         String roleValue = userObject.getString("userType");
                         if (roleValue.equals("TECHNICIAN") || roleValue.equals("ENGINEER") || roleValue.equals("SYSOP")) {

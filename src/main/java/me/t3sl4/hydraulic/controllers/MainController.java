@@ -644,11 +644,7 @@ public class MainController implements Initializable {
 
                 pdfViewButton.setOnAction(event -> {
                     if(info.isLocal()) {
-                        try {
-                            DesktopUtil.startExternalApplication(info.getSchematicID());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        DesktopUtil.startExternalApplicationAsync(info.getSchematicID());
                     } else {
                         openURL(BASE_URL + getSchematicURLPrefix + info.getOrderID());
                     }
@@ -656,11 +652,7 @@ public class MainController implements Initializable {
 
                 excelViewButton.setOnMouseClicked(event -> {
                     if(info.isLocal()) {
-                        try {
-                            DesktopUtil.startExternalApplication(info.getPartListID());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        DesktopUtil.startExternalApplicationAsync(info.getPartListID());
                     } else {
                         openURL(BASE_URL + getPartListURLPrefix + info.getOrderID());
                     }

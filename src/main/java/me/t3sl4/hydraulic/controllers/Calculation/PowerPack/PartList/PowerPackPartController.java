@@ -1,6 +1,5 @@
 package me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PartList;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import javafx.collections.ObservableList;
@@ -13,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
-import me.t3sl4.hydraulic.controllers.Calculation.Classic.ClassicController;
 import me.t3sl4.hydraulic.controllers.Calculation.PowerPack.PowerPackController;
 import me.t3sl4.hydraulic.utils.Utils;
 import me.t3sl4.hydraulic.utils.database.Model.Kabin.Kabin;
@@ -229,7 +227,7 @@ public class PowerPackPartController {
                             jsonObject);
                 }
 
-                DesktopUtil.startExternalApplication(excelFileName);
+                DesktopUtil.startExternalApplicationAsync(excelFileName);
             }
 
         } catch (IOException e) {

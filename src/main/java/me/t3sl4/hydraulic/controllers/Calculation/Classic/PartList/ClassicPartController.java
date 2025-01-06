@@ -223,7 +223,7 @@ public class ClassicPartController {
                             jsonObject);
                 }
 
-                DesktopUtil.startExternalApplication(excelFileName);
+                DesktopUtil.startExternalApplicationAsync(excelFileName);
             }
 
         } catch (IOException e) {
