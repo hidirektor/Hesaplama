@@ -50,7 +50,7 @@ public class Main extends Application {
                 SceneUtil.openMainScreen(screens.get(0));
             }
         } else {
-            if(screens.size() > 1) {
+            if (defaultMonitor.split(" ").length > 1) {
                 int monitorIndex = Integer.parseInt(defaultMonitor.split(" ")[1]) - 1;
                 defaultScreen = screens.get(monitorIndex);
                 SceneUtil.openMainScreen(screens.get(monitorIndex));

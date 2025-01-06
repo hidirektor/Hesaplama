@@ -7,7 +7,7 @@ public class SystemVariables {
     public static boolean offlineMode = false;
     public static String otpSentTime;
 
-    public static final String CURRENT_VERSION = "v3.9.6";
+    public static final String CURRENT_VERSION = "v3.9.7";
 
     public static final String REPO_OWNER = "hidirektor";
     public static final String HYDRAULIC_REPO_NAME = "ondergrup-hydraulic-tool";
