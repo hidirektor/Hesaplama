@@ -164,6 +164,12 @@ jobs:
           name: windows_Hydraulic
           path: windows_Hydraulic.exe
 
+      - name: Upload Windows Debug JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows_Hydraulic_JAR
+          path: ondergrup-hydraulic-tool.jar
+
   release:
     needs: [ macos-build, unix-build, windows-build ]
     runs-on: ubuntu-20.04
@@ -188,6 +194,7 @@ jobs:
           mv macos_Hydraulic/macos_Hydraulic.jar artifacts/
           mv unix_Hydraulic/unix_Hydraulic.jar artifacts/
           mv windows_Hydraulic/windows_Hydraulic.exe artifacts/
+          mv windows_Hydraulic_JAR/ondergrup-hydraulic-tool.jar artifacts/
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
