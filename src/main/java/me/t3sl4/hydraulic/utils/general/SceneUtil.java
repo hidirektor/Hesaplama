@@ -58,7 +58,7 @@ public class SceneUtil {
 
     public static void openMainScreen(Screen currentScreen) throws IOException {
         Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("fxml/Home.fxml")));
         primaryStage.setScene(new Scene(root));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Hydraulic Tool " + SystemVariables.getVersion());

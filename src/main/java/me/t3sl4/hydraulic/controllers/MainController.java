@@ -203,7 +203,7 @@ public class MainController implements Initializable {
 
         initializeHydraulicTable();
 
-        Platform.runLater(() -> checkLicense());
+        //Platform.runLater(() -> checkLicense());
 
         Utils.collapsableListener(collapsableAnchor, hesaplamaAnchor, hataYonetimiAnchor, programSettingsAnchor, accountSettingsAnchor, hesaplamaTitledPane, hataYonetimiTitledPane, programSettingsTitledPane, accountSettingsTitledPane);
     }
