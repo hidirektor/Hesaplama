@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="300.0" prefWidth="450.0" stylesheets="@../styling/update_available.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.Popup.UpdateAlertController">
+<AnchorPane prefHeight="300.0" prefWidth="450.0" stylesheets="@../styling/update_available.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.t3sl4.hydraulic.controllers.Popup.UpdateAlertController">
    <ImageView fitHeight="300.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../../assets/images/general/new_update.jpeg" />
@@ -17,12 +17,12 @@
          <Font name="System Bold" size="24.0" />
       </font>
    </Label>
-   <Label fx:id="versionLabel" layoutX="203.0" layoutY="48.0" text="Güncelleme Hakkında:" textFill="#d05d75">
+   <Label fx:id="versionLabel" alignment="CENTER" layoutX="203.0" layoutY="48.0" maxWidth="200.0" mnemonicParsing="true" prefHeight="35.0" prefWidth="241.0" text="Güncelleme Hakkında:" textFill="#d05d75" wrapText="true">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <ScrollPane layoutX="209.0" layoutY="68.0" prefHeight="104.0" prefWidth="241.0" stylesheets="@../styling/style.css">
+   <ScrollPane layoutX="209.0" layoutY="76.0" prefHeight="104.0" prefWidth="241.0" stylesheets="@../styling/style.css">
       <content>
          <Label fx:id="updateDetails" text="Güncelleme Hakkında" textFill="#315463">
             <font>

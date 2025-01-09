@@ -163,7 +163,7 @@ public class LoginController implements Initializable {
 
         checkInternet();
 
-        checkLicense();
+        //checkLicense();
     }
 
     private void togglePasswordVisibility() {
